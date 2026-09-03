@@ -1,0 +1,806 @@
+{% render 'chopinrx-tokens' %}
+
+{% liquid
+  assign ui_font = section.settings.ui_font
+  assign ui_font_semibold = ui_font | font_modify: 'weight', '600'
+  assign brand_font = section.settings.brand_font
+
+  assign menu = section.settings.menu
+  assign wordmark = section.settings.wordmark | default: shop.name
+
+  assign login_url = section.settings.login_url
+  if login_url == blank
+    assign login_url = routes.account_login_url
+  endif
+
+  assign chevron_icon = 'icon-chevron-down.svg' | inline_asset_content | replace: '#FF6E42', 'currentColor'
+  assign arrow_icon = 'icon-arrow-right.svg' | inline_asset_content | replace: '#FCFAF9', 'currentColor'
+%}
+
+{% style %}
+  {{ ui_font | font_face: font_display: 'swap' }}
+  {{ ui_font_semibold | font_face: font_display: 'swap' }}
+  {{ brand_font | font_face: font_display: 'swap' }}
+
+  :root {
+    --font-display: {{ brand_font.family }}, {{ brand_font.fallback_families }};
+    --font-ui: {{ ui_font.family }}, {{ ui_font.fallback_families }};
+  }
+{% endstyle %}
+
+<div
+  id="header-component"
+  class="chx-header"
+  {% if section.settings.enable_sticky_header %}
+    data-sticky
+  {% endif %}
+>
+  <div class="chx-header__inner chx-container">
+    <a
+      class="chx-header__brand"
+      href="{{ routes.root_url }}"
+      {% if request.page_type == 'index' %}
+        aria-current="page"
+      {% endif %}
+    >
+      {%- if settings.logo != blank -%}
+        {%- assign logo_width = settings.logo_height | times: settings.logo.aspect_ratio | ceil -%}
+        <img
+          src="{{ settings.logo | image_url: width: 600 }}"
+          alt="{{ shop.name | escape }}"
+          width="{{ logo_width }}"
+          height="{{ settings.logo_height }}"
+          class="chx-header__logo"
+          loading="eager"
+          fetchpriority="high"
+        >
+      {%- else -%}
+        <span class="chx-wordmark">{{ wordmark }}</span>
+      {%- endif -%}
+    </a>
+
+    <nav
+      class="chx-nav"
+      aria-label="{{ 'accessibility.header_navigation_label' | t }}"
+    >
+      <ul class="chx-nav__list" role="list">
+        {%- for link in menu.links -%}
+          <li class="chx-nav__item{% if link.links.size > 0 %} chx-nav__item--has-submenu{% endif %}">
+            <a
+              class="chx-nav__link{% if link.current or link.child_active %} chx-nav__link--active{% endif %}"
+              href="{{ link.url }}"
+              {% if link.current %}
+                aria-current="page"
+              {% endif %}
+              {% if link.links.size > 0 %}
+                aria-haspopup="true"
+              {% endif %}
+            >
+              <span class="chx-nav__label">{{ link.title | escape }}</span>
+              {%- if link.links.size > 0 -%}
+                <span class="chx-nav__chevron" aria-hidden="true">{{ chevron_icon }}</span>
+              {%- endif -%}
+            </a>
+
+            {%- if link.links.size > 0 -%}
+              <div class="chx-nav__panel">
+                <ul class="chx-nav__sublist" role="list">
+                  {%- for childlink in link.links -%}
+                    <li class="chx-nav__subitem">
+                      <a
+                        class="chx-nav__sublink{% if childlink.current %} chx-nav__sublink--active{% endif %}"
+                        href="{{ childlink.url }}"
+                        {% if childlink.current %}
+                          aria-current="page"
+                        {% endif %}
+                      >
+                        {{- childlink.title | escape -}}
+                      </a>
+
+                      {%- if childlink.links.size > 0 -%}
+                        <ul class="chx-nav__sublist chx-nav__sublist--nested" role="list">
+                          {%- for grandchildlink in childlink.links -%}
+                            <li>
+                              <a
+                                class="chx-nav__sublink chx-nav__sublink--nested{% if grandchildlink.current %} chx-nav__sublink--active{% endif %}"
+                                href="{{ grandchildlink.url }}"
+                                {% if grandchildlink.current %}
+                                  aria-current="page"
+                                {% endif %}
+                              >
+                                {{- grandchildlink.title | escape -}}
+                              </a>
+                            </li>
+                          {%- endfor -%}
+                        </ul>
+                      {%- endif -%}
+                    </li>
+                  {%- endfor -%}
+                </ul>
+              </div>
+            {%- endif -%}
+          </li>
+        {%- endfor -%}
+      </ul>
+    </nav>
+
+    <div class="chx-header__actions">
+      {%- if section.settings.show_login -%}
+        <a class="chx-btn chx-btn--secondary chx-header__login" href="{{ login_url }}">
+          {{- section.settings.login_label -}}
+        </a>
+      {%- endif -%}
+
+      {%- if section.settings.cta_label != blank -%}
+        <a class="chx-btn chx-btn--accent" href="{{ section.settings.cta_url | default: routes.root_url }}">
+          <span>{{ section.settings.cta_label }}</span>
+          <span class="chx-btn__icon" aria-hidden="true">{{ arrow_icon }}</span>
+        </a>
+      {%- endif -%}
+
+      <button
+        type="button"
+        class="chx-header__toggle"
+        aria-expanded="false"
+        aria-controls="chx-drawer"
+        aria-label="{{ 'accessibility.menu' | t }}"
+        data-chx-drawer-toggle
+      >
+        <span class="chx-header__toggle-icon" aria-hidden="true">
+          {{- 'icon-menu.svg' | inline_asset_content -}}
+        </span>
+      </button>
+    </div>
+  </div>
+
+  <div
+    class="chx-drawer"
+    id="chx-drawer"
+    data-open="false"
+    data-chx-drawer
+    inert
+  >
+    <div class="chx-drawer__backdrop" data-chx-drawer-close></div>
+
+    <div
+      class="chx-drawer__panel"
+      role="dialog"
+      aria-modal="true"
+      aria-label="{{ 'accessibility.menu' | t }}"
+    >
+      <div class="chx-drawer__head">
+        <span class="chx-wordmark chx-wordmark--drawer">{{ wordmark }}</span>
+        <button
+          type="button"
+          class="chx-drawer__close"
+          aria-label="{{ 'actions.close' | t }}"
+          data-chx-drawer-close
+          data-chx-drawer-initial-focus
+        >
+          <span class="chx-drawer__close-icon" aria-hidden="true">
+            {{- 'icon-close.svg' | inline_asset_content -}}
+          </span>
+        </button>
+      </div>
+
+      <nav
+        class="chx-drawer__nav"
+        aria-label="{{ 'accessibility.header_navigation_label' | t }}"
+      >
+        <ul class="chx-drawer__list" role="list">
+          {%- for link in menu.links -%}
+            <li class="chx-drawer__item">
+              {%- if link.links.size > 0 -%}
+                <details class="chx-drawer__details">
+                  <summary class="chx-drawer__summary{% if link.current or link.child_active %} chx-drawer__summary--active{% endif %}">
+                    <span>{{ link.title | escape }}</span>
+                    <span class="chx-nav__chevron" aria-hidden="true">{{ chevron_icon }}</span>
+                  </summary>
+                  <ul class="chx-drawer__sublist" role="list">
+                    <li>
+                      <a class="chx-drawer__sublink" href="{{ link.url }}">
+                        {{- link.title | escape -}}
+                      </a>
+                    </li>
+                    {%- for childlink in link.links -%}
+                      <li>
+                        <a
+                          class="chx-drawer__sublink{% if childlink.current %} chx-drawer__sublink--active{% endif %}"
+                          href="{{ childlink.url }}"
+                          {% if childlink.current %}
+                            aria-current="page"
+                          {% endif %}
+                        >
+                          {{- childlink.title | escape -}}
+                        </a>
+                        {%- if childlink.links.size > 0 -%}
+                          <ul class="chx-drawer__sublist chx-drawer__sublist--nested" role="list">
+                            {%- for grandchildlink in childlink.links -%}
+                              <li>
+                                <a
+                                  class="chx-drawer__sublink{% if grandchildlink.current %} chx-drawer__sublink--active{% endif %}"
+                                  href="{{ grandchildlink.url }}"
+                                  {% if grandchildlink.current %}
+                                    aria-current="page"
+                                  {% endif %}
+                                >
+                                  {{- grandchildlink.title | escape -}}
+                                </a>
+                              </li>
+                            {%- endfor -%}
+                          </ul>
+                        {%- endif -%}
+                      </li>
+                    {%- endfor -%}
+                  </ul>
+                </details>
+              {%- else -%}
+                <a
+                  class="chx-drawer__link{% if link.current %} chx-drawer__link--active{% endif %}"
+                  href="{{ link.url }}"
+                  {% if link.current %}
+                    aria-current="page"
+                  {% endif %}
+                >
+                  {{- link.title | escape -}}
+                </a>
+              {%- endif -%}
+            </li>
+          {%- endfor -%}
+        </ul>
+      </nav>
+
+      {%- if section.settings.show_login -%}
+        <div class="chx-drawer__foot">
+          <a class="chx-btn chx-btn--secondary chx-drawer__login" href="{{ login_url }}">
+            {{- section.settings.login_label -}}
+          </a>
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</div>
+
+<script
+  src="{{ 'chopinrx-header.js' | asset_url }}"
+  defer
+></script>
+
+{% stylesheet %}
+  /* ================================================================
+     Header shell
+     ================================================================ */
+  .chopinrx-header-section {
+    display: block;
+  }
+
+  #header-group:has(.chx-header[data-sticky]) {
+    display: contents;
+  }
+
+  .chopinrx-header-section:has(.chx-header[data-sticky]) {
+    position: sticky;
+    top: 0;
+    z-index: var(--layer-menu-drawer, 18);
+  }
+
+  .chx-header {
+    position: relative;
+    background-color: var(--surface-page);
+    color: var(--text-heading);
+  }
+
+  .chx-header__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-6);
+    padding-block: var(--space-3);
+  }
+
+  /* ── Brand ──────────────────────────────────── */
+  .chx-header__brand {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .chx-header__brand:hover {
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .chx-header__logo {
+    display: block;
+    width: auto;
+    height: 26px;
+    object-fit: contain;
+  }
+
+  .chx-wordmark {
+    font-family: var(--font-display);
+    font-size: var(--font-size-brand-name);
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: -1.17px;
+    color: var(--text-heading);
+    white-space: nowrap;
+  }
+
+  /* ================================================================
+     Desktop navigation
+     ================================================================ */
+  .chx-nav__list {
+    display: flex;
+    align-items: center;
+    gap: var(--space-8);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .chx-nav__item {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+
+  .chx-nav__link {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    font-family: var(--font-ui);
+    font-size: var(--font-size-body-large);
+    font-weight: 500;
+    line-height: 1.55;
+    letter-spacing: -0.09px;
+    color: var(--text-heading);
+    text-decoration: none;
+    white-space: nowrap;
+    transition: color 0.2s ease;
+  }
+
+  .chx-nav__link:hover,
+  .chx-nav__link--active,
+  .chx-nav__item:focus-within .chx-nav__link {
+    color: var(--text-accent);
+    text-decoration: none;
+  }
+
+  .chx-nav__chevron {
+    display: block;
+    flex-shrink: 0;
+    width: 20px;
+    height: 20px;
+    color: var(--text-accent);
+    transition: transform 0.2s ease;
+  }
+
+  .chx-nav__chevron svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  .chx-nav__item--has-submenu:hover .chx-nav__chevron,
+  .chx-nav__item--has-submenu:focus-within .chx-nav__chevron {
+    transform: rotate(180deg);
+  }
+
+  /* ── Submenu panel ──────────────────────────── */
+  .chx-nav__panel {
+    position: absolute;
+    top: 100%;
+    left: calc(var(--space-5) * -1);
+    z-index: var(--layer-raised, 10);
+    min-width: 240px;
+    margin-block-start: var(--space-3);
+    padding: var(--space-4) var(--space-5);
+    border: var(--border-w) solid var(--action-secondary-border);
+    border-radius: var(--radius-panel);
+    background-color: var(--surface-page);
+    box-shadow: 0 12px 32px rgb(20 24 29 / 12%);
+    opacity: 0;
+    visibility: hidden;
+    translate: 0 8px;
+    transition: opacity 0.2s ease, translate 0.2s ease, visibility 0.2s ease;
+  }
+
+  .chx-nav__item--has-submenu:hover .chx-nav__panel,
+  .chx-nav__item--has-submenu:focus-within .chx-nav__panel {
+    opacity: 1;
+    visibility: visible;
+    translate: 0 0;
+  }
+
+  .chx-nav__sublist {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .chx-nav__sublist--nested {
+    margin-block-start: var(--space-2);
+    padding-inline-start: var(--space-3);
+    border-inline-start: var(--border-w) solid var(--action-secondary-border);
+  }
+
+  .chx-nav__sublink {
+    display: block;
+    font-family: var(--font-ui);
+    font-size: var(--font-size-body);
+    font-weight: 500;
+    line-height: 1.5;
+    letter-spacing: -0.08px;
+    color: var(--text-heading);
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+
+  .chx-nav__sublink:hover,
+  .chx-nav__sublink--active {
+    color: var(--text-accent);
+    text-decoration: none;
+  }
+
+  /* ================================================================
+     Actions
+     ================================================================ */
+  .chx-header__actions {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-shrink: 0;
+  }
+
+  .chx-header__toggle {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    margin-inline-end: -10px;
+    padding: 0;
+    border: 0;
+    background: none;
+    color: var(--text-heading);
+    cursor: pointer;
+  }
+
+  .chx-header__toggle-icon {
+    display: block;
+    width: 24px;
+    height: 24px;
+  }
+
+  .chx-header__toggle-icon svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  /* ================================================================
+     Offcanvas drawer (tablet + mobile)
+     ================================================================ */
+  .chx-drawer {
+    position: fixed;
+    inset: 0;
+    z-index: var(--layer-menu-drawer, 18);
+    visibility: hidden;
+    transition: visibility 0.3s ease;
+  }
+
+  .chx-drawer[data-open='true'] {
+    visibility: visible;
+  }
+
+  .chx-drawer__backdrop {
+    position: absolute;
+    inset: 0;
+    background-color: rgb(20 24 29 / 45%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .chx-drawer[data-open='true'] .chx-drawer__backdrop {
+    opacity: 1;
+  }
+
+  .chx-drawer__panel {
+    position: absolute;
+    inset-block: 0;
+    inset-inline-end: 0;
+    display: flex;
+    flex-direction: column;
+    width: min(360px, 88vw);
+    padding: var(--space-4) var(--space-5) var(--space-6);
+    padding-block-start: max(var(--space-4), var(--safe-area-inset-top, 0px));
+    background-color: var(--surface-page);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    transform: translateX(100%);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .chx-drawer[data-open='true'] .chx-drawer__panel {
+    transform: translateX(0);
+  }
+
+  .chx-drawer__head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-4);
+    min-height: 44px;
+  }
+
+  .chx-wordmark--drawer {
+    font-size: 22px;
+    letter-spacing: -0.99px;
+  }
+
+  .chx-drawer__close {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    margin-inline-end: -10px;
+    padding: 0;
+    border: 0;
+    background: none;
+    color: var(--text-heading);
+    cursor: pointer;
+  }
+
+  .chx-drawer__close-icon {
+    display: block;
+    width: 24px;
+    height: 24px;
+  }
+
+  .chx-drawer__close-icon svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  .chx-drawer__nav {
+    margin-block-start: var(--space-6);
+  }
+
+  .chx-drawer__list,
+  .chx-drawer__sublist {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .chx-drawer__item {
+    border-block-end: var(--border-w) solid var(--action-secondary-border);
+  }
+
+  .chx-drawer__link,
+  .chx-drawer__summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-2);
+    min-height: 52px;
+    padding-block: var(--space-3);
+    font-family: var(--font-ui);
+    font-size: var(--font-size-body-large);
+    font-weight: 500;
+    line-height: 1.55;
+    letter-spacing: -0.09px;
+    color: var(--text-heading);
+    text-decoration: none;
+    cursor: pointer;
+    list-style: none;
+  }
+
+  .chx-drawer__summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .chx-drawer__link:hover,
+  .chx-drawer__link--active,
+  .chx-drawer__summary:hover,
+  .chx-drawer__summary--active {
+    color: var(--text-accent);
+    text-decoration: none;
+  }
+
+  .chx-drawer__details[open] > .chx-drawer__summary .chx-nav__chevron {
+    transform: rotate(180deg);
+  }
+
+  .chx-drawer__sublist {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    padding-block-end: var(--space-4);
+  }
+
+  .chx-drawer__sublist--nested {
+    padding-block-end: 0;
+    padding-inline-start: var(--space-3);
+    margin-block-start: var(--space-2);
+    border-inline-start: var(--border-w) solid var(--action-secondary-border);
+  }
+
+  .chx-drawer__sublink {
+    display: block;
+    padding-block: 6px;
+    font-family: var(--font-ui);
+    font-size: var(--font-size-body);
+    font-weight: 500;
+    line-height: 1.5;
+    letter-spacing: -0.08px;
+    color: var(--text-heading);
+    text-decoration: none;
+  }
+
+  .chx-drawer__sublink:hover,
+  .chx-drawer__sublink--active {
+    color: var(--text-accent);
+    text-decoration: none;
+  }
+
+  .chx-drawer__foot {
+    margin-block-start: var(--space-8);
+  }
+
+  .chx-drawer__login {
+    width: 100%;
+  }
+
+  /* ================================================================
+     Breakpoints
+     ================================================================ */
+
+  /* Tablet and below: nav + login collapse into the offcanvas drawer */
+  @media screen and (max-width: 1024px) {
+    .chx-header .chx-nav,
+    .chx-header .chx-header__login {
+      display: none;
+    }
+
+    .chx-header .chx-header__toggle {
+      display: flex;
+    }
+  }
+
+  @media screen and (min-width: 1025px) {
+    .chx-header .chx-drawer {
+      display: none;
+    }
+  }
+
+  @media screen and (max-width: 767px) {
+    .chx-wordmark {
+      font-size: 20px;
+      letter-spacing: -0.9px;
+    }
+
+    .chx-header__logo {
+      height: 20px;
+    }
+
+    .chx-header__inner {
+      gap: var(--space-3);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .chx-drawer__panel,
+    .chx-drawer__backdrop,
+    .chx-nav__panel,
+    .chx-nav__chevron {
+      transition: none;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Header",
+  "tag": "header",
+  "class": "chopinrx-header-section",
+  "enabled_on": {
+    "groups": ["header"]
+  },
+  "settings": [
+    {
+      "type": "header",
+      "content": "Brand"
+    },
+    {
+      "type": "text",
+      "id": "wordmark",
+      "label": "Wordmark",
+      "info": "Used when no logo image is set in theme settings.",
+      "default": "ChopinRX"
+    },
+    {
+      "type": "header",
+      "content": "Menu"
+    },
+    {
+      "type": "link_list",
+      "id": "menu",
+      "label": "Menu",
+      "default": "main-menu"
+    },
+    {
+      "type": "header",
+      "content": "Actions"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_login",
+      "label": "Show login button",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "login_label",
+      "label": "Login label",
+      "default": "Login"
+    },
+    {
+      "type": "url",
+      "id": "login_url",
+      "label": "Login link",
+      "info": "Defaults to the customer account login page."
+    },
+    {
+      "type": "text",
+      "id": "cta_label",
+      "label": "Call to action label",
+      "default": "Find your program"
+    },
+    {
+      "type": "url",
+      "id": "cta_url",
+      "label": "Call to action link"
+    },
+    {
+      "type": "header",
+      "content": "Typography"
+    },
+    {
+      "type": "font_picker",
+      "id": "brand_font",
+      "label": "Wordmark font",
+      "default": "figtree_n7"
+    },
+    {
+      "type": "font_picker",
+      "id": "ui_font",
+      "label": "Navigation font",
+      "default": "figtree_n5"
+    },
+    {
+      "type": "header",
+      "content": "Behavior"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_sticky_header",
+      "label": "Sticky header",
+      "default": true
+    }
+  ],
+  "presets": [
+    {
+      "name": "Header"
+    }
+  ]
+}
+{% endschema %}

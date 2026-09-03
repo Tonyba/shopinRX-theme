@@ -1,0 +1,117 @@
+{% render 'chopinrx-tokens' %}
+
+{% liquid
+  assign background_color = section.settings.background_color | default: '#14181d'
+  assign text_color = section.settings.text_color | default: '#fcfaf9'
+%}
+
+<div
+  class="chx-trust-bar"
+  style="--chx-trust-bar-background: {{ background_color }}; --chx-trust-bar-color: {{ text_color }};"
+>
+  <div class="chx-trust-bar__inner chx-container">
+    {%- if section.settings.show_icon -%}
+      <span class="chx-trust-bar__icon" aria-hidden="true">
+        {{- 'icon-shield-check.svg' | inline_asset_content | replace: '#FAF8F5', 'currentColor' -}}
+      </span>
+    {%- endif -%}
+    <p class="chx-trust-bar__text">{{ section.settings.text }}</p>
+  </div>
+</div>
+
+{% stylesheet %}
+  .chx-trust-bar {
+    background-color: var(--chx-trust-bar-background);
+    color: var(--chx-trust-bar-color);
+  }
+
+  .chx-trust-bar__inner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-2);
+    padding-block: var(--space-2);
+  }
+
+  .chx-trust-bar__icon {
+    display: block;
+    flex-shrink: 0;
+    width: 24px;
+    height: 24px;
+    color: var(--icon-on-dark);
+  }
+
+  .chx-trust-bar__icon svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  .chx-trust-bar__text {
+    margin: 0;
+    font-family: var(--font-ui);
+    font-size: var(--font-size-body-small);
+    font-weight: 500;
+    line-height: 1.43;
+    letter-spacing: -0.07px;
+    text-align: center;
+    text-wrap: balance;
+  }
+
+  @media screen and (max-width: 767px) {
+    .chx-trust-bar__icon {
+      width: 20px;
+      height: 20px;
+    }
+
+    .chx-trust-bar__text {
+      font-size: 13px;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Trust bar",
+  "tag": "aside",
+  "class": "chopinrx-trust-bar-section",
+  "enabled_on": {
+    "groups": ["header"]
+  },
+  "settings": [
+    {
+      "type": "text",
+      "id": "text",
+      "label": "Text",
+      "default": "Board-certified providers · Licensed U.S. compounding pharmacies"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_icon",
+      "label": "Show shield icon",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background",
+      "default": "#14181d"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text",
+      "default": "#fcfaf9"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Trust bar"
+    }
+  ]
+}
+{% endschema %}

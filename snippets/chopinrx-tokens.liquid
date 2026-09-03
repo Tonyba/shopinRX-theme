@@ -1,0 +1,158 @@
+{% doc %}
+  Global ChopinRX design tokens (colors, spacing, radii, type scale, layout)
+  and the shared button / container primitives built from them.
+
+  Values map 1:1 to the Figma variables of the ChopinRX design system.
+  Render once from any section that consumes them.
+
+  @example
+  {% render 'chopinrx-tokens' %}
+{% enddoc %}
+
+{% stylesheet %}
+  :root {
+    /* ── Surfaces ─────────────────────────────── */
+    --surface-page: #ffffff;
+    --surface-dark: #14181d;
+    --surface-muted: #faf8f5;
+
+    /* ── Text ─────────────────────────────────── */
+    --text-heading: #14181d;
+    --text-on-dark: #fcfaf9;
+    --text-accent: #ff6e42;
+    --icon-on-dark: #faf8f5;
+
+    /* ── Actions ──────────────────────────────── */
+    --action-accent-bg: #ff6e42;
+    --action-accent-bg-hover: #e85b2d;
+    --action-primary-fg: #fcfaf9;
+    --action-secondary-fg: #14181d;
+    --action-secondary-border: #c9c3b8;
+
+    /* ── Spacing ──────────────────────────────── */
+    --space-2: 8px;
+    --space-3: 12px;
+    --space-4: 16px;
+    --space-5: 20px;
+    --space-6: 24px;
+    --space-8: 32px;
+
+    /* ── Radii, borders, controls ─────────────── */
+    --radius-pill: 999px;
+    --radius-panel: 12px;
+    --border-w: 1px;
+    --control-h-lg: 60px;
+
+    /* ── Type ─────────────────────────────────── */
+    --font-display: 'Figtree', var(--font-heading--family, sans-serif);
+    --font-ui: 'Figtree', var(--font-body--family, sans-serif);
+    --font-size-body-small: 14px;
+    --font-size-body: 16px;
+    --font-size-body-large: 18px;
+    --font-size-button-large: 18px;
+    --font-size-brand-name: 26px;
+
+    /* ── Layout ───────────────────────────────── */
+    --screen-content-max-width: 1452px;
+    --screen-section-padding-x: 24px;
+  }
+
+  @media screen and (max-width: 767px) {
+    :root {
+      --screen-section-padding-x: 16px;
+    }
+  }
+
+  /* Centered content well. At 1920px the well is 1452px wide, leaving the
+     234px gutters specified in the design. */
+  .chx-container {
+    width: 100%;
+    max-width: calc(var(--screen-content-max-width) + (var(--screen-section-padding-x) * 2));
+    margin-inline: auto;
+    padding-inline: var(--screen-section-padding-x);
+  }
+
+  /* ── Button primitive ───────────────────────── */
+  .chx-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-2);
+    height: var(--control-h-lg);
+    padding-inline: var(--space-8);
+    border: var(--border-w) solid transparent;
+    border-radius: var(--radius-pill);
+    background: none;
+    font-family: var(--font-ui);
+    font-size: var(--font-size-button-large);
+    font-weight: 600;
+    line-height: 1.33;
+    letter-spacing: -0.09px;
+    text-align: center;
+    text-decoration: none;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease, transform 0.1s ease;
+  }
+
+  .chx-btn:hover {
+    text-decoration: none;
+  }
+
+  .chx-btn:active {
+    transform: scale(0.98);
+  }
+
+  .chx-btn[disabled],
+  .chx-btn[aria-disabled='true'] {
+    opacity: 0.4;
+    pointer-events: none;
+  }
+
+  .chx-btn--secondary {
+    border-color: var(--action-secondary-border);
+    color: var(--action-secondary-fg);
+  }
+
+  .chx-btn--secondary:hover {
+    border-color: var(--action-secondary-fg);
+    color: var(--action-secondary-fg);
+  }
+
+  .chx-btn--accent {
+    background-color: var(--action-accent-bg);
+    color: var(--action-primary-fg);
+  }
+
+  .chx-btn--accent:hover {
+    background-color: var(--action-accent-bg-hover);
+    color: var(--action-primary-fg);
+  }
+
+  .chx-btn__icon {
+    display: block;
+    flex-shrink: 0;
+    width: 24px;
+    height: 24px;
+  }
+
+  .chx-btn__icon svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  @media screen and (max-width: 767px) {
+    .chx-btn {
+      height: 44px;
+      padding-inline: var(--space-4);
+      font-size: var(--font-size-body-small);
+      gap: 6px;
+    }
+
+    .chx-btn__icon {
+      width: 20px;
+      height: 20px;
+    }
+  }
+{% endstylesheet %}
