@@ -1,8 +1,19 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "hero": {
-      "type": "chopinrx-about-hero",
+      "type": "chopinrx-page-banner",
       "settings": {
+        "style": "dark",
+        "alignment": "center",
         "image": "shopify://shop_images/chx-about-hero.jpg",
         "breadcrumb_home": "Home",
         "breadcrumb_current": "About us",
