@@ -207,6 +207,22 @@
       gap: var(--space-10);
     }
 
+    /* The trail stays on one line: an article title would otherwise wrap it
+       over several. */
+    .chx-articlehero .chx-breadcrumbs__list {
+      flex-wrap: nowrap;
+    }
+
+    .chx-articlehero .chx-breadcrumbs__item:last-child {
+      min-width: 0;
+    }
+
+    .chx-articlehero .chx-breadcrumbs__current {
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+
     /* The share row drops under the tag line. */
     .chx-articlehero__meta {
       flex-direction: column;
