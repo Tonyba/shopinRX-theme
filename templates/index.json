@@ -10,532 +10,202 @@
 {
   "sections": {
     "hero": {
-      "type": "chopinrx-hero",
-      "blocks": {
-        "feature_1": {
-          "type": "feature",
-          "settings": {
-            "text": "Lose weight with doctor-trusted treatment plans"
-          }
-        },
-        "feature_2": {
-          "type": "feature",
-          "settings": {
-            "text": "Plans tailored to your goals"
-          }
-        },
-        "feature_3": {
-          "type": "feature",
-          "settings": {
-            "text": "Access to 24/7 messaging, 100% online"
-          }
-        }
-      },
-      "block_order": [
-        "feature_1",
-        "feature_2",
-        "feature_3"
-      ],
+      "type": "chopinrx-about-hero",
       "settings": {
-        "image": "shopify://shop_images/chx-hero.jpg",
-        "eyebrow": "Provider-Guided Telehealth",
-        "title_line_1": "Personalized care.",
-        "title_line_2": "Delivered to you.",
-        "body": "<p>Connect with licensed U.S. clinicians for personalized treatment options through a simple online experience, with treatment delivered directly to your door.</p>",
-        "primary_label": "Explore Programs",
-        "secondary_label": "View our treatments",
+        "breadcrumb_home": "Home",
+        "breadcrumb_current": "About us",
+        "heading": "A platform built around the patient, not the system.",
+        "body": "<p>ChopinRX exists to make provider-guided telehealth care more accessible, more transparent, and more personal — without the complexity of traditional healthcare.</p>",
         "show_trustpilot": true,
         "trustpilot_rating": "Excellent",
-        "trustpilot_count": "436 reviews on"
+        "trustpilot_score": "4.6",
+        "trustpilot_count": "436 reviews",
+        "trustpilot_mobile_count": "Check out our 436 reviews"
       }
     },
-    "trust_bar": {
-      "type": "chopinrx-trust-bar",
-      "blocks": {
-        "feature_1": {
-          "type": "feature",
-          "settings": {
-            "title": "UK licensed",
-            "text": "Medications and clinicians."
-          }
-        },
-        "feature_2": {
-          "type": "feature",
-          "settings": {
-            "title": "Ongoing clinical support",
-            "text": "Trusted medical advice from expert clinicians."
-          }
-        },
-        "feature_3": {
-          "type": "feature",
-          "settings": {
-            "title": "HIPAA Compliant",
-            "text": "Your data is always protected"
-          }
-        },
-        "feature_4": {
-          "type": "feature",
-          "settings": {
-            "title": "Discreet Delivery",
-            "text": "No names, no logos, no delivery fee."
-          }
-        }
-      },
-      "block_order": [
-        "feature_1",
-        "feature_2",
-        "feature_3",
-        "feature_4"
-      ],
-      "settings": {}
-    },
-    "programs": {
-      "type": "chopinrx-programs",
+    "intro": {
+      "type": "chopinrx-about-intro",
       "settings": {
-        "eyebrow": "Flagship Programs",
-        "heading": "Start With A Flagship Program",
-        "collection": "program",
-        "products_count": 3,
-        "price_prefix": "From",
-        "price_unit": "/mo",
-        "card_cta_label": "Start intake",
-        "badge_tag": "flagship",
-        "badge_label": "Flagship",
-        "cta_label": "See All Programs",
-        "cta_url": ""
+        "eyebrow": "About Us",
+        "heading": "Your health is <em>personal</em>. Now, so is your care.",
+        "body": "<p>Most people who want to explore treatments for weight management, hormone health, or longevity run into the same problem: the traditional healthcare system is not designed for this kind of proactive, personalized care.</p><p>Long appointment waitlists, dismissive consultations, insurance gatekeeping, and fragmented care make it unnecessarily difficult to access treatments that are safe, available, and appropriate for many adults.</p><p>ChopinRX was built to close that gap — connecting consumers with independent licensed U.S. providers through a streamlined online process that puts the individual first.</p>"
       }
     },
-    "program_list": {
-      "type": "chopinrx-program-list",
+    "story": {
+      "type": "chopinrx-about-split",
       "settings": {
-        "eyebrow": "All Programs",
-        "heading": "Find The Program That Fits",
-        "collections": [
-          "metabolic-health",
-          "hormone-health",
-          "sex-health",
-          "longevity",
-          "energy-recovery",
-          "aesthetics"
-        ],
-        "products_count": 8,
-        "price_prefix": "From",
-        "price_unit": "/mo",
-        "card_cta_label": "Start intake",
-        "badge_tag": "flagship",
-        "badge_label": "Flagship",
-        "cta_label": "See All Programs",
-        "cta_url": ""
-      }
-    },
-    "personalized_care": {
-      "type": "chopinrx-split-features",
-      "blocks": {
-        "feature_1": {
-          "type": "feature",
-          "settings": {
-            "title": "100% online care from licensed clinicians",
-            "text": "Your goals and individual needs help shape the care experience."
-          }
-        },
-        "feature_2": {
-          "type": "feature",
-          "settings": {
-            "title": "Access to 24/7 messaging with your Care Team",
-            "text": "Independent licensed providers review your information and make prescribing decisions."
-          }
-        },
-        "feature_3": {
-          "type": "feature",
-          "settings": {
-            "title": "Unlimited check-ins to adjust your plan as needed",
-            "text": "Independent licensed providers review your information and make prescribing decisions."
-          }
-        },
-        "feature_4": {
-          "type": "feature",
-          "settings": {
-            "title": "Unlimited check-ins to adjust your plan as needed",
-            "text": "Independent licensed providers review your information and make prescribing decisions."
-          }
-        }
-      },
-      "block_order": [
-        "feature_1",
-        "feature_2",
-        "feature_3",
-        "feature_4"
-      ],
-      "settings": {
-        "image": "shopify://shop_images/chx-personalized-care.jpg",
         "media_position": "left",
-        "eyebrow": "Personalized Care",
-        "heading": "With you <em>every step</em> of the way",
-        "body": "<p>Your goals, your health history and your needs are different from everyone else's. ChopinRX connects you with independent, licensed providers who evaluate your information and determine whether a treatment is right for you.</p>",
-        "cta_label": "Explore treatments"
+        "background": "muted",
+        "eyebrow": "Our Story",
+        "heading": "Online <em>healthcare</em> made safe and easy",
+        "body": "<p>ChopinRX is an online platform connecting people with independent, licensed U.S. providers. We support confidential health consultations and prescription treatments across the country.</p><p>We started because online healthcare was a landscape of misleading information and illegitimate products, and we knew that something had to change.</p><p>What people needed was a reliable platform for essential medication, thorough consultations and expert medical advice. ChopinRX exists to give access to all those things.</p><p>When you order through ChopinRX, you are cared for by qualified providers and pharmacists. No deceptive products, no wrong prescriptions, no unreasonable prices.</p>"
       }
     },
-    "gender_split": {
-      "type": "chopinrx-gender-split",
-      "blocks": {
-        "panel_1": {
-          "type": "panel",
-          "settings": {
-            "image": "shopify://shop_images/chx-gender-men.jpg",
-            "overlay_color": "#124643b3",
-            "eyebrow": "Find your path",
-            "heading": "Built for men",
-            "text": "TRT foundation, drive, recovery and performance protocols reviewed by independent licensed providers.",
-            "cta_label": "Explore men's programs",
-            "button_color": "#22eee4",
-            "button_text_color": "#14181d"
-          }
-        },
-        "panel_2": {
-          "type": "panel",
-          "settings": {
-            "image": "shopify://shop_images/chx-gender-women-v2.jpg",
-            "overlay_color": "#5b2542b3",
-            "eyebrow": "Find your path",
-            "heading": "Built for women",
-            "text": "Menopause, HRT, balance and aesthetics protocols reviewed by independent licensed providers.",
-            "cta_label": "Explore women's programs",
-            "button_color": "#f9299b",
-            "button_text_color": "#fcfaf9"
-          }
-        }
-      },
-      "block_order": [
-        "panel_1",
-        "panel_2"
-      ],
-      "settings": {}
-    },
-    "treatments": {
-      "type": "chopinrx-treatments-carousel",
+    "mission": {
+      "type": "chopinrx-about-mission",
       "settings": {
-        "eyebrow": "Explore solutions",
-        "heading": "Explore Our Treatments",
-        "collections": [
-          "metabolic-health",
-          "hormone-health",
-          "sex-health",
-          "longevity",
-          "energy-recovery",
-          "aesthetics"
-        ],
-        "products_count": 8,
-        "price_prefix": "From",
-        "price_unit": "/mo",
-        "placeholder_label": "Vial · placeholder",
-        "card_cta_label": "Explore",
-        "cta_label": "See All Treatments",
-        "cta_url": ""
+        "eyebrow": "Our Mission Statement",
+        "heading": "Our <em>Mission</em> Statement",
+        "body": "<p>Managing prescriptions isn’t always easy, but at ChopinRX, we are constantly working to make it as uncomplicated and trouble-free as possible. We aim to build a world where everyone has easy access to high-quality healthcare services, whenever and wherever they need it. Patient-centred healthcare is at the heart of everything we do at ChopinRX. By bringing pharmacy care and online clinic consultations to a secure online platform, we strive to lead the way in providing expert, on-demand access to healthcare, available at the patient’s convenience.</p>"
       }
     },
-    "reviews": {
-      "type": "chopinrx-reviews",
+    "approach": {
+      "type": "chopinrx-about-approach",
       "blocks": {
-        "review_1": {
-          "type": "review",
+        "card_1": {
+          "type": "card",
           "settings": {
-            "name": "James Whitfield",
-            "rating": 5,
-            "quote": "“I really love how simple and easy everything has been so far. I have noticed an enhanced focused on being more mindful of what I am eating, making sure to hit my protein goals!”",
-            "row": "1"
+            "title": "Access without friction",
+            "text": "Getting connected to a licensed provider should not require an insurance card, a waiting room, or a referral. ChopinRX removes those barriers."
           }
         },
-        "review_2": {
-          "type": "review",
-          "settings": {
-            "name": "Amelia Hart",
-            "rating": 5,
-            "quote": "“The intake took ten minutes and I had a provider response the same day. Everything has been clear and easy to follow.”",
-            "row": "1"
-          }
-        },
-        "review_3": {
-          "type": "review",
-          "settings": {
-            "name": "Daniel Osei",
-            "rating": 5,
-            "quote": "“Discreet packaging, on time every month, and the care team answers fast when I have a question.”",
-            "row": "1"
-          }
-        },
-        "review_4": {
-          "type": "review",
-          "settings": {
-            "name": "Priya Raman",
-            "rating": 5,
-            "quote": "“I appreciate that the plan was adjusted after my check-in rather than being one size fits all.”",
-            "row": "2"
-          }
-        },
-        "review_5": {
-          "type": "review",
-          "settings": {
-            "name": "Marcus Lee",
-            "rating": 5,
-            "quote": "“Straightforward pricing and no surprises. The provider explained the options before anything was prescribed.”",
-            "row": "2"
-          }
-        },
-        "review_6": {
-          "type": "review",
-          "settings": {
-            "name": "Sofia Alvarez",
-            "rating": 5,
-            "quote": "“Being able to message the care team at any hour has made this far less stressful than I expected.”",
-            "row": "2"
-          }
-        }
-      },
-      "block_order": [
-        "review_1",
-        "review_2",
-        "review_3",
-        "review_4",
-        "review_5",
-        "review_6"
-      ],
-      "settings": {
-        "eyebrow": "4.8/5 on Trust Pilot",
-        "heading": "More than <em>100,000</em> patients trust our treatment plans",
-        "show_trustpilot": true,
-        "trustpilot_rating": "Excellent",
-        "trustpilot_count": "436 reviews on"
-      }
-    },
-    "proof": {
-      "type": "chopinrx-proof",
-      "blocks": {
-        "media_1": {
-          "type": "media",
-          "settings": {
-            "image": "shopify://shop_images/chx-proof.jpg"
-          }
-        },
-        "stat_2": {
-          "type": "stat",
-          "settings": {
-            "style": "accent",
-            "figure": "10K+",
-            "title": "Patients Served",
-            "text": "People supported through our care platform."
-          }
-        },
-        "stat_3": {
-          "type": "stat",
-          "settings": {
-            "style": "dark",
-            "figure": "+92%",
-            "title": "Patient Satisfaction",
-            "text": "Based on patient feedback."
-          }
-        },
-        "stat_4": {
-          "type": "stat",
-          "settings": {
-            "style": "well",
-            "figure": "5 min",
-            "title": "Average Assessment",
-            "text": "Designed to keep your experience simple."
-          }
-        },
-        "stat_5": {
-          "type": "stat",
-          "settings": {
-            "style": "paper",
-            "figure": "4.9/5",
-            "title": "Provider Rating",
-            "text": "Based on patient reviews"
-          }
-        }
-      },
-      "block_order": [
-        "media_1",
-        "stat_2",
-        "stat_3",
-        "stat_4",
-        "stat_5"
-      ],
-      "settings": {
-        "eyebrow": "Care designed around real people.",
-        "heading": "Changing lives through <em>proven outcomes</em>"
-      }
-    },
-    "lab_testing": {
-      "type": "chopinrx-lab-testing",
-      "blocks": {
-        "test_1": {
-          "type": "test",
-          "settings": {
-            "title": "Potency tested",
-            "text": "A test to check the medication contains the correct concentration of active ingredient."
-          }
-        },
-        "test_2": {
-          "type": "test",
+        "card_2": {
+          "type": "card",
           "settings": {
             "title": "Sterility Tested",
             "text": "A test to check the medication is free of foreign organisms and pathogens."
           }
         },
-        "test_3": {
-          "type": "test",
+        "card_3": {
+          "type": "card",
           "settings": {
             "title": "pH Level Tested",
             "text": "A test to check for the ideal 'acid to base' ratio to minimize irritation caused by the injection itself."
           }
         },
-        "test_4": {
-          "type": "test",
+        "card_4": {
+          "type": "card",
           "settings": {
             "title": "Endotoxicity Tested",
             "text": "A test to check the medication adheres to endotoxin safety recommendations."
           }
         }
       },
-      "block_order": [
-        "test_1",
-        "test_2",
-        "test_3",
-        "test_4"
-      ],
+      "block_order": ["card_1", "card_2", "card_3", "card_4"],
       "settings": {
-        "image": "shopify://shop_images/chx-lab-testing.jpg",
+        "eyebrow": "Our Approach",
+        "heading": "A new <em>approach</em> to everyday care.",
+        "body": "<p>ChopinRX is a networking platform. It connects consumers with independent, licensed U.S. medical providers who make all prescribing decisions independently. ChopinRX does not employ these providers, does not direct their clinical decisions, and is not itself a medical provider.</p><p>Fulfillment is handled by licensed U.S.-based compounding pharmacies that follow USP testing and quality standards.</p>"
+      }
+    },
+    "stats": {
+      "type": "chopinrx-about-stats",
+      "blocks": {
+        "stat_1": {
+          "type": "stat",
+          "settings": { "figure": "1M+", "label": "Patients served" }
+        },
+        "stat_2": {
+          "type": "stat",
+          "settings": { "figure": "37%", "label": "Prescriptions filled" }
+        },
+        "stat_3": {
+          "type": "stat",
+          "settings": { "figure": "120", "label": "Employees" }
+        }
+      },
+      "block_order": ["stat_1", "stat_2", "stat_3"],
+      "settings": {
+        "eyebrow": "Care designed around real people.",
+        "heading": "Where we stand",
+        "body": "<p>Since launching, we’ve grown rapidly: expanding treatments, developing an AI-powered health coach, and building a team dedicated to putting patients first.</p>"
+      }
+    },
+    "care": {
+      "type": "chopinrx-about-split",
+      "blocks": {
+        "feature_1": {
+          "type": "feature",
+          "settings": { "text": "Been reviewed against your individual health profile" }
+        },
+        "feature_2": {
+          "type": "feature",
+          "settings": { "text": "Been cross-checked against current clinical standards" }
+        },
+        "feature_3": {
+          "type": "feature",
+          "settings": { "text": "Been approved by a qualified clinician, not an algorithm" }
+        }
+      },
+      "block_order": ["feature_1", "feature_2", "feature_3"],
+      "settings": {
         "media_position": "right",
-        "eyebrow": "Quality & Testing",
-        "heading": "Always lab <em>tested</em> for quality & consistency"
+        "background": "page",
+        "heading": "What patient <em>care</em> means to us",
+        "body": "<p>We know we've made a tangible difference to people's lives. It's what drives us to keep raising the bar. Our patients have discovered undiagnosed conditions with simple blood tests, regained mental clarity with targeted hormone treatment, and reduced their risk of type 2 diabetes through weight loss.</p><p>Every treatment pathway follows recognised clinical guidelines. Our multidisciplinary team — bringing together doctors, pharmacists, and specialist clinicians — reviews every protocol to ensure your care meets the highest clinical standards.</p><p>When you receive a prescription through ChopinRX, you can be confident it has:</p>"
       }
     },
-    "how_it_works": {
-      "type": "chopinrx-how-it-works",
+    "trust": {
+      "type": "chopinrx-about-split",
+      "settings": {
+        "media_position": "left",
+        "background": "band",
+        "heading": "<em>Trust</em> matters",
+        "body": "<p>When it comes to health, trust is non-negotiable. That's why every part of ChopinRX is regulated, inspected, and verifiable.</p><p><strong>We are registered with:</strong></p><ul><li><strong>Legitimate pharmacy programs</strong> — our partner pharmacies are licensed in the states they ship to and are inspected against national standards for safety and quality.</li><li><strong>HIPAA</strong> — your health information is handled under federal privacy and security rules.</li></ul><p>Regulation is central to how we work, not a box to tick.</p><p><strong>Our practitioners are individually registered:</strong></p><ul><li>Prescribing clinicians — licensed in the state where they practise</li><li>Dispensing pharmacists — licensed with their state board of pharmacy</li></ul><p>You can verify any of our practitioners directly on their professional registers. We think that's exactly how it should be.</p>"
+      }
+    },
+    "team": {
+      "type": "chopinrx-about-team",
       "blocks": {
-        "step_1": {
-          "type": "step",
-          "settings": {
-            "title": "Choose a treatment or stack",
-            "text": "Pick a flagship program or a single treatment from the menu."
-          }
+        "feature_1": {
+          "type": "feature",
+          "settings": { "text": "Overseen by licensed MDs and pharmacists" }
         },
-        "step_2": {
-          "type": "step",
-          "settings": {
-            "title": "Complete the medical intake",
-            "text": "A secure online health questionnaire, about 10 minutes."
-          }
+        "feature_2": {
+          "type": "feature",
+          "settings": { "text": "Evidence-based protocols, not guesswork" }
         },
-        "step_3": {
-          "type": "step",
-          "settings": {
-            "title": "Provider reviews & prescribes",
-            "text": "A licensed provider reviews your history and prescribes only if appropriate."
-          }
+        "feature_3": {
+          "type": "feature",
+          "settings": { "text": "Licensed and fully regulated" }
         },
-        "step_4": {
-          "type": "step",
-          "settings": {
-            "title": "Pharmacy ships to your door",
-            "text": "A licensed U.S. pharmacy fills and ships discreetly, on a schedule."
-          }
+        "member_1": {
+          "type": "member",
+          "settings": { "name": "Dr Patrick Carroll", "role": "Chief Medical Officer" }
+        },
+        "member_2": {
+          "type": "member",
+          "settings": { "name": "Dr Amara Lewis", "role": "Medical Director" }
+        },
+        "member_3": {
+          "type": "member",
+          "settings": { "name": "Dr Sofia Marin", "role": "Clinical Lead, Hormone Health" }
+        },
+        "member_4": {
+          "type": "member",
+          "settings": { "name": "Daniel Okafor", "role": "Head of Pharmacy" }
+        },
+        "member_5": {
+          "type": "member",
+          "settings": { "name": "Dr Elena Ruiz", "role": "Clinical Lead, Metabolic Health" }
         }
       },
       "block_order": [
-        "step_1",
-        "step_2",
-        "step_3",
-        "step_4"
+        "feature_1",
+        "feature_2",
+        "feature_3",
+        "member_1",
+        "member_2",
+        "member_3",
+        "member_4",
+        "member_5"
       ],
       "settings": {
-        "eyebrow": "How it works",
-        "heading": "Four steps, about ten minutes",
-        "cta_label": "Get Started"
-      }
-    },
-    "faq": {
-      "type": "chopinrx-faq",
-      "blocks": {
-        "question_1": {
-          "type": "question",
-          "settings": {
-            "question": "How does ChopinRX work?",
-            "answer": "<p>You pick a program or a single treatment, complete the intake in about ten minutes, and an independent licensed provider reviews it and prescribes if appropriate. A licensed U.S. compounding pharmacy ships to your door.</p>",
-            "open": true
-          }
-        },
-        "question_2": {
-          "type": "question",
-          "settings": {
-            "question": "Who decides what I am prescribed?",
-            "answer": "<p>An independent licensed provider reviews your intake and medical history and makes the prescribing decision.</p>",
-            "open": false
-          }
-        },
-        "question_3": {
-          "type": "question",
-          "settings": {
-            "question": "What is the difference between a program and a treatment?",
-            "answer": "<p>A program is a packaged combination reviewed as one plan. A treatment is a single item from the full menu.</p>",
-            "open": false
-          }
-        },
-        "question_4": {
-          "type": "question",
-          "settings": {
-            "question": "Is ChopinRX available in my state?",
-            "answer": "<p>Availability depends on provider licensing in your state. You will see this during intake before anything is prescribed.</p>",
-            "open": false
-          }
-        },
-        "question_5": {
-          "type": "question",
-          "settings": {
-            "question": "Are these medications FDA approved?",
-            "answer": "<p>Compounded medications are not FDA approved. They are prepared by licensed U.S. compounding pharmacies for an individual prescription.</p>",
-            "open": false
-          }
-        }
-      },
-      "block_order": [
-        "question_1",
-        "question_2",
-        "question_3",
-        "question_4",
-        "question_5"
-      ],
-      "settings": {
-        "eyebrow": "Have questions?",
-        "heading": "Frequently asked <em>questions</em>",
-        "cta_label": "Get Started"
-      }
-    },
-    "insights": {
-      "type": "chopinrx-insights",
-      "settings": {
-        "eyebrow": "Our blog",
-        "heading": "Latest insights",
-        "blog": "news",
-        "posts_count": 3,
-        "read_more_label": "Read More",
-        "cta_label": "View all"
+        "eyebrow": "Our Team",
+        "heading": "Built by clinicians, for <em>patients</em>.",
+        "body": "<p>Our medical team brings together decades of clinical expertise across emergency medicine, longevity science, and pharmacy leadership — united by a shared commitment to safe, evidence-based care.</p>"
       }
     }
   },
   "order": [
     "hero",
-    "trust_bar",
-    "programs",
-    "program_list",
-    "personalized_care",
-    "gender_split",
-    "treatments",
-    "reviews",
-    "proof",
-    "lab_testing",
-    "how_it_works",
-    "faq",
-    "insights"
+    "intro",
+    "story",
+    "mission",
+    "approach",
+    "stats",
+    "care",
+    "trust",
+    "team"
   ]
 }
