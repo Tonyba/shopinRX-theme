@@ -361,7 +361,9 @@
 
     .chx-programs__grid {
       order: 2;
-      grid-template-columns: 1fr;
+      /* minmax(0, …) or the card's min-content contribution pushes the single
+         track past the container. */
+      grid-template-columns: minmax(0, 1fr);
       gap: var(--space-5);
       margin-block-start: var(--space-5);
     }
