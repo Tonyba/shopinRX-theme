@@ -119,14 +119,14 @@
   }
 
   .chx-team__header {
+    /* Muted copy through the inherited property, so the shared body primitive
+       follows without an equal-specificity contest. */
+    --chx-body-color: var(--text-muted);
+
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     gap: var(--space-5);
-  }
-
-  .chx-team__text {
-    color: var(--text-muted);
   }
 
   .chx-team__text > :first-child {

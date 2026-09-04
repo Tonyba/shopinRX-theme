@@ -29,8 +29,11 @@
 
 {% stylesheet %}
   .chx-aboutstats {
-    /* The band sits a step lighter than the ink surface, as drawn. */
+    /* The band sits a step lighter than the ink surface, as drawn. Colour goes
+       through the inherited properties so the shared type primitives follow
+       without an equal-specificity contest. */
     --chx-heading-color: var(--text-on-dark);
+    --chx-body-color: var(--text-on-dark-muted);
 
     background-color: #1f252c;
     padding-block: var(--space-16);
@@ -55,10 +58,6 @@
   .chx-aboutstats__heading {
     align-items: center;
     text-align: center;
-  }
-
-  .chx-aboutstats__text {
-    color: var(--text-on-dark-muted);
   }
 
   .chx-aboutstats__text > :first-child {

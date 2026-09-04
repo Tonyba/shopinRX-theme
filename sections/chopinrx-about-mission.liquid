@@ -23,6 +23,10 @@
   }
 
   .chx-mission__copy {
+    /* Muted copy through the inherited property, so the shared body primitive
+       follows without an equal-specificity contest. */
+    --chx-body-color: var(--text-muted);
+
     display: flex;
     flex-direction: column;
     gap: 30px;
@@ -34,7 +38,6 @@
   }
 
   .chx-mission__body {
-    color: var(--text-muted);
     text-align: center;
   }
 
