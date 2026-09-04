@@ -387,21 +387,47 @@
   }
 
   @media screen and (max-width: 767px) {
-    .chx-programlist__header {
+    .chx-programlist {
+      padding-block: var(--space-10);
+    }
+
+    /* The action moves under the cards, so the header's children are lifted
+       into the container and reordered. */
+    .chx-programlist > .chx-container {
+      display: flex;
       flex-direction: column;
-      align-items: flex-start;
-      gap: var(--space-6);
+    }
+
+    .chx-programlist__header {
+      display: contents;
+    }
+
+    .chx-programlist__heading {
+      order: 1;
+      align-items: center;
+      text-align: center;
+    }
+
+    .chx-programlist__toolbar {
+      order: 2;
+      border-block-start: var(--border-w) solid var(--border-hairline);
+      padding-block-start: var(--space-5);
+    }
+
+    .chx-programlist__panel {
+      order: 3;
     }
 
     .chx-programlist__cta {
-      width: 100%;
+      order: 4;
+      align-self: center;
+      margin-block-start: var(--space-10);
     }
 
     .chx-chips {
       flex-wrap: nowrap;
       overflow-x: auto;
       scrollbar-width: none;
-      padding-block-end: var(--space-2);
     }
 
     .chx-chips::-webkit-scrollbar {
@@ -409,21 +435,54 @@
     }
 
     .chx-chip {
+      height: 46px;
+      padding-block: 0;
       font-size: var(--font-size-body);
     }
 
+    .chx-programlist__grid {
+      grid-template-columns: minmax(0, 1fr);
+      row-gap: var(--space-6);
+      margin-block-start: var(--space-10);
+      padding-block-start: 0;
+    }
+
     .chx-programrow {
+      gap: var(--space-4);
       padding: var(--space-5);
+    }
+
+    .chx-programrow__content {
+      gap: var(--space-4);
     }
 
     .chx-programrow__top {
       flex-direction: column;
       align-items: flex-start;
-      gap: var(--space-3);
+      gap: var(--space-4);
     }
 
     .chx-programrow__price {
       align-items: flex-start;
+    }
+
+    /* Compare price sits above the current one in the mobile card. */
+    .chx-programrow__price-compare {
+      order: -1;
+      font-weight: 500;
+      opacity: 0.5;
+    }
+
+    /* The compact mobile card carries no description. */
+    .chx-programrow__text {
+      display: none;
+    }
+
+    .chx-programrow__cta {
+      height: var(--control-h);
+      padding-inline: var(--space-6);
+      font-size: var(--font-size-button);
+      line-height: 1.25;
     }
   }
 {% endstylesheet %}
