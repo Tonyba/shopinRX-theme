@@ -1,0 +1,158 @@
+{% doc %}
+  Renders the Trustpilot strip. Desktop sets it on one line — rating word,
+  stars, review count, wordmark. Mobile stacks it: stars, score and rating word
+  on the first line, the wordmark underneath.
+
+  @param {string} [rating] - Rating word, e.g. 'Excellent'.
+  @param {string} [score] - Numeric score, shown on mobile only.
+  @param {string} [count] - Review count line, shown on desktop only.
+  @param {string} [url] - Optional link to the Trustpilot profile.
+  @param {boolean} [ink] - Sets the strip in ink rather than on-dark.
+
+  @example
+  {% render 'chopinrx-trustpilot', rating: 'Excellent', score: '4.6', count: '436 reviews on' %}
+{% enddoc %}
+
+{%- capture chx_trustpilot_inner -%}
+  <span class="chx-trustpilot__rating">
+    <span class="chx-trustpilot__word">{{ rating }}</span>
+    <span class="chx-trustpilot__stars" aria-hidden="true">
+      {{- 'trustpilot-stars-5.svg' | inline_asset_content -}}
+    </span>
+    <span class="chx-trustpilot__score">{{ score }}</span>
+    <span class="chx-trustpilot__count">{{ count }}</span>
+  </span>
+  <span class="chx-trustpilot__brand">
+    <span class="chx-trustpilot__mark" aria-hidden="true">
+      {{- 'trustpilot-logo.svg' | inline_asset_content -}}
+    </span>
+    <span class="chx-trustpilot__word">Trustpilot</span>
+  </span>
+{%- endcapture -%}
+
+{%- if url != blank -%}
+  <a class="chx-trustpilot{% if ink %} chx-trustpilot--ink{% endif %}" href="{{ url }}" rel="noopener">
+    {{- chx_trustpilot_inner -}}
+  </a>
+{%- else -%}
+  <div class="chx-trustpilot{% if ink %} chx-trustpilot--ink{% endif %}">{{ chx_trustpilot_inner }}</div>
+{%- endif -%}
+
+{% stylesheet %}
+  .chx-trustpilot {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    height: 26px;
+    color: var(--text-on-dark);
+    text-decoration: none;
+  }
+
+  .chx-trustpilot:hover {
+    text-decoration: none;
+    color: var(--text-on-dark);
+  }
+
+  .chx-trustpilot--ink,
+  .chx-trustpilot--ink:hover {
+    color: var(--text-heading);
+  }
+
+  .chx-trustpilot__rating {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+  }
+
+  .chx-trustpilot__word,
+  .chx-trustpilot__score,
+  .chx-trustpilot__count {
+    font-family: var(--font-ui);
+    font-size: 17.12px;
+    line-height: 1;
+    white-space: nowrap;
+  }
+
+  .chx-trustpilot__word {
+    font-weight: 700;
+  }
+
+  .chx-trustpilot__score,
+  .chx-trustpilot__count {
+    font-weight: 500;
+  }
+
+  /* The score is a mobile-only figure, the count a desktop-only one. */
+  .chx-trustpilot__score {
+    display: none;
+  }
+
+  .chx-trustpilot__stars {
+    display: block;
+    flex-shrink: 0;
+    width: 106.667px;
+    height: 20px;
+  }
+
+  .chx-trustpilot__brand {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5.707px;
+    height: 26px;
+  }
+
+  .chx-trustpilot__mark {
+    display: block;
+    flex-shrink: 0;
+    width: 19.973px;
+    height: 18.903px;
+  }
+
+  .chx-trustpilot__stars svg,
+  .chx-trustpilot__mark svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  @media screen and (max-width: 767px) {
+    .chx-trustpilot {
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: auto;
+      gap: 0;
+    }
+
+    /* Stars, score and rating word, in that order, on one line. */
+    .chx-trustpilot__rating {
+      gap: 6px;
+    }
+
+    .chx-trustpilot__stars {
+      order: 1;
+      margin-inline-end: 7px;
+    }
+
+    .chx-trustpilot__score {
+      display: block;
+      order: 2;
+    }
+
+    .chx-trustpilot__rating .chx-trustpilot__word {
+      order: 3;
+    }
+
+    .chx-trustpilot__count {
+      display: none;
+    }
+
+    /* The rating line carries Trustpilot's own leading, which is what sets the
+       height of the block. The wordmark keeps its own line. */
+    .chx-trustpilot__rating .chx-trustpilot__word,
+    .chx-trustpilot__score {
+      line-height: 37.093px;
+    }
+  }
+{% endstylesheet %}
