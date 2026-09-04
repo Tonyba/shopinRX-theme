@@ -2,7 +2,7 @@
 
 {% liquid
   assign arrow_icon = 'icon-arrow-right.svg' | inline_asset_content | replace: '#FCFAF9', 'currentColor'
-  assign chevron_icon = 'icon-chevron-down.svg' | inline_asset_content
+  assign chevron_icon = 'icon-chevron-down.svg' | inline_asset_content | replace: '#FF6E42', 'currentColor'
   assign form_id = 'ContactForm-' | append: section.id
   assign reasons = section.settings.reasons | newline_to_br | split: '<br />'
 %}
