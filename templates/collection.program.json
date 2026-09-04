@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "hero": {
@@ -5,6 +14,7 @@
       "settings": {
         "style": "dark",
         "alignment": "center",
+        "image": "shopify://shop_images/Screenshot_27.png",
         "breadcrumb_home": "Home",
         "breadcrumb_current": "{{ closest.collection.title }}",
         "heading": "Complete care, from diagnosis to delivery, 100% online.",
@@ -13,7 +23,8 @@
         "trustpilot_rating": "Excellent",
         "trustpilot_score": "4.6",
         "trustpilot_count": "436 reviews",
-        "trustpilot_mobile_count": "Check out our 436 reviews"
+        "trustpilot_mobile_count": "Check out our 436 reviews",
+        "trustpilot_url": ""
       }
     },
     "programs": {
@@ -21,6 +32,7 @@
       "settings": {
         "eyebrow": "Goal Programs",
         "heading": "Find a program built around your <em>goals</em>.",
+        "source_collection": "",
         "products_count": 24,
         "collections": [
           "metabolic-health",
@@ -141,7 +153,8 @@
         "show_trustpilot": true,
         "trustpilot_rating": "Excellent",
         "trustpilot_score": "4.6",
-        "trustpilot_count": "436 reviews on"
+        "trustpilot_count": "436 reviews on",
+        "trustpilot_url": ""
       }
     },
     "cta": {
@@ -173,12 +186,14 @@
       ],
       "settings": {
         "heading": "Ready to get assessed for Ozempic?",
+        "image": "shopify://shop_images/Media_frame.png",
         "cta_label": "Get Started",
         "cta_url": "",
         "show_trustpilot": true,
         "trustpilot_rating": "Excellent",
         "trustpilot_score": "4.6",
-        "trustpilot_count": "436 reviews on"
+        "trustpilot_count": "436 reviews on",
+        "trustpilot_url": ""
       }
     }
   },
