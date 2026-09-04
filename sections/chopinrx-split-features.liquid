@@ -195,6 +195,14 @@
       aspect-ratio: 359 / 240;
     }
 
+    /* Rich text renders a <p> the theme sizes itself, so the size has to be set
+       on it rather than inherited from the wrapper. */
+    .chx-split__text,
+    .chx-split__text p {
+      font-size: var(--font-size-body);
+      line-height: 1.5;
+    }
+
     .chx-feature-card {
       flex-direction: column;
       align-items: flex-start;
