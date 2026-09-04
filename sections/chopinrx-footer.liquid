@@ -7,6 +7,12 @@
   assign legal_links = section.blocks | where: 'type', 'legal'
   assign socials = section.blocks | where: 'type', 'social'
   assign seals = section.blocks | where: 'type', 'seal'
+  assign seal_count = 0
+  for block in seals
+    if block.settings.image != blank
+      assign seal_count = seal_count | plus: 1
+    endif
+  endfor
 %}
 
 <div class="chx-footer">
@@ -118,7 +124,7 @@
         </ul>
       {%- endif -%}
 
-      {%- if seals.size > 0 -%}
+      {%- if seal_count > 0 -%}
         <ul class="chx-footer__seals" role="list">
           {%- for block in seals -%}
             {%- if block.settings.image != blank -%}
