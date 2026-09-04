@@ -14,6 +14,7 @@
       "settings": {
         "style": "dark",
         "alignment": "center",
+        "image": "shopify://shop_images/Screenshot_27.png",
         "breadcrumb_home": "Home",
         "breadcrumb_current": "{{ closest.collection.title }}",
         "heading": "Complete care, from diagnosis to delivery, 100% online.",
