@@ -106,6 +106,16 @@
           "settings": {
             "label": "Manage Cookies"
           }
+        },
+        "seal_1": {
+          "type": "seal",
+          "settings": {
+          }
+        },
+        "seal_2": {
+          "type": "seal",
+          "settings": {
+          }
         }
       },
       "block_order": [
@@ -122,7 +132,9 @@
         "legal_2",
         "legal_3",
         "legal_4",
-        "legal_5"
+        "legal_5",
+        "seal_1",
+        "seal_2"
       ],
       "settings": {
         "heading": "Ready to take <em>control</em> of your health",

@@ -396,6 +396,9 @@
     white-space: nowrap;
     color: var(--text-on-dark);
     user-select: none;
+    /* line-height 0.73 crops the line box, so the descender of the "p" spills
+       ~0.19em below it. Reserve that space or the copyright line overlaps it. */
+    padding-block-end: 0.19em;
   }
 
   .chx-footer__copyright {
@@ -648,7 +651,9 @@
         { "type": "legal", "settings": { "label": "Terms & Conditions" } },
         { "type": "legal", "settings": { "label": "Terms of Sale" } },
         { "type": "legal", "settings": { "label": "Complaints" } },
-        { "type": "legal", "settings": { "label": "Manage Cookies" } }
+        { "type": "legal", "settings": { "label": "Manage Cookies" } },
+        { "type": "seal" },
+        { "type": "seal" }
       ]
     }
   ]
