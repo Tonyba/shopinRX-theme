@@ -43,13 +43,10 @@
         "title_line_2": "Delivered to you.",
         "body": "<p>Connect with licensed U.S. clinicians for personalized treatment options through a simple online experience, with treatment delivered directly to your door.</p>",
         "primary_label": "Explore Programs",
-        "primary_url": "",
         "secondary_label": "View our treatments",
-        "secondary_url": "",
         "show_trustpilot": true,
         "trustpilot_rating": "Excellent",
-        "trustpilot_count": "436 reviews on",
-        "trustpilot_url": ""
+        "trustpilot_count": "436 reviews on"
       }
     },
     "trust_bar": {
@@ -175,8 +172,7 @@
         "eyebrow": "Personalized Care",
         "heading": "With you <em>every step</em> of the way",
         "body": "<p>Your goals, your health history and your needs are different from everyone else's. ChopinRX connects you with independent, licensed providers who evaluate your information and determine whether a treatment is right for you.</p>",
-        "cta_label": "Explore treatments",
-        "cta_url": ""
+        "cta_label": "Explore treatments"
       }
     },
     "gender_split": {
@@ -191,7 +187,6 @@
             "heading": "Built for men",
             "text": "TRT foundation, drive, recovery and performance protocols reviewed by independent licensed providers.",
             "cta_label": "Explore men's programs",
-            "cta_url": "",
             "button_color": "#22eee4",
             "button_text_color": "#14181d"
           }
@@ -205,7 +200,6 @@
             "heading": "Built for women",
             "text": "Menopause, HRT, balance and aesthetics protocols reviewed by independent licensed providers.",
             "cta_label": "Explore women's programs",
-            "cta_url": "",
             "button_color": "#f9299b",
             "button_text_color": "#fcfaf9"
           }
@@ -260,24 +254,6 @@
             "row": "1"
           }
         },
-        "review_thgw6b": {
-          "type": "review",
-          "settings": {
-            "name": "Amelia Hart",
-            "rating": 5,
-            "quote": "“The intake took ten minutes and I had a provider response the same day. Everything has been clear and easy to follow.”",
-            "row": "1"
-          }
-        },
-        "review_D7rGP8": {
-          "type": "review",
-          "settings": {
-            "name": "Amelia Hart",
-            "rating": 5,
-            "quote": "“The intake took ten minutes and I had a provider response the same day. Everything has been clear and easy to follow.”",
-            "row": "1"
-          }
-        },
         "review_3": {
           "type": "review",
           "settings": {
@@ -296,43 +272,7 @@
             "row": "2"
           }
         },
-        "review_tqp6JT": {
-          "type": "review",
-          "settings": {
-            "name": "Priya Raman",
-            "rating": 5,
-            "quote": "“I appreciate that the plan was adjusted after my check-in rather than being one size fits all.”",
-            "row": "2"
-          }
-        },
         "review_5": {
-          "type": "review",
-          "settings": {
-            "name": "Marcus Lee",
-            "rating": 5,
-            "quote": "“Straightforward pricing and no surprises. The provider explained the options before anything was prescribed.”",
-            "row": "2"
-          }
-        },
-        "review_Yax9aH": {
-          "type": "review",
-          "settings": {
-            "name": "Marcus Lee",
-            "rating": 5,
-            "quote": "“Straightforward pricing and no surprises. The provider explained the options before anything was prescribed.”",
-            "row": "2"
-          }
-        },
-        "review_dDYEfF": {
-          "type": "review",
-          "settings": {
-            "name": "Marcus Lee",
-            "rating": 5,
-            "quote": "“Straightforward pricing and no surprises. The provider explained the options before anything was prescribed.”",
-            "row": "2"
-          }
-        },
-        "review_4Q6JWq": {
           "type": "review",
           "settings": {
             "name": "Marcus Lee",
@@ -354,15 +294,9 @@
       "block_order": [
         "review_1",
         "review_2",
-        "review_thgw6b",
-        "review_D7rGP8",
         "review_3",
         "review_4",
-        "review_tqp6JT",
         "review_5",
-        "review_Yax9aH",
-        "review_dDYEfF",
-        "review_4Q6JWq",
         "review_6"
       ],
       "settings": {
@@ -370,8 +304,7 @@
         "heading": "More than <em>100,000</em> patients trust our treatment plans",
         "show_trustpilot": true,
         "trustpilot_rating": "Excellent",
-        "trustpilot_count": "436 reviews on",
-        "trustpilot_url": ""
+        "trustpilot_count": "436 reviews on"
       }
     },
     "proof": {
@@ -518,8 +451,7 @@
       "settings": {
         "eyebrow": "How it works",
         "heading": "Four steps, about ten minutes",
-        "cta_label": "Get Started",
-        "cta_url": ""
+        "cta_label": "Get Started"
       }
     },
     "faq": {
@@ -576,8 +508,7 @@
       "settings": {
         "eyebrow": "Have questions?",
         "heading": "Frequently asked <em>questions</em>",
-        "cta_label": "Get Started",
-        "cta_url": ""
+        "cta_label": "Get Started"
       }
     },
     "insights": {
@@ -588,8 +519,7 @@
         "blog": "news",
         "posts_count": 3,
         "read_more_label": "Read More",
-        "cta_label": "View all",
-        "cta_url": ""
+        "cta_label": "View all"
       }
     }
   },
