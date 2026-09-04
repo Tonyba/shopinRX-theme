@@ -169,17 +169,21 @@
   }
 
   @media screen and (max-width: 767px) {
+    .chx-proof {
+      padding-block: var(--space-10);
+    }
+
     .chx-proof__mosaic {
-      grid-template-columns: 1fr;
+      grid-template-columns: minmax(0, 1fr);
     }
 
     .chx-proof__media {
       grid-column: span 1;
+      aspect-ratio: 359 / 242;
     }
 
     .chx-stat {
-      min-height: 0;
-      gap: var(--space-4);
+      min-height: 223px;
     }
   }
 {% endstylesheet %}
