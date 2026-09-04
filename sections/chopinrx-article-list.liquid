@@ -128,8 +128,10 @@
     margin-block-end: var(--space-8);
   }
 
-  /* The rule above the tabs, as drawn. */
-  .chx-articles__tabs {
+  /* The rule above the tabs, as drawn. Scoped under the section root: the chip
+     row primitive sets padding at the same specificity and the bundle order is
+     not fixed. */
+  .chx-articles .chx-articles__tabs {
     padding-block-start: var(--space-8);
     border-block-start: var(--border-w) solid var(--border-hairline);
   }
@@ -234,7 +236,7 @@
       grid-template-columns: minmax(0, 1fr);
     }
 
-    .chx-articles__tabs {
+    .chx-articles .chx-articles__tabs {
       flex-wrap: nowrap;
       overflow-x: auto;
       scrollbar-width: none;
