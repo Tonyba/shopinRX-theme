@@ -402,25 +402,50 @@
   }
 
   @media screen and (max-width: 767px) {
-    .chx-explore__header {
+    .chx-explore {
+      display: flex;
       flex-direction: column;
-      align-items: flex-start;
-      gap: var(--space-6);
+      padding-block: var(--space-10);
+    }
+
+    /* The rails are siblings of the container, so both wrappers dissolve to let
+       the action be ordered after them. */
+    .chx-explore > .chx-container,
+    .chx-explore__header {
+      display: contents;
+    }
+
+    .chx-explore__heading {
+      order: 1;
+      align-items: center;
+      padding-inline: var(--section-px);
+      text-align: center;
+    }
+
+    .chx-explore__toolbar {
+      order: 2;
+      padding-inline: var(--section-px);
+    }
+
+    .chx-explore__rail {
+      order: 3;
     }
 
     .chx-explore__cta {
-      width: 100%;
+      order: 4;
+      align-self: center;
+      margin-block-start: var(--space-6);
     }
 
     .chx-carousel__slide {
-      flex-basis: 78%;
+      flex-basis: 300px;
     }
 
-    .chx-productcard__media {
-      height: 240px;
+    .chx-explore__controls {
+      top: 154px;
+      inset-inline-end: var(--section-px);
     }
 
-    .chx-explore__controls,
     .chx-explore__fade {
       display: none;
     }
