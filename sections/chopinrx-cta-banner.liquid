@@ -1,0 +1,297 @@
+{% render 'chopinrx-tokens' %}
+
+{% liquid
+  assign image = section.settings.image
+  assign arrow_icon = 'icon-arrow-right.svg' | inline_asset_content
+  assign check_icon = 'icon-check-accent.svg' | inline_asset_content
+%}
+
+<div class="chx-ctabanner">
+  <div class="chx-ctabanner__frame">
+    {%- if image != blank -%}
+      <img
+        class="chx-ctabanner__media"
+        src="{{ image | image_url: width: 1920 }}"
+        srcset="
+          {{ image | image_url: width: 750 }} 750w,
+          {{ image | image_url: width: 1100 }} 1100w,
+          {{ image | image_url: width: 1500 }} 1500w,
+          {{ image | image_url: width: 1920 }} 1920w,
+          {{ image | image_url: width: 2560 }} 2560w
+        "
+        sizes="100vw"
+        width="{{ image.width }}"
+        height="{{ image.height }}"
+        alt="{{ image.alt | escape }}"
+        loading="lazy"
+      >
+    {%- endif -%}
+
+    <div class="chx-ctabanner__content">
+      {%- if section.settings.heading != blank -%}
+        <h2 class="chx-h1 chx-ctabanner__title">{{ section.settings.heading }}</h2>
+      {%- endif -%}
+
+      {%- assign features = section.blocks | where: 'type', 'feature' -%}
+      {%- if features.size > 0 -%}
+        <ul class="chx-ctabanner__features" role="list">
+          {%- for block in features -%}
+            <li class="chx-ctabanner__feature" {{ block.shopify_attributes }}>
+              <span class="chx-ctabanner__feature-icon" aria-hidden="true">{{ check_icon }}</span>
+              <span class="chx-ctabanner__feature-text">{{ block.settings.text }}</span>
+            </li>
+          {%- endfor -%}
+        </ul>
+      {%- endif -%}
+    </div>
+
+    {%- if section.settings.show_trustpilot -%}
+      {% render 'chopinrx-trustpilot',
+        rating: section.settings.trustpilot_rating,
+        score: section.settings.trustpilot_score,
+        count: section.settings.trustpilot_count,
+        url: section.settings.trustpilot_url
+      %}
+    {%- endif -%}
+
+    {%- if section.settings.cta_label != blank -%}
+      <div class="chx-ctabanner__actions">
+        <a class="chx-btn chx-btn--inverse chx-ctabanner__cta" href="{{ section.settings.cta_url | default: routes.root_url }}">
+          <span>{{ section.settings.cta_label }}</span>
+          <span class="chx-btn__icon" aria-hidden="true">{{ arrow_icon }}</span>
+        </a>
+      </div>
+    {%- endif -%}
+  </div>
+</div>
+
+{% stylesheet %}
+  .chx-ctabanner {
+    background-color: var(--surface-page);
+  }
+
+  .chx-ctabanner__frame {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 30px;
+    overflow: hidden;
+    padding-block: var(--space-24);
+    padding-inline: var(--chx-gutter);
+    background-color: var(--surface-dark);
+
+    /* Every heading, feature and the Trustpilot strip sit on the ink frame, so
+       the on-dark colours are set once here and inherited. */
+    --chx-heading-color: var(--text-on-dark);
+    --chx-body-color: var(--text-on-dark);
+  }
+
+  .chx-ctabanner__media {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.5;
+  }
+
+  .chx-ctabanner__content {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 29px;
+    width: 100%;
+  }
+
+  .chx-ctabanner__title {
+    max-width: 1100px;
+    text-align: center;
+  }
+
+  .chx-ctabanner__features {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: center;
+    gap: var(--space-5);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .chx-ctabanner__feature {
+    display: flex;
+    align-items: center;
+    gap: var(--space-5);
+  }
+
+  .chx-ctabanner__feature-icon {
+    display: block;
+    flex-shrink: 0;
+    width: 24px;
+    height: 24px;
+  }
+
+  .chx-ctabanner__feature-icon svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  .chx-ctabanner__feature-text {
+    font-family: var(--font-ui);
+    font-size: var(--font-size-body-large);
+    font-weight: 500;
+    line-height: 1.55;
+    letter-spacing: -0.005em;
+    color: var(--text-on-dark);
+  }
+
+  .chx-ctabanner__actions,
+  .chx-ctabanner .chx-trustpilot {
+    position: relative;
+  }
+
+  @media screen and (max-width: 1024px) {
+    .chx-ctabanner__frame {
+      gap: var(--space-6);
+      padding-block: var(--space-16);
+    }
+
+    .chx-ctabanner__content {
+      gap: var(--space-6);
+    }
+  }
+
+  @media screen and (max-width: 767px) {
+    /* The banner keeps the hero padding allowance rather than the tighter
+       section value, per the Cta Banner spec. */
+    .chx-ctabanner__frame {
+      gap: var(--space-5);
+      padding-block: var(--space-10);
+      padding-inline: var(--space-5);
+    }
+
+    .chx-ctabanner__content {
+      gap: var(--space-5);
+    }
+
+    .chx-ctabanner__features {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: var(--space-3);
+    }
+
+    .chx-ctabanner__feature {
+      gap: var(--space-3);
+    }
+
+    .chx-ctabanner__feature-text {
+      font-size: var(--font-size-body);
+      line-height: 1.5;
+    }
+
+    .chx-ctabanner__cta {
+      width: 100%;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "CTA banner",
+  "tag": "section",
+  "class": "chopinrx-cta-banner-section",
+  "settings": [
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Ready to get assessed for Ozempic?"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Background image",
+      "info": "Sits at 50% opacity over the ink surface."
+    },
+    {
+      "type": "header",
+      "content": "Button"
+    },
+    {
+      "type": "text",
+      "id": "cta_label",
+      "label": "Button label",
+      "default": "Get Started"
+    },
+    {
+      "type": "url",
+      "id": "cta_url",
+      "label": "Button link"
+    },
+    {
+      "type": "header",
+      "content": "Trustpilot"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_trustpilot",
+      "label": "Show Trustpilot strip",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "trustpilot_rating",
+      "label": "Rating word",
+      "default": "Excellent"
+    },
+    {
+      "type": "text",
+      "id": "trustpilot_score",
+      "label": "Score",
+      "default": "4.6"
+    },
+    {
+      "type": "text",
+      "id": "trustpilot_count",
+      "label": "Review count",
+      "default": "436 reviews on"
+    },
+    {
+      "type": "url",
+      "id": "trustpilot_url",
+      "label": "Trustpilot link"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "feature",
+      "name": "Feature",
+      "limit": 4,
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Text",
+          "default": "Plans tailored to your goals"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "CTA banner",
+      "blocks": [
+        { "type": "feature", "settings": { "text": "Lose weight with doctor-trusted treatment plans" } },
+        { "type": "feature", "settings": { "text": "Plans tailored to your goals" } },
+        { "type": "feature", "settings": { "text": "Access to 24/7 messaging, 100% online" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

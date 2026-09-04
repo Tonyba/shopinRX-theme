@@ -1,0 +1,647 @@
+{% render 'chopinrx-tokens' %}
+
+{% liquid
+  assign arrow_icon = 'icon-arrow-right.svg' | inline_asset_content | replace: '#FCFAF9', 'currentColor'
+  assign arrow_down_icon = 'icon-arrow-down.svg' | inline_asset_content | replace: '#14181D', 'currentColor'
+  assign unit = section.settings.price_unit
+
+  assign source = collection
+  if section.settings.source_collection != blank
+    assign source = section.settings.source_collection
+  endif
+
+  assign chips = section.settings.collections
+  assign mens = section.settings.mens_collection
+  assign womens = section.settings.womens_collection
+
+  assign has_segments = false
+  if mens != blank or womens != blank
+    assign has_segments = true
+  endif
+
+  assign has_toolbar = false
+  if chips.count > 0 or has_segments
+    assign has_toolbar = true
+  endif
+
+  # The live region reports the match count, which only the script knows. The
+  # locale string is resolved with a sentinel so the plural form and the word
+  # order stay translated, then the sentinel becomes the script's placeholder.
+  assign count_label = 'content.search_results_resource_products_count' | t: count: 999 | replace: '999', '[count]'
+%}
+
+<div
+  class="chx-progcol"
+  data-chx-progcol
+  data-chx-step="{{ section.settings.initial_count }}"
+  data-chx-count-label="{{ count_label | escape }}"
+>
+  <div class="chx-container chx-progcol__inner">
+    <div class="chx-progcol__header">
+      {% render 'chopinrx-section-heading',
+        eyebrow: section.settings.eyebrow,
+        heading: section.settings.heading,
+        class: 'chx-progcol__heading'
+      %}
+
+      {%- if section.settings.cta_label != blank -%}
+        <a
+          class="chx-btn chx-btn--secondary chx-progcol__cta"
+          href="{{ section.settings.cta_url | default: routes.all_products_collection_url }}"
+        >
+          <span>{{ section.settings.cta_label }}</span>
+          <span class="chx-btn__icon" aria-hidden="true">{{ arrow_icon }}</span>
+        </a>
+      {%- endif -%}
+    </div>
+
+    {%- if has_toolbar -%}
+      <div class="chx-progcol__toolbar">
+        {%- if chips.count > 0 -%}
+          <div class="chx-chips chx-progcol__chips" role="group" aria-label="{{ section.settings.chips_label | escape }}">
+            <button type="button" class="chx-chip" data-chx-chip="" aria-pressed="true">
+              {{- section.settings.all_label -}}
+            </button>
+
+            {%- for chip in chips -%}
+              <button type="button" class="chx-chip" data-chx-chip="{{ chip.handle }}" aria-pressed="false">
+                {{- chip.title | escape -}}
+              </button>
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+
+        {%- if has_segments -%}
+          {%- if chips.count > 0 -%}
+            <span class="chx-progcol__divider" aria-hidden="true"></span>
+          {%- endif -%}
+
+          <div
+            class="chx-segmented chx-progcol__segmented"
+            role="radiogroup"
+            aria-label="{{ section.settings.segments_label | escape }}"
+          >
+            <button
+              type="button"
+              class="chx-segmented__item"
+              role="radio"
+              aria-checked="true"
+              tabindex="0"
+              data-chx-segment=""
+            >
+              {{- section.settings.segment_all_label -}}
+            </button>
+
+            {%- if mens != blank -%}
+              <button
+                type="button"
+                class="chx-segmented__item"
+                role="radio"
+                aria-checked="false"
+                tabindex="-1"
+                data-chx-segment="{{ mens.handle }}"
+              >
+                {{- section.settings.mens_label | default: mens.title -}}
+              </button>
+            {%- endif -%}
+
+            {%- if womens != blank -%}
+              <button
+                type="button"
+                class="chx-segmented__item"
+                role="radio"
+                aria-checked="false"
+                tabindex="-1"
+                data-chx-segment="{{ womens.handle }}"
+              >
+                {{- section.settings.womens_label | default: womens.title -}}
+              </button>
+            {%- endif -%}
+          </div>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+
+    <ul class="chx-progcol__grid" role="list">
+      {%- for product in source.products limit: section.settings.products_count -%}
+        {%- liquid
+          assign goal = product.metafields.custom.goal.value | default: product.type
+          assign ingredients = product.metafields.custom.ingredients.value | join: ' · '
+          assign handles = product.collections | map: 'handle' | join: ' '
+
+          assign product_tags = product.tags | join: ',' | downcase | split: ','
+          assign badge_tag = section.settings.badge_tag | downcase
+          assign badge = ''
+          if badge_tag != blank and product_tags contains badge_tag
+            assign badge = section.settings.badge_label
+          endif
+
+          assign summary = product.metafields.custom.summary.value
+          if summary == blank
+            assign summary = product.description | strip_html | truncatewords: 28
+          endif
+        -%}
+        <li
+          class="chx-programrow chx-progcol__card"
+          data-chx-card
+          data-chx-collections="{{ handles | escape }}"
+        >
+          {%- if badge != blank -%}
+            <span class="chx-programrow__badge">{{ badge }}</span>
+          {%- endif -%}
+
+          <div class="chx-programrow__content">
+            <div class="chx-programrow__top">
+              <div class="chx-programrow__title-col">
+                {%- if goal != blank -%}
+                  <span class="chx-pill chx-programrow__goal">{{ goal }}</span>
+                {%- endif -%}
+                <div class="chx-programrow__titles">
+                  <h3 class="chx-h3 chx-programrow__title">
+                    <a href="{{ product.url }}">{{ product.title | escape }}</a>
+                  </h3>
+                  {%- if ingredients != blank -%}
+                    <p class="chx-programrow__ingredients">{{ ingredients }}</p>
+                  {%- endif -%}
+                </div>
+              </div>
+
+              <div class="chx-programrow__price">
+                <span class="chx-programrow__price-current">
+                  <span class="chx-programrow__price-amount">
+                    {%- if product.price_varies and section.settings.price_prefix != blank -%}
+                      {{ section.settings.price_prefix }}&nbsp;
+                    {%- endif -%}
+                    {{- product.price | money_without_trailing_zeros -}}
+                  </span>
+                  {%- if unit != blank -%}
+                    <span class="chx-programrow__price-unit">{{ unit }}</span>
+                  {%- endif -%}
+                </span>
+                {%- if product.compare_at_price > product.price -%}
+                  <s class="chx-programrow__price-compare">
+                    {{- product.compare_at_price | money_without_trailing_zeros -}}
+                    {{- unit -}}
+                  </s>
+                {%- endif -%}
+              </div>
+            </div>
+
+            {%- if summary != blank -%}
+              <p class="chx-programrow__text">{{ summary }}</p>
+            {%- endif -%}
+          </div>
+
+          <a class="chx-btn chx-btn--md chx-btn--primary chx-programrow__cta" href="{{ product.url }}">
+            <span>{{ section.settings.card_cta_label }}</span>
+            <span class="chx-btn__icon" aria-hidden="true">{{ arrow_icon }}</span>
+          </a>
+        </li>
+      {%- endfor -%}
+    </ul>
+
+    <p class="chx-progcol__empty" data-chx-empty hidden>{{ 'content.no_products_found' | t }}</p>
+
+    <p class="chx-progcol__status" role="status" aria-live="polite" data-chx-status></p>
+
+    {%- if section.settings.load_more_label != blank -%}
+      <button type="button" class="chx-btn chx-btn--secondary chx-progcol__more" data-chx-more hidden>
+        <span>{{ section.settings.load_more_label }}</span>
+        <span class="chx-btn__icon" aria-hidden="true">{{ arrow_down_icon }}</span>
+      </button>
+    {%- endif -%}
+  </div>
+</div>
+
+<script type="module">
+  import { initProgramFilter } from '{{ 'chopinrx-program-filter.js' | asset_url }}';
+  initProgramFilter();
+</script>
+
+{% stylesheet %}
+  .chx-progcol {
+    background-color: var(--surface-page);
+    padding-block: var(--space-24);
+  }
+
+  .chx-progcol__inner {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-10);
+  }
+
+  /* ── Header ─────────────────────────────────── */
+  .chx-progcol__header {
+    display: flex;
+    align-items: center;
+    gap: var(--space-16);
+  }
+
+  .chx-progcol__heading {
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+
+  .chx-progcol__cta {
+    flex-shrink: 0;
+  }
+
+  /* ── Toolbar ────────────────────────────────── */
+  .chx-progcol__toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-5);
+  }
+
+  .chx-progcol__chips {
+    min-width: 0;
+  }
+
+  /* The chips are scoped so the selected state here does not reach the
+     single-select chips the home page program list renders. */
+  .chx-progcol .chx-chip {
+    height: 46px;
+    padding-block: 0;
+  }
+
+  .chx-progcol .chx-chip[aria-pressed='true'],
+  .chx-progcol .chx-chip[aria-pressed='true']:hover {
+    border-color: var(--surface-dark);
+    background-color: var(--surface-dark);
+    font-weight: 600;
+    color: var(--text-on-dark);
+  }
+
+  .chx-progcol__divider {
+    flex-shrink: 0;
+    align-self: center;
+    width: var(--border-w);
+    height: 43px;
+    background-color: var(--border-hairline);
+  }
+
+  /* ── Segmented control ──────────────────────── */
+  .chx-segmented {
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+    gap: 0;
+    padding: 4px;
+    border-radius: var(--radius-lg);
+    background-color: var(--surface-card-flat);
+  }
+
+  .chx-segmented__item {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 40px;
+    padding-inline: var(--space-6);
+    border: 0;
+    border-radius: var(--radius-xl);
+    background: none;
+    font-family: var(--font-ui);
+    font-size: var(--font-size-body);
+    font-weight: 500;
+    line-height: 1.5;
+    letter-spacing: -0.005em;
+    color: var(--text-muted);
+    white-space: nowrap;
+    cursor: pointer;
+    transition: background-color 0.2s ease, color 0.2s ease;
+  }
+
+  .chx-segmented__item:hover {
+    color: var(--text-heading);
+  }
+
+  .chx-segmented__item[aria-checked='true'],
+  .chx-segmented__item[aria-checked='true']:hover {
+    background-color: var(--accent-500);
+    font-weight: 600;
+    color: var(--text-on-dark);
+    box-shadow: 0 1px 2px 0 #2626260a, 0 2px 8px 0 #2626260a;
+  }
+
+  /* ── Grid ───────────────────────────────────── */
+  .chx-progcol__grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: stretch;
+    column-gap: 10px;
+    row-gap: var(--space-8);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  /* The grid formatting context would otherwise override the hidden
+     attribute on a filtered-out card. */
+  .chx-progcol__grid > [hidden] {
+    display: none;
+  }
+
+  /* Cards keep a common height per row so the rows read as a grid, with the
+     description taking up the slack. */
+  .chx-progcol__card .chx-programrow__content {
+    min-height: 171px;
+  }
+
+  .chx-progcol__empty {
+    margin: 0;
+    font-family: var(--font-ui);
+    font-size: var(--font-size-body-large);
+    color: var(--text-muted);
+  }
+
+  .chx-progcol__status {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  .chx-progcol__more {
+    align-self: center;
+  }
+
+  /* The button primitive sets display, which would otherwise defeat the
+     hidden attribute the script toggles. */
+  .chx-progcol__more[hidden] {
+    display: none;
+  }
+
+  /* ── Breakpoints ────────────────────────────── */
+  @media screen and (max-width: 1024px) {
+    .chx-progcol {
+      padding-block: var(--space-16);
+    }
+
+    .chx-progcol__header {
+      gap: var(--space-8);
+    }
+
+    .chx-progcol__grid {
+      grid-template-columns: minmax(0, 1fr);
+      row-gap: var(--space-6);
+    }
+
+    .chx-progcol__card .chx-programrow__content {
+      min-height: 0;
+    }
+  }
+
+  @media screen and (max-width: 767px) {
+    .chx-progcol {
+      padding-block: var(--space-10);
+    }
+
+    /* The section action moves under the cards, so the header's children are
+       lifted into the flex column and reordered. */
+    .chx-progcol__header {
+      display: contents;
+    }
+
+    .chx-progcol__heading {
+      order: 1;
+      align-items: center !important;
+      text-align: center !important;
+    }
+
+    .chx-progcol__toolbar {
+      order: 2;
+      flex-direction: column;
+      align-items: stretch;
+      gap: var(--space-5);
+    }
+
+    /* Mobile leads with the segmented control, then the rule, then the chips. */
+    .chx-progcol__segmented {
+      order: 1;
+      height: 48px;
+    }
+
+    .chx-progcol__segmented .chx-segmented__item {
+      flex: 1 1 0;
+      min-width: 0;
+      padding-inline: var(--space-3);
+    }
+
+    .chx-progcol__divider {
+      order: 2;
+      align-self: stretch;
+      width: auto;
+      height: var(--border-w);
+    }
+
+    .chx-progcol__chips {
+      order: 3;
+    }
+
+    .chx-progcol__grid {
+      order: 3;
+    }
+
+    .chx-progcol__empty {
+      order: 4;
+    }
+
+    /* The mobile design carries no Load More; the script shows the full list
+       instead so nothing becomes unreachable. */
+    .chx-progcol__more {
+      display: none;
+    }
+
+    .chx-progcol__cta {
+      order: 5;
+      align-self: center;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Program collection",
+  "tag": "section",
+  "class": "chopinrx-program-collection-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Goal Programs"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "info": "Italicise a clause to set it in the accent colour.",
+      "default": "Find a program built around your <em>goals</em>."
+    },
+    {
+      "type": "collection",
+      "id": "source_collection",
+      "label": "Products",
+      "info": "Leave empty on a collection template to use the collection being viewed."
+    },
+    {
+      "type": "range",
+      "id": "products_count",
+      "label": "Products to load",
+      "min": 4,
+      "max": 50,
+      "step": 2,
+      "default": 24
+    },
+    {
+      "type": "header",
+      "content": "Filters"
+    },
+    {
+      "type": "paragraph",
+      "content": "Chips are multi-select and combine as a union. Selecting none is the same as All."
+    },
+    {
+      "type": "collection_list",
+      "id": "collections",
+      "label": "Filter collections",
+      "info": "One chip per collection, in this order.",
+      "limit": 8
+    },
+    {
+      "type": "text",
+      "id": "all_label",
+      "label": "All chip label",
+      "default": "All"
+    },
+    {
+      "type": "text",
+      "id": "chips_label",
+      "label": "Chip group label",
+      "info": "Read by screen readers only.",
+      "default": "Filter programs by goal"
+    },
+    {
+      "type": "header",
+      "content": "Audience"
+    },
+    {
+      "type": "collection",
+      "id": "mens_collection",
+      "label": "Men's collection"
+    },
+    {
+      "type": "text",
+      "id": "mens_label",
+      "label": "Men's label",
+      "default": "Men's"
+    },
+    {
+      "type": "collection",
+      "id": "womens_collection",
+      "label": "Women's collection"
+    },
+    {
+      "type": "text",
+      "id": "womens_label",
+      "label": "Women's label",
+      "default": "Women's"
+    },
+    {
+      "type": "text",
+      "id": "segment_all_label",
+      "label": "All segment label",
+      "default": "All"
+    },
+    {
+      "type": "text",
+      "id": "segments_label",
+      "label": "Segment group label",
+      "info": "Read by screen readers only.",
+      "default": "Filter programs by audience"
+    },
+    {
+      "type": "header",
+      "content": "Card"
+    },
+    {
+      "type": "text",
+      "id": "price_prefix",
+      "label": "Varying price prefix",
+      "info": "Shown before the price when a product has more than one price.",
+      "default": "From"
+    },
+    {
+      "type": "text",
+      "id": "price_unit",
+      "label": "Price unit",
+      "info": "Appended after the product price, e.g. /mo.",
+      "default": "/mo"
+    },
+    {
+      "type": "text",
+      "id": "card_cta_label",
+      "label": "Card button label",
+      "default": "Start intake"
+    },
+    {
+      "type": "paragraph",
+      "content": "Goal pill reads custom.goal (falls back to the product type). Ingredients read custom.ingredients, a list of single line text, joined with a middot. Description reads custom.summary and falls back to the product description."
+    },
+    {
+      "type": "text",
+      "id": "badge_tag",
+      "label": "Badge product tag",
+      "info": "Products carrying this tag show the corner badge.",
+      "default": "flagship"
+    },
+    {
+      "type": "text",
+      "id": "badge_label",
+      "label": "Badge label",
+      "default": "Flagship"
+    },
+    {
+      "type": "header",
+      "content": "Section buttons"
+    },
+    {
+      "type": "text",
+      "id": "cta_label",
+      "label": "Button label",
+      "default": "See All Programs"
+    },
+    {
+      "type": "url",
+      "id": "cta_url",
+      "label": "Button link"
+    },
+    {
+      "type": "text",
+      "id": "load_more_label",
+      "label": "Load more label",
+      "info": "Hidden on mobile, where the full list is shown instead.",
+      "default": "Load More"
+    },
+    {
+      "type": "range",
+      "id": "initial_count",
+      "label": "Cards before Load more",
+      "min": 2,
+      "max": 24,
+      "step": 2,
+      "default": 8
+    }
+  ],
+  "presets": [
+    {
+      "name": "Program collection"
+    }
+  ]
+}
+{% endschema %}

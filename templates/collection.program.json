@@ -1,0 +1,189 @@
+{
+  "sections": {
+    "hero": {
+      "type": "chopinrx-page-banner",
+      "settings": {
+        "style": "dark",
+        "alignment": "center",
+        "breadcrumb_home": "Home",
+        "breadcrumb_current": "{{ closest.collection.title }}",
+        "heading": "Complete care, from diagnosis to delivery, 100% online.",
+        "body": "<p>Explore personalized treatment paths designed to support the goals that matter most to you. All programs are prescribed by independent licensed providers after reviewing your intake.</p>",
+        "show_trustpilot": true,
+        "trustpilot_rating": "Excellent",
+        "trustpilot_score": "4.6",
+        "trustpilot_count": "436 reviews",
+        "trustpilot_mobile_count": "Check out our 436 reviews"
+      }
+    },
+    "programs": {
+      "type": "chopinrx-program-collection",
+      "settings": {
+        "eyebrow": "Goal Programs",
+        "heading": "Find a program built around your <em>goals</em>.",
+        "products_count": 24,
+        "collections": [
+          "metabolic-health",
+          "hormone-health",
+          "energy-recovery",
+          "longevity",
+          "aesthetics",
+          "sex-health"
+        ],
+        "all_label": "All",
+        "chips_label": "Filter programs by goal",
+        "mens_label": "Men's",
+        "womens_label": "Women's",
+        "segment_all_label": "All",
+        "segments_label": "Filter programs by audience",
+        "price_prefix": "From",
+        "price_unit": "/mo",
+        "card_cta_label": "Start intake",
+        "badge_tag": "flagship",
+        "badge_label": "Flagship",
+        "cta_label": "See All Programs",
+        "cta_url": "",
+        "load_more_label": "Load More",
+        "initial_count": 8
+      }
+    },
+    "reviews": {
+      "type": "chopinrx-reviews",
+      "blocks": {
+        "review_1": {
+          "type": "review",
+          "settings": {
+            "name": "James Whitfield",
+            "rating": 5,
+            "quote": "\"I really love how simple and easy everything has been so far. I have noticed an enhanced focused on being more mindful of what I am eating, making sure to hit my protein goals!\"",
+            "row": "1"
+          }
+        },
+        "review_2": {
+          "type": "review",
+          "settings": {
+            "name": "James Whitfield",
+            "rating": 5,
+            "quote": "\"I really love how simple and easy everything has been so far. I have noticed an enhanced focused on being more mindful of what I am eating, making sure to hit my protein goals!\"",
+            "row": "1"
+          }
+        },
+        "review_3": {
+          "type": "review",
+          "settings": {
+            "name": "James Whitfield",
+            "rating": 5,
+            "quote": "\"I really love how simple and easy everything has been so far. I have noticed an enhanced focused on being more mindful of what I am eating, making sure to hit my protein goals!\"",
+            "row": "1"
+          }
+        },
+        "review_4": {
+          "type": "review",
+          "settings": {
+            "name": "James Whitfield",
+            "rating": 5,
+            "quote": "\"I really love how simple and easy everything has been so far. I have noticed an enhanced focused on being more mindful of what I am eating, making sure to hit my protein goals!\"",
+            "row": "1"
+          }
+        },
+        "review_5": {
+          "type": "review",
+          "settings": {
+            "name": "James Whitfield",
+            "rating": 5,
+            "quote": "\"I really love how simple and easy everything has been so far. I have noticed an enhanced focused on being more mindful of what I am eating, making sure to hit my protein goals!\"",
+            "row": "2"
+          }
+        },
+        "review_6": {
+          "type": "review",
+          "settings": {
+            "name": "James Whitfield",
+            "rating": 5,
+            "quote": "\"I really love how simple and easy everything has been so far. I have noticed an enhanced focused on being more mindful of what I am eating, making sure to hit my protein goals!\"",
+            "row": "2"
+          }
+        },
+        "review_7": {
+          "type": "review",
+          "settings": {
+            "name": "James Whitfield",
+            "rating": 5,
+            "quote": "\"I really love how simple and easy everything has been so far. I have noticed an enhanced focused on being more mindful of what I am eating, making sure to hit my protein goals!\"",
+            "row": "2"
+          }
+        },
+        "review_8": {
+          "type": "review",
+          "settings": {
+            "name": "James Whitfield",
+            "rating": 5,
+            "quote": "\"I really love how simple and easy everything has been so far. I have noticed an enhanced focused on being more mindful of what I am eating, making sure to hit my protein goals!\"",
+            "row": "2"
+          }
+        }
+      },
+      "block_order": [
+        "review_1",
+        "review_2",
+        "review_3",
+        "review_4",
+        "review_5",
+        "review_6",
+        "review_7",
+        "review_8"
+      ],
+      "settings": {
+        "eyebrow": "4.8/5 on Trust Pilot",
+        "heading": "More than <em>100,000</em> patients trust our treatment plans",
+        "show_trustpilot": true,
+        "trustpilot_rating": "Excellent",
+        "trustpilot_score": "4.6",
+        "trustpilot_count": "436 reviews on"
+      }
+    },
+    "cta": {
+      "type": "chopinrx-cta-banner",
+      "blocks": {
+        "feature_1": {
+          "type": "feature",
+          "settings": {
+            "text": "Lose weight with doctor-trusted treatment plans"
+          }
+        },
+        "feature_2": {
+          "type": "feature",
+          "settings": {
+            "text": "Plans tailored to your goals"
+          }
+        },
+        "feature_3": {
+          "type": "feature",
+          "settings": {
+            "text": "Access to 24/7 messaging, 100% online"
+          }
+        }
+      },
+      "block_order": [
+        "feature_1",
+        "feature_2",
+        "feature_3"
+      ],
+      "settings": {
+        "heading": "Ready to get assessed for Ozempic?",
+        "cta_label": "Get Started",
+        "cta_url": "",
+        "show_trustpilot": true,
+        "trustpilot_rating": "Excellent",
+        "trustpilot_score": "4.6",
+        "trustpilot_count": "436 reviews on"
+      }
+    }
+  },
+  "order": [
+    "hero",
+    "programs",
+    "reviews",
+    "cta"
+  ]
+}
