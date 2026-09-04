@@ -57,7 +57,7 @@
     {%- endif -%}
   </div>
 
-  <div class="chx-contact__panel">
+  <div class="chx-contact__form-col">
     {%- form 'contact', id: form_id, class: 'chx-form' -%}
       <input type="hidden" name="contact[id]" value="{{ form_id }}">
 
@@ -251,22 +251,41 @@
 </script>
 
 {% stylesheet %}
+  /* The page gutter is a grid column rather than a margin, so the copy starts
+     on the header's content edge and the form ends on it. Percentages in
+     grid-template-columns resolve against the section, which is the page width;
+     the same calc inside a grid cell would resolve against the cell. */
   .chx-contact {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1084px);
+    grid-template-columns:
+      [full-start] minmax(var(--section-px), calc((100% - var(--screen-content-max-width)) / 2))
+      [copy-start] minmax(0, 486px)
+      [copy-end] minmax(var(--space-8), 116px)
+      [panel-start] minmax(var(--space-10), 1fr)
+      [form-start] minmax(0, 766px)
+      [form-end] minmax(var(--section-px), calc((100% - var(--screen-content-max-width)) / 2))
+      [full-end];
     align-items: stretch;
     background-color: var(--surface-muted);
   }
 
+  /* The band behind the form, bleeding off the right edge. It is the first grid
+     item so it paints under the form. */
+  .chx-contact::before {
+    content: '';
+    grid-row: 1;
+    grid-column: panel-start / full-end;
+    background-color: var(--surface-card-flat);
+  }
+
   .chx-contact__copy {
+    grid-row: 1;
+    grid-column: copy-start / copy-end;
     display: flex;
     flex-direction: column;
     align-self: center;
     justify-content: center;
     gap: 30px;
-    width: 486px;
-    max-width: 100%;
-    margin-inline-start: var(--chx-gutter);
     padding-block: var(--section-py-tight);
   }
 
@@ -350,21 +369,19 @@
     color: var(--text-on-dark-muted);
   }
 
-  /* ── Form panel ─────────────────────────────── */
-  .chx-contact__panel {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 80px;
-    background-color: var(--surface-card-flat);
+  /* ── Form column ────────────────────────────── */
+  .chx-contact__form-col {
+    grid-row: 1;
+    grid-column: form-start / form-end;
+    align-self: center;
+    padding-block: 80px;
   }
 
   .chx-form {
     display: flex;
     flex-direction: column;
     gap: var(--space-6);
-    width: 766px;
-    max-width: 100%;
+    width: 100%;
   }
 
   .chx-form__row {
@@ -621,13 +638,20 @@
       grid-template-columns: minmax(0, 1fr);
     }
 
+    /* Stacked: the band sits behind the form row. */
+    .chx-contact::before {
+      grid-row: 2;
+      grid-column: 1;
+    }
+
     .chx-contact__copy {
-      width: 100%;
-      margin-inline: 0;
+      grid-column: 1;
       padding-inline: var(--section-px);
     }
 
-    .chx-contact__panel {
+    .chx-contact__form-col {
+      grid-row: 2;
+      grid-column: 1;
       padding: var(--space-10) var(--section-px);
     }
   }
@@ -660,7 +684,7 @@
       font-size: var(--font-size-body-large);
     }
 
-    .chx-contact__panel {
+    .chx-contact__form-col {
       padding: 30px var(--section-px);
     }
 
