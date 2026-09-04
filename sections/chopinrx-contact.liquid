@@ -679,13 +679,15 @@
       gap: var(--space-5);
     }
 
-    .chx-form__submit {
+    /* Scoped under the section root: the button primitive sets the same
+       properties at the same specificity and the bundle order is not fixed. */
+    .chx-contact .chx-form__submit {
       width: 100%;
       background-color: var(--action-accent-bg);
       color: var(--action-accent-fg);
     }
 
-    .chx-form__submit:hover {
+    .chx-contact .chx-form__submit:hover {
       background-color: var(--action-accent-bg-hover);
       color: var(--action-accent-fg);
     }
