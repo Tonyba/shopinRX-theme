@@ -100,7 +100,10 @@
                 {%- endif -%}
               </span>
               {%- if product.compare_at_price > product.price -%}
-                <s class="chx-program-card__price-compare">{{ product.compare_at_price | money_without_trailing_zeros }}{{ unit }}</s>
+                <s class="chx-program-card__price-compare">
+                  {{- product.compare_at_price | money_without_trailing_zeros -}}
+                  {{- unit -}}
+                </s>
               {%- endif -%}
             </div>
           </div>
@@ -355,7 +358,7 @@
 
     .chx-programs__heading {
       order: 1;
-      align-items: center;
+      align-items: center !important;
       text-align: center;
     }
 

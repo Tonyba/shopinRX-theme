@@ -116,7 +116,8 @@
                     </span>
                     {%- if product.compare_at_price > product.price -%}
                       <s class="chx-programrow__price-compare">
-                        {{- product.compare_at_price | money_without_trailing_zeros }}{{ unit -}}
+                        {{- product.compare_at_price | money_without_trailing_zeros -}}
+                        {{- unit -}}
                       </s>
                     {%- endif -%}
                   </div>
@@ -404,8 +405,8 @@
 
     .chx-programlist__heading {
       order: 1;
-      align-items: center;
-      text-align: center;
+      align-items: center !important;
+      text-align: center !important;
     }
 
     .chx-programlist__toolbar {
