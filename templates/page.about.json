@@ -12,6 +12,7 @@
     "hero": {
       "type": "chopinrx-about-hero",
       "settings": {
+        "image": "shopify://shop_images/chx-about-hero.jpg",
         "breadcrumb_home": "Home",
         "breadcrumb_current": "About us",
         "heading": "A platform built around the patient, not the system.",
@@ -34,6 +35,7 @@
     "story": {
       "type": "chopinrx-about-split",
       "settings": {
+        "image": "shopify://shop_images/chx-about-story.png",
         "media_position": "left",
         "background": "muted",
         "eyebrow": "Our Story",
@@ -129,6 +131,7 @@
       },
       "block_order": ["feature_1", "feature_2", "feature_3"],
       "settings": {
+        "image": "shopify://shop_images/chx-about-care.jpg",
         "media_position": "right",
         "background": "page",
         "heading": "What patient <em>care</em> means to us",
@@ -138,6 +141,7 @@
     "trust": {
       "type": "chopinrx-about-split",
       "settings": {
+        "image": "shopify://shop_images/chx-about-trust.jpg",
         "media_position": "left",
         "background": "band",
         "heading": "<em>Trust</em> matters",
@@ -161,23 +165,43 @@
         },
         "member_1": {
           "type": "member",
-          "settings": { "name": "Dr Patrick Carroll", "role": "Chief Medical Officer" }
+          "settings": {
+            "image": "shopify://shop_images/chx-about-team.jpg",
+            "name": "Dr Patrick Carroll",
+            "role": "Chief Medical Officer"
+          }
         },
         "member_2": {
           "type": "member",
-          "settings": { "name": "Dr Amara Lewis", "role": "Medical Director" }
+          "settings": {
+            "image": "shopify://shop_images/chx-about-team.jpg",
+            "name": "Dr Amara Lewis",
+            "role": "Medical Director"
+          }
         },
         "member_3": {
           "type": "member",
-          "settings": { "name": "Dr Sofia Marin", "role": "Clinical Lead, Hormone Health" }
+          "settings": {
+            "image": "shopify://shop_images/chx-about-team.jpg",
+            "name": "Dr Sofia Marin",
+            "role": "Clinical Lead, Hormone Health"
+          }
         },
         "member_4": {
           "type": "member",
-          "settings": { "name": "Daniel Okafor", "role": "Head of Pharmacy" }
+          "settings": {
+            "image": "shopify://shop_images/chx-about-team.jpg",
+            "name": "Daniel Okafor",
+            "role": "Head of Pharmacy"
+          }
         },
         "member_5": {
           "type": "member",
-          "settings": { "name": "Dr Elena Ruiz", "role": "Clinical Lead, Metabolic Health" }
+          "settings": {
+            "image": "shopify://shop_images/chx-about-team.jpg",
+            "name": "Dr Elena Ruiz",
+            "role": "Clinical Lead, Metabolic Health"
+          }
         }
       },
       "block_order": [
