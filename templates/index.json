@@ -118,6 +118,7 @@
           "energy-recovery",
           "aesthetics"
         ],
+        "primary_collection": "program",
         "products_count": 8,
         "price_prefix": "From",
         "price_unit": "/mo",
@@ -187,6 +188,7 @@
             "heading": "Built for men",
             "text": "TRT foundation, drive, recovery and performance protocols reviewed by independent licensed providers.",
             "cta_label": "Explore men's programs",
+            "cta_url": "/collections/program?gender=mens",
             "button_color": "#22eee4",
             "button_text_color": "#14181d"
           }
@@ -200,6 +202,7 @@
             "heading": "Built for women",
             "text": "Menopause, HRT, balance and aesthetics protocols reviewed by independent licensed providers.",
             "cta_label": "Explore women's programs",
+            "cta_url": "/collections/program?gender=womens",
             "button_color": "#f9299b",
             "button_text_color": "#fcfaf9"
           }
@@ -224,6 +227,7 @@
           "energy-recovery",
           "aesthetics"
         ],
+        "primary_collection": "treatment",
         "products_count": 8,
         "price_prefix": "From",
         "price_unit": "/mo",

@@ -3,15 +3,20 @@
  *
  * Shopify's storefront filtering has no collection facet, so combining
  * collections cannot be expressed in a URL. The grid therefore renders every
- * product once, each card carrying the handles of the collections it belongs
- * to, and the toolbar toggles visibility here.
+ * product once, each card carrying the collections it belongs to and the tags
+ * it carries, and the toolbar toggles visibility here.
  *
  * Chips are multi-select and combine as a union; the segmented control is a
  * single mutually exclusive choice. A card shows when it matches at least one
  * selected chip (or none is selected) and also matches the segment.
+ *
+ * Chips match collection handles. The segmented control matches tags, so a
+ * link can preselect a segment with ?gender=<tag> — that is what the home
+ * page's "Built for men" and "Built for women" panels point at.
  */
 
 const COMPACT = '(max-width: 767px)';
+const GENDER_PARAM = 'gender';
 
 export function initProgramFilter(root = document) {
   root.querySelectorAll('[data-chx-progcol]').forEach(setup);
@@ -34,8 +39,13 @@ function setup(section) {
   const countLabel = section.dataset.chxCountLabel || '';
   const compact = window.matchMedia(COMPACT);
 
+  // Handles are slugs and separate on a space; tags can contain spaces and
+  // separate on a pipe. Both are lowercased by the section.
   const handlesOf = new Map(
     cards.map((card) => [card, (card.dataset.chxCollections || '').split(' ').filter(Boolean)])
+  );
+  const tagsOf = new Map(
+    cards.map((card) => [card, (card.dataset.chxTags || '').split('|').filter(Boolean)])
   );
 
   /** Selected chip handles. Empty means "All". */
@@ -49,7 +59,7 @@ function setup(section) {
   function matches(card) {
     const handles = handlesOf.get(card);
     const byChip = selected.size === 0 || handles.some((handle) => selected.has(handle));
-    const bySegment = segment === '' || handles.includes(segment);
+    const bySegment = segment === '' || tagsOf.get(card).includes(segment);
     return byChip && bySegment;
   }
 
@@ -139,6 +149,16 @@ function setup(section) {
     revealed = step;
     render();
   });
+
+  // A ?gender=<tag> link preselects that segment. The value has to match a
+  // segment that is actually rendered, so an unknown or stale tag falls back
+  // to All rather than filtering the grid down to nothing.
+  const requested = new URLSearchParams(window.location.search).get(GENDER_PARAM);
+  if (requested) {
+    const wanted = requested.trim().toLowerCase();
+    const target = segments.find((button) => button.dataset.chxSegment === wanted);
+    if (target) selectSegment(target, false);
+  }
 
   syncChips();
   render();

@@ -11,11 +11,11 @@
   endif
 
   assign chips = section.settings.collections
-  assign mens = section.settings.mens_collection
-  assign womens = section.settings.womens_collection
+  assign mens_tag = section.settings.mens_tag | downcase | strip
+  assign womens_tag = section.settings.womens_tag | downcase | strip
 
   assign has_segments = false
-  if mens != blank or womens != blank
+  if mens_tag != blank or womens_tag != blank
     assign has_segments = true
   endif
 
@@ -92,29 +92,29 @@
               {{- section.settings.segment_all_label -}}
             </button>
 
-            {%- if mens != blank -%}
+            {%- if mens_tag != blank -%}
               <button
                 type="button"
                 class="chx-segmented__item"
                 role="radio"
                 aria-checked="false"
                 tabindex="-1"
-                data-chx-segment="{{ mens.handle }}"
+                data-chx-segment="{{ mens_tag | escape }}"
               >
-                {{- section.settings.mens_label | default: mens.title -}}
+                {{- section.settings.mens_label -}}
               </button>
             {%- endif -%}
 
-            {%- if womens != blank -%}
+            {%- if womens_tag != blank -%}
               <button
                 type="button"
                 class="chx-segmented__item"
                 role="radio"
                 aria-checked="false"
                 tabindex="-1"
-                data-chx-segment="{{ womens.handle }}"
+                data-chx-segment="{{ womens_tag | escape }}"
               >
-                {{- section.settings.womens_label | default: womens.title -}}
+                {{- section.settings.womens_label -}}
               </button>
             {%- endif -%}
           </div>
@@ -127,7 +127,12 @@
         {%- liquid
           assign goal = product.metafields.custom.goal.value | default: product.type
           assign ingredients = product.metafields.custom.ingredients.value | join: ' · '
+
+          # Chips match collections, the segmented control matches tags.
+          # Handles are slugs so a space separates them safely, but a tag can
+          # contain spaces, so tags are joined on a pipe instead.
           assign handles = product.collections | map: 'handle' | join: ' '
+          assign tag_list = product.tags | join: '|' | downcase
 
           assign product_tags = product.tags | join: ',' | downcase | split: ','
           assign badge_tag = section.settings.badge_tag | downcase
@@ -145,6 +150,7 @@
           class="chx-programrow chx-progcol__card"
           data-chx-card
           data-chx-collections="{{ handles | escape }}"
+          data-chx-tags="{{ tag_list | escape }}"
         >
           {%- if badge != blank -%}
             <span class="chx-programrow__badge">{{ badge }}</span>
@@ -531,9 +537,14 @@
       "content": "Audience"
     },
     {
-      "type": "collection",
-      "id": "mens_collection",
-      "label": "Men's collection"
+      "type": "paragraph",
+      "content": "The segments match product tags. Leave a tag empty to drop that segment; empty both and the control is hidden."
+    },
+    {
+      "type": "text",
+      "id": "mens_tag",
+      "label": "Men's tag",
+      "default": "mens"
     },
     {
       "type": "text",
@@ -542,9 +553,10 @@
       "default": "Men's"
     },
     {
-      "type": "collection",
-      "id": "womens_collection",
-      "label": "Women's collection"
+      "type": "text",
+      "id": "womens_tag",
+      "label": "Women's tag",
+      "default": "womens"
     },
     {
       "type": "text",

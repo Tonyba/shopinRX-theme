@@ -4,6 +4,7 @@
   assign arrow_icon = 'icon-arrow-right.svg' | inline_asset_content | replace: '#FCFAF9', 'currentColor'
   assign tabs = section.settings.collections
   assign unit = section.settings.price_unit
+  assign primary = section.settings.primary_collection
 %}
 
 <div class="chx-programlist">
@@ -64,8 +65,26 @@
         data-chx-panel
       >
         <ul class="chx-programlist__grid" role="list">
-          {%- for product in tab.products limit: section.settings.products_count -%}
+          {%- assign shown = 0 -%}
+          {%- for product in tab.products -%}
             {%- liquid
+              # A goal collection holds programs and treatments alike, so the
+              # primary collection is what keeps the two from mixing. The count
+              # is tracked by hand because the limit would otherwise apply
+              # before the filter and cut the tab short.
+              if shown >= section.settings.products_count
+                break
+              endif
+
+              if primary != blank
+                assign product_collections = product.collections | map: 'handle'
+                unless product_collections contains primary.handle
+                  continue
+                endunless
+              endif
+
+              assign shown = shown | plus: 1
+
               assign goal = product.metafields.custom.goal.value | default: product.type
               assign ingredients = product.metafields.custom.ingredients.value | join: ' · '
 
@@ -133,9 +152,11 @@
                 <span class="chx-btn__icon" aria-hidden="true">{{ arrow_icon }}</span>
               </a>
             </li>
-          {%- else -%}
-            <li class="chx-programlist__empty">{{ 'content.no_products_found' | t }}</li>
           {%- endfor -%}
+
+          {%- if shown == 0 -%}
+            <li class="chx-programlist__empty">{{ 'content.no_products_found' | t }}</li>
+          {%- endif -%}
         </ul>
       </div>
     {%- endfor -%}
@@ -516,6 +537,12 @@
       "label": "Tabs",
       "info": "One tab per collection, in this order. The first tab is selected.",
       "limit": 8
+    },
+    {
+      "type": "collection",
+      "id": "primary_collection",
+      "label": "Primary collection",
+      "info": "Only products that are also in this collection are shown, so programs and treatments do not mix in a shared goal tab. Leave empty to show everything in the tab."
     },
     {
       "type": "range",
