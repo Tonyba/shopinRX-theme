@@ -462,8 +462,11 @@
       gap: var(--space-4);
     }
 
+    /* The price block keeps its full height with no compare price so sibling
+       cards stay aligned, per the ProgramCard spec. */
     .chx-programrow__price {
       align-items: flex-start;
+      min-height: 54px;
     }
 
     /* Compare price sits above the current one in the mobile card. */
