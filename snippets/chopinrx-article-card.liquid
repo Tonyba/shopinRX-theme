@@ -1,0 +1,302 @@
+{% doc %}
+  Renders the editorial card: image, tag and date, title, dek and a read-more
+  link. Used by the homepage insights band, the blog grid and the featured rail.
+
+  @param {object} article - The article to render.
+  @param {string} [read_more] - Read-more label. Defaults to 'Read More'.
+  @param {string} [exclude_tag] - Tag to skip when picking the card's tag, so a
+    routing tag such as 'featured' never shows as the topic.
+  @param {string} [sizes] - The img sizes attribute.
+  @param {boolean} [wide] - Lays the card out as a band: copy beside the image.
+
+  @example
+  {% render 'chopinrx-article-card', article: article, exclude_tag: 'featured' %}
+{% enddoc %}
+
+{% liquid
+  assign arrow_icon = 'icon-arrow-right.svg' | inline_asset_content | replace: '#FCFAF9', 'currentColor'
+  assign dot_icon = 'icon-eyebrow-dot.svg' | inline_asset_content
+  assign label = read_more | default: 'Read More'
+  assign image_sizes = sizes | default: '(min-width: 1025px) 33vw, 100vw'
+
+  assign skip = exclude_tag | downcase
+  assign topic = ''
+  for tag in article.tags
+    assign tag_key = tag | downcase
+    if skip != blank and tag_key == skip
+      continue
+    endif
+    if topic == blank
+      assign topic = tag
+    endif
+  endfor
+%}
+
+<article class="chx-article{% if wide %} chx-article--wide{% endif %}">
+  <div class="chx-article__content">
+    <a class="chx-article__media" href="{{ article.url }}" tabindex="-1" aria-hidden="true">
+      {%- if article.image != blank -%}
+        <img
+          src="{{ article.image | image_url: width: 1200 }}"
+          srcset="
+            {{ article.image | image_url: width: 450 }} 450w,
+            {{ article.image | image_url: width: 900 }} 900w,
+            {{ article.image | image_url: width: 1200 }} 1200w
+          "
+          sizes="{{ image_sizes }}"
+          width="{{ article.image.width }}"
+          height="{{ article.image.height }}"
+          alt="{{ article.image.alt | escape }}"
+          loading="lazy"
+        >
+      {%- endif -%}
+    </a>
+
+    <div class="chx-article__body">
+      <p class="chx-article__meta">
+        {%- if topic != blank -%}
+          <span class="chx-article__tag">{{ topic }}</span>
+          <span class="chx-eyebrow__dot" aria-hidden="true">{{ dot_icon }}</span>
+        {%- endif -%}
+        <time datetime="{{ article.published_at | date: '%Y-%m-%d' }}">
+          {{- article.published_at | date: format: 'date' -}}
+        </time>
+      </p>
+
+      <h3 class="chx-article__title">
+        <a href="{{ article.url }}">{{ article.title }}</a>
+      </h3>
+
+      {%- if article.excerpt_or_content != blank -%}
+        <p class="chx-article__dek">
+          {{- article.excerpt_or_content | strip_html | truncatewords: 24 -}}
+        </p>
+      {%- endif -%}
+    </div>
+  </div>
+
+  <span class="chx-article__more" aria-hidden="true">
+    <span>{{ label }}</span>
+    <span class="chx-btn__icon chx-article__more-icon">{{ arrow_icon }}</span>
+  </span>
+</article>
+
+{% stylesheet %}
+  .chx-article {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+  }
+
+  .chx-article__content {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    gap: var(--space-5);
+    min-width: 0;
+  }
+
+  .chx-article__media {
+    display: block;
+    height: 266px;
+    border-radius: var(--radius-lg);
+    overflow: clip;
+    background-color: var(--surface-well);
+  }
+
+  .chx-article__media img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s var(--ease-out-cubic, ease);
+  }
+
+  .chx-article:hover .chx-article__media img {
+    transform: scale(1.04);
+  }
+
+  .chx-article__body {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    gap: var(--space-3);
+    min-width: 0;
+  }
+
+  .chx-article__meta {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    margin: 0;
+    font-family: var(--font-ui);
+    font-size: var(--font-size-label-tag);
+    font-weight: 600;
+    line-height: 1.14;
+    letter-spacing: 0.005em;
+    color: var(--text-muted);
+  }
+
+  .chx-article__tag {
+    text-transform: uppercase;
+  }
+
+  .chx-article__title {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: var(--font-size-h5);
+    font-weight: 500;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+    color: var(--text-heading);
+  }
+
+  .chx-article__title a {
+    color: inherit;
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+
+  .chx-article:hover .chx-article__title a {
+    color: var(--text-accent);
+    text-decoration: none;
+  }
+
+  .chx-article__dek {
+    display: -webkit-box;
+    margin: 0;
+    overflow: hidden;
+    font-family: var(--font-ui);
+    font-size: var(--font-size-body);
+    font-weight: 400;
+    line-height: 1.5;
+    letter-spacing: -0.005em;
+    color: var(--text-body);
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+  }
+
+  .chx-article__more {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    font-family: var(--font-ui);
+    font-size: var(--font-size-button-large);
+    font-weight: 600;
+    line-height: 1.33;
+    letter-spacing: -0.005em;
+    color: var(--text-heading);
+  }
+
+  .chx-article__more-icon {
+    color: var(--text-accent);
+  }
+
+  /* ── Wide band ──────────────────────────────────
+     Copy beside a full-height image, used for a featured article. */
+  .chx-article--wide {
+    position: relative;
+    height: 524px;
+    border-radius: var(--radius-lg);
+    overflow: clip;
+    background-color: var(--surface-well);
+  }
+
+  .chx-article--wide .chx-article__content {
+    flex-direction: row-reverse;
+    align-items: center;
+    gap: 0;
+    height: 100%;
+  }
+
+  /* Halves are set by width rather than flex-basis: a zero basis sizes the
+     content box, so the copy's 80px padding would push it wider than the
+     picture. */
+  .chx-article--wide .chx-article__media,
+  .chx-article--wide .chx-article__body {
+    flex: 0 0 50%;
+    width: 50%;
+  }
+
+  .chx-article--wide .chx-article__media {
+    height: 100%;
+    border-radius: 0;
+  }
+
+  .chx-article--wide .chx-article__body {
+    gap: var(--space-6);
+    padding-inline: 80px;
+  }
+
+  .chx-article--wide .chx-article__title {
+    font-size: var(--font-size-h2);
+    line-height: 1.04;
+    letter-spacing: -0.035em;
+  }
+
+  .chx-article--wide .chx-article__dek {
+    font-size: var(--font-size-body-large);
+    line-height: 1.55;
+  }
+
+  /* The action sits under the copy, inside the left half of the band. */
+  .chx-article--wide .chx-article__more {
+    position: absolute;
+    inset-block-end: 80px;
+    inset-inline-start: 80px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .chx-article__media img {
+      transition: none;
+    }
+
+    .chx-article:hover .chx-article__media img {
+      transform: none;
+    }
+  }
+
+  @media screen and (max-width: 1024px) {
+    .chx-article--wide {
+      height: auto;
+      border-radius: 0;
+      background: none;
+    }
+
+    .chx-article--wide .chx-article__content {
+      flex-direction: column;
+      gap: var(--space-5);
+    }
+
+    .chx-article--wide .chx-article__media,
+    .chx-article--wide .chx-article__body {
+      flex: 0 0 auto;
+      width: 100%;
+    }
+
+    .chx-article--wide .chx-article__media {
+      height: 266px;
+      border-radius: var(--radius-lg);
+    }
+
+    .chx-article--wide .chx-article__body {
+      gap: var(--space-3);
+      padding-inline: 0;
+    }
+
+    .chx-article--wide .chx-article__title {
+      font-size: var(--font-size-h5);
+      line-height: 1.2;
+      letter-spacing: -0.02em;
+    }
+
+    .chx-article--wide .chx-article__dek {
+      font-size: var(--font-size-body);
+      line-height: 1.5;
+    }
+
+    .chx-article--wide .chx-article__more {
+      position: static;
+    }
+  }
+{% endstylesheet %}

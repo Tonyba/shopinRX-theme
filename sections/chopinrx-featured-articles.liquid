@@ -1,0 +1,201 @@
+{% render 'chopinrx-tokens' %}
+
+{% liquid
+  assign arrow_icon = 'icon-arrow-right.svg' | inline_asset_content | replace: '#FCFAF9', 'currentColor'
+  assign feed = blog
+  if section.settings.blog != blank
+    assign feed = blogs[section.settings.blog]
+  endif
+  assign featured_tag = section.settings.featured_tag | downcase
+
+  assign featured = ''
+  for item in feed.articles
+    assign keys = item.tags | join: ',' | downcase | split: ','
+    if keys contains featured_tag
+      assign featured = featured | append: item.handle | append: ','
+    endif
+  endfor
+  assign featured_handles = featured | split: ','
+%}
+
+{%- if featured_handles.size > 0 -%}
+  <div class="chx-featured" data-chx-carousel>
+    <div class="chx-container">
+      <div class="chx-featured__head">
+        {%- if section.settings.heading != blank -%}
+          <h2 class="chx-h2 chx-featured__heading">{{ section.settings.heading }}</h2>
+        {%- endif -%}
+
+        {%- if featured_handles.size > 1 -%}
+          <div class="chx-featured__controls">
+            <button
+              type="button"
+              class="chx-carousel__control chx-featured__control chx-carousel__control--prev"
+              aria-label="{{ 'content.pagination.previous' | t }}"
+              data-chx-carousel-prev
+            >
+              <span class="chx-btn__icon" aria-hidden="true">{{ arrow_icon }}</span>
+            </button>
+            <button
+              type="button"
+              class="chx-carousel__control chx-featured__control"
+              aria-label="{{ 'content.pagination.next' | t }}"
+              data-chx-carousel-next
+            >
+              <span class="chx-btn__icon" aria-hidden="true">{{ arrow_icon }}</span>
+            </button>
+          </div>
+        {%- endif -%}
+      </div>
+
+      <div class="chx-carousel__viewport chx-featured__viewport" data-chx-carousel-viewport>
+        <ul class="chx-carousel__container chx-featured__track" role="list">
+          {%- for handle in featured_handles -%}
+            {%- for item in feed.articles -%}
+              {%- if item.handle == handle -%}
+                <li class="chx-carousel__slide chx-featured__slide">
+                  {% render 'chopinrx-article-card',
+                    article: item,
+                    wide: true,
+                    exclude_tag: section.settings.featured_tag,
+                    read_more: section.settings.read_more_label,
+                    sizes: '(min-width: 1025px) 50vw, 100vw'
+                  %}
+                </li>
+                {%- break -%}
+              {%- endif -%}
+            {%- endfor -%}
+          {%- endfor -%}
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <script type="module">
+    import EmblaCarousel from '{{ 'embla-carousel.js' | asset_url }}';
+    import { initCarousels } from '{{ 'chopinrx-carousel.js' | asset_url }}';
+    initCarousels(EmblaCarousel);
+  </script>
+{%- endif -%}
+
+{% stylesheet %}
+  .chx-featured {
+    background-color: var(--surface-page);
+    padding-block: var(--space-16);
+    overflow: clip;
+  }
+
+  .chx-featured > .chx-container {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-8);
+  }
+
+  .chx-featured__head {
+    display: flex;
+    align-items: center;
+    gap: var(--space-8);
+  }
+
+  .chx-featured__heading {
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+
+  .chx-featured__controls {
+    display: flex;
+    align-items: center;
+    gap: var(--space-8);
+    flex-shrink: 0;
+  }
+
+  .chx-featured .chx-featured__control {
+    border-color: transparent;
+    background-color: var(--surface-well);
+  }
+
+  .chx-featured .chx-featured__control:hover {
+    background-color: var(--border-hairline);
+  }
+
+  /* Both arrows stay in place at the ends of the rail, the inactive one dimmed. */
+  .chx-featured .chx-featured__control[disabled] {
+    opacity: 0.4;
+  }
+
+  /* One band per view, so the slide carries no spacing padding. */
+  .chx-featured .chx-carousel__container {
+    --chx-slide-spacing: 0px;
+  }
+
+  .chx-featured__slide {
+    flex: 0 0 100%;
+  }
+
+  /* ── Breakpoints ────────────────────────────── */
+  @media screen and (max-width: 767px) {
+    .chx-featured {
+      padding-block: var(--space-10);
+    }
+
+    /* The arrows move under the card and centre. */
+    .chx-featured > .chx-container {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      gap: var(--space-8);
+    }
+
+    .chx-featured__head {
+      order: 1;
+    }
+
+    .chx-featured__viewport {
+      order: 2;
+    }
+
+    .chx-featured__controls {
+      order: 3;
+      justify-content: center;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Featured articles",
+  "tag": "section",
+  "class": "chopinrx-featured-articles-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Featured articles"
+    },
+    {
+      "type": "blog",
+      "id": "blog",
+      "label": "Blog",
+      "info": "Leave empty on a blog template to use the blog being viewed."
+    },
+    {
+      "type": "text",
+      "id": "featured_tag",
+      "label": "Featured tag",
+      "info": "Articles carrying this tag appear here. The tag is hidden from the card and from the filter tabs.",
+      "default": "featured"
+    },
+    {
+      "type": "text",
+      "id": "read_more_label",
+      "label": "Read more label",
+      "default": "Read More"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Featured articles"
+    }
+  ]
+}
+{% endschema %}

@@ -3,9 +3,14 @@
 {% liquid
   assign image = section.settings.image
   assign slash_icon = 'icon-breadcrumb-slash.svg' | inline_asset_content
+
+  assign trustpilot_ink = false
+  if section.settings.style == 'band'
+    assign trustpilot_ink = true
+  endif
 %}
 
-<div class="chx-abouthero">
+<div class="chx-abouthero chx-abouthero--{{ section.settings.style }} chx-abouthero--{{ section.settings.alignment }}">
   <div class="chx-abouthero__frame">
     {%- if image != blank -%}
       <img
@@ -55,6 +60,7 @@
       {%- if section.settings.show_trustpilot -%}
         {% render 'chopinrx-trustpilot',
           variant: 'about',
+          ink: trustpilot_ink,
           rating: section.settings.trustpilot_rating,
           score: section.settings.trustpilot_score,
           count: section.settings.trustpilot_count,
@@ -73,21 +79,42 @@
   }
 
   .chx-abouthero__frame {
-    --chx-heading-color: var(--text-on-dark);
-    --chx-body-color: var(--text-on-dark);
-
     position: relative;
     display: flex;
     flex-direction: column;
-    align-items: center;
     justify-content: center;
     gap: var(--space-8);
-    min-height: 600px;
     padding: 80px var(--section-px);
     border-radius: var(--radius-xl);
     overflow: clip;
+  }
+
+  /* Photograph under the ink surface. */
+  .chx-abouthero--dark .chx-abouthero__frame {
+    --chx-heading-color: var(--text-on-dark);
+    --chx-body-color: var(--text-on-dark);
+
+    min-height: 600px;
     background-color: var(--surface-dark);
     color: var(--text-on-dark);
+  }
+
+  /* Flat band, ink copy. */
+  .chx-abouthero--band .chx-abouthero__frame {
+    background-color: var(--surface-card-flat);
+    color: var(--text-heading);
+  }
+
+  .chx-abouthero--center .chx-abouthero__frame {
+    align-items: center;
+  }
+
+  .chx-abouthero--start .chx-abouthero__frame {
+    align-items: flex-start;
+  }
+
+  .chx-abouthero--band .chx-breadcrumbs__link:hover {
+    color: var(--text-heading);
   }
 
   /* The photograph sits under the ink surface at 30%, as drawn. */
@@ -104,19 +131,28 @@
     position: relative;
     display: flex;
     flex-direction: column;
-    align-items: center;
     gap: var(--space-6);
     width: 100%;
+  }
+
+  .chx-abouthero--center .chx-abouthero__content {
+    align-items: center;
     max-width: 978px;
     text-align: center;
   }
 
-  .chx-abouthero__title {
-    color: var(--text-on-dark);
+  .chx-abouthero--start .chx-abouthero__content {
+    align-items: flex-start;
   }
 
+  /* The copy takes its colour from the frame, so both styles follow. */
+  .chx-abouthero__title,
   .chx-abouthero__text {
-    color: var(--text-on-dark);
+    color: inherit;
+  }
+
+  .chx-abouthero--start .chx-abouthero__content {
+    gap: var(--space-4);
   }
 
   .chx-abouthero__text > :first-child {
@@ -178,8 +214,11 @@
 
   /* ── Breakpoints ────────────────────────────── */
   @media screen and (max-width: 1024px) {
-    .chx-abouthero__frame {
+    .chx-abouthero--dark .chx-abouthero__frame {
       min-height: 520px;
+    }
+
+    .chx-abouthero__frame {
       padding-block: var(--space-16);
     }
   }
@@ -189,9 +228,17 @@
       padding-inline: 0;
     }
 
-    .chx-abouthero__frame {
+    .chx-abouthero--dark .chx-abouthero__frame {
       min-height: 512px;
+    }
+
+    .chx-abouthero__frame {
       padding: 80px 17px;
+    }
+
+    /* The flat band is a slimmer header on mobile. */
+    .chx-abouthero--band .chx-abouthero__frame {
+      padding-block: var(--space-10);
     }
 
     .chx-breadcrumbs__link,
@@ -217,10 +264,30 @@
 
 {% schema %}
 {
-  "name": "About hero",
+  "name": "Page banner",
   "tag": "section",
-  "class": "chopinrx-about-hero-section",
+  "class": "chopinrx-page-banner-section",
   "settings": [
+    {
+      "type": "select",
+      "id": "style",
+      "label": "Style",
+      "options": [
+        { "value": "dark", "label": "Photograph on ink" },
+        { "value": "band", "label": "Flat band" }
+      ],
+      "default": "dark"
+    },
+    {
+      "type": "select",
+      "id": "alignment",
+      "label": "Alignment",
+      "options": [
+        { "value": "center", "label": "Centred" },
+        { "value": "start", "label": "Left" }
+      ],
+      "default": "center"
+    },
     {
       "type": "image_picker",
       "id": "image",
@@ -294,7 +361,7 @@
   ],
   "presets": [
     {
-      "name": "About hero"
+      "name": "Page banner"
     }
   ]
 }

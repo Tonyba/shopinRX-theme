@@ -1,8 +1,10 @@
 {
   "sections": {
     "hero": {
-      "type": "chopinrx-about-hero",
+      "type": "chopinrx-page-banner",
       "settings": {
+        "style": "dark",
+        "alignment": "center",
         "image": "shopify://shop_images/chx-about-hero.jpg",
         "breadcrumb_home": "Home",
         "breadcrumb_current": "About us",

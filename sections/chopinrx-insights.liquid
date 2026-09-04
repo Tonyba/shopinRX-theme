@@ -30,50 +30,12 @@
     {%- if blog.articles_count > 0 -%}
       <ul class="chx-insights__grid" role="list">
         {%- for article in blog.articles limit: limit -%}
-          <li class="chx-article">
-            <a class="chx-article__media" href="{{ article.url }}" tabindex="-1" aria-hidden="true">
-              {%- if article.image != blank -%}
-                <img
-                  src="{{ article.image | image_url: width: 900 }}"
-                  srcset="
-                    {{ article.image | image_url: width: 450 }} 450w,
-                    {{ article.image | image_url: width: 900 }} 900w
-                  "
-                  sizes="(min-width: 1025px) 33vw, (min-width: 768px) 50vw, 100vw"
-                  width="{{ article.image.width }}"
-                  height="{{ article.image.height }}"
-                  alt="{{ article.image.alt | escape }}"
-                  loading="lazy"
-                >
-              {%- endif -%}
-            </a>
-
-            <div class="chx-article__body">
-              <p class="chx-article__meta">
-                {%- if article.tags.size > 0 -%}
-                  <span class="chx-article__tag">{{ article.tags.first }}</span>
-                  <span class="chx-eyebrow__dot" aria-hidden="true">{{ dot_icon }}</span>
-                {%- endif -%}
-                <time datetime="{{ article.published_at | date: '%Y-%m-%d' }}">
-                  {{- article.published_at | date: format: 'date' -}}
-                </time>
-              </p>
-
-              <h3 class="chx-h5 chx-article__title">
-                <a href="{{ article.url }}">{{ article.title }}</a>
-              </h3>
-
-              {%- if article.excerpt_or_content != blank -%}
-                <p class="chx-article__dek">
-                  {{- article.excerpt_or_content | strip_html | truncatewords: 24 -}}
-                </p>
-              {%- endif -%}
-            </div>
-
-            <span class="chx-article__more" aria-hidden="true">
-              <span>{{ section.settings.read_more_label }}</span>
-              <span class="chx-btn__icon chx-article__more-icon">{{ arrow_icon }}</span>
-            </span>
+          <li>
+            {% render 'chopinrx-article-card',
+              article: article,
+              read_more: section.settings.read_more_label,
+              exclude_tag: section.settings.featured_tag
+            %}
           </li>
         {%- endfor -%}
       </ul>
@@ -112,105 +74,10 @@
     list-style: none;
   }
 
-  /* ── Article card ───────────────────────────── */
-  .chx-article {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-6);
-  }
-
-  .chx-article__media {
-    display: block;
-    height: 266px;
-    border-radius: var(--radius-lg);
-    overflow: clip;
-    background-color: var(--text-muted);
-  }
-
-  .chx-article__media img {
-    display: block;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.4s var(--ease-out-cubic, ease);
-  }
-
-  .chx-article:hover .chx-article__media img {
-    transform: scale(1.04);
-  }
-
-  .chx-article__body {
-    display: flex;
-    flex: 1 1 auto;
-    flex-direction: column;
-    gap: var(--space-3);
-  }
-
-  .chx-article__meta {
-    display: flex;
-    align-items: center;
-    gap: var(--space-2);
-    margin: 0;
-    font-family: var(--font-ui);
-    font-size: var(--font-size-label-tag);
-    font-weight: 600;
-    line-height: 1.14;
-    letter-spacing: 0.005em;
-    color: var(--text-muted);
-  }
-
-  .chx-article__tag {
-    text-transform: uppercase;
-  }
-
-  .chx-article__title a {
-    color: inherit;
-    text-decoration: none;
-    transition: color 0.2s ease;
-  }
-
-  .chx-article:hover .chx-article__title a {
-    color: var(--text-accent);
-  }
-
-  .chx-article__dek {
-    margin: 0;
-    font-family: var(--font-ui);
-    font-size: var(--font-size-body);
-    font-weight: 400;
-    line-height: 1.5;
-    letter-spacing: -0.005em;
-    color: var(--text-body);
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 2;
-    overflow: hidden;
-  }
-
-  .chx-article__more {
-    display: inline-flex;
-    align-items: center;
-    gap: var(--space-2);
-    font-family: var(--font-ui);
-    font-size: var(--font-size-button-large);
-    font-weight: 600;
-    line-height: 1.33;
-    letter-spacing: -0.005em;
-    color: var(--text-heading);
-  }
-
-  .chx-article__more-icon {
-    color: var(--text-accent);
-  }
-
   /* ── Breakpoints ────────────────────────────── */
   @media screen and (max-width: 1024px) {
     .chx-insights__grid {
       grid-template-columns: repeat(2, 1fr);
-    }
-
-    .chx-article__media {
-      height: 220px;
     }
   }
 
@@ -252,20 +119,6 @@
       font-size: var(--font-size-button-large);
       line-height: 1.33;
     }
-
-    .chx-article__media {
-      height: 266px;
-    }
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .chx-article__media img {
-      transition: none;
-    }
-
-    .chx-article:hover .chx-article__media img {
-      transform: none;
-    }
   }
 {% endstylesheet %}
 
@@ -300,6 +153,12 @@
       "max": 6,
       "step": 1,
       "default": 3
+    },
+    {
+      "type": "text",
+      "id": "featured_tag",
+      "label": "Tag to hide on cards",
+      "default": "featured"
     },
     {
       "type": "text",
