@@ -152,6 +152,12 @@
     background-color: var(--border-hairline);
   }
 
+  /* Both arrows stay in place at the end of the rail, the inactive one dimmed,
+     rather than disappearing as the product rail's controls do. */
+  .chx-team .chx-team__control[disabled] {
+    opacity: 0.4;
+  }
+
   /* The rail runs off the right edge of the content well, as drawn. */
   .chx-team__rail {
     width: calc(100% + var(--chx-gutter));
