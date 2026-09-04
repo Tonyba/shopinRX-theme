@@ -87,28 +87,12 @@
       {%- endif -%}
 
       {%- if section.settings.show_trustpilot -%}
-        {%- capture trustpilot -%}
-          <span class="chx-trustpilot__rating">
-            <span class="chx-trustpilot__stars" aria-hidden="true">
-              {{- 'trustpilot-stars-5.svg' | inline_asset_content -}}
-            </span>
-            <span class="chx-trustpilot__score">{{ section.settings.trustpilot_score }}</span>
-            <span class="chx-trustpilot__word">{{ section.settings.trustpilot_rating }}</span>
-            <span class="chx-trustpilot__count">{{ section.settings.trustpilot_count }}</span>
-          </span>
-          <span class="chx-trustpilot__brand">
-            <span class="chx-trustpilot__mark" aria-hidden="true">
-              {{- 'trustpilot-logo.svg' | inline_asset_content -}}
-            </span>
-            <span class="chx-trustpilot__word">Trustpilot</span>
-          </span>
-        {%- endcapture -%}
-
-        {%- if section.settings.trustpilot_url != blank -%}
-          <a class="chx-trustpilot" href="{{ section.settings.trustpilot_url }}" rel="noopener">{{ trustpilot }}</a>
-        {%- else -%}
-          <div class="chx-trustpilot">{{ trustpilot }}</div>
-        {%- endif -%}
+        {% render 'chopinrx-trustpilot',
+          rating: section.settings.trustpilot_rating,
+          score: section.settings.trustpilot_score,
+          count: section.settings.trustpilot_count,
+          url: section.settings.trustpilot_url
+        %}
       {%- endif -%}
     </div>
   </div>
@@ -273,76 +257,6 @@
     gap: var(--space-3);
   }
 
-  /* ── Trustpilot strip ───────────────────────── */
-  .chx-trustpilot {
-    display: flex;
-    align-items: center;
-    gap: 13px;
-    height: 26px;
-    color: var(--text-on-dark);
-    text-decoration: none;
-  }
-
-  .chx-trustpilot:hover {
-    text-decoration: none;
-    color: var(--text-on-dark);
-  }
-
-  .chx-trustpilot__word,
-  .chx-trustpilot__count {
-    font-family: var(--font-ui);
-    font-size: 17.12px;
-    line-height: 1;
-    white-space: nowrap;
-  }
-
-  .chx-trustpilot__word {
-    font-weight: 700;
-  }
-
-  .chx-trustpilot__count {
-    font-weight: 500;
-  }
-
-  .chx-trustpilot__stars {
-    display: block;
-    flex-shrink: 0;
-    width: 106.667px;
-    height: 20px;
-  }
-
-  .chx-trustpilot__rating {
-    display: flex;
-    align-items: center;
-    gap: 13px;
-  }
-
-  .chx-trustpilot__score {
-    display: none;
-  }
-
-  .chx-trustpilot__brand {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 5.707px;
-    height: 26px;
-  }
-
-  .chx-trustpilot__mark {
-    display: block;
-    flex-shrink: 0;
-    width: 19.973px;
-    height: 18.903px;
-  }
-
-  .chx-trustpilot__stars svg,
-  .chx-trustpilot__mark svg {
-    display: block;
-    width: 100%;
-    height: 100%;
-  }
-
   /* ── Breakpoints ────────────────────────────── */
   @media screen and (max-width: 1024px) {
     .chx-hero__frame {
@@ -451,32 +365,6 @@
       width: 100%;
     }
 
-    /* Stars, score and word on one line, the wordmark beneath it. */
-    .chx-trustpilot {
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      height: auto;
-      gap: 0;
-    }
-
-    .chx-trustpilot__rating {
-      gap: 6px;
-    }
-
-    .chx-trustpilot__stars {
-      order: -1;
-      margin-inline-end: 7px;
-    }
-
-    .chx-trustpilot__score {
-      display: block;
-      font-weight: 500;
-    }
-
-    .chx-trustpilot__count {
-      display: none;
-    }
   }
 {% endstylesheet %}
 
