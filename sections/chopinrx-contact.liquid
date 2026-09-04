@@ -1,0 +1,921 @@
+{% render 'chopinrx-tokens' %}
+
+{% liquid
+  assign arrow_icon = 'icon-arrow-right.svg' | inline_asset_content | replace: '#FCFAF9', 'currentColor'
+  assign chevron_icon = 'icon-chevron-down.svg' | inline_asset_content | replace: '#FF6E42', 'currentColor'
+  assign form_id = 'ContactForm-' | append: section.id
+  assign reasons = section.settings.reasons | newline_to_br | split: '<br />'
+%}
+
+<div class="chx-contact">
+  <div class="chx-contact__copy">
+    {% render 'chopinrx-section-heading',
+      eyebrow: section.settings.eyebrow,
+      heading: section.settings.heading,
+      heading_tag: 'h1',
+      heading_class: 'chx-h1'
+    %}
+
+    {%- if section.settings.lede != blank -%}
+      <p class="chx-h5 chx-contact__lede">{{ section.settings.lede }}</p>
+    {%- endif -%}
+
+    {%- if section.blocks.size > 0 -%}
+      <div class="chx-contact__channels">
+        {%- if section.settings.channels_title != blank -%}
+          <p class="chx-contact__channels-title">{{ section.settings.channels_title }}</p>
+        {%- endif -%}
+
+        <ul class="chx-contact__links" role="list">
+          {%- for block in section.blocks -%}
+            {%- liquid
+              case block.settings.icon
+                when 'phone'
+                  assign icon = 'icon-contact-phone.svg' | inline_asset_content
+                when 'mail'
+                  assign icon = 'icon-contact-mail.svg' | inline_asset_content
+                else
+                  assign icon = 'icon-contact-chat.svg' | inline_asset_content
+              endcase
+            -%}
+            <li class="chx-contact__link" {{ block.shopify_attributes }}>
+              <span class="chx-contact__link-icon" aria-hidden="true">{{ icon }}</span>
+              <span class="chx-contact__link-body">
+                {%- if block.settings.url != blank -%}
+                  <a class="chx-contact__link-label" href="{{ block.settings.url }}">{{ block.settings.label }}</a>
+                {%- else -%}
+                  <span class="chx-contact__link-label">{{ block.settings.label }}</span>
+                {%- endif -%}
+                {%- if block.settings.text != blank -%}
+                  <span class="chx-contact__link-text">{{ block.settings.text }}</span>
+                {%- endif -%}
+              </span>
+            </li>
+          {%- endfor -%}
+        </ul>
+      </div>
+    {%- endif -%}
+  </div>
+
+  <div class="chx-contact__panel">
+    {%- form 'contact', id: form_id, class: 'chx-form' -%}
+      <input type="hidden" name="contact[id]" value="{{ form_id }}">
+
+      {%- liquid
+        assign form_matches = false
+        if form.id == form_id or form.id == blank
+          assign form_matches = true
+        endif
+      -%}
+
+      {%- if form.errors and form_matches -%}
+        <div class="chx-form__error" tabindex="-1" autofocus>
+          {{- 'icon-error.svg' | inline_asset_content -}}
+          <span>
+            {{- form.errors.translated_fields.email | capitalize }} {{ form.errors.messages.email -}}
+          </span>
+        </div>
+      {%- endif -%}
+
+      {%- if form.posted_successfully? and form_matches -%}
+        <div class="chx-form__success" tabindex="-1" autofocus>
+          {{- 'icon-checkmark.svg' | inline_asset_content -}}
+          <span>{{ 'blocks.contact_form.post_success' | t }}</span>
+        </div>
+      {%- endif -%}
+
+      <div class="chx-form__row">
+        <div class="chx-field">
+          <label class="chx-field__label" for="{{ form_id }}-first">
+            {{ section.settings.first_name_label }}
+            <span class="chx-field__required" aria-hidden="true">*</span>
+          </label>
+          <input
+            class="chx-field__control"
+            id="{{ form_id }}-first"
+            type="text"
+            name="contact[First name]"
+            autocomplete="given-name"
+            placeholder="{{ section.settings.first_name_label }}"
+            value="{{ form.first_name }}"
+            required
+          >
+          <p class="chx-field__helper">{{ section.settings.first_name_helper }}</p>
+        </div>
+
+        <div class="chx-field">
+          <label class="chx-field__label" for="{{ form_id }}-last">
+            {{ section.settings.last_name_label }}
+            <span class="chx-field__required" aria-hidden="true">*</span>
+          </label>
+          <input
+            class="chx-field__control"
+            id="{{ form_id }}-last"
+            type="text"
+            name="contact[Last name]"
+            autocomplete="family-name"
+            placeholder="{{ section.settings.last_name_label }}"
+            required
+          >
+          <p class="chx-field__helper">{{ section.settings.last_name_helper }}</p>
+        </div>
+      </div>
+
+      <div class="chx-form__row">
+        <div class="chx-field">
+          <label class="chx-field__label" for="{{ form_id }}-email">
+            {{ section.settings.email_label }}
+            <span class="chx-field__required" aria-hidden="true">*</span>
+          </label>
+          <input
+            class="chx-field__control"
+            id="{{ form_id }}-email"
+            type="email"
+            name="contact[email]"
+            autocomplete="email"
+            spellcheck="false"
+            autocapitalize="off"
+            placeholder="{{ section.settings.email_placeholder }}"
+            value="{% if form.email %}{{ form.email }}{% elsif customer %}{{ customer.email }}{% endif %}"
+            required
+            {% if form.errors contains 'email' and form_matches %}
+              aria-invalid="true"
+            {% endif %}
+          >
+          <p class="chx-field__helper">{{ section.settings.email_helper }}</p>
+        </div>
+
+        <div class="chx-field">
+          <label class="chx-field__label" for="{{ form_id }}-phone">
+            {{ section.settings.phone_label }}
+            <span class="chx-field__required" aria-hidden="true">*</span>
+          </label>
+          <input
+            class="chx-field__control"
+            id="{{ form_id }}-phone"
+            type="tel"
+            name="contact[phone]"
+            autocomplete="tel"
+            placeholder="{{ section.settings.phone_placeholder }}"
+            value="{% if form.phone %}{{ form.phone }}{% elsif customer %}{{ customer.phone }}{% endif %}"
+            required
+          >
+          <p class="chx-field__helper">{{ section.settings.phone_helper }}</p>
+        </div>
+      </div>
+
+      <div class="chx-form__row">
+        <div class="chx-field chx-field--select">
+          <label class="chx-field__label" for="{{ form_id }}-reason">
+            {{ section.settings.reason_label }}
+            <span class="chx-field__required" aria-hidden="true">*</span>
+          </label>
+          <div class="chx-field__control chx-field__control--select">
+            <span class="chx-field__mini-label" aria-hidden="true">{{ section.settings.reason_label }}</span>
+            <select id="{{ form_id }}-reason" name="contact[Contact reason]" required>
+              <option value="" disabled selected>{{ section.settings.reason_placeholder }}</option>
+              {%- for reason in reasons -%}
+                {%- assign reason_text = reason | strip_newlines | strip -%}
+                {%- if reason_text != blank -%}
+                  <option value="{{ reason_text | escape }}">{{ reason_text }}</option>
+                {%- endif -%}
+              {%- endfor -%}
+            </select>
+            <span class="chx-field__chevron" aria-hidden="true">{{ chevron_icon }}</span>
+          </div>
+          <p class="chx-field__helper">{{ section.settings.reason_helper }}</p>
+        </div>
+      </div>
+
+      <div class="chx-form__row">
+        <div class="chx-field">
+          <label class="chx-field__label" for="{{ form_id }}-body">
+            {{ section.settings.message_label }}
+            <span class="chx-field__required" aria-hidden="true">*</span>
+          </label>
+          <textarea
+            class="chx-field__control chx-field__control--textarea"
+            id="{{ form_id }}-body"
+            name="contact[body]"
+            placeholder="{{ section.settings.message_placeholder }}"
+            required
+            data-chx-counter-input
+          >{{ form.body }}</textarea>
+          <p class="chx-field__helper" data-chx-counter-output>
+            {{- section.settings.message_helper | replace: '[count]', '0' -}}
+          </p>
+        </div>
+      </div>
+
+      {%- if section.settings.consent != blank -%}
+        <div class="chx-form__consent">
+          <input
+            class="chx-checkbox"
+            id="{{ form_id }}-consent"
+            type="checkbox"
+            name="contact[Consent]"
+            value="{{ section.settings.consent | strip_html | truncate: 120 | escape }}"
+            required
+          >
+          <label class="chx-form__consent-text" for="{{ form_id }}-consent">{{ section.settings.consent }}</label>
+        </div>
+      {%- endif -%}
+
+      <div class="chx-form__actions">
+        <button class="chx-btn chx-btn--primary chx-form__submit" type="submit">
+          <span>{{ section.settings.submit_label }}</span>
+          <span class="chx-btn__icon" aria-hidden="true">{{ arrow_icon }}</span>
+        </button>
+
+        {%- if section.settings.note != blank -%}
+          <p class="chx-form__note">{{ section.settings.note }}</p>
+        {%- endif -%}
+      </div>
+    {%- endform -%}
+  </div>
+</div>
+
+<script type="module">
+  // The message helper doubles as a character counter, as drawn.
+  for (const form of document.querySelectorAll('.chx-form')) {
+    const input = form.querySelector('[data-chx-counter-input]');
+    const output = form.querySelector('[data-chx-counter-output]');
+    if (!input || !output) continue;
+    const template = output.textContent.trim().replace(/\d+/, '{count}');
+    const sync = () => {
+      output.textContent = template.replace('{count}', String(input.value.length));
+    };
+    input.addEventListener('input', sync);
+    sync();
+  }
+</script>
+
+{% stylesheet %}
+  .chx-contact {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1084px);
+    align-items: stretch;
+    background-color: var(--surface-muted);
+  }
+
+  .chx-contact__copy {
+    display: flex;
+    flex-direction: column;
+    align-self: center;
+    justify-content: center;
+    gap: 30px;
+    width: 486px;
+    max-width: 100%;
+    margin-inline-start: var(--chx-gutter);
+    padding-block: var(--section-py-tight);
+  }
+
+  .chx-contact__lede {
+    color: var(--text-body);
+  }
+
+  .chx-contact__channels {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-5);
+  }
+
+  .chx-contact__channels-title {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: var(--font-size-subtitle);
+    font-weight: 500;
+    line-height: 1.28;
+    letter-spacing: -0.02em;
+    color: var(--text-accent-strong);
+  }
+
+  .chx-contact__links {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-5);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .chx-contact__link {
+    display: flex;
+    align-items: center;
+    gap: var(--space-5);
+  }
+
+  .chx-contact__link-icon {
+    display: block;
+    flex-shrink: 0;
+    width: 30px;
+    height: 30px;
+    color: var(--text-body);
+  }
+
+  .chx-contact__link-icon svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  .chx-contact__link-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-width: 0;
+  }
+
+  .chx-contact__link-label {
+    font-family: var(--font-display);
+    font-size: var(--font-size-subtitle);
+    font-weight: 500;
+    line-height: 1.28;
+    letter-spacing: -0.02em;
+    color: var(--text-body);
+    text-decoration: none;
+  }
+
+  a.chx-contact__link-label:hover {
+    color: var(--text-accent);
+    text-decoration: none;
+  }
+
+  .chx-contact__link-text {
+    font-family: var(--font-ui);
+    font-size: var(--font-size-body-large);
+    font-weight: 400;
+    line-height: 1.55;
+    letter-spacing: -0.005em;
+    color: var(--text-on-dark-muted);
+  }
+
+  /* ── Form panel ─────────────────────────────── */
+  .chx-contact__panel {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 80px;
+    background-color: var(--surface-card-flat);
+  }
+
+  .chx-form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+    width: 766px;
+    max-width: 100%;
+  }
+
+  .chx-form__row {
+    display: flex;
+    gap: var(--space-6);
+  }
+
+  .chx-form__error,
+  .chx-form__success {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-3);
+    padding: var(--space-4) var(--space-5);
+    border-radius: var(--radius-md);
+    font-family: var(--font-ui);
+    font-size: var(--font-size-body-small);
+    line-height: 1.43;
+  }
+
+  .chx-form__error {
+    border: var(--border-w) solid #a33a28;
+    color: #a33a28;
+  }
+
+  .chx-form__success {
+    border: var(--border-w) solid var(--icon-success);
+    color: var(--text-heading);
+  }
+
+  .chx-form__error svg,
+  .chx-form__success svg {
+    flex-shrink: 0;
+    width: 20px;
+    height: 20px;
+  }
+
+  /* ── Field ──────────────────────────────────── */
+  .chx-field {
+    display: flex;
+    flex: 1 1 0;
+    flex-direction: column;
+    gap: var(--space-2);
+    min-width: 0;
+  }
+
+  .chx-field__label {
+    display: flex;
+    gap: 4px;
+    font-family: var(--font-ui);
+    font-size: var(--font-size-body);
+    font-weight: 600;
+    line-height: 1.5;
+    letter-spacing: -0.005em;
+    color: var(--text-heading);
+  }
+
+  .chx-field__required {
+    color: #a33a28;
+  }
+
+  .chx-field__control {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    width: 100%;
+    height: 60px;
+    padding: var(--space-3) var(--space-5);
+    border: var(--border-w) solid var(--border-hairline);
+    border-radius: var(--radius-md);
+    background-color: var(--surface-card);
+    font-family: var(--font-ui);
+    font-size: var(--font-size-body);
+    font-weight: 400;
+    line-height: 1.5;
+    letter-spacing: -0.005em;
+    color: var(--text-heading);
+    appearance: none;
+  }
+
+  .chx-field__control::placeholder {
+    color: var(--text-muted);
+  }
+
+  .chx-field__control:focus-visible {
+    outline: 2px solid var(--text-heading);
+    outline-offset: 1px;
+  }
+
+  .chx-field__control[aria-invalid='true'] {
+    border-color: #a33a28;
+  }
+
+  .chx-field__control--textarea {
+    display: block;
+    height: 200px;
+    padding: var(--space-5);
+    resize: vertical;
+  }
+
+  /* The select carries its own label above the value, so the control is a
+     little taller than a text field. */
+  .chx-field__control--select {
+    position: relative;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 0;
+    height: 65px;
+  }
+
+  .chx-field__mini-label {
+    font-family: var(--font-ui);
+    font-size: var(--font-size-body-small);
+    font-weight: 500;
+    line-height: 1.43;
+    letter-spacing: -0.005em;
+    color: var(--text-heading);
+  }
+
+  .chx-field__control--select select {
+    width: 100%;
+    padding: 0;
+    padding-inline-end: 32px;
+    border: 0;
+    background: none;
+    font-family: var(--font-ui);
+    font-size: var(--font-size-body);
+    font-weight: 400;
+    line-height: 1.5;
+    letter-spacing: -0.005em;
+    color: var(--text-heading);
+    appearance: none;
+    cursor: pointer;
+  }
+
+  .chx-field__control--select select:focus-visible {
+    outline: none;
+  }
+
+  .chx-field__control--select:focus-within {
+    outline: 2px solid var(--text-heading);
+    outline-offset: 1px;
+  }
+
+  .chx-field__control--select select:invalid {
+    color: var(--text-muted);
+  }
+
+  .chx-field__chevron {
+    position: absolute;
+    inset-block-start: 50%;
+    inset-inline-end: var(--space-5);
+    display: block;
+    width: 20px;
+    height: 20px;
+    color: var(--text-heading);
+    transform: translateY(-50%);
+    pointer-events: none;
+  }
+
+  .chx-field__chevron svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  .chx-field__helper {
+    margin: 0;
+    font-family: var(--font-ui);
+    font-size: var(--font-size-body-small);
+    font-weight: 400;
+    line-height: 1.43;
+    letter-spacing: -0.005em;
+    color: var(--text-muted);
+  }
+
+  /* ── Consent ────────────────────────────────── */
+  .chx-form__consent {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-4);
+    padding: var(--space-5);
+    border: var(--border-w) solid var(--surface-accent-soft);
+    border-radius: var(--radius-md);
+    background-color: var(--surface-card);
+  }
+
+  .chx-checkbox {
+    flex-shrink: 0;
+    width: 20px;
+    height: 20px;
+    margin: 0;
+    border: var(--border-w) solid var(--border-strong);
+    border-radius: 6px;
+    background-color: var(--surface-card);
+    appearance: none;
+    cursor: pointer;
+  }
+
+  .chx-checkbox:checked {
+    border-color: var(--surface-accent);
+    background-color: var(--surface-accent);
+    /* Tick drawn from the box itself so no extra asset is needed. */
+    background-image: linear-gradient(45deg, transparent 45%, var(--action-accent-fg) 45%, var(--action-accent-fg) 55%, transparent 55%),
+      linear-gradient(-45deg, transparent 60%, var(--action-accent-fg) 60%, var(--action-accent-fg) 70%, transparent 70%);
+    background-position: 3px 6px, -1px 2px;
+    background-repeat: no-repeat;
+    background-size: 10px 10px, 10px 10px;
+  }
+
+  .chx-checkbox:focus-visible {
+    outline: 2px solid var(--text-heading);
+    outline-offset: 2px;
+  }
+
+  .chx-form__consent-text {
+    flex: 1 1 auto;
+    font-family: var(--font-ui);
+    font-size: var(--font-size-body-small);
+    font-weight: 400;
+    line-height: 1.43;
+    letter-spacing: -0.005em;
+    color: var(--text-muted);
+  }
+
+  .chx-form__consent-text a {
+    color: var(--text-heading);
+    text-decoration: underline;
+  }
+
+  /* ── Actions ────────────────────────────────── */
+  .chx-form__actions {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-4);
+  }
+
+  /* The note runs under the action on mobile only, as drawn. */
+  .chx-form__note {
+    display: none;
+    margin: 0;
+    font-family: var(--font-ui);
+    font-size: var(--font-size-body-small);
+    font-weight: 500;
+    line-height: 1.43;
+    letter-spacing: -0.005em;
+    color: var(--text-muted);
+  }
+
+  /* ── Breakpoints ────────────────────────────── */
+  @media screen and (max-width: 1024px) {
+    .chx-contact {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .chx-contact__copy {
+      width: 100%;
+      margin-inline: 0;
+      padding-inline: var(--section-px);
+    }
+
+    .chx-contact__panel {
+      padding: var(--space-10) var(--section-px);
+    }
+  }
+
+  @media screen and (max-width: 767px) {
+    .chx-contact__copy {
+      gap: 30px;
+      padding-block: var(--space-10) 0;
+    }
+
+    /* The lede holds its 24px through the mobile ramp, as drawn. */
+    .chx-contact .chx-contact__lede {
+      font-size: 24px;
+      line-height: 1.2;
+    }
+
+    /* Icon over copy, rather than beside it. */
+    .chx-contact__link {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: var(--space-5);
+    }
+
+    .chx-contact__link-label {
+      font-size: var(--font-size-body-large);
+      line-height: 1.28;
+    }
+
+    .chx-contact__link-text {
+      font-size: var(--font-size-body-large);
+    }
+
+    .chx-contact__panel {
+      padding: 30px var(--section-px);
+    }
+
+    /* On mobile the fields become a single column inside a bordered card, and
+       the action fills the width. */
+    .chx-form {
+      gap: var(--space-6);
+      padding: var(--space-6) var(--section-px);
+      border: var(--border-w) solid var(--border-hairline);
+      border-radius: var(--radius-lg);
+      background-color: var(--surface-card);
+    }
+
+    .chx-form__row {
+      flex-direction: column;
+      gap: var(--space-5);
+    }
+
+    /* Scoped under the section root: the button primitive sets the same
+       properties at the same specificity and the bundle order is not fixed. */
+    .chx-contact .chx-form__submit {
+      width: 100%;
+      background-color: var(--action-accent-bg);
+      color: var(--action-accent-fg);
+    }
+
+    .chx-contact .chx-form__submit:hover {
+      background-color: var(--action-accent-bg-hover);
+      color: var(--action-accent-fg);
+    }
+
+    .chx-form__note {
+      display: block;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Contact",
+  "tag": "section",
+  "class": "chopinrx-contact-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Contact Us"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "info": "Italic text is rendered in the accent colour.",
+      "default": "Get In Touch<em>.</em>"
+    },
+    {
+      "type": "text",
+      "id": "lede",
+      "label": "Intro line",
+      "default": "Fill in the form to get in touch with someone on our team, and we will reach out shortly."
+    },
+    {
+      "type": "text",
+      "id": "channels_title",
+      "label": "Channels title",
+      "default": "Have a question?"
+    },
+    {
+      "type": "header",
+      "content": "Form"
+    },
+    {
+      "type": "text",
+      "id": "first_name_label",
+      "label": "First name label",
+      "default": "First name"
+    },
+    {
+      "type": "text",
+      "id": "first_name_helper",
+      "label": "First name helper",
+      "default": "As it appears on your ID."
+    },
+    {
+      "type": "text",
+      "id": "last_name_label",
+      "label": "Last name label",
+      "default": "Last name"
+    },
+    {
+      "type": "text",
+      "id": "last_name_helper",
+      "label": "Last name helper",
+      "default": "As it appears on your ID."
+    },
+    {
+      "type": "text",
+      "id": "email_label",
+      "label": "Email label",
+      "default": "Email"
+    },
+    {
+      "type": "text",
+      "id": "email_placeholder",
+      "label": "Email placeholder",
+      "default": "you@example.com"
+    },
+    {
+      "type": "text",
+      "id": "email_helper",
+      "label": "Email helper",
+      "default": "We reply here first."
+    },
+    {
+      "type": "text",
+      "id": "phone_label",
+      "label": "Phone label",
+      "default": "Phone number"
+    },
+    {
+      "type": "text",
+      "id": "phone_placeholder",
+      "label": "Phone placeholder",
+      "default": "+1 (___) ___-____"
+    },
+    {
+      "type": "text",
+      "id": "phone_helper",
+      "label": "Phone helper",
+      "default": "Only used if we cannot reach you by email."
+    },
+    {
+      "type": "text",
+      "id": "reason_label",
+      "label": "Reason label",
+      "default": "Contact reason"
+    },
+    {
+      "type": "text",
+      "id": "reason_placeholder",
+      "label": "Reason placeholder",
+      "default": "Choose a reason"
+    },
+    {
+      "type": "textarea",
+      "id": "reasons",
+      "label": "Reason options",
+      "info": "One per line.",
+      "default": "Programs and treatments\nAn existing order\nBilling\nPress and media\nSomething else"
+    },
+    {
+      "type": "text",
+      "id": "reason_helper",
+      "label": "Reason helper",
+      "default": "Pick the closest match — it routes your message."
+    },
+    {
+      "type": "text",
+      "id": "message_label",
+      "label": "Message label",
+      "default": "Message"
+    },
+    {
+      "type": "text",
+      "id": "message_placeholder",
+      "label": "Message placeholder",
+      "default": "Tell us what you need"
+    },
+    {
+      "type": "text",
+      "id": "message_helper",
+      "label": "Message helper",
+      "info": "[count] is replaced with the number of characters typed.",
+      "default": "Character count: [count]"
+    },
+    {
+      "type": "richtext",
+      "id": "consent",
+      "label": "Consent",
+      "default": "<p>I agree to the Terms & Conditions and the Privacy Policy. By submitting this form I consent to receive SMS messages, emails and calls from ChopinRX. Message frequency varies. Reply STOP to cancel. Msg and data rates may apply. Your information is never sold to third parties.</p>"
+    },
+    {
+      "type": "text",
+      "id": "submit_label",
+      "label": "Submit label",
+      "default": "Send message"
+    },
+    {
+      "type": "text",
+      "id": "note",
+      "label": "Closing note",
+      "default": "ChopinRX connects you with independent licensed providers. This form is not a request for medical advice."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "channel",
+      "name": "Contact channel",
+      "settings": [
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icon",
+          "options": [
+            { "value": "phone", "label": "Phone" },
+            { "value": "chat", "label": "Chat" },
+            { "value": "mail", "label": "Mail" }
+          ],
+          "default": "phone"
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label",
+          "default": "073 8016 9186"
+        },
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Sub-label",
+          "default": "Monday - Friday 9am - 5pm"
+        },
+        {
+          "type": "url",
+          "id": "url",
+          "label": "Link"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 6,
+  "presets": [
+    {
+      "name": "Contact",
+      "blocks": [
+        { "type": "channel" },
+        {
+          "type": "channel",
+          "settings": {
+            "icon": "chat",
+            "label": "help@chopinrx.com",
+            "text": "We aim to reply in 24 hours"
+          }
+        },
+        {
+          "type": "channel",
+          "settings": {
+            "icon": "mail",
+            "label": "press@chopinrx.com",
+            "text": "Press & media inquiries"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
