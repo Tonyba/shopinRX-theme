@@ -603,7 +603,9 @@
     gap: var(--space-4);
   }
 
+  /* The note runs under the action on mobile only, as drawn. */
   .chx-form__note {
+    display: none;
     margin: 0;
     font-family: var(--font-ui);
     font-size: var(--font-size-body-small);
@@ -686,6 +688,10 @@
     .chx-form__submit:hover {
       background-color: var(--action-accent-bg-hover);
       color: var(--action-accent-fg);
+    }
+
+    .chx-form__note {
+      display: block;
     }
   }
 {% endstylesheet %}
