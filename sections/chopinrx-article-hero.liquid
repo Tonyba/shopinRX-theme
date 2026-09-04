@@ -1,0 +1,274 @@
+{% render 'chopinrx-tokens' %}
+
+{% liquid
+  assign slash_icon = 'icon-breadcrumb-slash.svg' | inline_asset_content
+  assign dot_icon = 'icon-eyebrow-dot.svg' | inline_asset_content
+  assign share_url = shop.url | append: article.url
+  assign share_title = article.title | url_encode
+
+  assign skip = section.settings.featured_tag | downcase
+  assign topic = ''
+  for tag in article.tags
+    assign tag_key = tag | downcase
+    if skip != blank and tag_key == skip
+      continue
+    endif
+    if topic == blank
+      assign topic = tag
+    endif
+  endfor
+%}
+
+<div class="chx-articlehero">
+  <div class="chx-container">
+    <div class="chx-measure">
+      <nav class="chx-breadcrumbs" aria-label="Breadcrumb">
+        <ol class="chx-breadcrumbs__list" role="list">
+          <li class="chx-breadcrumbs__item">
+            <a class="chx-breadcrumbs__link" href="{{ routes.root_url }}">{{ section.settings.breadcrumb_home }}</a>
+          </li>
+          <li class="chx-breadcrumbs__item">
+            <span class="chx-breadcrumbs__sep" aria-hidden="true">{{ slash_icon }}</span>
+            <a class="chx-breadcrumbs__link" href="{{ blog.url }}">{{ blog.title }}</a>
+          </li>
+          <li class="chx-breadcrumbs__item">
+            <span class="chx-breadcrumbs__sep" aria-hidden="true">{{ slash_icon }}</span>
+            <span class="chx-breadcrumbs__current" aria-current="page">{{ article.title }}</span>
+          </li>
+        </ol>
+      </nav>
+
+      <div class="chx-articlehero__head">
+        <h1 class="chx-h2 chx-articlehero__title">{{ article.title }}</h1>
+
+        <div class="chx-articlehero__meta">
+          <p class="chx-articlehero__eyebrow">
+            {%- if topic != blank -%}
+              <span class="chx-articlehero__tag">{{ topic }}</span>
+              <span class="chx-eyebrow__dot" aria-hidden="true">{{ dot_icon }}</span>
+            {%- endif -%}
+            <time datetime="{{ article.published_at | date: '%Y-%m-%d' }}">
+              {{- article.published_at | date: format: 'date' -}}
+            </time>
+          </p>
+
+          {%- if section.settings.show_share -%}
+            <div class="chx-share">
+              <span class="chx-share__label">{{ section.settings.share_label }}</span>
+              <ul class="chx-share__links" role="list">
+                <li>
+                  <a
+                    class="chx-share__link"
+                    href="https://www.linkedin.com/sharing/share-offsite/?url={{ share_url | url_encode }}"
+                    target="_blank"
+                    rel="noopener"
+                    aria-label="{{ section.settings.share_label }} — LinkedIn"
+                  >
+                    <svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" focusable="false">
+                      {%- render 'icon', icon: 'linkedin' -%}
+                    </svg>
+                  </a>
+                </li>
+                {%- if section.settings.instagram_url != blank -%}
+                  <li>
+                    <a
+                      class="chx-share__link"
+                      href="{{ section.settings.instagram_url }}"
+                      target="_blank"
+                      rel="noopener"
+                      aria-label="Instagram"
+                    >
+                      <svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" focusable="false">
+                        {%- render 'icon', icon: 'instagram' -%}
+                      </svg>
+                    </a>
+                  </li>
+                {%- endif -%}
+                <li>
+                  <a
+                    class="chx-share__link"
+                    href="https://www.facebook.com/sharer/sharer.php?u={{ share_url | url_encode }}&t={{ share_title }}"
+                    target="_blank"
+                    rel="noopener"
+                    aria-label="{{ section.settings.share_label }} — Facebook"
+                  >
+                    <svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" focusable="false">
+                      {%- render 'icon', icon: 'facebook' -%}
+                    </svg>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          {%- endif -%}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% stylesheet %}
+  .chx-articlehero {
+    background-color: var(--surface-card-flat);
+    padding-block: var(--space-16);
+  }
+
+  /* The reading column: 1202px inside the 1452px well, which lands on the
+     359px side margin the design draws at 1920. */
+  .chx-measure {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-8);
+    max-width: 1202px;
+    margin-inline: auto;
+  }
+
+  .chx-articlehero__head {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+  }
+
+  .chx-articlehero__meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-6);
+  }
+
+  .chx-articlehero__eyebrow {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    margin: 0;
+    font-family: var(--font-ui);
+    font-size: var(--font-size-label-tag);
+    font-weight: 600;
+    line-height: 1.14;
+    letter-spacing: 0.005em;
+    color: var(--text-muted);
+  }
+
+  .chx-articlehero__tag {
+    text-transform: uppercase;
+    color: var(--text-on-dark-muted);
+  }
+
+  /* ── Share ──────────────────────────────────── */
+  .chx-share {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+  }
+
+  .chx-share__label {
+    font-family: var(--font-ui);
+    font-size: var(--font-size-body-large);
+    font-weight: 500;
+    line-height: 1.55;
+    letter-spacing: -0.005em;
+    color: var(--text-body);
+  }
+
+  .chx-share__links {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .chx-share__link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    color: var(--text-heading);
+  }
+
+  .chx-share__link:hover {
+    color: var(--text-accent);
+  }
+
+  .chx-share__link svg {
+    display: block;
+    width: 22px;
+    height: 22px;
+  }
+
+  /* ── Breakpoints ────────────────────────────── */
+  @media screen and (max-width: 767px) {
+    .chx-articlehero {
+      padding-block: 60px;
+    }
+
+    .chx-measure {
+      gap: var(--space-5);
+    }
+
+    /* The trail stays on one line: an article title would otherwise wrap it
+       over several. */
+    .chx-articlehero .chx-breadcrumbs__list {
+      flex-wrap: nowrap;
+    }
+
+    .chx-articlehero .chx-breadcrumbs__item:last-child {
+      min-width: 0;
+    }
+
+    .chx-articlehero .chx-breadcrumbs__current {
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+
+    /* The share row drops under the tag line. */
+    .chx-articlehero__meta {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: var(--space-6);
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Article hero",
+  "tag": "section",
+  "class": "chopinrx-article-hero-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "breadcrumb_home",
+      "label": "Breadcrumb: home label",
+      "default": "Home"
+    },
+    {
+      "type": "text",
+      "id": "featured_tag",
+      "label": "Tag to hide",
+      "info": "Kept off the tag line, as on the blog cards.",
+      "default": "featured"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_share",
+      "label": "Show share links",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "share_label",
+      "label": "Share label",
+      "default": "Share"
+    },
+    {
+      "type": "url",
+      "id": "instagram_url",
+      "label": "Instagram profile",
+      "info": "Instagram has no share link, so this icon points at the profile. Leave empty to hide it."
+    }
+  ]
+}
+{% endschema %}
