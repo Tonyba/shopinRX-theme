@@ -86,7 +86,7 @@
         "heading": "Start With A Flagship Program",
         "collection": "program",
         "products_count": 3,
-        "price_prefix": "From ",
+        "price_prefix": "From",
         "price_unit": "/mo",
         "card_cta_label": "Start intake",
         "cta_label": "See All Programs",
@@ -109,7 +109,7 @@
           "aesthetics"
         ],
         "products_count": 8,
-        "price_prefix": "From ",
+        "price_prefix": "From",
         "price_unit": "/mo",
         "card_cta_label": "Start intake",
         "cta_label": "See All Programs",
@@ -214,7 +214,7 @@
           "aesthetics"
         ],
         "products_count": 8,
-        "price_prefix": "From ",
+        "price_prefix": "From",
         "price_unit": "/mo",
         "placeholder_label": "Vial · placeholder",
         "card_cta_label": "Explore",

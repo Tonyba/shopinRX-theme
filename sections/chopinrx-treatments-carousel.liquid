@@ -98,7 +98,7 @@
                   <span class="chx-productcard__price-dot" aria-hidden="true">{{ dot_icon }}</span>
                   <span>
                     {%- if section.settings.price_prefix != blank -%}
-                      {{ section.settings.price_prefix }}
+                      {{ section.settings.price_prefix }}&nbsp;
                     {%- endif -%}
                     {{- product.price | money_without_trailing_zeros }}{{ unit -}}
                   </span>
@@ -480,7 +480,7 @@
       "type": "text",
       "id": "price_prefix",
       "label": "Price prefix",
-      "default": "From "
+      "default": "From"
     },
     {
       "type": "text",

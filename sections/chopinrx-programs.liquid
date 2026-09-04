@@ -91,7 +91,7 @@
               <span class="chx-program-card__price-current">
                 <span class="chx-program-card__price-amount">
                   {%- if product.price_varies and section.settings.price_prefix != blank -%}
-                    {{ section.settings.price_prefix }}
+                    {{ section.settings.price_prefix }}&nbsp;
                   {%- endif -%}
                   {{- product.price | money_without_trailing_zeros -}}
                 </span>
@@ -400,7 +400,7 @@
       "id": "price_prefix",
       "label": "Varying price prefix",
       "info": "Shown before the price when a product has more than one price.",
-      "default": "From "
+      "default": "From"
     },
     {
       "type": "text",
