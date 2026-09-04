@@ -408,7 +408,10 @@
       color: var(--paper-000);
     }
 
-    .chx-hero__text {
+    /* The richtext paragraph carries the theme's own element rule, so the size
+       has to be set on it rather than inherited from the wrapper. */
+    .chx-hero__text,
+    .chx-hero__text p {
       max-width: 330px;
       font-size: var(--font-size-body);
       line-height: 1.5;
