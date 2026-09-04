@@ -209,15 +209,21 @@
     height: 100%;
   }
 
+  /* Halves are set by width rather than flex-basis: a zero basis sizes the
+     content box, so the copy's 80px padding would push it wider than the
+     picture. */
+  .chx-article--wide .chx-article__media,
+  .chx-article--wide .chx-article__body {
+    flex: 0 0 50%;
+    width: 50%;
+  }
+
   .chx-article--wide .chx-article__media {
-    flex: 1 1 0;
     height: 100%;
     border-radius: 0;
   }
 
   .chx-article--wide .chx-article__body {
-    flex: 1 1 0;
-    flex-grow: 1;
     gap: var(--space-6);
     padding-inline: 80px;
   }
@@ -262,8 +268,13 @@
       gap: var(--space-5);
     }
 
-    .chx-article--wide .chx-article__media {
+    .chx-article--wide .chx-article__media,
+    .chx-article--wide .chx-article__body {
       flex: 0 0 auto;
+      width: 100%;
+    }
+
+    .chx-article--wide .chx-article__media {
       height: 266px;
       border-radius: var(--radius-lg);
     }
