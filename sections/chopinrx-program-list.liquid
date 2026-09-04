@@ -1,0 +1,529 @@
+{% render 'chopinrx-tokens' %}
+
+{% liquid
+  assign arrow_icon = 'icon-arrow-right.svg' | inline_asset_content | replace: '#FCFAF9', 'currentColor'
+  assign tabs = section.settings.collections
+  assign unit = section.settings.price_unit
+%}
+
+<div class="chx-programlist">
+  <div class="chx-container" data-chx-tabs>
+    <div class="chx-programlist__header">
+      {% render 'chopinrx-section-heading',
+        eyebrow: section.settings.eyebrow,
+        heading: section.settings.heading,
+        class: 'chx-programlist__heading'
+      %}
+
+      {%- if section.settings.cta_label != blank -%}
+        <a
+          class="chx-btn chx-btn--secondary chx-programlist__cta"
+          href="{{ section.settings.cta_url | default: routes.all_products_collection_url }}"
+        >
+          <span>{{ section.settings.cta_label }}</span>
+          <span class="chx-btn__icon" aria-hidden="true">{{ arrow_icon }}</span>
+        </a>
+      {%- endif -%}
+    </div>
+
+    {%- if tabs.count > 1 -%}
+      <div
+        class="chx-chips chx-programlist__toolbar"
+        role="tablist"
+        aria-label="{{ section.settings.heading | escape }}"
+      >
+        {%- for tab in tabs -%}
+          <button
+            type="button"
+            role="tab"
+            class="chx-chip{% if forloop.first %} chx-chip--active{% endif %}"
+            id="chx-tab-{{ section.id }}-{{ forloop.index }}"
+            aria-controls="chx-panel-{{ section.id }}-{{ forloop.index }}"
+            aria-selected="{% if forloop.first %}true{% else %}false{% endif %}"
+            tabindex="{% if forloop.first %}0{% else %}-1{% endif %}"
+            data-chx-tab
+          >
+            {{- tab.title | escape -}}
+          </button>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+
+    {%- for tab in tabs -%}
+      <div
+        class="chx-programlist__panel"
+        id="chx-panel-{{ section.id }}-{{ forloop.index }}"
+        {% if tabs.count > 1 %}
+          role="tabpanel"
+          aria-labelledby="chx-tab-{{ section.id }}-{{ forloop.index }}"
+          tabindex="0"
+        {% endif %}
+        {% unless forloop.first %}
+          hidden
+        {% endunless %}
+        data-chx-panel
+      >
+        <ul class="chx-programlist__grid" role="list">
+          {%- for product in tab.products limit: section.settings.products_count -%}
+            {%- liquid
+              assign goal = product.metafields.custom.goal.value | default: product.type
+              assign ingredients = product.metafields.custom.ingredients.value | join: ' · '
+
+              assign product_tags = product.tags | join: ',' | downcase | split: ','
+              assign badge_tag = section.settings.badge_tag | downcase
+              assign badge = ''
+              if badge_tag != blank and product_tags contains badge_tag
+                assign badge = section.settings.badge_label
+              endif
+
+              assign summary = product.metafields.custom.summary.value
+              if summary == blank
+                assign summary = product.description | strip_html | truncatewords: 28
+              endif
+            -%}
+            <li class="chx-programrow">
+              {%- if badge != blank -%}
+                <span class="chx-programrow__badge">{{ badge }}</span>
+              {%- endif -%}
+
+              <div class="chx-programrow__content">
+                <div class="chx-programrow__top">
+                  <div class="chx-programrow__title-col">
+                    {%- if goal != blank -%}
+                      <span class="chx-pill chx-programrow__goal">{{ goal }}</span>
+                    {%- endif -%}
+                    <div class="chx-programrow__titles">
+                      <h3 class="chx-h3 chx-programrow__title">
+                        <a href="{{ product.url }}">{{ product.title | escape }}</a>
+                      </h3>
+                      {%- if ingredients != blank -%}
+                        <p class="chx-programrow__ingredients">{{ ingredients }}</p>
+                      {%- endif -%}
+                    </div>
+                  </div>
+
+                  <div class="chx-programrow__price">
+                    <span class="chx-programrow__price-current">
+                      <span class="chx-programrow__price-amount">
+                        {%- if product.price_varies and section.settings.price_prefix != blank -%}
+                          {{ section.settings.price_prefix }}
+                        {%- endif -%}
+                        {{- product.price | money_without_trailing_zeros -}}
+                      </span>
+                      {%- if unit != blank -%}
+                        <span class="chx-programrow__price-unit">{{ unit }}</span>
+                      {%- endif -%}
+                    </span>
+                    {%- if product.compare_at_price > product.price -%}
+                      <s class="chx-programrow__price-compare">
+                        {{- product.compare_at_price | money_without_trailing_zeros }}{{ unit -}}
+                      </s>
+                    {%- endif -%}
+                  </div>
+                </div>
+
+                {%- if summary != blank -%}
+                  <p class="chx-programrow__text">{{ summary }}</p>
+                {%- endif -%}
+              </div>
+
+              <a class="chx-btn chx-btn--md chx-btn--primary chx-programrow__cta" href="{{ product.url }}">
+                <span>{{ section.settings.card_cta_label }}</span>
+                <span class="chx-btn__icon" aria-hidden="true">{{ arrow_icon }}</span>
+              </a>
+            </li>
+          {%- else -%}
+            <li class="chx-programlist__empty">{{ 'content.no_products_found' | t }}</li>
+          {%- endfor -%}
+        </ul>
+      </div>
+    {%- endfor -%}
+  </div>
+</div>
+
+{%- if tabs.count > 1 -%}
+  <script type="module">
+    import { initTabs } from '{{ 'chopinrx-tabs.js' | asset_url }}';
+    initTabs();
+  </script>
+{%- endif -%}
+
+{% stylesheet %}
+  .chx-programlist {
+    background-color: var(--surface-page);
+    padding-block: var(--space-24);
+  }
+
+  .chx-programlist__header {
+    display: flex;
+    align-items: center;
+    gap: var(--space-16);
+  }
+
+  .chx-programlist__heading {
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+
+  .chx-programlist__cta {
+    flex-shrink: 0;
+  }
+
+  .chx-programlist__toolbar {
+    margin-block-start: var(--space-10);
+  }
+
+  .chx-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .chx-chip {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-2) var(--space-5);
+    border: var(--border-w) solid var(--border-hairline);
+    border-radius: var(--radius-md);
+    background-color: var(--surface-card);
+    font-family: var(--font-ui);
+    font-size: var(--font-size-body-large);
+    font-weight: 400;
+    line-height: 1.55;
+    letter-spacing: -0.005em;
+    color: var(--text-heading);
+    text-decoration: none;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: background-color 0.2s ease, border-color 0.2s ease;
+  }
+
+  .chx-chip:hover {
+    background-color: var(--surface-muted);
+    color: var(--text-heading);
+    text-decoration: none;
+  }
+
+  .chx-chip--active {
+    border-color: var(--text-heading);
+    background-color: var(--surface-well);
+  }
+
+  .chx-programlist__grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    column-gap: 10px;
+    row-gap: var(--space-8);
+    margin: var(--space-10) 0 0;
+    padding-block-start: var(--space-5);
+    list-style: none;
+  }
+
+  .chx-programlist__empty {
+    grid-column: 1 / -1;
+    font-family: var(--font-ui);
+    font-size: var(--font-size-body-large);
+    color: var(--text-muted);
+  }
+
+  /* ── Program row card ───────────────────────── */
+  .chx-programrow {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    gap: var(--space-5);
+    padding: var(--space-5) var(--space-10);
+    border: var(--border-w) solid var(--border-hairline);
+    border-radius: var(--radius-lg);
+    background-color: var(--surface-well);
+    color: var(--text-body);
+  }
+
+  .chx-programrow__badge {
+    position: absolute;
+    top: -15px;
+    right: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: var(--pill-h);
+    padding-inline: var(--space-3);
+    border-radius: var(--radius-pill);
+    background-color: var(--surface-accent);
+    font-family: var(--font-ui);
+    font-size: var(--font-size-label-tag);
+    font-weight: 600;
+    line-height: 1.14;
+    letter-spacing: 0.005em;
+    text-transform: uppercase;
+    color: var(--text-on-dark);
+    white-space: nowrap;
+  }
+
+  .chx-programrow__content {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    gap: var(--space-5);
+    width: 100%;
+  }
+
+  .chx-programrow__top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-5);
+  }
+
+  .chx-programrow__title-col {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    gap: 6px;
+    min-width: 0;
+  }
+
+  .chx-programrow__goal {
+    color: var(--text-heading);
+  }
+
+  .chx-programrow__titles {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .chx-programrow__title a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .chx-programrow__title a:hover {
+    color: var(--text-accent);
+    text-decoration: none;
+  }
+
+  .chx-programrow__ingredients {
+    margin: 0;
+    font-family: var(--font-ui);
+    font-size: var(--font-size-body);
+    font-weight: 600;
+    line-height: 1.5;
+    letter-spacing: -0.005em;
+    color: var(--text-accent-strong);
+  }
+
+  .chx-programrow__price {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: center;
+    flex-shrink: 0;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .chx-programrow__price-current {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    color: var(--text-heading);
+  }
+
+  .chx-programrow__price-amount {
+    font-family: var(--font-display);
+    font-size: var(--font-size-h3);
+    font-weight: 500;
+    line-height: 1.08;
+    letter-spacing: -0.035em;
+  }
+
+  .chx-programrow__price-unit {
+    font-family: var(--font-ui);
+    font-size: var(--font-size-body-large);
+    font-weight: 500;
+    line-height: 1.55;
+    letter-spacing: -0.005em;
+  }
+
+  .chx-programrow__price-compare {
+    font-family: var(--font-ui);
+    font-size: var(--font-size-body-large);
+    font-weight: 400;
+    line-height: 1.55;
+    letter-spacing: -0.005em;
+    color: var(--ink-300);
+  }
+
+  .chx-programrow__text {
+    flex: 1 1 auto;
+    margin: 0;
+    font-family: var(--font-ui);
+    font-size: var(--font-size-body);
+    font-weight: 400;
+    line-height: 1.5;
+    letter-spacing: -0.005em;
+    color: var(--text-body);
+  }
+
+  .chx-programrow__cta {
+    width: 100%;
+  }
+
+  /* ── Breakpoints ────────────────────────────── */
+  @media screen and (max-width: 1024px) {
+    .chx-programlist__header {
+      gap: var(--space-8);
+    }
+
+    .chx-programlist__grid {
+      grid-template-columns: 1fr;
+      row-gap: var(--space-6);
+    }
+  }
+
+  @media screen and (max-width: 767px) {
+    .chx-programlist__header {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: var(--space-6);
+    }
+
+    .chx-programlist__cta {
+      width: 100%;
+    }
+
+    .chx-chips {
+      flex-wrap: nowrap;
+      overflow-x: auto;
+      scrollbar-width: none;
+      padding-block-end: var(--space-2);
+    }
+
+    .chx-chips::-webkit-scrollbar {
+      display: none;
+    }
+
+    .chx-chip {
+      font-size: var(--font-size-body);
+    }
+
+    .chx-programrow {
+      padding: var(--space-5);
+    }
+
+    .chx-programrow__top {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: var(--space-3);
+    }
+
+    .chx-programrow__price {
+      align-items: flex-start;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Program list",
+  "tag": "section",
+  "class": "chopinrx-program-list-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "All Programs"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Find The Program That Fits"
+    },
+    {
+      "type": "collection_list",
+      "id": "collections",
+      "label": "Tabs",
+      "info": "One tab per collection, in this order. The first tab is selected.",
+      "limit": 8
+    },
+    {
+      "type": "range",
+      "id": "products_count",
+      "label": "Products per tab",
+      "min": 2,
+      "max": 24,
+      "step": 1,
+      "default": 8
+    },
+    {
+      "type": "header",
+      "content": "Card"
+    },
+    {
+      "type": "text",
+      "id": "price_prefix",
+      "label": "Varying price prefix",
+      "info": "Shown before the price when a product has more than one price.",
+      "default": "From "
+    },
+    {
+      "type": "text",
+      "id": "price_unit",
+      "label": "Price unit",
+      "info": "Appended after the product price, e.g. /mo.",
+      "default": "/mo"
+    },
+    {
+      "type": "text",
+      "id": "card_cta_label",
+      "label": "Card button label",
+      "default": "Start intake"
+    },
+    {
+      "type": "paragraph",
+      "content": "Goal pill reads custom.goal (falls back to the product type). Ingredients read custom.ingredients, a list of single line text, joined with a middot. Description reads custom.summary and falls back to the product description."
+    },
+    {
+      "type": "text",
+      "id": "badge_tag",
+      "label": "Badge product tag",
+      "info": "Products carrying this tag show the corner badge.",
+      "default": "flagship"
+    },
+    {
+      "type": "text",
+      "id": "badge_label",
+      "label": "Badge label",
+      "default": "Flagship"
+    },
+    {
+      "type": "header",
+      "content": "Section button"
+    },
+    {
+      "type": "text",
+      "id": "cta_label",
+      "label": "Button label",
+      "default": "See All Programs"
+    },
+    {
+      "type": "url",
+      "id": "cta_url",
+      "label": "Button link"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Program list"
+    }
+  ]
+}
+{% endschema %}

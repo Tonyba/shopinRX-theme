@@ -1,0 +1,304 @@
+{% render 'chopinrx-tokens' %}
+
+<div class="chx-proof">
+  <div class="chx-container">
+    {% render 'chopinrx-section-heading',
+      eyebrow: section.settings.eyebrow,
+      heading: section.settings.heading,
+      centered: true
+    %}
+
+    <div class="chx-proof__mosaic">
+      {%- for block in section.blocks -%}
+        {%- case block.type -%}
+          {%- when 'media' -%}
+            <div class="chx-proof__media" {{ block.shopify_attributes }}>
+              {%- if block.settings.image != blank -%}
+                <img
+                  src="{{ block.settings.image | image_url: width: 900 }}"
+                  srcset="
+                    {{ block.settings.image | image_url: width: 450 }} 450w,
+                    {{ block.settings.image | image_url: width: 900 }} 900w
+                  "
+                  sizes="(min-width: 1025px) 33vw, 100vw"
+                  width="{{ block.settings.image.width }}"
+                  height="{{ block.settings.image.height }}"
+                  alt="{{ block.settings.image.alt | escape }}"
+                  loading="lazy"
+                >
+              {%- endif -%}
+            </div>
+
+          {%- when 'stat' -%}
+            <div class="chx-stat chx-stat--{{ block.settings.style }}" {{ block.shopify_attributes }}>
+              <p class="chx-stat__figure">{{ block.settings.figure }}</p>
+              <div class="chx-stat__body">
+                <p class="chx-stat__title">{{ block.settings.title }}</p>
+                {%- if block.settings.text != blank -%}
+                  <p class="chx-stat__text">{{ block.settings.text }}</p>
+                {%- endif -%}
+              </div>
+            </div>
+        {%- endcase -%}
+      {%- endfor -%}
+    </div>
+  </div>
+</div>
+
+{% stylesheet %}
+  .chx-proof {
+    background-color: var(--surface-muted);
+    padding-block: var(--section-py-tight);
+    overflow: clip;
+  }
+
+  .chx-proof__mosaic {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: 248px 200px;
+    gap: var(--space-3);
+    margin-block-start: var(--space-10);
+  }
+
+  .chx-proof__media {
+    grid-row: span 2;
+    border-radius: var(--radius-xl);
+    overflow: clip;
+    background-color: #c9c9c9;
+  }
+
+  .chx-proof__media img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  /* ── Stat card ──────────────────────────────── */
+  .chx-stat {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: var(--space-6);
+    padding: var(--space-6);
+    border: var(--border-w) solid transparent;
+    border-radius: var(--radius-xl);
+    overflow: clip;
+  }
+
+  .chx-stat__figure {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: var(--font-size-h1);
+    font-weight: 500;
+    line-height: 1.04;
+    letter-spacing: -0.035em;
+  }
+
+  .chx-stat__body {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .chx-stat__title {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: var(--font-size-h5);
+    font-weight: 500;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+  }
+
+  .chx-stat__text {
+    margin: 0;
+    font-family: var(--font-ui);
+    font-size: var(--font-size-body-large);
+    font-weight: 400;
+    line-height: 1.55;
+    letter-spacing: -0.005em;
+  }
+
+  .chx-stat--accent {
+    border-color: var(--ink-900);
+    background-color: var(--surface-accent);
+    color: var(--text-on-dark);
+  }
+
+  .chx-stat--dark {
+    background-color: var(--surface-dark);
+    color: var(--text-on-dark);
+  }
+
+  .chx-stat--dark .chx-stat__text {
+    color: var(--text-on-dark-muted);
+  }
+
+  .chx-stat--well {
+    border-color: var(--border-hairline);
+    background-color: var(--surface-well);
+    color: var(--text-heading);
+  }
+
+  .chx-stat--paper {
+    border-color: var(--border-strong);
+    background-color: var(--surface-page);
+    color: var(--text-heading);
+  }
+
+  .chx-stat--well .chx-stat__text,
+  .chx-stat--paper .chx-stat__text {
+    color: var(--text-muted);
+  }
+
+  /* ── Breakpoints ────────────────────────────── */
+  @media screen and (max-width: 1024px) {
+    .chx-proof__mosaic {
+      grid-template-columns: repeat(2, 1fr);
+      grid-template-rows: auto;
+    }
+
+    .chx-proof__media {
+      grid-row: span 1;
+      grid-column: span 2;
+      aspect-ratio: 16 / 9;
+    }
+
+    .chx-stat {
+      min-height: 220px;
+    }
+  }
+
+  @media screen and (max-width: 767px) {
+    .chx-proof__mosaic {
+      grid-template-columns: 1fr;
+    }
+
+    .chx-proof__media {
+      grid-column: span 1;
+    }
+
+    .chx-stat {
+      min-height: 0;
+      gap: var(--space-4);
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Proof stats",
+  "tag": "section",
+  "class": "chopinrx-proof-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Care designed around real people."
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "info": "Italic text is rendered in the accent colour.",
+      "default": "Changing lives through <em>proven outcomes</em>"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "media",
+      "name": "Image tile",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image",
+          "info": "Upload to Content → Files, then pick it here."
+        }
+      ]
+    },
+    {
+      "type": "stat",
+      "name": "Stat tile",
+      "settings": [
+        {
+          "type": "select",
+          "id": "style",
+          "label": "Style",
+          "options": [
+            { "value": "accent", "label": "Accent" },
+            { "value": "dark", "label": "Ink" },
+            { "value": "well", "label": "Well" },
+            { "value": "paper", "label": "Paper" }
+          ],
+          "default": "well"
+        },
+        {
+          "type": "text",
+          "id": "figure",
+          "label": "Figure",
+          "default": "10K+"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Patients Served"
+        },
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Text",
+          "default": "People supported through our care platform."
+        }
+      ]
+    }
+  ],
+  "max_blocks": 5,
+  "presets": [
+    {
+      "name": "Proof stats",
+      "blocks": [
+        { "type": "media" },
+        {
+          "type": "stat",
+          "settings": {
+            "style": "accent",
+            "figure": "10K+",
+            "title": "Patients Served",
+            "text": "People supported through our care platform."
+          }
+        },
+        {
+          "type": "stat",
+          "settings": {
+            "style": "dark",
+            "figure": "+92%",
+            "title": "Patient Satisfaction",
+            "text": "Based on patient feedback."
+          }
+        },
+        {
+          "type": "stat",
+          "settings": {
+            "style": "well",
+            "figure": "5 min",
+            "title": "Average Assessment",
+            "text": "Designed to keep your experience simple."
+          }
+        },
+        {
+          "type": "stat",
+          "settings": {
+            "style": "paper",
+            "figure": "4.9/5",
+            "title": "Provider Rating",
+            "text": "Based on patient reviews"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

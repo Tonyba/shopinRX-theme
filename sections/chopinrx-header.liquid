@@ -1,10 +1,6 @@
 {% render 'chopinrx-tokens' %}
 
 {% liquid
-  assign ui_font = section.settings.ui_font
-  assign ui_font_semibold = ui_font | font_modify: 'weight', '600'
-  assign brand_font = section.settings.brand_font
-
   assign menu = section.settings.menu
   assign wordmark = section.settings.wordmark | default: shop.name
 
@@ -17,16 +13,17 @@
   assign arrow_icon = 'icon-arrow-right.svg' | inline_asset_content | replace: '#FCFAF9', 'currentColor'
 %}
 
-{% style %}
-  {{ ui_font | font_face: font_display: 'swap' }}
-  {{ ui_font_semibold | font_face: font_display: 'swap' }}
-  {{ brand_font | font_face: font_display: 'swap' }}
-
-  :root {
-    --font-display: {{ brand_font.family }}, {{ brand_font.fallback_families }};
-    --font-ui: {{ ui_font.family }}, {{ ui_font.fallback_families }};
+<script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "Organization",
+    "name": {{ shop.name | json }},
+    {% if settings.logo %}
+      "logo": {{ settings.logo | image_url: width: 500 | prepend: "https:" | json }},
+    {% endif %}
+    "url": {{ request.origin | append: page.url | json }}
   }
-{% endstyle %}
+</script>
 
 <div
   id="header-component"
@@ -769,22 +766,6 @@
       "type": "url",
       "id": "cta_url",
       "label": "Call to action link"
-    },
-    {
-      "type": "header",
-      "content": "Typography"
-    },
-    {
-      "type": "font_picker",
-      "id": "brand_font",
-      "label": "Wordmark font",
-      "default": "figtree_n7"
-    },
-    {
-      "type": "font_picker",
-      "id": "ui_font",
-      "label": "Navigation font",
-      "default": "figtree_n5"
     },
     {
       "type": "header",

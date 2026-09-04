@@ -1,0 +1,290 @@
+{% render 'chopinrx-tokens' %}
+
+{% liquid
+  assign flask_icon = 'icon-flask.svg' | inline_asset_content
+  assign image = section.settings.image
+%}
+
+<div class="chx-lab">
+  <div class="chx-container">
+    <div class="chx-lab__grid{% if section.settings.media_position == 'left' %} chx-lab__grid--media-left{% endif %}">
+      <div class="chx-lab__copy">
+        {% render 'chopinrx-section-heading',
+          eyebrow: section.settings.eyebrow,
+          heading: section.settings.heading
+        %}
+
+        {%- if section.blocks.size > 0 -%}
+          <ul class="chx-lab__list" role="list">
+            {%- for block in section.blocks -%}
+              <li
+                class="chx-lab-card{% if forloop.first %} chx-lab-card--filled{% endif %}"
+                {{ block.shopify_attributes }}
+              >
+                <span class="chx-lab-card__icon" aria-hidden="true">{{ flask_icon }}</span>
+                <span class="chx-lab-card__copy">
+                  <span class="chx-lab-card__title">{{ block.settings.title }}</span>
+                  {%- if block.settings.text != blank -%}
+                    <span class="chx-lab-card__text">{{ block.settings.text }}</span>
+                  {%- endif -%}
+                </span>
+              </li>
+            {%- endfor -%}
+          </ul>
+        {%- endif -%}
+      </div>
+
+      <div class="chx-lab__media">
+        {%- if image != blank -%}
+          <img
+            src="{{ image | image_url: width: 1200 }}"
+            srcset="
+              {{ image | image_url: width: 600 }} 600w,
+              {{ image | image_url: width: 900 }} 900w,
+              {{ image | image_url: width: 1200 }} 1200w
+            "
+            sizes="(min-width: 1025px) 45vw, 100vw"
+            width="{{ image.width }}"
+            height="{{ image.height }}"
+            alt="{{ image.alt | escape }}"
+            loading="lazy"
+          >
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% stylesheet %}
+  .chx-lab {
+    background-color: var(--surface-muted);
+    padding-block: var(--section-py-tight);
+    overflow: clip;
+  }
+
+  .chx-lab__grid {
+    display: grid;
+    grid-template-columns: 708px 1fr;
+    align-items: center;
+    gap: var(--space-16);
+  }
+
+  .chx-lab__grid--media-left {
+    grid-template-columns: 1fr 708px;
+  }
+
+  .chx-lab__grid--media-left .chx-lab__media {
+    order: -1;
+  }
+
+  .chx-lab__copy {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-8);
+    min-width: 0;
+  }
+
+  .chx-lab__list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .chx-lab-card {
+    display: flex;
+    align-items: center;
+    gap: var(--space-5);
+    padding: var(--space-6) var(--space-4);
+    border: var(--border-w) solid var(--border-hairline);
+    border-radius: var(--radius-md);
+  }
+
+  .chx-lab-card--filled {
+    background-color: var(--surface-card-flat);
+  }
+
+  .chx-lab-card__icon {
+    display: block;
+    flex-shrink: 0;
+    width: 25px;
+    height: 25px;
+    color: var(--text-heading);
+  }
+
+  .chx-lab-card__icon svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  .chx-lab-card__copy {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    justify-content: center;
+    gap: var(--space-2);
+    min-width: 0;
+  }
+
+  .chx-lab-card__title {
+    font-family: var(--font-display);
+    font-size: var(--font-size-h5);
+    font-weight: 500;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+    color: var(--text-heading);
+  }
+
+  .chx-lab-card__text {
+    font-family: var(--font-ui);
+    font-size: var(--font-size-body-large);
+    font-weight: 400;
+    line-height: 1.55;
+    letter-spacing: -0.005em;
+    color: var(--text-muted);
+  }
+
+  .chx-lab__media {
+    align-self: stretch;
+    border-radius: var(--radius-xl);
+    overflow: clip;
+    background-color: #c9c9c9;
+  }
+
+  .chx-lab__media img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    min-height: 440px;
+    object-fit: cover;
+  }
+
+  /* ── Breakpoints ────────────────────────────── */
+  @media screen and (max-width: 1024px) {
+    .chx-lab__grid,
+    .chx-lab__grid--media-left {
+      grid-template-columns: 1fr;
+      gap: var(--space-8);
+    }
+
+    .chx-lab__grid--media-left .chx-lab__media {
+      order: 0;
+    }
+
+    .chx-lab__media img {
+      min-height: 0;
+      aspect-ratio: 4 / 3;
+    }
+  }
+
+  @media screen and (max-width: 767px) {
+    .chx-lab-card {
+      align-items: flex-start;
+      padding: var(--space-5) var(--space-4);
+    }
+
+    .chx-lab-card__text {
+      font-size: var(--font-size-body);
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Lab testing",
+  "tag": "section",
+  "class": "chopinrx-lab-section",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image",
+      "info": "Upload to Content → Files, then pick it here."
+    },
+    {
+      "type": "select",
+      "id": "media_position",
+      "label": "Image position",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "right", "label": "Right" }
+      ],
+      "default": "right"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Quality & Testing"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "info": "Italic text is rendered in the accent colour.",
+      "default": "Always lab <em>tested</em> for quality & consistency"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "test",
+      "name": "Test",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Potency tested"
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Text",
+          "default": "A test to check the medication contains the correct concentration of active ingredient."
+        }
+      ]
+    }
+  ],
+  "max_blocks": 8,
+  "presets": [
+    {
+      "name": "Lab testing",
+      "blocks": [
+        {
+          "type": "test",
+          "settings": {
+            "title": "Potency tested",
+            "text": "A test to check the medication contains the correct concentration of active ingredient."
+          }
+        },
+        {
+          "type": "test",
+          "settings": {
+            "title": "Sterility Tested",
+            "text": "A test to check the medication is free of foreign organisms and pathogens."
+          }
+        },
+        {
+          "type": "test",
+          "settings": {
+            "title": "pH Level Tested",
+            "text": "A test to check for the ideal 'acid to base' ratio to minimize irritation caused by the injection itself."
+          }
+        },
+        {
+          "type": "test",
+          "settings": {
+            "title": "Endotoxicity Tested",
+            "text": "A test to check the medication adheres to endotoxin safety recommendations."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,267 @@
+{% render 'chopinrx-tokens' %}
+
+{% liquid
+  assign arrow_icon = 'icon-arrow-right.svg' | inline_asset_content | replace: '#FCFAF9', 'currentColor'
+  assign dot_icon = 'icon-eyebrow-dot.svg' | inline_asset_content
+%}
+
+<div class="chx-gender">
+  {%- for block in section.blocks -%}
+    <div
+      class="chx-gender__panel"
+      style="
+        --chx-panel-overlay: {{ block.settings.overlay_color }};
+        --chx-panel-button-bg: {{ block.settings.button_color }};
+        --chx-panel-button-fg: {{ block.settings.button_text_color }};
+      "
+      {{ block.shopify_attributes }}
+    >
+      {%- if block.settings.image != blank -%}
+        <img
+          class="chx-gender__media"
+          src="{{ block.settings.image | image_url: width: 1200 }}"
+          srcset="
+            {{ block.settings.image | image_url: width: 600 }} 600w,
+            {{ block.settings.image | image_url: width: 960 }} 960w,
+            {{ block.settings.image | image_url: width: 1400 }} 1400w,
+            {{ block.settings.image | image_url: width: 1920 }} 1920w
+          "
+          sizes="(min-width: 768px) 50vw, 100vw"
+          width="{{ block.settings.image.width }}"
+          height="{{ block.settings.image.height }}"
+          alt="{{ block.settings.image.alt | escape }}"
+          loading="lazy"
+        >
+      {%- endif -%}
+      <div class="chx-gender__overlay" aria-hidden="true"></div>
+
+      <div class="chx-gender__content">
+        {%- if block.settings.eyebrow != blank -%}
+          <p class="chx-gender__eyebrow">
+            <span class="chx-eyebrow__dot" aria-hidden="true">{{ dot_icon }}</span>
+            <span>{{ block.settings.eyebrow }}</span>
+          </p>
+        {%- endif -%}
+
+        <h2 class="chx-h2 chx-gender__title">{{ block.settings.heading }}</h2>
+
+        {%- if block.settings.text != blank -%}
+          <p class="chx-body-lg chx-gender__text">{{ block.settings.text }}</p>
+        {%- endif -%}
+
+        {%- if block.settings.cta_label != blank -%}
+          <a
+            class="chx-btn chx-gender__cta"
+            href="{{ block.settings.cta_url | default: routes.all_products_collection_url }}"
+          >
+            <span>{{ block.settings.cta_label }}</span>
+            <span class="chx-btn__icon" aria-hidden="true">{{ arrow_icon }}</span>
+          </a>
+        {%- endif -%}
+      </div>
+    </div>
+  {%- endfor -%}
+</div>
+
+{% stylesheet %}
+  .chx-gender {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    background-color: var(--surface-accent-soft);
+  }
+
+  .chx-gender__panel {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 756px;
+    padding: var(--space-16) var(--space-8);
+    overflow: clip;
+  }
+
+  .chx-gender__media {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .chx-gender__overlay {
+    position: absolute;
+    inset: 0;
+    background-color: var(--chx-panel-overlay);
+  }
+
+  .chx-gender__content {
+    --chx-heading-color: var(--text-on-dark);
+    --chx-body-color: var(--text-on-dark);
+
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-5);
+    width: 100%;
+    max-width: 900px;
+    text-align: center;
+    color: var(--text-on-dark);
+  }
+
+  .chx-gender__eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    margin: 0;
+    padding: 12px 20px;
+    border: var(--border-w) solid var(--paper-000);
+    border-radius: 50px;
+    font-family: var(--font-ui);
+    font-size: var(--font-size-body);
+    font-weight: 500;
+    line-height: 1.5;
+    letter-spacing: -0.005em;
+    color: var(--text-on-dark);
+  }
+
+  .chx-gender__title,
+  .chx-gender__text {
+    color: var(--text-on-dark);
+  }
+
+  .chx-gender__cta {
+    background-color: var(--chx-panel-button-bg);
+    color: var(--chx-panel-button-fg);
+  }
+
+  .chx-gender__cta:hover {
+    background-color: var(--chx-panel-button-bg);
+    color: var(--chx-panel-button-fg);
+    filter: brightness(0.92);
+  }
+
+  /* ── Breakpoints ────────────────────────────── */
+  @media screen and (max-width: 1024px) {
+    .chx-gender__panel {
+      min-height: 560px;
+      padding: var(--space-10) var(--space-6);
+    }
+  }
+
+  @media screen and (max-width: 767px) {
+    .chx-gender {
+      grid-template-columns: 1fr;
+    }
+
+    .chx-gender__panel {
+      min-height: 440px;
+      padding: var(--space-10) var(--section-px);
+    }
+
+    .chx-gender__cta {
+      width: 100%;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Gender split",
+  "tag": "section",
+  "class": "chopinrx-gender-section",
+  "blocks": [
+    {
+      "type": "panel",
+      "name": "Panel",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image",
+          "info": "Upload to Content → Files, then pick it here."
+        },
+        {
+          "type": "color",
+          "id": "overlay_color",
+          "label": "Overlay",
+          "default": "#124643b3"
+        },
+        {
+          "type": "text",
+          "id": "eyebrow",
+          "label": "Eyebrow",
+          "default": "Find your path"
+        },
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "default": "Built for men"
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Text",
+          "default": "TRT foundation, drive, recovery and performance protocols reviewed by independent licensed providers."
+        },
+        {
+          "type": "text",
+          "id": "cta_label",
+          "label": "Button label",
+          "default": "Explore men's programs"
+        },
+        {
+          "type": "url",
+          "id": "cta_url",
+          "label": "Button link"
+        },
+        {
+          "type": "color",
+          "id": "button_color",
+          "label": "Button background",
+          "default": "#22eee4"
+        },
+        {
+          "type": "color",
+          "id": "button_text_color",
+          "label": "Button text",
+          "default": "#14181d"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 2,
+  "presets": [
+    {
+      "name": "Gender split",
+      "blocks": [
+        {
+          "type": "panel",
+          "settings": {
+            "overlay_color": "#124643b3",
+            "eyebrow": "Find your path",
+            "heading": "Built for men",
+            "text": "TRT foundation, drive, recovery and performance protocols reviewed by independent licensed providers.",
+            "cta_label": "Explore men's programs",
+            "button_color": "#22eee4",
+            "button_text_color": "#14181d"
+          }
+        },
+        {
+          "type": "panel",
+          "settings": {
+            "overlay_color": "#5b2542b3",
+            "eyebrow": "Find your path",
+            "heading": "Built for women",
+            "text": "Menopause, HRT, balance and aesthetics protocols reviewed by independent licensed providers.",
+            "cta_label": "Explore women's programs",
+            "button_color": "#f9299b",
+            "button_text_color": "#fcfaf9"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

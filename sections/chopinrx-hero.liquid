@@ -1,0 +1,540 @@
+{% render 'chopinrx-tokens' %}
+
+{% liquid
+  assign image = section.settings.image
+  assign check_icon = 'icon-check-circle.svg' | inline_asset_content
+  assign arrow_icon = 'icon-arrow-right.svg' | inline_asset_content | replace: '#FCFAF9', 'currentColor'
+%}
+
+<div class="chx-hero">
+  <div class="chx-hero__frame">
+    {%- if image != blank -%}
+      <img
+        class="chx-hero__media"
+        src="{{ image | image_url: width: 1920 }}"
+        srcset="
+          {{ image | image_url: width: 750 }} 750w,
+          {{ image | image_url: width: 1100 }} 1100w,
+          {{ image | image_url: width: 1500 }} 1500w,
+          {{ image | image_url: width: 1920 }} 1920w,
+          {{ image | image_url: width: 2560 }} 2560w
+        "
+        sizes="100vw"
+        width="{{ image.width }}"
+        height="{{ image.height }}"
+        alt="{{ image.alt | escape }}"
+        loading="eager"
+        fetchpriority="high"
+      >
+    {%- endif -%}
+    <div class="chx-hero__scrim" aria-hidden="true"></div>
+
+    <div class="chx-hero__inner chx-container">
+      <div class="chx-hero__lede">
+        {%- if section.settings.eyebrow != blank -%}
+          <p class="chx-hero__eyebrow">{{ section.settings.eyebrow }}</p>
+        {%- endif -%}
+
+        <div class="chx-hero__content">
+          <h1 class="chx-h1 chx-hero__title">
+            {%- if section.settings.title_line_1 != blank -%}
+              <span class="chx-hero__title-line">{{ section.settings.title_line_1 }}</span>
+            {%- endif -%}
+            {%- if section.settings.title_line_2 != blank -%}
+              <span class="chx-hero__title-line chx-hero__title-line--accent">
+                {{- section.settings.title_line_2 -}}
+              </span>
+            {%- endif -%}
+          </h1>
+
+          {%- if section.settings.body != blank -%}
+            <div class="chx-body-lg chx-hero__text">{{ section.settings.body }}</div>
+          {%- endif -%}
+
+          {%- if section.blocks.size > 0 -%}
+            <ul class="chx-hero__features" role="list">
+              {%- for block in section.blocks -%}
+                <li class="chx-hero__feature" {{ block.shopify_attributes }}>
+                  <span class="chx-hero__feature-icon" aria-hidden="true">{{ check_icon }}</span>
+                  <span class="chx-hero__feature-text">{{ block.settings.text }}</span>
+                </li>
+              {%- endfor -%}
+            </ul>
+          {%- endif -%}
+        </div>
+      </div>
+
+      {%- if section.settings.primary_label != blank or section.settings.secondary_label != blank -%}
+        <div class="chx-hero__actions">
+          {%- if section.settings.primary_label != blank -%}
+            <a
+              class="chx-btn chx-btn--accent"
+              href="{{ section.settings.primary_url | default: routes.all_products_collection_url }}"
+            >
+              <span>{{ section.settings.primary_label }}</span>
+              <span class="chx-btn__icon" aria-hidden="true">{{ arrow_icon }}</span>
+            </a>
+          {%- endif -%}
+          {%- if section.settings.secondary_label != blank -%}
+            <a
+              class="chx-btn chx-btn--inverse"
+              href="{{ section.settings.secondary_url | default: routes.all_products_collection_url }}"
+            >
+              {{- section.settings.secondary_label -}}
+            </a>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+
+      {%- if section.settings.show_trustpilot -%}
+        {%- capture trustpilot -%}
+          <span class="chx-trustpilot__word">{{ section.settings.trustpilot_rating }}</span>
+          <span class="chx-trustpilot__stars" aria-hidden="true">
+            {{- 'trustpilot-stars-5.svg' | inline_asset_content -}}
+          </span>
+          <span class="chx-trustpilot__count">{{ section.settings.trustpilot_count }}</span>
+          <span class="chx-trustpilot__brand">
+            <span class="chx-trustpilot__mark" aria-hidden="true">
+              {{- 'trustpilot-logo.svg' | inline_asset_content -}}
+            </span>
+            <span class="chx-trustpilot__word">Trustpilot</span>
+          </span>
+        {%- endcapture -%}
+
+        {%- if section.settings.trustpilot_url != blank -%}
+          <a class="chx-trustpilot" href="{{ section.settings.trustpilot_url }}" rel="noopener">{{ trustpilot }}</a>
+        {%- else -%}
+          <div class="chx-trustpilot">{{ trustpilot }}</div>
+        {%- endif -%}
+      {%- endif -%}
+    </div>
+  </div>
+</div>
+
+{% stylesheet %}
+  .chx-hero {
+    background-color: var(--surface-muted);
+    padding-inline: var(--space-3);
+    padding-block-end: var(--space-3);
+  }
+
+  .chx-hero__frame {
+    --chx-hero-lede: 646px;
+    --chx-heading-color: var(--text-on-dark);
+    --chx-body-color: var(--text-on-dark);
+
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 30px;
+    min-height: 788px;
+    padding-block: var(--space-16);
+    border-radius: var(--radius-xl);
+    overflow: clip;
+    background-color: var(--surface-dark);
+    color: var(--text-on-dark);
+  }
+
+  .chx-hero__media {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    /* The subject sits right of centre so the darker side of the frame falls
+       under the copy, as composed in the design. */
+    object-position: 82% center;
+  }
+
+  /* The design's wash, plus a left-anchored floor. The wash alone is expressed
+     in percentages, so on a frame wider than the 1896px it was drawn at it
+     retreats past the copy and the headline loses contrast. The second layer is
+     anchored to the content column instead, so the copy stays legible at any
+     width. */
+  .chx-hero__scrim {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(269.34deg, rgb(0 0 0 / 0%) 45.502%, rgb(0 0 0 / 100%) 72.911%),
+      linear-gradient(
+        to right,
+        rgb(0 0 0 / 96%) 0,
+        rgb(0 0 0 / 88%) calc(var(--chx-gutter) + var(--chx-hero-lede) * 0.72),
+        rgb(0 0 0 / 0%) calc(var(--chx-gutter) + var(--chx-hero-lede) + 300px)
+      );
+  }
+
+  .chx-hero__inner {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 30px;
+  }
+
+  .chx-hero__lede {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: var(--chx-hero-lede);
+    max-width: 100%;
+  }
+
+  .chx-hero__eyebrow {
+    display: flex;
+    align-items: center;
+    height: 20px;
+    margin: 0;
+    padding-inline: var(--space-4);
+    border-inline-start: 2px solid var(--paper-000);
+    font-family: var(--font-ui);
+    font-size: var(--font-size-body-large);
+    font-weight: 500;
+    line-height: 1.55;
+    letter-spacing: -0.005em;
+    color: var(--text-on-dark);
+  }
+
+  .chx-hero__content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+
+  .chx-hero__title {
+    color: var(--text-on-dark);
+  }
+
+  .chx-hero__title-line {
+    display: block;
+  }
+
+  .chx-hero__title-line--accent {
+    color: var(--text-accent);
+  }
+
+  .chx-hero__text {
+    color: var(--text-on-dark);
+  }
+
+  .chx-hero__text > :first-child {
+    margin-block-start: 0;
+  }
+
+  .chx-hero__text > :last-child {
+    margin-block-end: 0;
+  }
+
+  .chx-hero__features {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-5);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .chx-hero__feature {
+    display: flex;
+    align-items: center;
+    gap: var(--space-5);
+  }
+
+  .chx-hero__feature-icon {
+    display: block;
+    flex-shrink: 0;
+    width: 24px;
+    height: 24px;
+  }
+
+  .chx-hero__feature-icon svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  .chx-hero__feature-text {
+    font-family: var(--font-ui);
+    font-size: var(--font-size-body-large);
+    font-weight: 500;
+    line-height: 1.55;
+    letter-spacing: -0.005em;
+    color: var(--text-on-dark);
+  }
+
+  .chx-hero__actions {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+  }
+
+  /* ── Trustpilot strip ───────────────────────── */
+  .chx-trustpilot {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    height: 26px;
+    color: var(--text-on-dark);
+    text-decoration: none;
+  }
+
+  .chx-trustpilot:hover {
+    text-decoration: none;
+    color: var(--text-on-dark);
+  }
+
+  .chx-trustpilot__word,
+  .chx-trustpilot__count {
+    font-family: var(--font-ui);
+    font-size: 17.12px;
+    line-height: 1;
+    white-space: nowrap;
+  }
+
+  .chx-trustpilot__word {
+    font-weight: 700;
+  }
+
+  .chx-trustpilot__count {
+    font-weight: 500;
+  }
+
+  .chx-trustpilot__stars {
+    display: block;
+    flex-shrink: 0;
+    width: 106.667px;
+    height: 20px;
+  }
+
+  .chx-trustpilot__brand {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5.707px;
+    height: 26px;
+  }
+
+  .chx-trustpilot__mark {
+    display: block;
+    flex-shrink: 0;
+    width: 19.973px;
+    height: 18.903px;
+  }
+
+  .chx-trustpilot__stars svg,
+  .chx-trustpilot__mark svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  /* ── Breakpoints ────────────────────────────── */
+  @media screen and (max-width: 1024px) {
+    .chx-hero__frame {
+      min-height: 640px;
+      gap: var(--space-6);
+    }
+
+    .chx-hero__inner {
+      gap: var(--space-6);
+    }
+  }
+
+  @media screen and (max-width: 767px) {
+    .chx-hero {
+      padding-inline: var(--space-2);
+      padding-block-end: var(--space-2);
+    }
+
+    .chx-hero__frame {
+      min-height: 0;
+      padding-block: var(--space-10);
+      border-radius: var(--radius-lg);
+    }
+
+    .chx-hero__media {
+      object-position: 65% center;
+    }
+
+    /* The horizontal wash leaves no legible area on a narrow viewport, so the
+       scrim runs top-to-bottom instead. */
+    .chx-hero__scrim {
+      background-image: linear-gradient(180deg, rgb(0 0 0 / 30%) 0%, rgb(0 0 0 / 82%) 55%);
+    }
+
+    .chx-hero__lede {
+      width: 100%;
+    }
+
+    .chx-hero__feature-text,
+    .chx-hero__eyebrow {
+      font-size: var(--font-size-body);
+    }
+
+    .chx-hero__feature {
+      align-items: flex-start;
+      gap: var(--space-3);
+    }
+
+    .chx-hero__features {
+      gap: var(--space-3);
+    }
+
+    .chx-hero__actions {
+      flex-direction: column;
+      align-items: stretch;
+      align-self: stretch;
+      gap: var(--space-2);
+    }
+
+    .chx-hero__actions .chx-btn {
+      width: 100%;
+    }
+
+    .chx-trustpilot {
+      flex-wrap: wrap;
+      height: auto;
+      gap: var(--space-2);
+    }
+
+    .chx-trustpilot__word,
+    .chx-trustpilot__count {
+      font-size: var(--font-size-body-small);
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Hero",
+  "tag": "section",
+  "class": "chopinrx-hero-section",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Background image",
+      "info": "Upload to Content → Files, then pick it here."
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Provider-Guided Telehealth"
+    },
+    {
+      "type": "text",
+      "id": "title_line_1",
+      "label": "Heading line 1",
+      "default": "Personalized care."
+    },
+    {
+      "type": "text",
+      "id": "title_line_2",
+      "label": "Heading line 2 (accent)",
+      "default": "Delivered to you."
+    },
+    {
+      "type": "richtext",
+      "id": "body",
+      "label": "Body",
+      "default": "<p>Connect with licensed U.S. clinicians for personalized treatment options through a simple online experience, with treatment delivered directly to your door.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Actions"
+    },
+    {
+      "type": "text",
+      "id": "primary_label",
+      "label": "Primary button label",
+      "default": "Explore Programs"
+    },
+    {
+      "type": "url",
+      "id": "primary_url",
+      "label": "Primary button link"
+    },
+    {
+      "type": "text",
+      "id": "secondary_label",
+      "label": "Secondary button label",
+      "default": "View our treatments"
+    },
+    {
+      "type": "url",
+      "id": "secondary_url",
+      "label": "Secondary button link"
+    },
+    {
+      "type": "header",
+      "content": "Trustpilot"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_trustpilot",
+      "label": "Show Trustpilot strip",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "trustpilot_rating",
+      "label": "Rating word",
+      "default": "Excellent"
+    },
+    {
+      "type": "text",
+      "id": "trustpilot_count",
+      "label": "Review count",
+      "default": "436 reviews on"
+    },
+    {
+      "type": "url",
+      "id": "trustpilot_url",
+      "label": "Trustpilot link"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "feature",
+      "name": "Feature",
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Text",
+          "default": "Plans tailored to your goals"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 6,
+  "presets": [
+    {
+      "name": "Hero",
+      "blocks": [
+        {
+          "type": "feature",
+          "settings": {
+            "text": "Lose weight with doctor-trusted treatment plans"
+          }
+        },
+        {
+          "type": "feature",
+          "settings": {
+            "text": "Plans tailored to your goals"
+          }
+        },
+        {
+          "type": "feature",
+          "settings": {
+            "text": "Access to 24/7 messaging, 100% online"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

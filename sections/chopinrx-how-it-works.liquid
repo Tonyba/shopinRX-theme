@@ -1,0 +1,246 @@
+{% render 'chopinrx-tokens' %}
+
+{% assign arrow_icon = 'icon-arrow-right.svg' | inline_asset_content | replace: '#FCFAF9', 'currentColor' %}
+
+<div class="chx-steps">
+  <div class="chx-container">
+    <div class="chx-steps__header">
+      {% render 'chopinrx-section-heading',
+        eyebrow: section.settings.eyebrow,
+        heading: section.settings.heading,
+        class: 'chx-steps__heading'
+      %}
+
+      {%- if section.settings.cta_label != blank -%}
+        <a
+          class="chx-btn chx-btn--primary chx-steps__cta"
+          href="{{ section.settings.cta_url | default: routes.all_products_collection_url }}"
+        >
+          <span>{{ section.settings.cta_label }}</span>
+          <span class="chx-btn__icon" aria-hidden="true">{{ arrow_icon }}</span>
+        </a>
+      {%- endif -%}
+    </div>
+
+    <ol class="chx-steps__list">
+      {%- for block in section.blocks -%}
+        <li class="chx-step" {{ block.shopify_attributes }}>
+          <span class="chx-step__marker">
+            <span class="chx-step__number">{{ forloop.index | prepend: '0' | slice: -2, 2 }}</span>
+            <span class="chx-step__rule" aria-hidden="true"></span>
+          </span>
+          <h3 class="chx-step__title">{{ block.settings.title }}</h3>
+          {%- if block.settings.text != blank -%}
+            <p class="chx-step__text">{{ block.settings.text }}</p>
+          {%- endif -%}
+        </li>
+      {%- endfor -%}
+    </ol>
+  </div>
+</div>
+
+{% stylesheet %}
+  .chx-steps {
+    background-color: var(--surface-well);
+    padding-block: var(--section-py-tight);
+    overflow: clip;
+  }
+
+  .chx-steps__header {
+    display: flex;
+    align-items: flex-end;
+    gap: var(--space-10);
+  }
+
+  .chx-steps__heading {
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+
+  .chx-steps__cta {
+    flex-shrink: 0;
+  }
+
+  .chx-steps__list {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--space-5);
+    margin: var(--space-10) 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .chx-step {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: var(--space-3);
+    padding: var(--space-8) var(--space-6);
+    border: var(--border-w) solid var(--border-hairline);
+    border-radius: var(--radius-md);
+    background-color: var(--surface-card);
+  }
+
+  .chx-step__marker {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .chx-step__number {
+    font-family: var(--font-display);
+    font-size: var(--font-size-h3);
+    font-weight: 500;
+    line-height: 1.08;
+    letter-spacing: -0.035em;
+    color: var(--text-accent);
+  }
+
+  .chx-step__rule {
+    display: block;
+    width: 49px;
+    height: 3px;
+    background-color: var(--text-accent);
+  }
+
+  .chx-step__title {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: var(--font-size-h4);
+    font-weight: 500;
+    line-height: 1.12;
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+    color: var(--text-heading);
+  }
+
+  .chx-step__text {
+    margin: 0;
+    font-family: var(--font-ui);
+    font-size: var(--font-size-body-large);
+    font-weight: 400;
+    line-height: 1.55;
+    letter-spacing: -0.005em;
+    color: var(--text-body);
+  }
+
+  /* ── Breakpoints ────────────────────────────── */
+  @media screen and (max-width: 1024px) {
+    .chx-steps__list {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media screen and (max-width: 767px) {
+    .chx-steps__header {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: var(--space-6);
+    }
+
+    .chx-steps__cta {
+      width: 100%;
+    }
+
+    .chx-steps__list {
+      grid-template-columns: 1fr;
+    }
+
+    .chx-step {
+      padding: var(--space-6) var(--space-5);
+    }
+
+    .chx-step__text {
+      font-size: var(--font-size-body);
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "How it works",
+  "tag": "section",
+  "class": "chopinrx-steps-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "How it works"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Four steps, about ten minutes"
+    },
+    {
+      "type": "text",
+      "id": "cta_label",
+      "label": "Button label",
+      "default": "Get Started"
+    },
+    {
+      "type": "url",
+      "id": "cta_url",
+      "label": "Button link"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "step",
+      "name": "Step",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Choose a treatment or stack"
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Text",
+          "default": "Pick a flagship program or a single treatment from the menu."
+        }
+      ]
+    }
+  ],
+  "max_blocks": 6,
+  "presets": [
+    {
+      "name": "How it works",
+      "blocks": [
+        {
+          "type": "step",
+          "settings": {
+            "title": "Choose a treatment or stack",
+            "text": "Pick a flagship program or a single treatment from the menu."
+          }
+        },
+        {
+          "type": "step",
+          "settings": {
+            "title": "Complete the medical intake",
+            "text": "A secure online health questionnaire, about 10 minutes."
+          }
+        },
+        {
+          "type": "step",
+          "settings": {
+            "title": "Provider reviews & prescribes",
+            "text": "A licensed provider reviews your history and prescribes only if appropriate."
+          }
+        },
+        {
+          "type": "step",
+          "settings": {
+            "title": "Pharmacy ships to your door",
+            "text": "A licensed U.S. pharmacy fills and ships discreetly, on a schedule."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,6 +1,6 @@
 {% doc %}
-  Global ChopinRX design tokens (colors, spacing, radii, type scale, layout)
-  and the shared button / container primitives built from them.
+  Global ChopinRX design tokens and the shared primitives built from them
+  (container, type scale, buttons, tag pills).
 
   Values map 1:1 to the Figma variables of the ChopinRX design system.
   Render once from any section that consumes them.
@@ -12,54 +12,122 @@
 {% stylesheet %}
   :root {
     /* ── Surfaces ─────────────────────────────── */
+    --paper-000: #ffffff;
     --surface-page: #ffffff;
+    --surface-card: #ffffff;
+    --surface-muted: #fcfaf9;
+    --surface-card-flat: #f5f3f1;
+    --surface-well: #e9e6df;
     --surface-dark: #14181d;
-    --surface-muted: #faf8f5;
+    --surface-accent: #ff6e42;
+    --surface-accent-soft: #ffe8e2;
+    --alpha-paper-16: #faf8f529;
+
+    /* ── Ink & accent ramps ───────────────────── */
+    --ink-900: #14181d;
+    --ink-300: #a8aeb8;
+    --accent-500: #ff6e42;
 
     /* ── Text ─────────────────────────────────── */
     --text-heading: #14181d;
+    --text-body: #1f252c;
+    --text-muted: #6b7480;
     --text-on-dark: #fcfaf9;
+    --text-on-dark-muted: #9ba3ae;
     --text-accent: #ff6e42;
+    --text-accent-strong: #944128;
     --icon-on-dark: #faf8f5;
+    --icon-success: #34c759;
+
+    /* ── Borders ──────────────────────────────── */
+    --border-hairline: #ddd8cf;
+    --border-strong: #c9c3b8;
+    --border-w: 1px;
 
     /* ── Actions ──────────────────────────────── */
-    --action-accent-bg: #ff6e42;
-    --action-accent-bg-hover: #e85b2d;
+    --action-primary-bg: #14181d;
     --action-primary-fg: #fcfaf9;
+    --action-primary-bg-hover: #000000;
+    --action-accent-bg: #ff6e42;
+    --action-accent-fg: #14181d;
+    --action-accent-bg-hover: #e85b2d;
     --action-secondary-fg: #14181d;
     --action-secondary-border: #c9c3b8;
 
     /* ── Spacing ──────────────────────────────── */
+    --space-1: 0px;
     --space-2: 8px;
     --space-3: 12px;
     --space-4: 16px;
     --space-5: 20px;
     --space-6: 24px;
     --space-8: 32px;
+    --space-10: 40px;
+    --space-16: 64px;
+    --space-24: 96px;
+    --grid-gap: 24px;
 
-    /* ── Radii, borders, controls ─────────────── */
+    /* ── Radii & controls ─────────────────────── */
+    --radius-md: 10px;
+    --radius-lg: 14px;
+    --radius-xl: 20px;
     --radius-pill: 999px;
-    --radius-panel: 12px;
-    --border-w: 1px;
+    --control-h: 50px;
     --control-h-lg: 60px;
+    --pill-h: 28px;
 
-    /* ── Type ─────────────────────────────────── */
-    --font-display: 'Figtree', var(--font-heading--family, sans-serif);
-    --font-ui: 'Figtree', var(--font-body--family, sans-serif);
-    --font-size-body-small: 14px;
-    --font-size-body: 16px;
+    /* ── Type ─────────────────────────────────────
+       Families come from the theme's global typography settings, which are set
+       to Figtree to match the design system. Weights are applied per role:
+       400 body, 500 UI / headings, 600 buttons & labels, 700 wordmark. */
+    --font-display: var(--font-heading--family, 'Figtree', sans-serif);
+    --font-ui: var(--font-body--family, 'Figtree', sans-serif);
+    --font-size-h1: 80px;
+    --font-size-h2: 48px;
+    --font-size-h3: 36px;
+    --font-size-h4: 28px;
+    --font-size-h5: 24px;
+    --font-size-subtitle: 20px;
     --font-size-body-large: 18px;
+    --font-size-body: 16px;
+    --font-size-body-small: 14px;
     --font-size-button-large: 18px;
+    --font-size-button: 16px;
+    --font-size-label-tag: 14px;
     --font-size-brand-name: 26px;
 
     /* ── Layout ───────────────────────────────── */
+    --section-px: 24px;
+    --section-py-tight: 80px;
     --screen-content-max-width: 1452px;
-    --screen-section-padding-x: 24px;
+    --screen-section-padding-x: var(--section-px);
+
+    /* Distance from a full-width section's edge to the content well, so
+       full-bleed rails can line up with the container. */
+    --chx-gutter: max(var(--section-px), calc((100% - var(--screen-content-max-width)) / 2));
+  }
+
+  @media screen and (max-width: 1024px) {
+    :root {
+      --font-size-h1: 56px;
+      --font-size-h2: 40px;
+      --font-size-h3: 32px;
+      --font-size-h4: 26px;
+      --font-size-h5: 22px;
+      --section-py-tight: 64px;
+    }
   }
 
   @media screen and (max-width: 767px) {
     :root {
-      --screen-section-padding-x: 16px;
+      --font-size-h1: 42px;
+      --font-size-h2: 32px;
+      --font-size-h3: 28px;
+      --font-size-h4: 24px;
+      --font-size-h5: 20px;
+      --font-size-subtitle: 18px;
+      --section-px: 16px;
+      --section-py-tight: 48px;
     }
   }
 
@@ -67,9 +135,117 @@
      234px gutters specified in the design. */
   .chx-container {
     width: 100%;
-    max-width: calc(var(--screen-content-max-width) + (var(--screen-section-padding-x) * 2));
+    max-width: calc(var(--screen-content-max-width) + (var(--section-px) * 2));
     margin-inline: auto;
-    padding-inline: var(--screen-section-padding-x);
+    padding-inline: var(--section-px);
+  }
+
+  /* A few bands sit on a 1480px well (220px gutters at 1920px) rather than the
+     page default of 1452px. */
+  .chx-container--wide {
+    max-width: calc(1480px + (var(--section-px) * 2));
+  }
+
+  /* ── Type primitives ──────────────────────────
+     Colour comes through an inherited custom property rather than a direct
+     declaration. A section on a dark surface sets --chx-heading-color once on
+     its wrapper and every heading inside follows, with no specificity contest
+     against either these rules or the theme's element-level heading styles. */
+  .chx-h1,
+  .chx-h2,
+  .chx-h3,
+  .chx-h4,
+  .chx-h5,
+  .chx-subtitle {
+    margin: 0;
+    font-family: var(--font-display);
+    font-weight: 500;
+    color: var(--chx-heading-color, var(--text-heading));
+  }
+
+  .chx-h1 {
+    font-size: var(--font-size-h1);
+    line-height: 1.04;
+    letter-spacing: -0.035em;
+  }
+
+  .chx-h2 {
+    font-size: var(--font-size-h2);
+    line-height: 1.04;
+    letter-spacing: -0.035em;
+  }
+
+  .chx-h3 {
+    font-size: var(--font-size-h3);
+    line-height: 1.08;
+    letter-spacing: -0.035em;
+  }
+
+  .chx-h4 {
+    font-size: var(--font-size-h4);
+    line-height: 1.12;
+    letter-spacing: -0.02em;
+  }
+
+  .chx-h5 {
+    font-size: var(--font-size-h5);
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+  }
+
+  .chx-subtitle {
+    font-size: var(--font-size-subtitle);
+    line-height: 1.28;
+    letter-spacing: -0.02em;
+  }
+
+  .chx-body-lg,
+  .chx-body,
+  .chx-body-sm {
+    margin: 0;
+    font-family: var(--font-ui);
+    font-weight: 400;
+    letter-spacing: -0.005em;
+    color: var(--chx-body-color, var(--text-body));
+  }
+
+  .chx-body-lg {
+    font-size: var(--font-size-body-large);
+    line-height: 1.55;
+  }
+
+  .chx-body {
+    font-size: var(--font-size-body);
+    line-height: 1.5;
+  }
+
+  .chx-body-sm {
+    font-size: var(--font-size-body-small);
+    line-height: 1.43;
+  }
+
+  .chx-label-tag {
+    margin: 0;
+    font-family: var(--font-ui);
+    font-size: var(--font-size-label-tag);
+    font-weight: 600;
+    line-height: 1.14;
+    letter-spacing: 0.005em;
+  }
+
+  .chx-link {
+    font-family: var(--font-ui);
+    font-size: var(--font-size-button);
+    font-weight: 600;
+    line-height: 1.25;
+    letter-spacing: -0.005em;
+    color: var(--text-heading);
+    text-decoration: none;
+  }
+
+  .chx-link:hover {
+    color: var(--text-accent);
+    text-decoration: none;
   }
 
   /* ── Button primitive ───────────────────────── */
@@ -87,7 +263,7 @@
     font-size: var(--font-size-button-large);
     font-weight: 600;
     line-height: 1.33;
-    letter-spacing: -0.09px;
+    letter-spacing: -0.005em;
     text-align: center;
     text-decoration: none;
     white-space: nowrap;
@@ -109,6 +285,24 @@
     pointer-events: none;
   }
 
+  /* Medium control height, per --control-h / Button / Medium */
+  .chx-btn--md {
+    height: var(--control-h);
+    font-size: var(--font-size-button);
+    line-height: 1.25;
+    padding-inline: var(--space-6);
+  }
+
+  .chx-btn--primary {
+    background-color: var(--action-primary-bg);
+    color: var(--action-primary-fg);
+  }
+
+  .chx-btn--primary:hover {
+    background-color: var(--action-primary-bg-hover);
+    color: var(--action-primary-fg);
+  }
+
   .chx-btn--secondary {
     border-color: var(--action-secondary-border);
     color: var(--action-secondary-fg);
@@ -127,6 +321,17 @@
   .chx-btn--accent:hover {
     background-color: var(--action-accent-bg-hover);
     color: var(--action-primary-fg);
+  }
+
+  /* Outlined action on photography or ink surfaces */
+  .chx-btn--inverse {
+    border-color: var(--action-secondary-border);
+    color: var(--text-on-dark);
+  }
+
+  .chx-btn--inverse:hover {
+    border-color: var(--paper-000);
+    color: var(--text-on-dark);
   }
 
   .chx-btn__icon {

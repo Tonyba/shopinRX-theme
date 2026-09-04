@@ -1,0 +1,329 @@
+{% render 'chopinrx-tokens' %}
+
+{% liquid
+  assign arrow_icon = 'icon-arrow-right.svg' | inline_asset_content | replace: '#FCFAF9', 'currentColor'
+  assign plus_icon = 'icon-faq-plus.svg' | inline_asset_content | replace: '#FCFAF9', 'currentColor'
+  assign minus_icon = 'icon-faq-minus.svg' | inline_asset_content | replace: '#FCFAF9', 'currentColor'
+%}
+
+<div class="chx-faq">
+  <div class="chx-container">
+    <div class="chx-faq__grid">
+      <div class="chx-faq__intro">
+        {% render 'chopinrx-section-heading',
+          eyebrow: section.settings.eyebrow,
+          heading: section.settings.heading,
+          heading_class: 'chx-h1'
+        %}
+
+        {%- if section.settings.cta_label != blank -%}
+          <a
+            class="chx-btn chx-btn--primary chx-faq__cta"
+            href="{{ section.settings.cta_url | default: routes.all_products_collection_url }}"
+          >
+            <span>{{ section.settings.cta_label }}</span>
+            <span class="chx-btn__icon" aria-hidden="true">{{ arrow_icon }}</span>
+          </a>
+        {%- endif -%}
+      </div>
+
+      <div class="chx-faq__list">
+        {%- for block in section.blocks -%}
+          <details
+            class="chx-faq__item"
+            {% if block.settings.open %}
+              open
+            {% endif %}
+            {{ block.shopify_attributes }}
+          >
+            <summary class="chx-faq__question">
+              <span class="chx-faq__question-text">{{ block.settings.question }}</span>
+              <span class="chx-faq__toggle" aria-hidden="true">
+                <span class="chx-faq__toggle-icon chx-faq__toggle-icon--closed">{{ plus_icon }}</span>
+                <span class="chx-faq__toggle-icon chx-faq__toggle-icon--open">{{ minus_icon }}</span>
+              </span>
+            </summary>
+            <div class="chx-faq__answer">{{ block.settings.answer }}</div>
+          </details>
+        {%- endfor -%}
+      </div>
+    </div>
+  </div>
+</div>
+
+{%- capture faq_schema -%}
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {%- for block in section.blocks -%}
+        {
+          "@type": "Question",
+          "name": {{ block.settings.question | strip_html | json }},
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": {{ block.settings.answer | strip_html | strip | json }}
+          }
+        }{% unless forloop.last %},{% endunless %}
+      {%- endfor -%}
+    ]
+  }
+{%- endcapture -%}
+
+{%- if section.blocks.size > 0 -%}
+  <script type="application/ld+json">
+    {{ faq_schema }}
+  </script>
+{%- endif -%}
+
+{% stylesheet %}
+  .chx-faq {
+    background-color: var(--surface-muted);
+    padding-block: var(--section-py-tight);
+  }
+
+  .chx-faq__grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    gap: var(--space-8);
+  }
+
+  .chx-faq__intro {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 30px;
+  }
+
+  .chx-faq__list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+    min-width: 0;
+  }
+
+  .chx-faq__item {
+    padding: var(--space-6);
+    border: var(--border-w) solid var(--border-strong);
+    border-radius: var(--radius-lg);
+    background-color: var(--surface-card);
+  }
+
+  .chx-faq__item[open] {
+    background-color: var(--surface-card-flat);
+  }
+
+  .chx-faq__question {
+    display: flex;
+    align-items: center;
+    gap: var(--space-6);
+    font-family: var(--font-display);
+    font-size: var(--font-size-subtitle);
+    font-weight: 500;
+    line-height: 1.28;
+    letter-spacing: -0.02em;
+    color: var(--text-heading);
+    cursor: pointer;
+    list-style: none;
+  }
+
+  .chx-faq__question::-webkit-details-marker {
+    display: none;
+  }
+
+  .chx-faq__question-text {
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+
+  .chx-faq__toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 35px;
+    height: 35px;
+    border: 1.296px solid var(--border-hairline);
+    border-radius: var(--radius-pill);
+    background-color: var(--surface-dark);
+    color: var(--text-on-dark);
+    transition: background-color 0.2s ease, border-color 0.2s ease;
+  }
+
+  .chx-faq__item[open] .chx-faq__toggle {
+    border-color: transparent;
+    background-color: var(--surface-accent);
+  }
+
+  .chx-faq__toggle-icon {
+    display: none;
+    width: 25px;
+    height: 25px;
+  }
+
+  .chx-faq__toggle-icon svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  .chx-faq__toggle-icon--closed {
+    display: block;
+  }
+
+  .chx-faq__item[open] .chx-faq__toggle-icon--closed {
+    display: none;
+  }
+
+  .chx-faq__item[open] .chx-faq__toggle-icon--open {
+    display: block;
+  }
+
+  .chx-faq__answer {
+    margin-block-start: var(--space-4);
+    font-family: var(--font-ui);
+    font-size: var(--font-size-body-large);
+    font-weight: 400;
+    line-height: 1.55;
+    letter-spacing: -0.005em;
+    color: var(--text-muted);
+  }
+
+  .chx-faq__answer > :first-child {
+    margin-block-start: 0;
+  }
+
+  .chx-faq__answer > :last-child {
+    margin-block-end: 0;
+  }
+
+  /* ── Breakpoints ────────────────────────────── */
+  @media screen and (max-width: 1024px) {
+    .chx-faq__grid {
+      grid-template-columns: 1fr;
+      gap: var(--space-8);
+    }
+
+    .chx-faq__intro {
+      gap: var(--space-6);
+    }
+  }
+
+  @media screen and (max-width: 767px) {
+    .chx-faq__cta {
+      width: 100%;
+    }
+
+    .chx-faq__item {
+      padding: var(--space-5);
+    }
+
+    .chx-faq__question {
+      gap: var(--space-4);
+    }
+
+    .chx-faq__answer {
+      font-size: var(--font-size-body);
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "FAQ",
+  "tag": "section",
+  "class": "chopinrx-faq-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Have questions?"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "info": "Italic text is rendered in the accent colour.",
+      "default": "Frequently asked <em>questions</em>"
+    },
+    {
+      "type": "text",
+      "id": "cta_label",
+      "label": "Button label",
+      "default": "Get Started"
+    },
+    {
+      "type": "url",
+      "id": "cta_url",
+      "label": "Button link"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "question",
+      "name": "Question",
+      "settings": [
+        {
+          "type": "text",
+          "id": "question",
+          "label": "Question",
+          "default": "How does ChopinRX work?"
+        },
+        {
+          "type": "richtext",
+          "id": "answer",
+          "label": "Answer",
+          "default": "<p>You pick a program or a single treatment, complete the intake in about ten minutes, and an independent licensed provider reviews it and prescribes if appropriate. A licensed U.S. compounding pharmacy ships to your door.</p>"
+        },
+        {
+          "type": "checkbox",
+          "id": "open",
+          "label": "Open by default",
+          "default": false
+        }
+      ]
+    }
+  ],
+  "max_blocks": 20,
+  "presets": [
+    {
+      "name": "FAQ",
+      "blocks": [
+        {
+          "type": "question",
+          "settings": {
+            "question": "How does ChopinRX work?",
+            "open": true
+          }
+        },
+        {
+          "type": "question",
+          "settings": {
+            "question": "Who decides what I am prescribed?"
+          }
+        },
+        {
+          "type": "question",
+          "settings": {
+            "question": "What is the difference between a program and a treatment?"
+          }
+        },
+        {
+          "type": "question",
+          "settings": {
+            "question": "Is ChopinRX available in my state?"
+          }
+        },
+        {
+          "type": "question",
+          "settings": {
+            "question": "Are these medications FDA approved?"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

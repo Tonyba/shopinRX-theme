@@ -1,0 +1,302 @@
+{% render 'chopinrx-tokens' %}
+
+{% liquid
+  assign arrow_icon = 'icon-arrow-right.svg' | inline_asset_content | replace: '#FCFAF9', 'currentColor'
+  assign badge_icon = 'icon-check-badge.svg' | inline_asset_content
+  assign image = section.settings.image
+%}
+
+<div class="chx-split">
+  <div class="chx-container">
+    <div class="chx-split__grid{% if section.settings.media_position == 'right' %} chx-split__grid--media-right{% endif %}">
+      <div class="chx-split__media">
+        {%- if image != blank -%}
+          <img
+            src="{{ image | image_url: width: 1200 }}"
+            srcset="
+              {{ image | image_url: width: 600 }} 600w,
+              {{ image | image_url: width: 900 }} 900w,
+              {{ image | image_url: width: 1200 }} 1200w
+            "
+            sizes="(min-width: 1025px) 45vw, 100vw"
+            width="{{ image.width }}"
+            height="{{ image.height }}"
+            alt="{{ image.alt | escape }}"
+            loading="lazy"
+          >
+        {%- endif -%}
+      </div>
+
+      <div class="chx-split__copy">
+        {% render 'chopinrx-section-heading',
+          eyebrow: section.settings.eyebrow,
+          heading: section.settings.heading
+        %}
+
+        {%- if section.settings.body != blank -%}
+          <div class="chx-body-lg chx-split__text">{{ section.settings.body }}</div>
+        {%- endif -%}
+
+        {%- if section.blocks.size > 0 -%}
+          <ul class="chx-split__features" role="list">
+            {%- for block in section.blocks -%}
+              <li class="chx-feature-card" {{ block.shopify_attributes }}>
+                <span class="chx-feature-card__icon" aria-hidden="true">{{ badge_icon }}</span>
+                <span class="chx-feature-card__body">
+                  <span class="chx-subtitle chx-feature-card__title">{{ block.settings.title }}</span>
+                  {%- if block.settings.text != blank -%}
+                    <span class="chx-body chx-feature-card__text">{{ block.settings.text }}</span>
+                  {%- endif -%}
+                </span>
+              </li>
+            {%- endfor -%}
+          </ul>
+        {%- endif -%}
+
+        {%- if section.settings.cta_label != blank -%}
+          <a
+            class="chx-btn chx-btn--primary chx-split__cta"
+            href="{{ section.settings.cta_url | default: routes.all_products_collection_url }}"
+          >
+            <span>{{ section.settings.cta_label }}</span>
+            <span class="chx-btn__icon" aria-hidden="true">{{ arrow_icon }}</span>
+          </a>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% stylesheet %}
+  .chx-split {
+    background-color: var(--surface-page);
+    padding-block: var(--section-py-tight);
+    overflow: clip;
+  }
+
+  .chx-split__grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    gap: var(--space-16);
+  }
+
+  .chx-split__grid--media-right .chx-split__media {
+    order: 2;
+  }
+
+  .chx-split__media {
+    align-self: stretch;
+    min-height: 100%;
+    border-radius: var(--radius-xl);
+    overflow: clip;
+    background-color: var(--text-muted);
+  }
+
+  .chx-split__media img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    min-height: 400px;
+    object-fit: cover;
+  }
+
+  .chx-split__copy {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-6);
+    min-width: 0;
+  }
+
+  .chx-split__text {
+    color: var(--text-body);
+  }
+
+  .chx-split__text > :first-child {
+    margin-block-start: 0;
+  }
+
+  .chx-split__text > :last-child {
+    margin-block-end: 0;
+  }
+
+  .chx-split__features {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  /* ── Feature card ───────────────────────────── */
+  .chx-feature-card {
+    display: flex;
+    align-items: center;
+    gap: var(--space-6);
+    padding: var(--space-6);
+    border: var(--border-w) solid var(--border-hairline);
+    border-radius: var(--radius-lg);
+  }
+
+  .chx-feature-card__icon {
+    display: block;
+    flex-shrink: 0;
+    width: 40px;
+    height: 40px;
+  }
+
+  .chx-feature-card__icon svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  .chx-feature-card__body {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    min-width: 0;
+  }
+
+  .chx-feature-card__text {
+    color: var(--text-body);
+  }
+
+  /* ── Breakpoints ────────────────────────────── */
+  @media screen and (max-width: 1024px) {
+    .chx-split__grid {
+      grid-template-columns: 1fr;
+      gap: var(--space-8);
+    }
+
+    .chx-split__grid--media-right .chx-split__media {
+      order: 0;
+    }
+
+    .chx-split__media img {
+      min-height: 0;
+      aspect-ratio: 4 / 3;
+    }
+  }
+
+  @media screen and (max-width: 767px) {
+    .chx-feature-card {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: var(--space-3);
+      padding: var(--space-5);
+    }
+
+    .chx-split__cta {
+      width: 100%;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Split features",
+  "tag": "section",
+  "class": "chopinrx-split-section",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image",
+      "info": "Upload to Content → Files, then pick it here."
+    },
+    {
+      "type": "select",
+      "id": "media_position",
+      "label": "Image position",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "right", "label": "Right" }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Personalized Care"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "info": "Italic text is rendered in the accent colour.",
+      "default": "With you <em>every step</em> of the way"
+    },
+    {
+      "type": "richtext",
+      "id": "body",
+      "label": "Body",
+      "default": "<p>Your goals, your health history and your needs are different from everyone else's. ChopinRX connects you with independent, licensed providers who evaluate your information and determine whether a treatment is right for you.</p>"
+    },
+    {
+      "type": "text",
+      "id": "cta_label",
+      "label": "Button label",
+      "default": "Explore treatments"
+    },
+    {
+      "type": "url",
+      "id": "cta_url",
+      "label": "Button link"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "feature",
+      "name": "Feature",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "100% online care from licensed clinicians"
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Text",
+          "default": "Your goals and individual needs help shape the care experience."
+        }
+      ]
+    }
+  ],
+  "max_blocks": 8,
+  "presets": [
+    {
+      "name": "Split features",
+      "blocks": [
+        {
+          "type": "feature",
+          "settings": {
+            "title": "100% online care from licensed clinicians",
+            "text": "Your goals and individual needs help shape the care experience."
+          }
+        },
+        {
+          "type": "feature",
+          "settings": {
+            "title": "Access to 24/7 messaging with your Care Team",
+            "text": "Independent licensed providers review your information and make prescribing decisions."
+          }
+        },
+        {
+          "type": "feature",
+          "settings": {
+            "title": "Unlimited check-ins to adjust your plan as needed",
+            "text": "Independent licensed providers review your information and make prescribing decisions."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

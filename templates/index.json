@@ -1,282 +1,530 @@
-/*
- * ------------------------------------------------------------
- * IMPORTANT: The contents of this file are auto-generated.
- *
- * This file may be updated by the Shopify admin theme editor
- * or related systems. Please exercise caution as any changes
- * made to this file may be overwritten.
- * ------------------------------------------------------------
- */
 {
   "sections": {
-    "hero_jVaWmY": {
-      "type": "hero",
+    "hero": {
+      "type": "chopinrx-hero",
+      "settings": {
+        "eyebrow": "Provider-Guided Telehealth",
+        "title_line_1": "Personalized care.",
+        "title_line_2": "Delivered to you.",
+        "body": "<p>Connect with licensed U.S. clinicians for personalized treatment options through a simple online experience, with treatment delivered directly to your door.</p>",
+        "primary_label": "Explore Programs",
+        "secondary_label": "View our treatments",
+        "show_trustpilot": true,
+        "trustpilot_rating": "Excellent",
+        "trustpilot_count": "436 reviews on",
+        "image": "shopify://shop_images/chx-hero.jpg"
+      },
       "blocks": {
-        "text_YLPk4p": {
-          "type": "text",
-          "name": "t:names.heading",
+        "feature_1": {
+          "type": "feature",
           "settings": {
-            "text": "<p>Browse our latest products</p>",
-            "width": "fit-content",
-            "max_width": "normal",
-            "alignment": "left",
-            "type_preset": "h2",
-            "font": "var(--font-body--family)",
-            "font_size": "1rem",
-            "line_height": "normal",
-            "letter_spacing": "normal",
-            "case": "none",
-            "wrap": "pretty",
-            "text_color": "{{ settings.color_palette.background }}",
-            "background": false,
-            "background_color": "#00000026",
-            "corner_radius": 0,
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          },
-          "blocks": {}
+            "text": "Lose weight with doctor-trusted treatment plans"
+          }
         },
-        "button_H9gpTf": {
-          "type": "button",
-          "name": "t:names.button",
+        "feature_2": {
+          "type": "feature",
           "settings": {
-            "label": "Shop all",
-            "link": "shopify://collections/all",
-            "open_in_new_tab": false,
-            "style_class": "button-custom",
-            "custom_button_background": "rgba(0, 0, 0, 0)",
-            "custom_button_text": "{{ settings.color_palette.background }}",
-            "custom_button_border": "{{ settings.color_palette.background }}",
-            "width": "fit-content",
-            "custom_width": 100,
-            "width_mobile": "fit-content",
-            "custom_width_mobile": 100
-          },
-          "blocks": {}
+            "text": "Plans tailored to your goals"
+          }
+        },
+        "feature_3": {
+          "type": "feature",
+          "settings": {
+            "text": "Access to 24/7 messaging, 100% online"
+          }
         }
       },
       "block_order": [
-        "text_YLPk4p",
-        "button_H9gpTf"
-      ],
-      "name": "t:names.hero",
-      "settings": {
-        "media_type_1": "image",
-        "media_type_2": "image",
-        "link": "",
-        "open_in_new_tab": false,
-        "content_direction": "column",
-        "vertical_on_mobile": true,
-        "horizontal_alignment": "space-between",
-        "vertical_alignment": "flex-end",
-        "align_baseline": true,
-        "horizontal_alignment_flex_direction_column": "center",
-        "vertical_alignment_flex_direction_column": "flex-end",
-        "gap": 24,
-        "section_width": "page-width",
-        "section_height": "medium",
-        "section_height_custom": 50,
-        "toggle_overlay": true,
-        "overlay_color": "#12121266",
-        "overlay_style": "solid",
-        "gradient_direction": "to bottom",
-        "blurred_reflection": false,
-        "reflection_opacity": 75,
-        "padding-block-start": 100,
-        "padding-block-end": 72
-      }
+        "feature_1",
+        "feature_2",
+        "feature_3"
+      ]
     },
-    "product_list_fa6P9H": {
-      "type": "product-list",
+    "trust_bar": {
+      "type": "chopinrx-trust-bar",
       "blocks": {
-        "static-header": {
-          "type": "_product-list-content",
-          "name": "t:names.header",
-          "static": true,
+        "feature_1": {
+          "type": "feature",
           "settings": {
-            "content_direction": "row",
-            "vertical_on_mobile": false,
-            "horizontal_alignment": "space-between",
-            "vertical_alignment": "flex-end",
-            "align_baseline": true,
-            "horizontal_alignment_flex_direction_column": "flex-start",
-            "vertical_alignment_flex_direction_column": "center",
-            "gap": 12,
-            "width": "fill",
-            "custom_width": 100,
-            "width_mobile": "fill",
-            "custom_width_mobile": 100,
-            "height": "fit",
-            "custom_height": 100,
-            "background_media": "none",
-            "video_position": "cover",
-            "background_image_position": "cover",
-            "border": "none",
-            "border_width": 1,
-            "border_opacity": 100,
-            "border_radius": 0,
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          },
-          "blocks": {
-            "product_list_text_YFtzcL": {
-              "type": "_product-list-text",
-              "name": "t:names.collection_title",
-              "settings": {
-                "text": "<h3>{{ closest.collection.title }}</h3>",
-                "width": "fit-content",
-                "max_width": "normal",
-                "alignment": "left",
-                "type_preset": "h4",
-                "font": "var(--font-body--family)",
-                "font_size": "",
-                "line_height": "normal",
-                "letter_spacing": "normal",
-                "case": "none",
-                "wrap": "pretty",
-                "background": false,
-                "background_color": "#00000026",
-                "corner_radius": 0,
-                "padding-block-start": 0,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              },
-              "blocks": {}
-            },
-            "product_list_button_MWeP9V": {
-              "type": "_product-list-button",
-              "name": "t:names.product_list_button",
-              "settings": {
-                "label": "View all",
-                "open_in_new_tab": false,
-                "style_class": "button-unstyled",
-                "width": "fit-content",
-                "custom_width": 100,
-                "width_mobile": "fit-content",
-                "custom_width_mobile": 100
-              },
-              "blocks": {}
-            }
-          },
-          "block_order": [
-            "product_list_text_YFtzcL",
-            "product_list_button_MWeP9V"
-          ]
+            "title": "UK licensed",
+            "text": "Medications and clinicians."
+          }
         },
-        "static-product-card": {
-          "type": "_product-card",
-          "name": "t:names.product_card",
-          "static": true,
+        "feature_2": {
+          "type": "feature",
           "settings": {
-            "product_card_gap": 4,
-            "border": "none",
-            "border_width": 1,
-            "border_opacity": 100,
-            "border_radius": 0,
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          },
-          "blocks": {
-            "product_card_gallery_677WP3": {
-              "type": "_product-card-gallery",
-              "name": "t:names.product_card_media",
-              "settings": {
-                "image_ratio": "adapt",
-                "border": "none",
-                "border_width": 1,
-                "border_opacity": 100,
-                "border_radius": 0,
-                "padding-block-start": 0,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              },
-              "blocks": {}
-            },
-            "product_title_YXxMTj": {
-              "type": "product-title",
-              "name": "t:names.product_title",
-              "settings": {
-                "width": "100%",
-                "max_width": "normal",
-                "alignment": "left",
-                "type_preset": "paragraph",
-                "font": "var(--font-body--family)",
-                "font_size": "1rem",
-                "line_height": "normal",
-                "letter_spacing": "normal",
-                "case": "none",
-                "wrap": "pretty",
-                "background": false,
-                "background_color": "#00000026",
-                "corner_radius": 0,
-                "padding-block-start": 4,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              },
-              "blocks": {}
-            },
-            "price_JQzVV4": {
-              "type": "price",
-              "name": "t:names.product_price",
-              "settings": {
-                "show_sale_price_first": true,
-                "show_installments": false,
-                "show_tax_info": false,
-                "type_preset": "h6",
-                "width": "100%",
-                "alignment": "left",
-                "font": "var(--font-body--family)",
-                "font_size": "1rem",
-                "line_height": "normal",
-                "letter_spacing": "normal",
-                "case": "none",
-                "padding-block-start": 0,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              },
-              "blocks": {}
-            }
-          },
-          "block_order": [
-            "product_card_gallery_677WP3",
-            "product_title_YXxMTj",
-            "price_JQzVV4"
-          ]
+            "title": "Ongoing clinical support",
+            "text": "Trusted medical advice from expert clinicians."
+          }
+        },
+        "feature_3": {
+          "type": "feature",
+          "settings": {
+            "title": "HIPAA Compliant",
+            "text": "Your data is always protected"
+          }
+        },
+        "feature_4": {
+          "type": "feature",
+          "settings": {
+            "title": "Discreet Delivery",
+            "text": "No names, no logos, no delivery fee."
+          }
         }
       },
-      "name": "t:names.featured_collection",
+      "block_order": [
+        "feature_1",
+        "feature_2",
+        "feature_3",
+        "feature_4"
+      ]
+    },
+    "programs": {
+      "type": "chopinrx-programs",
       "settings": {
-        "collection": "all",
-        "layout_type": "grid",
-        "carousel_on_mobile": false,
-        "max_products": 8,
-        "columns": 4,
-        "mobile_columns": "2",
-        "mobile_card_size": "60cqw",
-        "columns_gap": 8,
-        "rows_gap": 24,
-        "icons_style": "arrow",
-        "icons_shape": "none",
-        "section_width": "page-width",
-        "horizontal_alignment": "flex-start",
-        "gap": 28,
-        "padding-block-start": 48,
-        "padding-block-end": 48
+        "eyebrow": "Flagship Programs",
+        "heading": "Start With A Flagship Program",
+        "collection": "program",
+        "products_count": 3,
+        "price_prefix": "From ",
+        "price_unit": "/mo",
+        "card_cta_label": "Start intake",
+        "cta_label": "See All Programs",
+        "cta_url": "",
+        "badge_tag": "flagship",
+        "badge_label": "Flagship"
+      }
+    },
+    "program_list": {
+      "type": "chopinrx-program-list",
+      "settings": {
+        "eyebrow": "All Programs",
+        "heading": "Find The Program That Fits",
+        "collections": [
+          "metabolic-health",
+          "hormone-health",
+          "sex-health",
+          "longevity",
+          "energy-recovery",
+          "aesthetics"
+        ],
+        "products_count": 8,
+        "price_prefix": "From ",
+        "price_unit": "/mo",
+        "card_cta_label": "Start intake",
+        "cta_label": "See All Programs",
+        "cta_url": "",
+        "badge_tag": "flagship",
+        "badge_label": "Flagship"
+      }
+    },
+    "personalized_care": {
+      "type": "chopinrx-split-features",
+      "settings": {
+        "media_position": "left",
+        "eyebrow": "Personalized Care",
+        "heading": "With you <em>every step</em> of the way",
+        "body": "<p>Your goals, your health history and your needs are different from everyone else's. ChopinRX connects you with independent, licensed providers who evaluate your information and determine whether a treatment is right for you.</p>",
+        "cta_label": "Explore treatments",
+        "image": "shopify://shop_images/chx-personalized-care.jpg"
+      },
+      "blocks": {
+        "feature_1": {
+          "type": "feature",
+          "settings": {
+            "title": "100% online care from licensed clinicians",
+            "text": "Your goals and individual needs help shape the care experience."
+          }
+        },
+        "feature_2": {
+          "type": "feature",
+          "settings": {
+            "title": "Access to 24/7 messaging with your Care Team",
+            "text": "Independent licensed providers review your information and make prescribing decisions."
+          }
+        },
+        "feature_3": {
+          "type": "feature",
+          "settings": {
+            "title": "Unlimited check-ins to adjust your plan as needed",
+            "text": "Independent licensed providers review your information and make prescribing decisions."
+          }
+        },
+        "feature_4": {
+          "type": "feature",
+          "settings": {
+            "title": "Unlimited check-ins to adjust your plan as needed",
+            "text": "Independent licensed providers review your information and make prescribing decisions."
+          }
+        }
+      },
+      "block_order": [
+        "feature_1",
+        "feature_2",
+        "feature_3",
+        "feature_4"
+      ]
+    },
+    "gender_split": {
+      "type": "chopinrx-gender-split",
+      "blocks": {
+        "panel_1": {
+          "type": "panel",
+          "settings": {
+            "overlay_color": "#124643b3",
+            "eyebrow": "Find your path",
+            "heading": "Built for men",
+            "text": "TRT foundation, drive, recovery and performance protocols reviewed by independent licensed providers.",
+            "cta_label": "Explore men's programs",
+            "button_color": "#22eee4",
+            "button_text_color": "#14181d",
+            "image": "shopify://shop_images/chx-gender-men.jpg"
+          }
+        },
+        "panel_2": {
+          "type": "panel",
+          "settings": {
+            "overlay_color": "#5b2542b3",
+            "eyebrow": "Find your path",
+            "heading": "Built for women",
+            "text": "Menopause, HRT, balance and aesthetics protocols reviewed by independent licensed providers.",
+            "cta_label": "Explore women's programs",
+            "button_color": "#f9299b",
+            "button_text_color": "#fcfaf9",
+            "image": "shopify://shop_images/chx-gender-women.png"
+          }
+        }
+      },
+      "block_order": [
+        "panel_1",
+        "panel_2"
+      ]
+    },
+    "treatments": {
+      "type": "chopinrx-treatments-carousel",
+      "settings": {
+        "eyebrow": "Explore solutions",
+        "heading": "Explore Our Treatments",
+        "collections": [
+          "metabolic-health",
+          "hormone-health",
+          "sex-health",
+          "longevity",
+          "energy-recovery",
+          "aesthetics"
+        ],
+        "products_count": 8,
+        "price_prefix": "From ",
+        "price_unit": "/mo",
+        "placeholder_label": "Vial · placeholder",
+        "card_cta_label": "Explore",
+        "cta_label": "See All Treatments",
+        "cta_url": ""
+      }
+    },
+    "reviews": {
+      "type": "chopinrx-reviews",
+      "settings": {
+        "eyebrow": "Reviews",
+        "heading": "Real people. Real results.",
+        "show_trustpilot": true,
+        "trustpilot_rating": "Excellent",
+        "trustpilot_count": "436 reviews on"
+      },
+      "blocks": {
+        "review_1": {
+          "type": "review",
+          "settings": {
+            "name": "James Whitfield",
+            "rating": 5,
+            "quote": "“I really love how simple and easy everything has been so far. I have noticed an enhanced focused on being more mindful of what I am eating, making sure to hit my protein goals!”",
+            "row": "1"
+          }
+        },
+        "review_2": {
+          "type": "review",
+          "settings": {
+            "name": "Amelia Hart",
+            "rating": 5,
+            "quote": "“The intake took ten minutes and I had a provider response the same day. Everything has been clear and easy to follow.”",
+            "row": "1"
+          }
+        },
+        "review_3": {
+          "type": "review",
+          "settings": {
+            "name": "Daniel Osei",
+            "rating": 5,
+            "quote": "“Discreet packaging, on time every month, and the care team answers fast when I have a question.”",
+            "row": "1"
+          }
+        },
+        "review_4": {
+          "type": "review",
+          "settings": {
+            "name": "Priya Raman",
+            "rating": 5,
+            "quote": "“I appreciate that the plan was adjusted after my check-in rather than being one size fits all.”",
+            "row": "2"
+          }
+        },
+        "review_5": {
+          "type": "review",
+          "settings": {
+            "name": "Marcus Lee",
+            "rating": 5,
+            "quote": "“Straightforward pricing and no surprises. The provider explained the options before anything was prescribed.”",
+            "row": "2"
+          }
+        },
+        "review_6": {
+          "type": "review",
+          "settings": {
+            "name": "Sofia Alvarez",
+            "rating": 5,
+            "quote": "“Being able to message the care team at any hour has made this far less stressful than I expected.”",
+            "row": "2"
+          }
+        }
+      },
+      "block_order": [
+        "review_1",
+        "review_2",
+        "review_3",
+        "review_4",
+        "review_5",
+        "review_6"
+      ]
+    },
+    "proof": {
+      "type": "chopinrx-proof",
+      "settings": {
+        "eyebrow": "Care designed around real people.",
+        "heading": "Changing lives through <em>proven outcomes</em>"
+      },
+      "blocks": {
+        "media_1": {
+          "type": "media",
+          "settings": {
+            "image": "shopify://shop_images/chx-proof.jpg"
+          }
+        },
+        "stat_2": {
+          "type": "stat",
+          "settings": {
+            "style": "accent",
+            "figure": "10K+",
+            "title": "Patients Served",
+            "text": "People supported through our care platform."
+          }
+        },
+        "stat_3": {
+          "type": "stat",
+          "settings": {
+            "style": "dark",
+            "figure": "+92%",
+            "title": "Patient Satisfaction",
+            "text": "Based on patient feedback."
+          }
+        },
+        "stat_4": {
+          "type": "stat",
+          "settings": {
+            "style": "well",
+            "figure": "5 min",
+            "title": "Average Assessment",
+            "text": "Designed to keep your experience simple."
+          }
+        },
+        "stat_5": {
+          "type": "stat",
+          "settings": {
+            "style": "paper",
+            "figure": "4.9/5",
+            "title": "Provider Rating",
+            "text": "Based on patient reviews"
+          }
+        }
+      },
+      "block_order": [
+        "media_1",
+        "stat_2",
+        "stat_3",
+        "stat_4",
+        "stat_5"
+      ]
+    },
+    "lab_testing": {
+      "type": "chopinrx-lab-testing",
+      "settings": {
+        "media_position": "right",
+        "eyebrow": "Quality & Testing",
+        "heading": "Always lab <em>tested</em> for quality & consistency",
+        "image": "shopify://shop_images/chx-lab-testing.jpg"
+      },
+      "blocks": {
+        "test_1": {
+          "type": "test",
+          "settings": {
+            "title": "Potency tested",
+            "text": "A test to check the medication contains the correct concentration of active ingredient."
+          }
+        },
+        "test_2": {
+          "type": "test",
+          "settings": {
+            "title": "Sterility Tested",
+            "text": "A test to check the medication is free of foreign organisms and pathogens."
+          }
+        },
+        "test_3": {
+          "type": "test",
+          "settings": {
+            "title": "pH Level Tested",
+            "text": "A test to check for the ideal 'acid to base' ratio to minimize irritation caused by the injection itself."
+          }
+        },
+        "test_4": {
+          "type": "test",
+          "settings": {
+            "title": "Endotoxicity Tested",
+            "text": "A test to check the medication adheres to endotoxin safety recommendations."
+          }
+        }
+      },
+      "block_order": [
+        "test_1",
+        "test_2",
+        "test_3",
+        "test_4"
+      ]
+    },
+    "how_it_works": {
+      "type": "chopinrx-how-it-works",
+      "settings": {
+        "eyebrow": "How it works",
+        "heading": "Four steps, about ten minutes",
+        "cta_label": "Get Started"
+      },
+      "blocks": {
+        "step_1": {
+          "type": "step",
+          "settings": {
+            "title": "Choose a treatment or stack",
+            "text": "Pick a flagship program or a single treatment from the menu."
+          }
+        },
+        "step_2": {
+          "type": "step",
+          "settings": {
+            "title": "Complete the medical intake",
+            "text": "A secure online health questionnaire, about 10 minutes."
+          }
+        },
+        "step_3": {
+          "type": "step",
+          "settings": {
+            "title": "Provider reviews & prescribes",
+            "text": "A licensed provider reviews your history and prescribes only if appropriate."
+          }
+        },
+        "step_4": {
+          "type": "step",
+          "settings": {
+            "title": "Pharmacy ships to your door",
+            "text": "A licensed U.S. pharmacy fills and ships discreetly, on a schedule."
+          }
+        }
+      },
+      "block_order": [
+        "step_1",
+        "step_2",
+        "step_3",
+        "step_4"
+      ]
+    },
+    "faq": {
+      "type": "chopinrx-faq",
+      "settings": {
+        "eyebrow": "Have questions?",
+        "heading": "Frequently asked <em>questions</em>",
+        "cta_label": "Get Started"
+      },
+      "blocks": {
+        "question_1": {
+          "type": "question",
+          "settings": {
+            "question": "How does ChopinRX work?",
+            "answer": "<p>You pick a program or a single treatment, complete the intake in about ten minutes, and an independent licensed provider reviews it and prescribes if appropriate. A licensed U.S. compounding pharmacy ships to your door.</p>",
+            "open": true
+          }
+        },
+        "question_2": {
+          "type": "question",
+          "settings": {
+            "question": "Who decides what I am prescribed?",
+            "answer": "<p>An independent licensed provider reviews your intake and medical history and makes the prescribing decision.</p>",
+            "open": false
+          }
+        },
+        "question_3": {
+          "type": "question",
+          "settings": {
+            "question": "What is the difference between a program and a treatment?",
+            "answer": "<p>A program is a packaged combination reviewed as one plan. A treatment is a single item from the full menu.</p>",
+            "open": false
+          }
+        },
+        "question_4": {
+          "type": "question",
+          "settings": {
+            "question": "Is ChopinRX available in my state?",
+            "answer": "<p>Availability depends on provider licensing in your state. You will see this during intake before anything is prescribed.</p>",
+            "open": false
+          }
+        },
+        "question_5": {
+          "type": "question",
+          "settings": {
+            "question": "Are these medications FDA approved?",
+            "answer": "<p>Compounded medications are not FDA approved. They are prepared by licensed U.S. compounding pharmacies for an individual prescription.</p>",
+            "open": false
+          }
+        }
+      },
+      "block_order": [
+        "question_1",
+        "question_2",
+        "question_3",
+        "question_4",
+        "question_5"
+      ]
+    },
+    "insights": {
+      "type": "chopinrx-insights",
+      "settings": {
+        "eyebrow": "Our blog",
+        "heading": "Latest insights",
+        "blog": "news",
+        "posts_count": 3,
+        "read_more_label": "Read More",
+        "cta_label": "View all"
       }
     }
   },
   "order": [
-    "hero_jVaWmY",
-    "product_list_fa6P9H"
+    "hero",
+    "trust_bar",
+    "programs",
+    "program_list",
+    "personalized_care",
+    "gender_split",
+    "treatments",
+    "reviews",
+    "proof",
+    "lab_testing",
+    "how_it_works",
+    "faq",
+    "insights"
   ]
 }

@@ -1,0 +1,159 @@
+{% render 'chopinrx-tokens' %}
+
+{% assign badge_icon = 'icon-check-badge.svg' | inline_asset_content %}
+
+<div class="chx-trustbar">
+  <ul class="chx-trustbar__list chx-container chx-container--wide" role="list">
+    {%- for block in section.blocks -%}
+      <li class="chx-trustbar__item" {{ block.shopify_attributes }}>
+        <span class="chx-trustbar__icon" aria-hidden="true">{{ badge_icon }}</span>
+        <span class="chx-trustbar__body">
+          <span class="chx-h5 chx-trustbar__title">{{ block.settings.title }}</span>
+          {%- if block.settings.text != blank -%}
+            <span class="chx-body chx-trustbar__text">{{ block.settings.text }}</span>
+          {%- endif -%}
+        </span>
+      </li>
+    {%- endfor -%}
+  </ul>
+</div>
+
+{% stylesheet %}
+  .chx-trustbar {
+    background-color: var(--surface-muted);
+    border-radius: var(--radius-xl);
+    overflow: clip;
+  }
+
+  .chx-trustbar__list {
+    display: grid;
+    grid-template-columns: repeat(4, max-content);
+    justify-content: space-between;
+    align-items: start;
+    gap: var(--space-6);
+    margin: 0;
+    padding-block: var(--space-10);
+    list-style: none;
+  }
+
+  .chx-trustbar__item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-3);
+  }
+
+  .chx-trustbar__icon {
+    display: block;
+    flex-shrink: 0;
+    width: 40px;
+    height: 40px;
+  }
+
+  .chx-trustbar__icon svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  .chx-trustbar__body {
+    --chx-heading-color: var(--text-body);
+
+    display: flex;
+    flex-direction: column;
+    color: var(--text-body);
+  }
+
+  .chx-trustbar__title {
+    color: var(--text-body);
+  }
+
+  @media screen and (max-width: 1024px) {
+    .chx-trustbar__list {
+      grid-template-columns: repeat(2, 1fr);
+      justify-content: stretch;
+      gap: var(--space-8) var(--space-6);
+    }
+
+    .chx-trustbar__item {
+      justify-content: flex-start;
+    }
+  }
+
+  @media screen and (max-width: 767px) {
+    .chx-trustbar__list {
+      grid-template-columns: 1fr;
+      gap: var(--space-5);
+      padding-block: var(--space-8);
+    }
+
+    .chx-trustbar__icon {
+      width: 32px;
+      height: 32px;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Trust bar",
+  "tag": "section",
+  "class": "chopinrx-trustbar-section",
+  "blocks": [
+    {
+      "type": "feature",
+      "name": "Feature",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "UK licensed"
+        },
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Text",
+          "default": "Medications and clinicians."
+        }
+      ]
+    }
+  ],
+  "max_blocks": 4,
+  "presets": [
+    {
+      "name": "Trust bar",
+      "blocks": [
+        {
+          "type": "feature",
+          "settings": {
+            "title": "UK licensed",
+            "text": "Medications and clinicians."
+          }
+        },
+        {
+          "type": "feature",
+          "settings": {
+            "title": "Ongoing clinical support",
+            "text": "Trusted medical advice from expert clinicians."
+          }
+        },
+        {
+          "type": "feature",
+          "settings": {
+            "title": "HIPAA Compliant",
+            "text": "Your data is always protected"
+          }
+        },
+        {
+          "type": "feature",
+          "settings": {
+            "title": "Discreet Delivery",
+            "text": "No names, no logos, no delivery fee."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

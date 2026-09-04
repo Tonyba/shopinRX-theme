@@ -1,0 +1,655 @@
+{% render 'chopinrx-tokens' %}
+
+{% liquid
+  assign arrow_icon = 'icon-arrow-right.svg' | inline_asset_content | replace: '#FCFAF9', 'currentColor'
+  assign contacts = section.blocks | where: 'type', 'contact'
+  assign columns = section.blocks | where: 'type', 'column'
+  assign legal_links = section.blocks | where: 'type', 'legal'
+  assign socials = section.blocks | where: 'type', 'social'
+  assign seals = section.blocks | where: 'type', 'seal'
+%}
+
+<div class="chx-footer">
+  <div class="chx-container">
+    <div class="chx-footer__brand">
+      {%- if section.settings.heading != blank -%}
+        <p class="chx-h2 chx-footer__claim">{{ section.settings.heading }}</p>
+      {%- endif -%}
+
+      <div class="chx-footer__actions">
+        {%- if section.settings.cta_label != blank -%}
+          <a
+            class="chx-btn chx-btn--accent"
+            href="{{ section.settings.cta_url | default: routes.all_products_collection_url }}"
+          >
+            <span>{{ section.settings.cta_label }}</span>
+            <span class="chx-btn__icon" aria-hidden="true">{{ arrow_icon }}</span>
+          </a>
+        {%- endif -%}
+
+        {%- if socials.size > 0 -%}
+          <div class="chx-footer__follow">
+            {%- if section.settings.follow_label != blank -%}
+              <span class="chx-footer__follow-label">{{ section.settings.follow_label }}</span>
+            {%- endif -%}
+            <ul class="chx-footer__social" role="list">
+              {%- for block in socials -%}
+                <li {{ block.shopify_attributes }}>
+                  <a
+                    class="chx-footer__social-link"
+                    href="{{ block.settings.url | default: '#' }}"
+                    rel="noopener"
+                    aria-label="{{ block.settings.platform }}"
+                  >
+                    <svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" focusable="false">
+                      {%- render 'icon', icon: block.settings.platform -%}
+                    </svg>
+                  </a>
+                </li>
+              {%- endfor -%}
+            </ul>
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+
+    <div class="chx-footer__columns">
+      {%- if contacts.size > 0 -%}
+        <div class="chx-footer__col">
+          <h2 class="chx-subtitle chx-footer__col-title">{{ section.settings.contact_title }}</h2>
+          <ul class="chx-footer__contacts" role="list">
+            {%- for block in contacts -%}
+              <li class="chx-footer__contact" {{ block.shopify_attributes }}>
+                {%- if block.settings.icon != blank -%}
+                  <img
+                    class="chx-footer__contact-icon"
+                    src="{{ block.settings.icon | image_url: width: 48 }}"
+                    width="24"
+                    height="24"
+                    alt=""
+                    loading="lazy"
+                  >
+                {%- endif -%}
+                <span class="chx-footer__contact-body">
+                  {%- if block.settings.url != blank -%}
+                    <a class="chx-footer__contact-label" href="{{ block.settings.url }}">
+                      {{- block.settings.label -}}
+                    </a>
+                  {%- else -%}
+                    <span class="chx-footer__contact-label">{{ block.settings.label }}</span>
+                  {%- endif -%}
+                  {%- if block.settings.text != blank -%}
+                    <span class="chx-footer__contact-text">{{ block.settings.text }}</span>
+                  {%- endif -%}
+                </span>
+              </li>
+            {%- endfor -%}
+          </ul>
+        </div>
+      {%- endif -%}
+
+      {%- for block in columns -%}
+        <div class="chx-footer__col" {{ block.shopify_attributes }}>
+          <h2 class="chx-subtitle chx-footer__col-title">{{ block.settings.title }}</h2>
+          {%- assign menu = linklists[block.settings.menu] -%}
+          {%- if menu.links.size > 0 -%}
+            <ul class="chx-footer__links" role="list">
+              {%- for link in menu.links -%}
+                <li>
+                  <a class="chx-footer__link" href="{{ link.url }}">{{ link.title }}</a>
+                </li>
+              {%- endfor -%}
+            </ul>
+          {%- endif -%}
+        </div>
+      {%- endfor -%}
+    </div>
+
+    <div class="chx-footer__legal">
+      {%- if legal_links.size > 0 -%}
+        <ul class="chx-footer__legal-links" role="list">
+          {%- for block in legal_links -%}
+            <li {{ block.shopify_attributes }}>
+              <a class="chx-footer__legal-link" href="{{ block.settings.url | default: '#' }}">
+                {{- block.settings.label -}}
+              </a>
+            </li>
+          {%- endfor -%}
+        </ul>
+      {%- endif -%}
+
+      {%- if seals.size > 0 -%}
+        <ul class="chx-footer__seals" role="list">
+          {%- for block in seals -%}
+            {%- if block.settings.image != blank -%}
+              <li {{ block.shopify_attributes }}>
+                <img
+                  src="{{ block.settings.image | image_url: width: 200 }}"
+                  width="{{ block.settings.image.width }}"
+                  height="{{ block.settings.image.height }}"
+                  alt="{{ block.settings.image.alt | escape }}"
+                  loading="lazy"
+                >
+              </li>
+            {%- endif -%}
+          {%- endfor -%}
+        </ul>
+      {%- endif -%}
+    </div>
+
+    {%- if section.settings.wordmark != blank -%}
+      <p class="chx-footer__wordmark" aria-hidden="true">{{ section.settings.wordmark }}</p>
+    {%- endif -%}
+
+    {%- if section.settings.copyright != blank -%}
+      <p class="chx-footer__copyright">{{ section.settings.copyright }}</p>
+    {%- endif -%}
+  </div>
+</div>
+
+{% stylesheet %}
+  .chx-footer {
+    --chx-heading-color: var(--text-on-dark);
+    --chx-body-color: var(--text-on-dark);
+
+    background-color: var(--surface-dark);
+    color: var(--text-on-dark);
+    padding-block: var(--space-24) var(--space-8);
+    overflow: clip;
+  }
+
+  .chx-footer__brand {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-10);
+  }
+
+  .chx-footer__claim {
+    color: var(--text-on-dark);
+  }
+
+  .chx-footer__claim em {
+    font-style: normal;
+    color: var(--text-accent);
+  }
+
+  .chx-footer__actions {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    flex-shrink: 0;
+  }
+
+  .chx-footer__follow {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+  }
+
+  .chx-footer__follow-label {
+    font-family: var(--font-ui);
+    font-size: var(--font-size-body-large);
+    font-weight: 500;
+    line-height: 1.55;
+    letter-spacing: -0.005em;
+    white-space: nowrap;
+  }
+
+  .chx-footer__social {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .chx-footer__social-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    color: var(--text-on-dark);
+    transition: color 0.2s ease;
+  }
+
+  .chx-footer__social-link:hover {
+    color: var(--text-accent);
+  }
+
+  .chx-footer__social-link svg {
+    display: block;
+    width: 22px;
+    height: 22px;
+  }
+
+  /* ── Columns ────────────────────────────────── */
+  .chx-footer__columns {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--space-8);
+    margin-block-start: var(--space-16);
+    padding-block-start: var(--space-16);
+    border-block-start: var(--border-w) solid var(--alpha-paper-16);
+  }
+
+  .chx-footer__col-title {
+    color: var(--text-on-dark);
+    margin-block-end: var(--space-5);
+  }
+
+  .chx-footer__contacts,
+  .chx-footer__links {
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .chx-footer__contacts {
+    gap: var(--space-5);
+  }
+
+  .chx-footer__links {
+    gap: 12px;
+  }
+
+  .chx-footer__contact {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .chx-footer__contact-icon {
+    display: block;
+    flex-shrink: 0;
+    width: 24px;
+    height: 24px;
+    margin-block-start: 3px;
+    object-fit: contain;
+  }
+
+  .chx-footer__contact-body {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+  }
+
+  .chx-footer__contact-label {
+    font-family: var(--font-ui);
+    font-size: var(--font-size-body-large);
+    font-weight: 600;
+    line-height: 1.55;
+    letter-spacing: -0.005em;
+    color: var(--text-on-dark);
+    text-decoration: none;
+  }
+
+  a.chx-footer__contact-label:hover {
+    color: var(--text-accent);
+    text-decoration: none;
+  }
+
+  .chx-footer__contact-text {
+    font-family: var(--font-ui);
+    font-size: var(--font-size-body);
+    font-weight: 400;
+    line-height: 1.5;
+    letter-spacing: -0.005em;
+    color: var(--text-on-dark-muted);
+  }
+
+  .chx-footer__link {
+    font-family: var(--font-ui);
+    font-size: var(--font-size-body-large);
+    font-weight: 400;
+    line-height: 1.55;
+    letter-spacing: -0.005em;
+    color: var(--text-on-dark);
+    text-decoration: none;
+  }
+
+  .chx-footer__link:hover {
+    color: var(--text-accent);
+    text-decoration: none;
+  }
+
+  /* ── Legal bar ──────────────────────────────── */
+  .chx-footer__legal {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-8);
+    margin-block-start: var(--space-16);
+    padding-block: var(--space-10);
+    border-block: var(--border-w) solid var(--alpha-paper-16);
+  }
+
+  .chx-footer__legal-links {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 16px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .chx-footer__legal-links li {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .chx-footer__legal-links li + li::before {
+    content: '';
+    display: block;
+    width: 1px;
+    height: 18px;
+    background-color: var(--alpha-paper-16);
+  }
+
+  .chx-footer__legal-link {
+    font-family: var(--font-ui);
+    font-size: var(--font-size-body-small);
+    font-weight: 400;
+    line-height: 1.43;
+    letter-spacing: -0.005em;
+    color: var(--text-on-dark);
+    text-decoration: none;
+  }
+
+  .chx-footer__legal-link:hover {
+    color: var(--text-accent);
+    text-decoration: none;
+  }
+
+  .chx-footer__seals {
+    display: flex;
+    align-items: center;
+    gap: var(--space-10);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    flex-shrink: 0;
+  }
+
+  .chx-footer__seals img {
+    display: block;
+    width: auto;
+    height: 80px;
+    object-fit: contain;
+  }
+
+  /* ── Wordmark ───────────────────────────────── */
+  .chx-footer__wordmark {
+    margin: var(--space-16) 0 0;
+    font-family: var(--font-display);
+    font-size: clamp(56px, 18.7vw, 360px);
+    font-weight: 500;
+    line-height: 0.73;
+    letter-spacing: -0.035em;
+    text-align: center;
+    color: var(--text-on-dark);
+    user-select: none;
+  }
+
+  .chx-footer__copyright {
+    margin: var(--space-10) 0 0;
+    font-family: var(--font-ui);
+    font-size: var(--font-size-body-small);
+    font-weight: 400;
+    line-height: 1.43;
+    letter-spacing: -0.005em;
+    text-align: center;
+    color: var(--text-on-dark-muted);
+  }
+
+  /* ── Breakpoints ────────────────────────────── */
+  @media screen and (max-width: 1024px) {
+    .chx-footer__brand {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: var(--space-6);
+    }
+
+    .chx-footer__columns {
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--space-10) var(--space-8);
+      margin-block-start: var(--space-10);
+      padding-block-start: var(--space-10);
+    }
+
+    .chx-footer__legal {
+      margin-block-start: var(--space-10);
+      flex-direction: column;
+      align-items: flex-start;
+      gap: var(--space-6);
+    }
+  }
+
+  @media screen and (max-width: 767px) {
+    .chx-footer {
+      padding-block: var(--space-16) var(--space-6);
+    }
+
+    .chx-footer__actions {
+      flex-direction: column;
+      align-items: flex-start;
+      width: 100%;
+      gap: var(--space-5);
+    }
+
+    .chx-footer__actions .chx-btn {
+      width: 100%;
+    }
+
+    .chx-footer__columns {
+      grid-template-columns: 1fr;
+    }
+
+    .chx-footer__seals img {
+      height: 56px;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Footer",
+  "tag": "footer",
+  "class": "chopinrx-footer-section",
+  "enabled_on": {
+    "groups": ["footer"]
+  },
+  "settings": [
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "info": "Italic text is rendered in the accent colour.",
+      "default": "Ready to take <em>control</em> of your health"
+    },
+    {
+      "type": "text",
+      "id": "cta_label",
+      "label": "Button label",
+      "default": "Explore treatments"
+    },
+    {
+      "type": "url",
+      "id": "cta_url",
+      "label": "Button link"
+    },
+    {
+      "type": "text",
+      "id": "follow_label",
+      "label": "Follow label",
+      "default": "Follow us"
+    },
+    {
+      "type": "text",
+      "id": "contact_title",
+      "label": "Contact column title",
+      "default": "Have a question?"
+    },
+    {
+      "type": "text",
+      "id": "wordmark",
+      "label": "Wordmark",
+      "default": "ChopinRX"
+    },
+    {
+      "type": "text",
+      "id": "copyright",
+      "label": "Copyright",
+      "default": "Copyright ©2026 ChopinRX. All rights reserved."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "contact",
+      "name": "Contact row",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "icon",
+          "label": "Icon",
+          "info": "24×24 SVG or PNG. Upload to Content → Files, then pick it here."
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label",
+          "default": "073 8016 9186"
+        },
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Sub-label",
+          "default": "Monday - Friday 9am - 5pm"
+        },
+        {
+          "type": "url",
+          "id": "url",
+          "label": "Link"
+        }
+      ]
+    },
+    {
+      "type": "column",
+      "name": "Link column",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Programs"
+        },
+        {
+          "type": "link_list",
+          "id": "menu",
+          "label": "Menu"
+        }
+      ]
+    },
+    {
+      "type": "social",
+      "name": "Social link",
+      "settings": [
+        {
+          "type": "select",
+          "id": "platform",
+          "label": "Platform",
+          "options": [
+            { "value": "linkedin", "label": "LinkedIn" },
+            { "value": "instagram", "label": "Instagram" },
+            { "value": "facebook", "label": "Facebook" },
+            { "value": "x", "label": "X" },
+            { "value": "youtube", "label": "YouTube" },
+            { "value": "tiktok", "label": "TikTok" }
+          ],
+          "default": "linkedin"
+        },
+        {
+          "type": "url",
+          "id": "url",
+          "label": "Link"
+        }
+      ]
+    },
+    {
+      "type": "legal",
+      "name": "Legal link",
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label",
+          "default": "Privacy Policy"
+        },
+        {
+          "type": "url",
+          "id": "url",
+          "label": "Link"
+        }
+      ]
+    },
+    {
+      "type": "seal",
+      "name": "Compliance seal",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image",
+          "info": "Upload to Content → Files, then pick it here."
+        }
+      ]
+    }
+  ],
+  "max_blocks": 24,
+  "presets": [
+    {
+      "name": "Footer",
+      "blocks": [
+        {
+          "type": "contact",
+          "settings": {
+            "label": "073 8016 9186",
+            "text": "Monday - Friday 9am - 5pm"
+          }
+        },
+        {
+          "type": "contact",
+          "settings": {
+            "label": "help@chopinrx.com",
+            "text": "We aim to reply in 24 hours"
+          }
+        },
+        {
+          "type": "contact",
+          "settings": {
+            "label": "press@chopinrx.com",
+            "text": "Press & media inquiries"
+          }
+        },
+        { "type": "column", "settings": { "title": "Programs" } },
+        { "type": "column", "settings": { "title": "Treatments" } },
+        { "type": "column", "settings": { "title": "Company" } },
+        { "type": "social", "settings": { "platform": "linkedin" } },
+        { "type": "social", "settings": { "platform": "instagram" } },
+        { "type": "social", "settings": { "platform": "facebook" } },
+        { "type": "legal", "settings": { "label": "Privacy Policy" } },
+        { "type": "legal", "settings": { "label": "Terms & Conditions" } },
+        { "type": "legal", "settings": { "label": "Terms of Sale" } },
+        { "type": "legal", "settings": { "label": "Complaints" } },
+        { "type": "legal", "settings": { "label": "Manage Cookies" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

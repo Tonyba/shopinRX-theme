@@ -30,8 +30,6 @@
         "login_url": "",
         "cta_label": "Find your program",
         "cta_url": "",
-        "brand_font": "figtree_n7",
-        "ui_font": "figtree_n5",
         "enable_sticky_header": true
       }
     }
