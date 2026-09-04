@@ -191,6 +191,18 @@
 
   /* ── Breakpoints ────────────────────────────── */
   @media screen and (max-width: 767px) {
+    .chx-reviews {
+      padding-block: var(--space-10);
+    }
+
+    .chx-reviews__rail {
+      margin-block-start: 30px;
+    }
+
+    .chx-reviews__trustpilot {
+      margin-block-start: 30px;
+    }
+
     .chx-review {
       width: 300px;
       min-height: 0;
@@ -248,6 +260,12 @@
       "id": "trustpilot_rating",
       "label": "Rating word",
       "default": "Excellent"
+    },
+    {
+      "type": "text",
+      "id": "trustpilot_score",
+      "label": "Score (mobile)",
+      "default": "4.6"
     },
     {
       "type": "text",
