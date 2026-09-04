@@ -32,7 +32,8 @@
 
 <div
   class="chx-progcol"
-  data-chx-progcol
+  data-chx-catalog
+  data-chx-reveal-all-compact
   data-chx-step="{{ section.settings.initial_count }}"
   data-chx-count-label="{{ count_label | escape }}"
 >
@@ -220,8 +221,8 @@
 </div>
 
 <script type="module">
-  import { initProgramFilter } from '{{ 'chopinrx-program-filter.js' | asset_url }}';
-  initProgramFilter();
+  import { initCatalogFilter } from '{{ 'chopinrx-catalog-filter.js' | asset_url }}';
+  initCatalogFilter();
 </script>
 
 {% stylesheet %}

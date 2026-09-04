@@ -1,0 +1,489 @@
+{% render 'chopinrx-tokens' %}
+
+{% liquid
+  assign arrow_icon = 'icon-arrow-right.svg' | inline_asset_content | replace: '#FCFAF9', 'currentColor'
+  assign arrow_down_icon = 'icon-arrow-down.svg' | inline_asset_content | replace: '#14181D', 'currentColor'
+  assign dot_icon = 'icon-eyebrow-dot.svg' | inline_asset_content
+  assign unit = section.settings.price_unit
+
+  assign source = collection
+  if section.settings.source_collection != blank
+    assign source = section.settings.source_collection
+  endif
+
+  assign chips = section.settings.collections
+  assign mens_tag = section.settings.mens_tag | downcase | strip
+  assign womens_tag = section.settings.womens_tag | downcase | strip
+
+  assign has_segments = false
+  if mens_tag != blank or womens_tag != blank
+    assign has_segments = true
+  endif
+
+  assign has_toolbar = false
+  if chips.count > 0 or has_segments
+    assign has_toolbar = true
+  endif
+
+  # The live region reports the match count, which only the script knows. The
+  # locale string is resolved with a sentinel so the plural form and the word
+  # order stay translated, then the sentinel becomes the script's placeholder.
+  assign count_label = 'content.search_results_resource_products_count' | t: count: 999 | replace: '999', '[count]'
+%}
+
+<div
+  class="chx-treatcol"
+  data-chx-catalog
+  data-chx-step="{{ section.settings.initial_count }}"
+  data-chx-count-label="{{ count_label | escape }}"
+>
+  <div class="chx-container chx-treatcol__inner">
+    {%- if has_toolbar -%}
+      <div class="chx-treatcol__toolbar">
+        {%- if chips.count > 0 -%}
+          <div class="chx-chips chx-treatcol__chips" role="group" aria-label="{{ section.settings.chips_label | escape }}">
+            <button type="button" class="chx-chip" data-chx-chip="" aria-pressed="true">
+              {{- section.settings.all_label -}}
+            </button>
+
+            {%- for chip in chips -%}
+              <button type="button" class="chx-chip" data-chx-chip="{{ chip.handle }}" aria-pressed="false">
+                {{- chip.title | escape -}}
+              </button>
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+
+        {%- if has_segments -%}
+          {%- if chips.count > 0 -%}
+            <span class="chx-treatcol__divider" aria-hidden="true"></span>
+          {%- endif -%}
+
+          <div
+            class="chx-segmented chx-treatcol__segmented"
+            role="radiogroup"
+            aria-label="{{ section.settings.segments_label | escape }}"
+          >
+            <button
+              type="button"
+              class="chx-segmented__item"
+              role="radio"
+              aria-checked="true"
+              tabindex="0"
+              data-chx-segment=""
+            >
+              {{- section.settings.segment_all_label -}}
+            </button>
+
+            {%- if mens_tag != blank -%}
+              <button
+                type="button"
+                class="chx-segmented__item"
+                role="radio"
+                aria-checked="false"
+                tabindex="-1"
+                data-chx-segment="{{ mens_tag | escape }}"
+              >
+                {{- section.settings.mens_label -}}
+              </button>
+            {%- endif -%}
+
+            {%- if womens_tag != blank -%}
+              <button
+                type="button"
+                class="chx-segmented__item"
+                role="radio"
+                aria-checked="false"
+                tabindex="-1"
+                data-chx-segment="{{ womens_tag | escape }}"
+              >
+                {{- section.settings.womens_label -}}
+              </button>
+            {%- endif -%}
+          </div>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+
+    <ul class="chx-treatcol__grid" role="list">
+      {%- for product in source.products limit: section.settings.products_count -%}
+        {%- liquid
+          # Chips match collections, the segmented control matches tags.
+          # Handles are slugs so a space separates them safely, but a tag can
+          # contain spaces, so tags are joined on a pipe instead.
+          assign handles = product.collections | map: 'handle' | join: ' '
+          assign tag_list = product.tags | join: '|' | downcase
+
+          assign summary = product.metafields.custom.summary.value
+          if summary == blank
+            assign summary = product.description | strip_html | truncatewords: 14
+          endif
+        -%}
+        <li
+          class="chx-productcard chx-treatcol__card"
+          data-chx-card
+          data-chx-collections="{{ handles | escape }}"
+          data-chx-tags="{{ tag_list | escape }}"
+        >
+          <a class="chx-productcard__media" href="{{ product.url }}" tabindex="-1" aria-hidden="true">
+            {%- if product.featured_image -%}
+              <img
+                src="{{ product.featured_image | image_url: width: 960 }}"
+                srcset="
+                  {{ product.featured_image | image_url: width: 480 }} 480w,
+                  {{ product.featured_image | image_url: width: 720 }} 720w,
+                  {{ product.featured_image | image_url: width: 960 }} 960w
+                "
+                sizes="(max-width: 767px) 100vw, (max-width: 1024px) 45vw, 471px"
+                width="{{ product.featured_image.width }}"
+                height="{{ product.featured_image.height }}"
+                alt="{{ product.featured_image.alt | escape }}"
+                loading="lazy"
+              >
+            {%- else -%}
+              <span class="chx-productcard__placeholder">{{ section.settings.placeholder_label }}</span>
+            {%- endif -%}
+
+            <span class="chx-productcard__price">
+              <span class="chx-productcard__price-dot" aria-hidden="true">{{ dot_icon }}</span>
+              <span>
+                {%- if section.settings.price_prefix != blank -%}
+                  {{ section.settings.price_prefix }}&nbsp;
+                {%- endif -%}
+                {{- product.price | money_without_trailing_zeros }}{{ unit -}}
+              </span>
+            </span>
+          </a>
+
+          <div class="chx-productcard__body">
+            <h3 class="chx-h5 chx-productcard__title">
+              <a href="{{ product.url }}">{{ product.title | escape }}</a>
+            </h3>
+            {%- if summary != blank -%}
+              <p class="chx-productcard__text">{{ summary }}</p>
+            {%- endif -%}
+          </div>
+
+          <a class="chx-productcard__link" href="{{ product.url }}">
+            <span>{{ section.settings.card_cta_label }}</span>
+            <span class="chx-btn__icon" aria-hidden="true">{{ arrow_icon }}</span>
+          </a>
+        </li>
+      {%- endfor -%}
+    </ul>
+
+    <p class="chx-treatcol__empty" data-chx-empty hidden>{{ 'content.no_products_found' | t }}</p>
+
+    <p class="chx-treatcol__status" role="status" aria-live="polite" data-chx-status></p>
+
+    {%- if section.settings.load_more_label != blank -%}
+      <button type="button" class="chx-btn chx-btn--secondary chx-treatcol__more" data-chx-more hidden>
+        <span>{{ section.settings.load_more_label }}</span>
+        <span class="chx-btn__icon" aria-hidden="true">{{ arrow_down_icon }}</span>
+      </button>
+    {%- endif -%}
+  </div>
+</div>
+
+<script type="module">
+  import { initCatalogFilter } from '{{ 'chopinrx-catalog-filter.js' | asset_url }}';
+  initCatalogFilter();
+</script>
+
+{% stylesheet %}
+  .chx-treatcol {
+    background-color: var(--surface-page);
+    padding-block: var(--section-py-tight);
+  }
+
+  .chx-treatcol__inner {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-10);
+  }
+
+  /* ── Toolbar ────────────────────────────────── */
+  .chx-treatcol__toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-5);
+  }
+
+  .chx-treatcol__chips {
+    min-width: 0;
+  }
+
+  /* Scoped so the selected state here cannot reach the single-select chips
+     the home page program list renders. */
+  .chx-treatcol .chx-chip {
+    height: 46px;
+    padding-block: 0;
+  }
+
+  .chx-treatcol .chx-chip[aria-pressed='true'],
+  .chx-treatcol .chx-chip[aria-pressed='true']:hover {
+    border-color: var(--surface-dark);
+    background-color: var(--surface-dark);
+    font-weight: 600;
+    color: var(--text-on-dark);
+  }
+
+  /* The desktop toolbar runs the chips straight into the segmented control;
+     the rule only appears once the toolbar stacks. */
+  .chx-treatcol__divider {
+    display: none;
+  }
+
+  /* ── Grid ───────────────────────────────────── */
+  .chx-treatcol__grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    align-items: start;
+    column-gap: var(--space-5);
+    row-gap: var(--space-16);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  /* The grid formatting context would otherwise override the hidden
+     attribute on a filtered-out card. */
+  .chx-treatcol__grid > [hidden] {
+    display: none;
+  }
+
+  .chx-treatcol__empty {
+    margin: 0;
+    font-family: var(--font-ui);
+    font-size: var(--font-size-body-large);
+    color: var(--text-muted);
+  }
+
+  .chx-treatcol__status {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  .chx-treatcol__more {
+    align-self: center;
+  }
+
+  /* The button primitive sets display, which would otherwise defeat the
+     hidden attribute the script toggles. */
+  .chx-treatcol__more[hidden] {
+    display: none;
+  }
+
+  /* ── Breakpoints ────────────────────────────── */
+  @media screen and (max-width: 1024px) {
+    .chx-treatcol__grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      row-gap: var(--space-10);
+    }
+  }
+
+  @media screen and (max-width: 767px) {
+    .chx-treatcol {
+      padding-block: var(--space-10);
+    }
+
+    /* Mobile leads with the segmented control, then the rule, then the chips. */
+    .chx-treatcol__toolbar {
+      flex-direction: column;
+      align-items: stretch;
+      gap: var(--space-5);
+    }
+
+    .chx-treatcol__segmented {
+      order: 1;
+      height: 48px;
+    }
+
+    .chx-treatcol__segmented .chx-segmented__item {
+      flex: 1 1 0;
+      min-width: 0;
+      padding-inline: var(--space-3);
+    }
+
+    .chx-treatcol__divider {
+      display: block;
+      order: 2;
+      align-self: stretch;
+      width: auto;
+      height: var(--border-w);
+      background-color: var(--border-hairline);
+    }
+
+    .chx-treatcol__chips {
+      order: 3;
+    }
+
+    .chx-treatcol__grid {
+      grid-template-columns: minmax(0, 1fr);
+      row-gap: var(--space-10);
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Treatment collection",
+  "tag": "section",
+  "class": "chopinrx-treatment-collection-section",
+  "settings": [
+    {
+      "type": "collection",
+      "id": "source_collection",
+      "label": "Products",
+      "info": "Leave empty on a collection template to use the collection being viewed."
+    },
+    {
+      "type": "range",
+      "id": "products_count",
+      "label": "Products to load",
+      "min": 4,
+      "max": 50,
+      "step": 2,
+      "default": 24
+    },
+    {
+      "type": "header",
+      "content": "Filters"
+    },
+    {
+      "type": "paragraph",
+      "content": "Chips are multi-select and combine as a union. Selecting none is the same as All."
+    },
+    {
+      "type": "collection_list",
+      "id": "collections",
+      "label": "Filter collections",
+      "info": "One chip per collection, in this order.",
+      "limit": 8
+    },
+    {
+      "type": "text",
+      "id": "all_label",
+      "label": "All chip label",
+      "default": "All"
+    },
+    {
+      "type": "text",
+      "id": "chips_label",
+      "label": "Chip group label",
+      "info": "Read by screen readers only.",
+      "default": "Filter treatments by goal"
+    },
+    {
+      "type": "header",
+      "content": "Audience"
+    },
+    {
+      "type": "paragraph",
+      "content": "The segments match product tags, so a link can preselect one with ?gender=<tag>. Leave a tag empty to drop that segment; empty both and the control is hidden."
+    },
+    {
+      "type": "text",
+      "id": "mens_tag",
+      "label": "Men's tag",
+      "default": "mens"
+    },
+    {
+      "type": "text",
+      "id": "mens_label",
+      "label": "Men's label",
+      "default": "Men's"
+    },
+    {
+      "type": "text",
+      "id": "womens_tag",
+      "label": "Women's tag",
+      "default": "womens"
+    },
+    {
+      "type": "text",
+      "id": "womens_label",
+      "label": "Women's label",
+      "default": "Women's"
+    },
+    {
+      "type": "text",
+      "id": "segment_all_label",
+      "label": "All segment label",
+      "default": "All"
+    },
+    {
+      "type": "text",
+      "id": "segments_label",
+      "label": "Segment group label",
+      "info": "Read by screen readers only.",
+      "default": "Filter treatments by audience"
+    },
+    {
+      "type": "header",
+      "content": "Card"
+    },
+    {
+      "type": "text",
+      "id": "price_prefix",
+      "label": "Price prefix",
+      "default": "From"
+    },
+    {
+      "type": "text",
+      "id": "price_unit",
+      "label": "Price unit",
+      "info": "Appended after the product price, e.g. /mo.",
+      "default": "/mo"
+    },
+    {
+      "type": "text",
+      "id": "placeholder_label",
+      "label": "Image placeholder label",
+      "info": "Shown when a product has no featured image.",
+      "default": "Vial · placeholder"
+    },
+    {
+      "type": "text",
+      "id": "card_cta_label",
+      "label": "Card link label",
+      "default": "Explore"
+    },
+    {
+      "type": "paragraph",
+      "content": "The card description reads custom.summary and falls back to the product description."
+    },
+    {
+      "type": "header",
+      "content": "Load more"
+    },
+    {
+      "type": "text",
+      "id": "load_more_label",
+      "label": "Load more label",
+      "default": "Load More"
+    },
+    {
+      "type": "range",
+      "id": "initial_count",
+      "label": "Cards before Load more",
+      "min": 3,
+      "max": 24,
+      "step": 3,
+      "default": 9
+    }
+  ],
+  "presets": [
+    {
+      "name": "Treatment collection"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,255 @@
+{
+  "sections": {
+    "hero": {
+      "type": "chopinrx-page-banner",
+      "settings": {
+        "style": "dark",
+        "alignment": "center",
+        "breadcrumb_home": "Home",
+        "breadcrumb_current": "{{ closest.collection.title }}",
+        "heading": "Complete care, from diagnosis to delivery, 100% online.",
+        "body": "<p>Browse the full treatment menu. Every option is prescribed by an independent licensed provider after reviewing your intake, and dispensed by a licensed U.S. compounding pharmacy.</p>",
+        "show_trustpilot": true,
+        "trustpilot_rating": "Excellent",
+        "trustpilot_score": "4.6",
+        "trustpilot_count": "436 reviews",
+        "trustpilot_mobile_count": "Check out our 436 reviews",
+        "trustpilot_url": ""
+      }
+    },
+    "treatments": {
+      "type": "chopinrx-treatment-collection",
+      "settings": {
+        "source_collection": "",
+        "products_count": 24,
+        "collections": [
+          "metabolic-health",
+          "hormone-health",
+          "energy-recovery",
+          "longevity",
+          "aesthetics",
+          "sex-health"
+        ],
+        "all_label": "All",
+        "chips_label": "Filter treatments by goal",
+        "mens_tag": "mens",
+        "mens_label": "Men's",
+        "womens_tag": "womens",
+        "womens_label": "Women's",
+        "segment_all_label": "All",
+        "segments_label": "Filter treatments by audience",
+        "price_prefix": "From",
+        "price_unit": "/mo",
+        "placeholder_label": "Vial · placeholder",
+        "card_cta_label": "Explore",
+        "load_more_label": "Load More",
+        "initial_count": 9
+      }
+    },
+    "reviews": {
+      "type": "chopinrx-reviews",
+      "blocks": {
+        "review_1": {
+          "type": "review",
+          "settings": {
+            "name": "James Whitfield",
+            "rating": 5,
+            "quote": "\"I really love how simple and easy everything has been so far. I have noticed an enhanced focused on being more mindful of what I am eating, making sure to hit my protein goals!\"",
+            "row": "1"
+          }
+        },
+        "review_2": {
+          "type": "review",
+          "settings": {
+            "name": "James Whitfield",
+            "rating": 5,
+            "quote": "\"I really love how simple and easy everything has been so far. I have noticed an enhanced focused on being more mindful of what I am eating, making sure to hit my protein goals!\"",
+            "row": "1"
+          }
+        },
+        "review_3": {
+          "type": "review",
+          "settings": {
+            "name": "James Whitfield",
+            "rating": 5,
+            "quote": "\"I really love how simple and easy everything has been so far. I have noticed an enhanced focused on being more mindful of what I am eating, making sure to hit my protein goals!\"",
+            "row": "1"
+          }
+        },
+        "review_4": {
+          "type": "review",
+          "settings": {
+            "name": "James Whitfield",
+            "rating": 5,
+            "quote": "\"I really love how simple and easy everything has been so far. I have noticed an enhanced focused on being more mindful of what I am eating, making sure to hit my protein goals!\"",
+            "row": "1"
+          }
+        },
+        "review_5": {
+          "type": "review",
+          "settings": {
+            "name": "James Whitfield",
+            "rating": 5,
+            "quote": "\"I really love how simple and easy everything has been so far. I have noticed an enhanced focused on being more mindful of what I am eating, making sure to hit my protein goals!\"",
+            "row": "2"
+          }
+        },
+        "review_6": {
+          "type": "review",
+          "settings": {
+            "name": "James Whitfield",
+            "rating": 5,
+            "quote": "\"I really love how simple and easy everything has been so far. I have noticed an enhanced focused on being more mindful of what I am eating, making sure to hit my protein goals!\"",
+            "row": "2"
+          }
+        },
+        "review_7": {
+          "type": "review",
+          "settings": {
+            "name": "James Whitfield",
+            "rating": 5,
+            "quote": "\"I really love how simple and easy everything has been so far. I have noticed an enhanced focused on being more mindful of what I am eating, making sure to hit my protein goals!\"",
+            "row": "2"
+          }
+        },
+        "review_8": {
+          "type": "review",
+          "settings": {
+            "name": "James Whitfield",
+            "rating": 5,
+            "quote": "\"I really love how simple and easy everything has been so far. I have noticed an enhanced focused on being more mindful of what I am eating, making sure to hit my protein goals!\"",
+            "row": "2"
+          }
+        }
+      },
+      "block_order": [
+        "review_1",
+        "review_2",
+        "review_3",
+        "review_4",
+        "review_5",
+        "review_6",
+        "review_7",
+        "review_8"
+      ],
+      "settings": {
+        "eyebrow": "4.8/5 on Trust Pilot",
+        "heading": "More than <em>100,000</em> patients trust our treatment plans",
+        "show_trustpilot": true,
+        "trustpilot_rating": "Excellent",
+        "trustpilot_score": "4.6",
+        "trustpilot_count": "436 reviews on",
+        "trustpilot_url": ""
+      }
+    },
+    "credentials": {
+      "type": "chopinrx-lab-testing",
+      "blocks": {
+        "test_1": {
+          "type": "test",
+          "settings": {
+            "title": "Potency tested",
+            "text": "A test to check the medication contains the correct concentration of active ingredient."
+          }
+        },
+        "test_2": {
+          "type": "test",
+          "settings": {
+            "title": "Sterility Tested",
+            "text": "A test to check the medication is free of foreign organisms and pathogens."
+          }
+        },
+        "test_3": {
+          "type": "test",
+          "settings": {
+            "title": "pH Level Tested",
+            "text": "A test to check for the ideal 'acid to base' ratio to minimize irritation caused by the injection itself."
+          }
+        },
+        "test_4": {
+          "type": "test",
+          "settings": {
+            "title": "Endotoxicity Tested",
+            "text": "A test to check the medication adheres to endotoxin safety recommendations."
+          }
+        }
+      },
+      "block_order": [
+        "test_1",
+        "test_2",
+        "test_3",
+        "test_4"
+      ],
+      "settings": {
+        "image": "shopify://shop_images/chx-lab-testing.jpg",
+        "media_position": "right",
+        "eyebrow": "Quality & Testing",
+        "heading": "Always lab <em>tested</em> for quality & consistency"
+      }
+    },
+    "faq": {
+      "type": "chopinrx-faq",
+      "blocks": {
+        "question_1": {
+          "type": "question",
+          "settings": {
+            "question": "How does ChopinRX work?",
+            "answer": "<p>You pick a program or a single treatment, complete the intake in about ten minutes, and an independent licensed provider reviews it and prescribes if appropriate. A licensed U.S. compounding pharmacy ships to your door.</p>",
+            "open": true
+          }
+        },
+        "question_2": {
+          "type": "question",
+          "settings": {
+            "question": "Who decides what I am prescribed?",
+            "answer": "<p>An independent licensed provider reviews your intake and medical history and makes the prescribing decision.</p>",
+            "open": false
+          }
+        },
+        "question_3": {
+          "type": "question",
+          "settings": {
+            "question": "What is the difference between a program and a treatment?",
+            "answer": "<p>A program is a packaged combination reviewed as one plan. A treatment is a single item from the full menu.</p>",
+            "open": false
+          }
+        },
+        "question_4": {
+          "type": "question",
+          "settings": {
+            "question": "Is ChopinRX available in my state?",
+            "answer": "<p>Availability depends on provider licensing in your state. You will see this during intake before anything is prescribed.</p>",
+            "open": false
+          }
+        },
+        "question_5": {
+          "type": "question",
+          "settings": {
+            "question": "Are these medications FDA approved?",
+            "answer": "<p>Compounded medications are not FDA approved. They are prepared by licensed U.S. compounding pharmacies for an individual prescription.</p>",
+            "open": false
+          }
+        }
+      },
+      "block_order": [
+        "question_1",
+        "question_2",
+        "question_3",
+        "question_4",
+        "question_5"
+      ],
+      "settings": {
+        "eyebrow": "Have questions?",
+        "heading": "Frequently asked <em>questions</em>",
+        "cta_label": "Get Started"
+      }
+    }
+  },
+  "order": [
+    "hero",
+    "treatments",
+    "reviews",
+    "credentials",
+    "faq"
+  ]
+}

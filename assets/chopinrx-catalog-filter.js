@@ -1,5 +1,8 @@
 /**
- * Client-side filtering for the program collection grid.
+ * Client-side filtering for a catalogue grid.
+ *
+ * Shared by the program and treatment collection templates: both render a
+ * toolbar of goal chips plus an audience segmented control over one grid.
  *
  * Shopify's storefront filtering has no collection facet, so combining
  * collections cannot be expressed in a URL. The grid therefore renders every
@@ -18,8 +21,8 @@
 const COMPACT = '(max-width: 767px)';
 const GENDER_PARAM = 'gender';
 
-export function initProgramFilter(root = document) {
-  root.querySelectorAll('[data-chx-progcol]').forEach(setup);
+export function initCatalogFilter(root = document) {
+  root.querySelectorAll('[data-chx-catalog]').forEach(setup);
 }
 
 function setup(section) {
@@ -52,9 +55,14 @@ function setup(section) {
   const selected = new Set();
   /** Selected segment handle. Empty means "All". */
   let segment = '';
-  /** How many matching cards are revealed. The mobile design carries no
-      Load More, so the whole list is shown there instead. */
+  /** How many matching cards are revealed. */
   let revealed = step;
+
+  /* The program design drops Load More on mobile, so that grid shows the whole
+     list there rather than stranding the products past the first page. The
+     treatment design keeps the button at every width, which is the default. */
+  const revealAllCompact = section.hasAttribute('data-chx-reveal-all-compact');
+  const showAll = () => revealAllCompact && compact.matches;
 
   function matches(card) {
     const handles = handlesOf.get(card);
@@ -64,7 +72,7 @@ function setup(section) {
   }
 
   function render() {
-    const limit = compact.matches ? Infinity : revealed;
+    const limit = showAll() ? Infinity : revealed;
     let matched = 0;
 
     cards.forEach((card) => {
@@ -73,7 +81,7 @@ function setup(section) {
       if (hit) matched += 1;
     });
 
-    if (moreButton) moreButton.hidden = compact.matches || matched <= revealed;
+    if (moreButton) moreButton.hidden = showAll() || matched <= revealed;
     if (empty) empty.hidden = matched !== 0;
     if (status && countLabel) status.textContent = countLabel.replace('[count]', String(matched));
   }
