@@ -145,26 +145,40 @@
   }
 
   @media screen and (max-width: 767px) {
-    .chx-steps__header {
-      flex-direction: column;
-      align-items: flex-start;
-      gap: var(--space-6);
+    .chx-steps {
+      padding-block: var(--space-10);
     }
 
-    .chx-steps__cta {
-      width: 100%;
+    /* The action moves under the steps on mobile. */
+    .chx-steps > .chx-container {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .chx-steps__header {
+      display: contents;
+    }
+
+    .chx-steps__heading {
+      order: 1;
+      align-items: center;
+      text-align: center;
     }
 
     .chx-steps__list {
-      grid-template-columns: 1fr;
+      order: 2;
+      grid-template-columns: minmax(0, 1fr);
     }
 
-    .chx-step {
-      padding: var(--space-6) var(--space-5);
+    /* The rule threads the row of cards; there is no row to thread on mobile. */
+    .chx-steps__list::before {
+      display: none;
     }
 
-    .chx-step__text {
-      font-size: var(--font-size-body);
+    .chx-steps__cta {
+      order: 3;
+      align-self: center;
+      margin-block-start: var(--space-10);
     }
   }
 {% endstylesheet %}

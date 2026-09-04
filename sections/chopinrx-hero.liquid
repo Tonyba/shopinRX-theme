@@ -87,25 +87,12 @@
       {%- endif -%}
 
       {%- if section.settings.show_trustpilot -%}
-        {%- capture trustpilot -%}
-          <span class="chx-trustpilot__word">{{ section.settings.trustpilot_rating }}</span>
-          <span class="chx-trustpilot__stars" aria-hidden="true">
-            {{- 'trustpilot-stars-5.svg' | inline_asset_content -}}
-          </span>
-          <span class="chx-trustpilot__count">{{ section.settings.trustpilot_count }}</span>
-          <span class="chx-trustpilot__brand">
-            <span class="chx-trustpilot__mark" aria-hidden="true">
-              {{- 'trustpilot-logo.svg' | inline_asset_content -}}
-            </span>
-            <span class="chx-trustpilot__word">Trustpilot</span>
-          </span>
-        {%- endcapture -%}
-
-        {%- if section.settings.trustpilot_url != blank -%}
-          <a class="chx-trustpilot" href="{{ section.settings.trustpilot_url }}" rel="noopener">{{ trustpilot }}</a>
-        {%- else -%}
-          <div class="chx-trustpilot">{{ trustpilot }}</div>
-        {%- endif -%}
+        {% render 'chopinrx-trustpilot',
+          rating: section.settings.trustpilot_rating,
+          score: section.settings.trustpilot_score,
+          count: section.settings.trustpilot_count,
+          url: section.settings.trustpilot_url
+        %}
       {%- endif -%}
     </div>
   </div>
@@ -270,66 +257,6 @@
     gap: var(--space-3);
   }
 
-  /* ── Trustpilot strip ───────────────────────── */
-  .chx-trustpilot {
-    display: flex;
-    align-items: center;
-    gap: 13px;
-    height: 26px;
-    color: var(--text-on-dark);
-    text-decoration: none;
-  }
-
-  .chx-trustpilot:hover {
-    text-decoration: none;
-    color: var(--text-on-dark);
-  }
-
-  .chx-trustpilot__word,
-  .chx-trustpilot__count {
-    font-family: var(--font-ui);
-    font-size: 17.12px;
-    line-height: 1;
-    white-space: nowrap;
-  }
-
-  .chx-trustpilot__word {
-    font-weight: 700;
-  }
-
-  .chx-trustpilot__count {
-    font-weight: 500;
-  }
-
-  .chx-trustpilot__stars {
-    display: block;
-    flex-shrink: 0;
-    width: 106.667px;
-    height: 20px;
-  }
-
-  .chx-trustpilot__brand {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 5.707px;
-    height: 26px;
-  }
-
-  .chx-trustpilot__mark {
-    display: block;
-    flex-shrink: 0;
-    width: 19.973px;
-    height: 18.903px;
-  }
-
-  .chx-trustpilot__stars svg,
-  .chx-trustpilot__mark svg {
-    display: block;
-    width: 100%;
-    height: 100%;
-  }
-
   /* ── Breakpoints ────────────────────────────── */
   @media screen and (max-width: 1024px) {
     .chx-hero__frame {
@@ -344,65 +271,100 @@
 
   @media screen and (max-width: 767px) {
     .chx-hero {
-      padding-inline: var(--space-2);
-      padding-block-end: var(--space-2);
+      padding-inline: 6px;
+      padding-block-end: 6px;
     }
 
     .chx-hero__frame {
-      min-height: 0;
+      min-height: 749px;
+      gap: var(--space-5);
+      align-items: center;
       padding-block: var(--space-10);
-      border-radius: var(--radius-lg);
+      border-radius: var(--radius-xl);
     }
 
     .chx-hero__media {
       object-position: 65% center;
     }
 
-    /* The horizontal wash leaves no legible area on a narrow viewport, so the
-       scrim runs top-to-bottom instead. */
+    /* Mobile drops the directional wash for the design's flat overlay: a 60%
+       black layer under the 40% ink scrim. */
     .chx-hero__scrim {
-      background-image: linear-gradient(180deg, rgb(0 0 0 / 30%) 0%, rgb(0 0 0 / 82%) 55%);
+      background-image:
+        linear-gradient(rgb(38 38 38 / 40%), rgb(38 38 38 / 40%)),
+        linear-gradient(rgb(0 0 0 / 60%), rgb(0 0 0 / 60%));
+    }
+
+    .chx-hero__inner {
+      align-items: center;
+      gap: var(--space-5);
     }
 
     .chx-hero__lede {
       width: 100%;
+      align-items: center;
+      gap: var(--space-5);
+      text-align: center;
     }
 
-    .chx-hero__feature-text,
+    /* Not in the mobile design. */
     .chx-hero__eyebrow {
-      font-size: var(--font-size-body);
+      display: none;
     }
 
-    .chx-hero__feature {
-      align-items: flex-start;
-      gap: var(--space-3);
+    .chx-hero__content {
+      align-items: center;
+      gap: var(--space-5);
+    }
+
+    /* The accent line is white on mobile, as drawn. */
+    .chx-hero .chx-hero__title-line--accent {
+      color: var(--paper-000);
+    }
+
+    /* The richtext paragraph carries the theme's own element rule, so the size
+       has to be set on it rather than inherited from the wrapper. */
+    .chx-hero__text,
+    .chx-hero__text p {
+      max-width: 330px;
+      font-size: var(--font-size-body);
+      line-height: 1.5;
     }
 
     .chx-hero__features {
+      width: 306px;
+      max-width: 100%;
+      gap: var(--space-5);
+      text-align: start;
+    }
+
+    .chx-hero__feature {
+      align-items: center;
       gap: var(--space-3);
+    }
+
+    .chx-hero__feature-icon {
+      width: 20px;
+      height: 20px;
+    }
+
+    .chx-hero__feature-text {
+      font-size: var(--font-size-body);
+      font-weight: 400;
+      line-height: 1.5;
     }
 
     .chx-hero__actions {
       flex-direction: column;
       align-items: stretch;
       align-self: stretch;
-      gap: var(--space-2);
+      gap: var(--space-3);
     }
 
     .chx-hero__actions .chx-btn {
       width: 100%;
     }
 
-    .chx-trustpilot {
-      flex-wrap: wrap;
-      height: auto;
-      gap: var(--space-2);
-    }
-
-    .chx-trustpilot__word,
-    .chx-trustpilot__count {
-      font-size: var(--font-size-body-small);
-    }
   }
 {% endstylesheet %}
 
@@ -486,8 +448,14 @@
     },
     {
       "type": "text",
+      "id": "trustpilot_score",
+      "label": "Score (mobile)",
+      "default": "4.6"
+    },
+    {
+      "type": "text",
       "id": "trustpilot_count",
-      "label": "Review count",
+      "label": "Review count (desktop)",
       "default": "436 reviews on"
     },
     {

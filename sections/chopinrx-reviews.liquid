@@ -55,27 +55,13 @@
   {%- if section.settings.show_trustpilot -%}
     <div class="chx-container">
       <div class="chx-reviews__trustpilot">
-        {%- capture trustpilot -%}
-          <span class="chx-trustpilot__word">{{ section.settings.trustpilot_rating }}</span>
-          <span class="chx-trustpilot__stars" aria-hidden="true">
-            {{- 'trustpilot-stars-5.svg' | inline_asset_content -}}
-          </span>
-          <span class="chx-trustpilot__count">{{ section.settings.trustpilot_count }}</span>
-          <span class="chx-trustpilot__brand">
-            <span class="chx-trustpilot__mark" aria-hidden="true">
-              {{- 'trustpilot-logo.svg' | inline_asset_content -}}
-            </span>
-            <span class="chx-trustpilot__word">Trustpilot</span>
-          </span>
-        {%- endcapture -%}
-
-        {%- if section.settings.trustpilot_url != blank -%}
-          <a class="chx-trustpilot chx-trustpilot--ink" href="{{ section.settings.trustpilot_url }}" rel="noopener">
-            {{ trustpilot }}
-          </a>
-        {%- else -%}
-          <div class="chx-trustpilot chx-trustpilot--ink">{{ trustpilot }}</div>
-        {%- endif -%}
+        {% render 'chopinrx-trustpilot',
+          rating: section.settings.trustpilot_rating,
+          score: section.settings.trustpilot_score,
+          count: section.settings.trustpilot_count,
+          url: section.settings.trustpilot_url,
+          ink: true
+        %}
       </div>
     </div>
   {%- endif -%}
@@ -203,13 +189,20 @@
     margin-block-start: var(--space-8);
   }
 
-  .chx-trustpilot--ink,
-  .chx-trustpilot--ink:hover {
-    color: var(--text-heading);
-  }
-
   /* ── Breakpoints ────────────────────────────── */
   @media screen and (max-width: 767px) {
+    .chx-reviews {
+      padding-block: var(--space-10);
+    }
+
+    .chx-reviews__rail {
+      margin-block-start: 30px;
+    }
+
+    .chx-reviews__trustpilot {
+      margin-block-start: 30px;
+    }
+
     .chx-review {
       width: 300px;
       min-height: 0;
@@ -267,6 +260,12 @@
       "id": "trustpilot_rating",
       "label": "Rating word",
       "default": "Excellent"
+    },
+    {
+      "type": "text",
+      "id": "trustpilot_score",
+      "label": "Score (mobile)",
+      "default": "4.6"
     },
     {
       "type": "text",

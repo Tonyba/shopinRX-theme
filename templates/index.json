@@ -1,19 +1,16 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "hero": {
       "type": "chopinrx-hero",
-      "settings": {
-        "eyebrow": "Provider-Guided Telehealth",
-        "title_line_1": "Personalized care.",
-        "title_line_2": "Delivered to you.",
-        "body": "<p>Connect with licensed U.S. clinicians for personalized treatment options through a simple online experience, with treatment delivered directly to your door.</p>",
-        "primary_label": "Explore Programs",
-        "secondary_label": "View our treatments",
-        "show_trustpilot": true,
-        "trustpilot_rating": "Excellent",
-        "trustpilot_count": "436 reviews on",
-        "image": "shopify://shop_images/chx-hero.jpg"
-      },
       "blocks": {
         "feature_1": {
           "type": "feature",
@@ -38,7 +35,19 @@
         "feature_1",
         "feature_2",
         "feature_3"
-      ]
+      ],
+      "settings": {
+        "image": "shopify://shop_images/chx-hero.jpg",
+        "eyebrow": "Provider-Guided Telehealth",
+        "title_line_1": "Personalized care.",
+        "title_line_2": "Delivered to you.",
+        "body": "<p>Connect with licensed U.S. clinicians for personalized treatment options through a simple online experience, with treatment delivered directly to your door.</p>",
+        "primary_label": "Explore Programs",
+        "secondary_label": "View our treatments",
+        "show_trustpilot": true,
+        "trustpilot_rating": "Excellent",
+        "trustpilot_count": "436 reviews on"
+      }
     },
     "trust_bar": {
       "type": "chopinrx-trust-bar",
@@ -77,7 +86,8 @@
         "feature_2",
         "feature_3",
         "feature_4"
-      ]
+      ],
+      "settings": {}
     },
     "programs": {
       "type": "chopinrx-programs",
@@ -89,10 +99,10 @@
         "price_prefix": "From",
         "price_unit": "/mo",
         "card_cta_label": "Start intake",
-        "cta_label": "See All Programs",
-        "cta_url": "",
         "badge_tag": "flagship",
-        "badge_label": "Flagship"
+        "badge_label": "Flagship",
+        "cta_label": "See All Programs",
+        "cta_url": ""
       }
     },
     "program_list": {
@@ -112,22 +122,14 @@
         "price_prefix": "From",
         "price_unit": "/mo",
         "card_cta_label": "Start intake",
-        "cta_label": "See All Programs",
-        "cta_url": "",
         "badge_tag": "flagship",
-        "badge_label": "Flagship"
+        "badge_label": "Flagship",
+        "cta_label": "See All Programs",
+        "cta_url": ""
       }
     },
     "personalized_care": {
       "type": "chopinrx-split-features",
-      "settings": {
-        "media_position": "left",
-        "eyebrow": "Personalized Care",
-        "heading": "With you <em>every step</em> of the way",
-        "body": "<p>Your goals, your health history and your needs are different from everyone else's. ChopinRX connects you with independent, licensed providers who evaluate your information and determine whether a treatment is right for you.</p>",
-        "cta_label": "Explore treatments",
-        "image": "shopify://shop_images/chx-personalized-care.jpg"
-      },
       "blocks": {
         "feature_1": {
           "type": "feature",
@@ -163,7 +165,15 @@
         "feature_2",
         "feature_3",
         "feature_4"
-      ]
+      ],
+      "settings": {
+        "image": "shopify://shop_images/chx-personalized-care.jpg",
+        "media_position": "left",
+        "eyebrow": "Personalized Care",
+        "heading": "With you <em>every step</em> of the way",
+        "body": "<p>Your goals, your health history and your needs are different from everyone else's. ChopinRX connects you with independent, licensed providers who evaluate your information and determine whether a treatment is right for you.</p>",
+        "cta_label": "Explore treatments"
+      }
     },
     "gender_split": {
       "type": "chopinrx-gender-split",
@@ -171,34 +181,35 @@
         "panel_1": {
           "type": "panel",
           "settings": {
+            "image": "shopify://shop_images/chx-gender-men.jpg",
             "overlay_color": "#124643b3",
             "eyebrow": "Find your path",
             "heading": "Built for men",
             "text": "TRT foundation, drive, recovery and performance protocols reviewed by independent licensed providers.",
             "cta_label": "Explore men's programs",
             "button_color": "#22eee4",
-            "button_text_color": "#14181d",
-            "image": "shopify://shop_images/chx-gender-men.jpg"
+            "button_text_color": "#14181d"
           }
         },
         "panel_2": {
           "type": "panel",
           "settings": {
+            "image": "shopify://shop_images/chx-gender-women-v2.jpg",
             "overlay_color": "#5b2542b3",
             "eyebrow": "Find your path",
             "heading": "Built for women",
             "text": "Menopause, HRT, balance and aesthetics protocols reviewed by independent licensed providers.",
             "cta_label": "Explore women's programs",
             "button_color": "#f9299b",
-            "button_text_color": "#fcfaf9",
-            "image": "shopify://shop_images/chx-gender-women-v2.jpg"
+            "button_text_color": "#fcfaf9"
           }
         }
       },
       "block_order": [
         "panel_1",
         "panel_2"
-      ]
+      ],
+      "settings": {}
     },
     "treatments": {
       "type": "chopinrx-treatments-carousel",
@@ -224,13 +235,6 @@
     },
     "reviews": {
       "type": "chopinrx-reviews",
-      "settings": {
-        "eyebrow": "4.8/5 on Trust Pilot",
-        "heading": "More than <em>100,000</em> patients trust our treatment plans",
-        "show_trustpilot": true,
-        "trustpilot_rating": "Excellent",
-        "trustpilot_count": "436 reviews on"
-      },
       "blocks": {
         "review_1": {
           "type": "review",
@@ -294,14 +298,17 @@
         "review_4",
         "review_5",
         "review_6"
-      ]
+      ],
+      "settings": {
+        "eyebrow": "4.8/5 on Trust Pilot",
+        "heading": "More than <em>100,000</em> patients trust our treatment plans",
+        "show_trustpilot": true,
+        "trustpilot_rating": "Excellent",
+        "trustpilot_count": "436 reviews on"
+      }
     },
     "proof": {
       "type": "chopinrx-proof",
-      "settings": {
-        "eyebrow": "Care designed around real people.",
-        "heading": "Changing lives through <em>proven outcomes</em>"
-      },
       "blocks": {
         "media_1": {
           "type": "media",
@@ -352,16 +359,14 @@
         "stat_3",
         "stat_4",
         "stat_5"
-      ]
+      ],
+      "settings": {
+        "eyebrow": "Care designed around real people.",
+        "heading": "Changing lives through <em>proven outcomes</em>"
+      }
     },
     "lab_testing": {
       "type": "chopinrx-lab-testing",
-      "settings": {
-        "media_position": "right",
-        "eyebrow": "Quality & Testing",
-        "heading": "Always lab <em>tested</em> for quality & consistency",
-        "image": "shopify://shop_images/chx-lab-testing.jpg"
-      },
       "blocks": {
         "test_1": {
           "type": "test",
@@ -397,15 +402,16 @@
         "test_2",
         "test_3",
         "test_4"
-      ]
+      ],
+      "settings": {
+        "image": "shopify://shop_images/chx-lab-testing.jpg",
+        "media_position": "right",
+        "eyebrow": "Quality & Testing",
+        "heading": "Always lab <em>tested</em> for quality & consistency"
+      }
     },
     "how_it_works": {
       "type": "chopinrx-how-it-works",
-      "settings": {
-        "eyebrow": "How it works",
-        "heading": "Four steps, about ten minutes",
-        "cta_label": "Get Started"
-      },
       "blocks": {
         "step_1": {
           "type": "step",
@@ -441,15 +447,15 @@
         "step_2",
         "step_3",
         "step_4"
-      ]
+      ],
+      "settings": {
+        "eyebrow": "How it works",
+        "heading": "Four steps, about ten minutes",
+        "cta_label": "Get Started"
+      }
     },
     "faq": {
       "type": "chopinrx-faq",
-      "settings": {
-        "eyebrow": "Have questions?",
-        "heading": "Frequently asked <em>questions</em>",
-        "cta_label": "Get Started"
-      },
       "blocks": {
         "question_1": {
           "type": "question",
@@ -498,7 +504,12 @@
         "question_3",
         "question_4",
         "question_5"
-      ]
+      ],
+      "settings": {
+        "eyebrow": "Have questions?",
+        "heading": "Frequently asked <em>questions</em>",
+        "cta_label": "Get Started"
+      }
     },
     "insights": {
       "type": "chopinrx-insights",

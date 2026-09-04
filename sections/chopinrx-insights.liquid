@@ -215,19 +215,46 @@
   }
 
   @media screen and (max-width: 767px) {
-    .chx-insights__header {
-      flex-direction: column;
-      align-items: flex-start;
-      gap: var(--space-6);
+    .chx-insights {
+      padding-block: var(--space-10);
     }
 
-    .chx-insights__cta {
-      width: 100%;
+    /* The action moves under the articles on mobile. */
+    .chx-insights > .chx-container {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .chx-insights__header {
+      display: contents;
+    }
+
+    .chx-insights__heading {
+      order: 1;
+      align-items: center;
+      text-align: center;
     }
 
     .chx-insights__grid {
-      grid-template-columns: 1fr;
+      order: 2;
+      grid-template-columns: minmax(0, 1fr);
       gap: var(--space-8);
+    }
+
+    /* Scoped under the section root: the shared button primitive sets the same
+       properties at the same specificity and the bundle order is not fixed. */
+    .chx-insights .chx-insights__cta {
+      order: 3;
+      align-self: center;
+      height: var(--control-h-lg);
+      margin-block-start: var(--space-8);
+      padding-inline: var(--space-8);
+      font-size: var(--font-size-button-large);
+      line-height: 1.33;
+    }
+
+    .chx-article__media {
+      height: 266px;
     }
   }
 

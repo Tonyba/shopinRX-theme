@@ -7,6 +7,12 @@
   assign legal_links = section.blocks | where: 'type', 'legal'
   assign socials = section.blocks | where: 'type', 'social'
   assign seals = section.blocks | where: 'type', 'seal'
+  assign seal_count = 0
+  for block in seals
+    if block.settings.image != blank
+      assign seal_count = seal_count | plus: 1
+    endif
+  endfor
 %}
 
 <div class="chx-footer">
@@ -118,7 +124,7 @@
         </ul>
       {%- endif -%}
 
-      {%- if seals.size > 0 -%}
+      {%- if seal_count > 0 -%}
         <ul class="chx-footer__seals" role="list">
           {%- for block in seals -%}
             {%- if block.settings.image != blank -%}
@@ -396,6 +402,9 @@
     white-space: nowrap;
     color: var(--text-on-dark);
     user-select: none;
+    /* line-height 0.73 crops the line box, so the descender of the "p" spills
+       ~0.19em below it. Reserve that space or the copyright line overlaps it. */
+    padding-block-end: 0.19em;
   }
 
   .chx-footer__copyright {
@@ -434,26 +443,69 @@
 
   @media screen and (max-width: 767px) {
     .chx-footer {
-      padding-block: var(--space-16) var(--space-6);
+      padding-block: var(--space-10);
     }
 
+    .chx-footer__brand {
+      align-items: center;
+      gap: var(--space-8);
+      text-align: center;
+    }
+
+    /* The action block is centred as a whole; its rows stay left-aligned. */
     .chx-footer__actions {
       flex-direction: column;
       align-items: flex-start;
-      width: 100%;
-      gap: var(--space-5);
-    }
-
-    .chx-footer__actions .chx-btn {
-      width: 100%;
+      width: fit-content;
+      gap: var(--space-3);
     }
 
     .chx-footer__columns {
-      grid-template-columns: 1fr;
+      grid-template-columns: minmax(0, 1fr);
+      justify-items: center;
+      gap: var(--space-8);
+      /* The rule above the columns runs edge to edge. */
+      margin: 60px calc(var(--section-px) * -1) 0;
+      padding: 60px var(--section-px) 0;
+    }
+
+    .chx-footer__col {
+      width: 287px;
+      max-width: 100%;
+    }
+
+    .chx-footer__legal {
+      margin-block-start: 60px;
+      align-items: center;
+      gap: var(--space-5);
+    }
+
+    .chx-footer__legal-links {
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+    }
+
+    /* The separator between links turns from a rule beside them to one above. */
+    .chx-footer__legal-links li {
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .chx-footer__legal-links li + li::before {
+      width: 18px;
+      height: 1px;
     }
 
     .chx-footer__seals img {
-      height: 56px;
+      height: 80px;
+    }
+
+    /* The wordmark is set to the width drawn in the design (299 of 393), which
+       is narrower than the desktop rule's 30vw. */
+    .chx-footer__wordmark {
+      margin-block-start: var(--space-10);
+      font-size: 17.8vw;
     }
   }
 {% endstylesheet %}
@@ -648,7 +700,9 @@
         { "type": "legal", "settings": { "label": "Terms & Conditions" } },
         { "type": "legal", "settings": { "label": "Terms of Sale" } },
         { "type": "legal", "settings": { "label": "Complaints" } },
-        { "type": "legal", "settings": { "label": "Manage Cookies" } }
+        { "type": "legal", "settings": { "label": "Manage Cookies" } },
+        { "type": "seal" },
+        { "type": "seal" }
       ]
     }
   ]

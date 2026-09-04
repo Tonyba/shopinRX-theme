@@ -338,23 +338,52 @@
   }
 
   @media screen and (max-width: 767px) {
-    .chx-programs__header {
-      flex-direction: column;
-      align-items: flex-start;
-      gap: var(--space-6);
+    .chx-programs {
+      padding-block: var(--space-10);
     }
 
-    .chx-programs__cta {
-      width: 100%;
+    /* The action moves under the cards on mobile. `display: contents` lifts the
+       header's children into the container so they can be reordered. */
+    .chx-programs > .chx-container {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .chx-programs__header {
+      display: contents;
+    }
+
+    .chx-programs__heading {
+      order: 1;
+      align-items: center;
+      text-align: center;
     }
 
     .chx-programs__grid {
-      grid-template-columns: 1fr;
-      gap: var(--space-8);
+      order: 2;
+      /* minmax(0, …) or the card's min-content contribution pushes the single
+         track past the container. */
+      grid-template-columns: minmax(0, 1fr);
+      gap: var(--space-5);
+      margin-block-start: var(--space-5);
     }
 
-    .chx-program-card {
-      padding: var(--space-5);
+    .chx-programs__cta {
+      order: 3;
+      align-self: center;
+      margin-block-start: var(--space-10);
+    }
+
+    .chx-program-card__media {
+      aspect-ratio: 295 / 210;
+    }
+
+    .chx-program-card__price-amount {
+      font-size: var(--font-size-h4);
+    }
+
+    .chx-program-card__price-compare {
+      font-size: 18px;
     }
   }
 {% endstylesheet %}

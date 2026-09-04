@@ -183,13 +183,33 @@
   }
 
   @media screen and (max-width: 767px) {
-    .chx-lab-card {
-      align-items: flex-start;
-      padding: var(--space-5) var(--space-4);
+    .chx-lab {
+      padding-block: var(--space-10);
     }
 
-    .chx-lab-card__text {
-      font-size: var(--font-size-body);
+    .chx-lab__grid,
+    .chx-lab__grid--media-left {
+      gap: var(--space-6);
+    }
+
+    /* The photograph runs above the copy on mobile. */
+    .chx-lab__grid .chx-lab__media,
+    .chx-lab__grid--media-left .chx-lab__media {
+      order: -1;
+    }
+
+    .chx-lab__media img {
+      aspect-ratio: 359 / 240;
+    }
+
+    .chx-lab-card {
+      padding: var(--space-6);
+      border-radius: var(--radius-lg);
+    }
+
+    .chx-lab-card__title {
+      font-size: var(--font-size-subtitle);
+      line-height: 1.28;
     }
   }
 {% endstylesheet %}

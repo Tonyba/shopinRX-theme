@@ -235,20 +235,29 @@
   }
 
   @media screen and (max-width: 767px) {
+    .chx-faq {
+      padding-block: var(--space-10);
+    }
+
+    /* The action moves under the questions, so the intro dissolves into the
+       grid and its children are ordered around the list. */
+    .chx-faq__intro {
+      display: contents;
+    }
+
+    .chx-faq .chx-section-heading {
+      order: 1;
+      align-items: center;
+      text-align: center;
+    }
+
+    .chx-faq__list {
+      order: 2;
+    }
+
     .chx-faq__cta {
-      width: 100%;
-    }
-
-    .chx-faq__item {
-      padding: var(--space-5);
-    }
-
-    .chx-faq__question {
-      gap: var(--space-4);
-    }
-
-    .chx-faq__answer {
-      font-size: var(--font-size-body);
+      order: 3;
+      justify-self: center;
     }
   }
 {% endstylesheet %}

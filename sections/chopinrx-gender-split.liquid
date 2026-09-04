@@ -154,12 +154,23 @@
     }
 
     .chx-gender__panel {
-      min-height: 440px;
+      min-height: 500px;
       padding: var(--space-10) var(--section-px);
     }
 
+    /* The eyebrow and heading sit closer together than the blocks below them. */
+    .chx-gender__content {
+      gap: var(--space-4);
+    }
+
+    .chx-gender__text,
     .chx-gender__cta {
-      width: 100%;
+      margin-block-start: 4px;
+    }
+
+    /* The copy column is the width of the action, not of the panel. */
+    .chx-gender__text {
+      max-width: 300px;
     }
   }
 {% endstylesheet %}

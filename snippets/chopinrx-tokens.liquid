@@ -120,13 +120,14 @@
 
   @media screen and (max-width: 767px) {
     :root {
-      --font-size-h1: 42px;
+      --font-size-h1: 36px;
       --font-size-h2: 32px;
       --font-size-h3: 28px;
       --font-size-h4: 24px;
       --font-size-h5: 20px;
       --font-size-subtitle: 18px;
-      --section-px: 16px;
+      --font-size-button-large: 16px;
+      --section-px: 17px;
       --section-py-tight: 48px;
     }
   }
@@ -348,16 +349,8 @@
   }
 
   @media screen and (max-width: 767px) {
-    .chx-btn {
-      height: 44px;
+    .chx-btn--md {
       padding-inline: var(--space-4);
-      font-size: var(--font-size-body-small);
-      gap: 6px;
-    }
-
-    .chx-btn__icon {
-      width: 20px;
-      height: 20px;
     }
   }
 {% endstylesheet %}
