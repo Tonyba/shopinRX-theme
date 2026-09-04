@@ -1,0 +1,99 @@
+{% render 'chopinrx-tokens' %}
+
+<div class="chx-aboutintro">
+  <div class="chx-container">
+    <div class="chx-aboutintro__grid">
+      {% render 'chopinrx-section-heading',
+        eyebrow: section.settings.eyebrow,
+        heading: section.settings.heading,
+        class: 'chx-aboutintro__heading'
+      %}
+
+      {%- if section.settings.body != blank -%}
+        <div class="chx-body-lg chx-aboutintro__body">{{ section.settings.body }}</div>
+      {%- endif -%}
+    </div>
+  </div>
+</div>
+
+{% stylesheet %}
+  .chx-aboutintro {
+    background-color: var(--surface-page);
+    padding-block: var(--section-py-tight);
+  }
+
+  .chx-aboutintro__grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: center;
+    gap: 30px;
+  }
+
+  .chx-aboutintro__body {
+    color: var(--text-body);
+  }
+
+  .chx-aboutintro__body > :first-child {
+    margin-block-start: 0;
+  }
+
+  .chx-aboutintro__body > :last-child {
+    margin-block-end: 0;
+  }
+
+  /* ── Breakpoints ────────────────────────────── */
+  @media screen and (max-width: 1024px) {
+    .chx-aboutintro__grid {
+      grid-template-columns: minmax(0, 1fr);
+      align-items: start;
+    }
+  }
+
+  @media screen and (max-width: 767px) {
+    .chx-aboutintro {
+      padding-block: var(--space-10);
+    }
+
+    /* Rich text renders a <p> the theme sizes itself, so the size has to be set
+       on it rather than inherited from the wrapper. */
+    .chx-aboutintro__body,
+    .chx-aboutintro__body p {
+      font-size: var(--font-size-body);
+      line-height: 1.5;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "About intro",
+  "tag": "section",
+  "class": "chopinrx-about-intro-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "About Us"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "info": "Italic text is rendered in the accent colour.",
+      "default": "Your health is <em>personal</em>. Now, so is your care."
+    },
+    {
+      "type": "richtext",
+      "id": "body",
+      "label": "Body",
+      "default": "<p>Most people who want to explore treatments for weight management, hormone health, or longevity run into the same problem: the traditional healthcare system is not designed for this kind of proactive, personalized care.</p><p>Long appointment waitlists, dismissive consultations, insurance gatekeeping, and fragmented care make it unnecessarily difficult to access treatments that are safe, available, and appropriate for many adults.</p><p>ChopinRX was built to close that gap — connecting consumers with independent licensed U.S. providers through a streamlined online process that puts the individual first.</p>"
+    }
+  ],
+  "presets": [
+    {
+      "name": "About intro"
+    }
+  ]
+}
+{% endschema %}

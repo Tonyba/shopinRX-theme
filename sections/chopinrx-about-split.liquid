@@ -1,0 +1,250 @@
+{% render 'chopinrx-tokens' %}
+
+{% liquid
+  assign image = section.settings.image
+  assign check_icon = 'icon-check-circle.svg' | inline_asset_content
+  assign features = section.blocks | where: 'type', 'feature'
+%}
+
+<div class="chx-aboutsplit chx-aboutsplit--{{ section.settings.background }}">
+  <div class="chx-container">
+    <div
+      class="chx-aboutsplit__grid{% if section.settings.media_position == 'right' %} chx-aboutsplit__grid--media-right{% endif %}"
+    >
+      <div class="chx-aboutsplit__media">
+        {%- if image != blank -%}
+          <img
+            src="{{ image | image_url: width: 1200 }}"
+            srcset="
+              {{ image | image_url: width: 600 }} 600w,
+              {{ image | image_url: width: 900 }} 900w,
+              {{ image | image_url: width: 1200 }} 1200w
+            "
+            sizes="(min-width: 1025px) 45vw, 100vw"
+            width="{{ image.width }}"
+            height="{{ image.height }}"
+            alt="{{ image.alt | escape }}"
+            loading="lazy"
+          >
+        {%- endif -%}
+      </div>
+
+      <div class="chx-aboutsplit__copy">
+        {% render 'chopinrx-section-heading',
+          eyebrow: section.settings.eyebrow,
+          heading: section.settings.heading
+        %}
+
+        {%- if section.settings.body != blank -%}
+          <div class="chx-body-lg chx-aboutsplit__body">{{ section.settings.body }}</div>
+        {%- endif -%}
+
+        {%- if features.size > 0 -%}
+          <ul class="chx-checklist" role="list">
+            {%- for block in features -%}
+              <li class="chx-checklist__item" {{ block.shopify_attributes }}>
+                <span class="chx-checklist__icon" aria-hidden="true">{{ check_icon }}</span>
+                <span class="chx-checklist__text">{{ block.settings.text }}</span>
+              </li>
+            {%- endfor -%}
+          </ul>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% stylesheet %}
+  .chx-aboutsplit {
+    padding-block: var(--section-py-tight);
+    overflow: clip;
+  }
+
+  .chx-aboutsplit--page {
+    background-color: var(--surface-page);
+  }
+
+  .chx-aboutsplit--muted {
+    background-color: var(--surface-muted);
+  }
+
+  .chx-aboutsplit--band {
+    background-color: var(--surface-card-flat);
+  }
+
+  .chx-aboutsplit__grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: center;
+    gap: var(--space-16);
+  }
+
+  .chx-aboutsplit__grid--media-right .chx-aboutsplit__media {
+    order: 2;
+  }
+
+  .chx-aboutsplit__media {
+    align-self: stretch;
+    border-radius: var(--radius-xl);
+    overflow: clip;
+    background-color: #c9c9c9;
+  }
+
+  .chx-aboutsplit__media img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    min-height: 420px;
+    object-fit: cover;
+  }
+
+  .chx-aboutsplit__copy {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 30px;
+    min-width: 0;
+  }
+
+  .chx-aboutsplit__body {
+    color: var(--text-body);
+  }
+
+  .chx-aboutsplit__body > :first-child {
+    margin-block-start: 0;
+  }
+
+  .chx-aboutsplit__body > :last-child {
+    margin-block-end: 0;
+  }
+
+  /* Registration lists in the copy keep the body measure and marker indent. */
+  .chx-aboutsplit__body ul,
+  .chx-aboutsplit__body ol {
+    margin-block: var(--space-3);
+    padding-inline-start: 27px;
+  }
+
+  .chx-aboutsplit__body li + li {
+    margin-block-start: var(--space-3);
+  }
+
+  /* ── Breakpoints ────────────────────────────── */
+  @media screen and (max-width: 1024px) {
+    .chx-aboutsplit__grid {
+      grid-template-columns: minmax(0, 1fr);
+      gap: var(--space-8);
+    }
+
+    .chx-aboutsplit__grid--media-right .chx-aboutsplit__media {
+      order: 0;
+    }
+
+    .chx-aboutsplit__media img {
+      min-height: 0;
+      aspect-ratio: 16 / 9;
+    }
+  }
+
+  @media screen and (max-width: 767px) {
+    .chx-aboutsplit {
+      padding-block: var(--space-10);
+    }
+
+    .chx-aboutsplit__grid {
+      gap: var(--space-16);
+    }
+
+    .chx-aboutsplit__media img {
+      aspect-ratio: 359 / 240;
+    }
+
+    /* Rich text renders a <p> the theme sizes itself, so the size has to be set
+       on it rather than inherited from the wrapper. */
+    .chx-aboutsplit__body,
+    .chx-aboutsplit__body p,
+    .chx-aboutsplit__body li {
+      font-size: var(--font-size-body);
+      line-height: 1.5;
+    }
+
+    .chx-checklist__text {
+      font-size: var(--font-size-body);
+      line-height: 1.5;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "About split",
+  "tag": "section",
+  "class": "chopinrx-about-split-section",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image",
+      "info": "Upload to Content → Files, then pick it here."
+    },
+    {
+      "type": "select",
+      "id": "media_position",
+      "label": "Image position",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "right", "label": "Right" }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "select",
+      "id": "background",
+      "label": "Background",
+      "options": [
+        { "value": "page", "label": "Page" },
+        { "value": "muted", "label": "Muted" },
+        { "value": "band", "label": "Band" }
+      ],
+      "default": "page"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "info": "Italic text is rendered in the accent colour.",
+      "default": "Online <em>healthcare</em> made safe and easy"
+    },
+    {
+      "type": "richtext",
+      "id": "body",
+      "label": "Body"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "feature",
+      "name": "Check line",
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Text",
+          "default": "Been reviewed against your individual health profile"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 6,
+  "presets": [
+    {
+      "name": "About split"
+    }
+  ]
+}
+{% endschema %}
