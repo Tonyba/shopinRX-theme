@@ -95,6 +95,7 @@
     --font-size-button: 16px;
     --font-size-label-tag: 14px;
     --font-size-brand-name: 26px;
+    --font-size-big-number: 96px;
 
     /* ── Layout ───────────────────────────────── */
     --section-px: 24px;
@@ -109,6 +110,7 @@
 
   @media screen and (max-width: 1024px) {
     :root {
+      --font-size-big-number: 72px;
       --font-size-h1: 56px;
       --font-size-h2: 40px;
       --font-size-h3: 32px;
@@ -127,6 +129,7 @@
       --font-size-h5: 20px;
       --font-size-subtitle: 18px;
       --font-size-button-large: 16px;
+      --font-size-big-number: 56px;
       --section-px: 17px;
       --section-py-tight: 48px;
     }
@@ -247,6 +250,46 @@
   .chx-link:hover {
     color: var(--text-accent);
     text-decoration: none;
+  }
+
+  /* ── Check list ───────────────────────────────
+     Rows of a 20px check badge and a line of copy, used wherever the design
+     lists what a section guarantees. */
+  .chx-checklist {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-5);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .chx-checklist__item {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+  }
+
+  .chx-checklist__icon {
+    display: block;
+    flex-shrink: 0;
+    width: 20px;
+    height: 20px;
+  }
+
+  .chx-checklist__icon svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  .chx-checklist__text {
+    font-family: var(--font-ui);
+    font-size: var(--font-size-body-large);
+    font-weight: 500;
+    line-height: 1.55;
+    letter-spacing: -0.005em;
+    color: var(--text-body);
   }
 
   /* ── Button primitive ───────────────────────── */

@@ -1,0 +1,352 @@
+{% render 'chopinrx-tokens' %}
+
+{% liquid
+  assign arrow_icon = 'icon-arrow-right.svg' | inline_asset_content | replace: '#FCFAF9', 'currentColor'
+  assign check_icon = 'icon-check-circle.svg' | inline_asset_content
+  assign features = section.blocks | where: 'type', 'feature'
+  assign members = section.blocks | where: 'type', 'member'
+%}
+
+<div class="chx-team" data-chx-carousel>
+  <div class="chx-container chx-team__grid">
+    <div class="chx-team__copy">
+      <div class="chx-team__header">
+        {% render 'chopinrx-section-heading',
+          eyebrow: section.settings.eyebrow,
+          heading: section.settings.heading
+        %}
+
+        {%- if section.settings.body != blank -%}
+          <div class="chx-body-lg chx-team__text">{{ section.settings.body }}</div>
+        {%- endif -%}
+
+        {%- if features.size > 0 -%}
+          <ul class="chx-checklist" role="list">
+            {%- for block in features -%}
+              <li class="chx-checklist__item" {{ block.shopify_attributes }}>
+                <span class="chx-checklist__icon" aria-hidden="true">{{ check_icon }}</span>
+                <span class="chx-checklist__text">{{ block.settings.text }}</span>
+              </li>
+            {%- endfor -%}
+          </ul>
+        {%- endif -%}
+      </div>
+
+      {%- if members.size > 1 -%}
+        <div class="chx-team__controls">
+          <button
+            type="button"
+            class="chx-carousel__control chx-team__control chx-carousel__control--prev"
+            aria-label="{{ 'content.pagination.previous' | t }}"
+            data-chx-carousel-prev
+          >
+            <span class="chx-btn__icon" aria-hidden="true">{{ arrow_icon }}</span>
+          </button>
+          <button
+            type="button"
+            class="chx-carousel__control chx-team__control"
+            aria-label="{{ 'content.pagination.next' | t }}"
+            data-chx-carousel-next
+          >
+            <span class="chx-btn__icon" aria-hidden="true">{{ arrow_icon }}</span>
+          </button>
+        </div>
+      {%- endif -%}
+    </div>
+
+    <div class="chx-team__rail">
+      <div class="chx-carousel__viewport" data-chx-carousel-viewport>
+        <ul class="chx-carousel__container" role="list">
+          {%- for block in members -%}
+            <li class="chx-carousel__slide chx-teamcard" {{ block.shopify_attributes }}>
+              <div class="chx-teamcard__media">
+                {%- if block.settings.image != blank -%}
+                  <img
+                    src="{{ block.settings.image | image_url: width: 700 }}"
+                    srcset="
+                      {{ block.settings.image | image_url: width: 350 }} 350w,
+                      {{ block.settings.image | image_url: width: 700 }} 700w
+                    "
+                    sizes="345px"
+                    width="{{ block.settings.image.width }}"
+                    height="{{ block.settings.image.height }}"
+                    alt="{{ block.settings.image.alt | escape | default: block.settings.name }}"
+                    loading="lazy"
+                  >
+                {%- endif -%}
+              </div>
+
+              <div class="chx-teamcard__body">
+                <p class="chx-teamcard__name">{{ block.settings.name }}</p>
+                {%- if block.settings.role != blank -%}
+                  <p class="chx-teamcard__role">{{ block.settings.role }}</p>
+                {%- endif -%}
+              </div>
+            </li>
+          {%- endfor -%}
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="module">
+  import EmblaCarousel from '{{ 'embla-carousel.js' | asset_url }}';
+  import { initCarousels } from '{{ 'chopinrx-carousel.js' | asset_url }}';
+  initCarousels(EmblaCarousel);
+</script>
+
+{% stylesheet %}
+  .chx-team {
+    background-color: var(--surface-page);
+    padding-block: var(--section-py-tight);
+    overflow: clip;
+  }
+
+  .chx-team__grid {
+    display: grid;
+    grid-template-columns: 449px minmax(0, 1fr);
+    align-items: center;
+    gap: var(--space-8);
+  }
+
+  .chx-team__copy {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-8);
+    min-width: 0;
+  }
+
+  .chx-team__header {
+    /* Muted copy through the inherited property, so the shared body primitive
+       follows without an equal-specificity contest. */
+    --chx-body-color: var(--text-muted);
+
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-5);
+  }
+
+  .chx-team__text > :first-child {
+    margin-block-start: 0;
+  }
+
+  .chx-team__text > :last-child {
+    margin-block-end: 0;
+  }
+
+  .chx-team__controls {
+    display: flex;
+    align-items: center;
+    gap: var(--space-8);
+  }
+
+  .chx-team .chx-team__control {
+    border-color: transparent;
+    background-color: var(--surface-well);
+  }
+
+  .chx-team .chx-team__control:hover {
+    background-color: var(--border-hairline);
+  }
+
+  /* Both arrows stay in place at the end of the rail, the inactive one dimmed,
+     rather than disappearing as the product rail's controls do. */
+  .chx-team .chx-team__control[disabled] {
+    opacity: 0.4;
+  }
+
+  /* The rail runs off the right edge of the content well, as drawn. */
+  .chx-team__rail {
+    width: calc(100% + var(--chx-gutter));
+    min-width: 0;
+  }
+
+  .chx-team .chx-carousel__container {
+    --chx-slide-spacing: 10px;
+  }
+
+  /* The slide carries the spacing as inline padding, so the basis is the card
+     width plus that spacing. */
+  .chx-team .chx-carousel__slide {
+    flex: 0 0 355px;
+  }
+
+  /* ── Team card ──────────────────────────────── */
+  .chx-teamcard {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-5);
+    height: 430px;
+  }
+
+  .chx-teamcard__media {
+    flex: 1 1 auto;
+    min-height: 0;
+    border-radius: var(--radius-lg);
+    overflow: clip;
+    background-color: var(--surface-well);
+  }
+
+  .chx-teamcard__media img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .chx-teamcard__body {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .chx-teamcard__name {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: var(--font-size-h5);
+    font-weight: 500;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+    color: var(--text-heading);
+  }
+
+  .chx-teamcard__role {
+    margin: 0;
+    font-family: var(--font-ui);
+    font-size: var(--font-size-body);
+    font-weight: 500;
+    line-height: 1.5;
+    letter-spacing: -0.005em;
+    color: var(--text-muted);
+  }
+
+  /* ── Breakpoints ────────────────────────────── */
+  @media screen and (max-width: 1024px) {
+    .chx-team__grid {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+
+  @media screen and (max-width: 767px) {
+    .chx-team {
+      padding-block: var(--space-10);
+    }
+
+    /* The controls move under the rail, so the copy column dissolves into the
+       grid and its children are ordered around it. */
+    .chx-team__copy {
+      display: contents;
+    }
+
+    .chx-team__header {
+      order: 1;
+    }
+
+    .chx-team__rail {
+      order: 2;
+    }
+
+    .chx-team__controls {
+      order: 3;
+      justify-content: center;
+      gap: var(--space-8);
+    }
+
+    .chx-team .chx-team__control {
+      width: 50px;
+      height: 50px;
+    }
+
+    .chx-team__text,
+    .chx-team__text p {
+      font-size: var(--font-size-body);
+      line-height: 1.5;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "About team",
+  "tag": "section",
+  "class": "chopinrx-about-team-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Our Team"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "info": "Italic text is rendered in the accent colour.",
+      "default": "Built by clinicians, for <em>patients</em>."
+    },
+    {
+      "type": "richtext",
+      "id": "body",
+      "label": "Body",
+      "default": "<p>Our medical team brings together decades of clinical expertise across emergency medicine, longevity science, and pharmacy leadership — united by a shared commitment to safe, evidence-based care.</p>"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "feature",
+      "name": "Check line",
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Text",
+          "default": "Overseen by licensed MDs and pharmacists"
+        }
+      ]
+    },
+    {
+      "type": "member",
+      "name": "Team member",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Photo",
+          "info": "Upload to Content → Files, then pick it here."
+        },
+        {
+          "type": "text",
+          "id": "name",
+          "label": "Name",
+          "default": "Dr Patrick Carroll"
+        },
+        {
+          "type": "text",
+          "id": "role",
+          "label": "Role",
+          "default": "Chief Medical Officer"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 16,
+  "presets": [
+    {
+      "name": "About team",
+      "blocks": [
+        { "type": "feature" },
+        { "type": "feature", "settings": { "text": "Evidence-based protocols, not guesswork" } },
+        { "type": "feature", "settings": { "text": "Licensed and fully regulated" } },
+        { "type": "member" },
+        { "type": "member" },
+        { "type": "member" },
+        { "type": "member" },
+        { "type": "member" }
+      ]
+    }
+  ]
+}
+{% endschema %}

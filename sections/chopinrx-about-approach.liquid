@@ -1,0 +1,209 @@
+{% render 'chopinrx-tokens' %}
+
+<div class="chx-approach">
+  <div class="chx-container">
+    <div class="chx-approach__grid">
+      <div class="chx-approach__copy">
+        {% render 'chopinrx-section-heading',
+          eyebrow: section.settings.eyebrow,
+          heading: section.settings.heading
+        %}
+
+        {%- if section.settings.body != blank -%}
+          <div class="chx-body-lg chx-approach__body">{{ section.settings.body }}</div>
+        {%- endif -%}
+      </div>
+
+      {%- if section.blocks.size > 0 -%}
+        <ul class="chx-approach__cards" role="list">
+          {%- for block in section.blocks -%}
+            <li class="chx-approach-card" {{ block.shopify_attributes }}>
+              <h3 class="chx-h5 chx-approach-card__title">{{ block.settings.title }}</h3>
+              {%- if block.settings.text != blank -%}
+                <p class="chx-approach-card__text">{{ block.settings.text }}</p>
+              {%- endif -%}
+            </li>
+          {%- endfor -%}
+        </ul>
+      {%- endif -%}
+    </div>
+  </div>
+</div>
+
+{% stylesheet %}
+  .chx-approach {
+    background-color: var(--surface-page);
+    padding-block: var(--section-py-tight);
+    overflow: clip;
+  }
+
+  .chx-approach__grid {
+    display: grid;
+    grid-template-columns: 590px minmax(0, 1fr);
+    align-items: center;
+    gap: var(--space-16);
+  }
+
+  .chx-approach__copy {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-8);
+    min-width: 0;
+  }
+
+  .chx-approach__body {
+    color: var(--text-body);
+  }
+
+  .chx-approach__body > :first-child {
+    margin-block-start: 0;
+  }
+
+  .chx-approach__body > :last-child {
+    margin-block-end: 0;
+  }
+
+  .chx-approach__cards {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .chx-approach-card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    padding: var(--space-6) var(--space-4);
+    border: var(--border-w) solid var(--border-hairline);
+    border-radius: var(--radius-md);
+    background-color: var(--surface-card);
+  }
+
+  .chx-approach-card__title {
+    color: var(--text-heading);
+  }
+
+  .chx-approach-card__text {
+    margin: 0;
+    font-family: var(--font-ui);
+    font-size: var(--font-size-body-large);
+    font-weight: 400;
+    line-height: 1.55;
+    letter-spacing: -0.005em;
+    color: var(--text-muted);
+  }
+
+  /* ── Breakpoints ────────────────────────────── */
+  @media screen and (max-width: 1024px) {
+    .chx-approach__grid {
+      grid-template-columns: minmax(0, 1fr);
+      gap: var(--space-8);
+    }
+  }
+
+  @media screen and (max-width: 767px) {
+    .chx-approach {
+      padding-block: var(--space-10);
+    }
+
+    .chx-approach__grid {
+      gap: 30px;
+    }
+
+    /* Rich text renders a <p> the theme sizes itself, so the size has to be set
+       on it rather than inherited from the wrapper. */
+    .chx-approach__body,
+    .chx-approach__body p {
+      font-size: var(--font-size-body);
+      line-height: 1.5;
+    }
+
+    .chx-approach-card__text {
+      font-size: var(--font-size-body);
+      line-height: 1.5;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "About approach",
+  "tag": "section",
+  "class": "chopinrx-about-approach-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Our Approach"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "info": "Italic text is rendered in the accent colour.",
+      "default": "A new <em>approach</em> to everyday care."
+    },
+    {
+      "type": "richtext",
+      "id": "body",
+      "label": "Body",
+      "default": "<p>ChopinRX is a networking platform. It connects consumers with independent, licensed U.S. medical providers who make all prescribing decisions independently. ChopinRX does not employ these providers, does not direct their clinical decisions, and is not itself a medical provider.</p><p>Fulfillment is handled by licensed U.S.-based compounding pharmacies that follow USP testing and quality standards.</p>"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "card",
+      "name": "Card",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Access without friction"
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Text",
+          "default": "Getting connected to a licensed provider should not require an insurance card, a waiting room, or a referral. ChopinRX removes those barriers."
+        }
+      ]
+    }
+  ],
+  "max_blocks": 8,
+  "presets": [
+    {
+      "name": "About approach",
+      "blocks": [
+        { "type": "card" },
+        {
+          "type": "card",
+          "settings": {
+            "title": "Sterility Tested",
+            "text": "A test to check the medication is free of foreign organisms and pathogens."
+          }
+        },
+        {
+          "type": "card",
+          "settings": {
+            "title": "pH Level Tested",
+            "text": "A test to check for the ideal 'acid to base' ratio to minimize irritation caused by the injection itself."
+          }
+        },
+        {
+          "type": "card",
+          "settings": {
+            "title": "Endotoxicity Tested",
+            "text": "A test to check the medication adheres to endotoxin safety recommendations."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

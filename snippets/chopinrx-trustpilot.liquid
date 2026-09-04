@@ -6,8 +6,12 @@
   @param {string} [rating] - Rating word, e.g. 'Excellent'.
   @param {string} [score] - Numeric score, shown on mobile only.
   @param {string} [count] - Review count line, shown on desktop only.
+  @param {string} [mobile_count] - Replaces the score and rating word on mobile,
+    e.g. 'Check out our 436 reviews'. Only read by the 'about' variant.
   @param {string} [url] - Optional link to the Trustpilot profile.
   @param {boolean} [ink] - Sets the strip in ink rather than on-dark.
+  @param {string} [variant] - 'about' leads with the wordmark on desktop and
+    sets the wider stars used on the About hero.
 
   @example
   {% render 'chopinrx-trustpilot', rating: 'Excellent', score: '4.6', count: '436 reviews on' %}
@@ -21,6 +25,9 @@
     </span>
     <span class="chx-trustpilot__score">{{ score }}</span>
     <span class="chx-trustpilot__count">{{ count }}</span>
+    {%- if mobile_count != blank -%}
+      <span class="chx-trustpilot__mobile-count">{{ mobile_count }}</span>
+    {%- endif -%}
   </span>
   <span class="chx-trustpilot__brand">
     <span class="chx-trustpilot__mark" aria-hidden="true">
@@ -30,12 +37,14 @@
   </span>
 {%- endcapture -%}
 
+{%- capture chx_trustpilot_class -%}
+  chx-trustpilot{% if ink %} chx-trustpilot--ink{% endif %}{% if variant != blank %} chx-trustpilot--{{ variant }}{% endif %}
+{%- endcapture -%}
+
 {%- if url != blank -%}
-  <a class="chx-trustpilot{% if ink %} chx-trustpilot--ink{% endif %}" href="{{ url }}" rel="noopener">
-    {{- chx_trustpilot_inner -}}
-  </a>
+  <a class="{{ chx_trustpilot_class | strip }}" href="{{ url }}" rel="noopener">{{ chx_trustpilot_inner }}</a>
 {%- else -%}
-  <div class="chx-trustpilot{% if ink %} chx-trustpilot--ink{% endif %}">{{ chx_trustpilot_inner }}</div>
+  <div class="{{ chx_trustpilot_class | strip }}">{{ chx_trustpilot_inner }}</div>
 {%- endif -%}
 
 {% stylesheet %}
@@ -83,8 +92,37 @@
   }
 
   /* The score is a mobile-only figure, the count a desktop-only one. */
-  .chx-trustpilot__score {
+  .chx-trustpilot__score,
+  .chx-trustpilot__mobile-count {
     display: none;
+  }
+
+  /* About hero: the wordmark leads and the score sits beside the word. */
+  .chx-trustpilot--about .chx-trustpilot__brand {
+    order: -1;
+  }
+
+  .chx-trustpilot--about .chx-trustpilot__rating {
+    gap: 6px;
+  }
+
+  .chx-trustpilot--about .chx-trustpilot__stars {
+    order: 1;
+    margin-inline-end: 7px;
+  }
+
+  .chx-trustpilot--about .chx-trustpilot__score {
+    display: block;
+    order: 2;
+  }
+
+  .chx-trustpilot--about .chx-trustpilot__rating .chx-trustpilot__word {
+    order: 3;
+  }
+
+  .chx-trustpilot--about .chx-trustpilot__count {
+    order: 4;
+    margin-inline-start: 7px;
   }
 
   .chx-trustpilot__stars {
@@ -146,6 +184,52 @@
 
     .chx-trustpilot__count {
       display: none;
+    }
+
+    /* About hero: wider stars, one review line, wordmark underneath. */
+    .chx-trustpilot--about {
+      gap: 13px;
+    }
+
+    .chx-trustpilot--about .chx-trustpilot__brand {
+      order: 1;
+      gap: 6.585px;
+      height: 30px;
+    }
+
+    .chx-trustpilot--about .chx-trustpilot__rating {
+      gap: 9.231px;
+    }
+
+    .chx-trustpilot--about .chx-trustpilot__stars {
+      width: 123.077px;
+      height: 23.077px;
+      margin-inline-end: 0;
+    }
+
+    .chx-trustpilot--about .chx-trustpilot__mark {
+      width: 23.046px;
+      height: 21.811px;
+    }
+
+    .chx-trustpilot--about .chx-trustpilot__brand .chx-trustpilot__word {
+      font-size: 19.754px;
+      line-height: 30px;
+    }
+
+    .chx-trustpilot--about .chx-trustpilot__score,
+    .chx-trustpilot--about .chx-trustpilot__rating .chx-trustpilot__word {
+      display: none;
+    }
+
+    .chx-trustpilot--about .chx-trustpilot__mobile-count {
+      display: block;
+      order: 2;
+      font-family: var(--font-ui);
+      font-size: 16.154px;
+      font-weight: 500;
+      line-height: 30px;
+      white-space: nowrap;
     }
 
     /* The rating line carries Trustpilot's own leading, which is what sets the

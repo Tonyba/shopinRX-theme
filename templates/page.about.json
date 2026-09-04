@@ -1,0 +1,226 @@
+{
+  "sections": {
+    "hero": {
+      "type": "chopinrx-about-hero",
+      "settings": {
+        "image": "shopify://shop_images/chx-about-hero.jpg",
+        "breadcrumb_home": "Home",
+        "breadcrumb_current": "About us",
+        "heading": "A platform built around the patient, not the system.",
+        "body": "<p>ChopinRX exists to make provider-guided telehealth care more accessible, more transparent, and more personal — without the complexity of traditional healthcare.</p>",
+        "show_trustpilot": true,
+        "trustpilot_rating": "Excellent",
+        "trustpilot_score": "4.6",
+        "trustpilot_count": "436 reviews",
+        "trustpilot_mobile_count": "Check out our 436 reviews"
+      }
+    },
+    "intro": {
+      "type": "chopinrx-about-intro",
+      "settings": {
+        "eyebrow": "About Us",
+        "heading": "Your health is <em>personal</em>. Now, so is your care.",
+        "body": "<p>Most people who want to explore treatments for weight management, hormone health, or longevity run into the same problem: the traditional healthcare system is not designed for this kind of proactive, personalized care.</p><p>Long appointment waitlists, dismissive consultations, insurance gatekeeping, and fragmented care make it unnecessarily difficult to access treatments that are safe, available, and appropriate for many adults.</p><p>ChopinRX was built to close that gap — connecting consumers with independent licensed U.S. providers through a streamlined online process that puts the individual first.</p>"
+      }
+    },
+    "story": {
+      "type": "chopinrx-about-split",
+      "settings": {
+        "image": "shopify://shop_images/chx-about-story.png",
+        "media_position": "left",
+        "background": "muted",
+        "eyebrow": "Our Story",
+        "heading": "Online <em>healthcare</em> made safe and easy",
+        "body": "<p>ChopinRX is an online platform connecting people with independent, licensed U.S. providers. We support confidential health consultations and prescription treatments across the country.</p><p>We started because online healthcare was a landscape of misleading information and illegitimate products, and we knew that something had to change.</p><p>What people needed was a reliable platform for essential medication, thorough consultations and expert medical advice. ChopinRX exists to give access to all those things.</p><p>When you order through ChopinRX, you are cared for by qualified providers and pharmacists. No deceptive products, no wrong prescriptions, no unreasonable prices.</p>"
+      }
+    },
+    "mission": {
+      "type": "chopinrx-about-mission",
+      "settings": {
+        "eyebrow": "Our Mission Statement",
+        "heading": "Our <em>Mission</em> Statement",
+        "body": "<p>Managing prescriptions isn’t always easy, but at ChopinRX, we are constantly working to make it as uncomplicated and trouble-free as possible. We aim to build a world where everyone has easy access to high-quality healthcare services, whenever and wherever they need it. Patient-centred healthcare is at the heart of everything we do at ChopinRX. By bringing pharmacy care and online clinic consultations to a secure online platform, we strive to lead the way in providing expert, on-demand access to healthcare, available at the patient’s convenience.</p>"
+      }
+    },
+    "approach": {
+      "type": "chopinrx-about-approach",
+      "blocks": {
+        "card_1": {
+          "type": "card",
+          "settings": {
+            "title": "Access without friction",
+            "text": "Getting connected to a licensed provider should not require an insurance card, a waiting room, or a referral. ChopinRX removes those barriers."
+          }
+        },
+        "card_2": {
+          "type": "card",
+          "settings": {
+            "title": "Sterility Tested",
+            "text": "A test to check the medication is free of foreign organisms and pathogens."
+          }
+        },
+        "card_3": {
+          "type": "card",
+          "settings": {
+            "title": "pH Level Tested",
+            "text": "A test to check for the ideal 'acid to base' ratio to minimize irritation caused by the injection itself."
+          }
+        },
+        "card_4": {
+          "type": "card",
+          "settings": {
+            "title": "Endotoxicity Tested",
+            "text": "A test to check the medication adheres to endotoxin safety recommendations."
+          }
+        }
+      },
+      "block_order": ["card_1", "card_2", "card_3", "card_4"],
+      "settings": {
+        "eyebrow": "Our Approach",
+        "heading": "A new <em>approach</em> to everyday care.",
+        "body": "<p>ChopinRX is a networking platform. It connects consumers with independent, licensed U.S. medical providers who make all prescribing decisions independently. ChopinRX does not employ these providers, does not direct their clinical decisions, and is not itself a medical provider.</p><p>Fulfillment is handled by licensed U.S.-based compounding pharmacies that follow USP testing and quality standards.</p>"
+      }
+    },
+    "stats": {
+      "type": "chopinrx-about-stats",
+      "blocks": {
+        "stat_1": {
+          "type": "stat",
+          "settings": { "figure": "1M+", "label": "Patients served" }
+        },
+        "stat_2": {
+          "type": "stat",
+          "settings": { "figure": "37%", "label": "Prescriptions filled" }
+        },
+        "stat_3": {
+          "type": "stat",
+          "settings": { "figure": "120", "label": "Employees" }
+        }
+      },
+      "block_order": ["stat_1", "stat_2", "stat_3"],
+      "settings": {
+        "eyebrow": "Care designed around real people.",
+        "heading": "Where we stand",
+        "body": "<p>Since launching, we’ve grown rapidly: expanding treatments, developing an AI-powered health coach, and building a team dedicated to putting patients first.</p>"
+      }
+    },
+    "care": {
+      "type": "chopinrx-about-split",
+      "blocks": {
+        "feature_1": {
+          "type": "feature",
+          "settings": { "text": "Been reviewed against your individual health profile" }
+        },
+        "feature_2": {
+          "type": "feature",
+          "settings": { "text": "Been cross-checked against current clinical standards" }
+        },
+        "feature_3": {
+          "type": "feature",
+          "settings": { "text": "Been approved by a qualified clinician, not an algorithm" }
+        }
+      },
+      "block_order": ["feature_1", "feature_2", "feature_3"],
+      "settings": {
+        "image": "shopify://shop_images/chx-about-care.jpg",
+        "media_position": "right",
+        "background": "page",
+        "heading": "What patient <em>care</em> means to us",
+        "body": "<p>We know we've made a tangible difference to people's lives. It's what drives us to keep raising the bar. Our patients have discovered undiagnosed conditions with simple blood tests, regained mental clarity with targeted hormone treatment, and reduced their risk of type 2 diabetes through weight loss.</p><p>Every treatment pathway follows recognised clinical guidelines. Our multidisciplinary team — bringing together doctors, pharmacists, and specialist clinicians — reviews every protocol to ensure your care meets the highest clinical standards.</p><p>When you receive a prescription through ChopinRX, you can be confident it has:</p>"
+      }
+    },
+    "trust": {
+      "type": "chopinrx-about-split",
+      "settings": {
+        "image": "shopify://shop_images/chx-about-trust.jpg",
+        "media_position": "left",
+        "background": "band",
+        "heading": "<em>Trust</em> matters",
+        "body": "<p>When it comes to health, trust is non-negotiable. That's why every part of ChopinRX is regulated, inspected, and verifiable.</p><p><strong>We are registered with:</strong></p><ul><li><strong>Legitimate pharmacy programs</strong> — our partner pharmacies are licensed in the states they ship to and are inspected against national standards for safety and quality.</li><li><strong>HIPAA</strong> — your health information is handled under federal privacy and security rules.</li></ul><p>Regulation is central to how we work, not a box to tick.</p><p><strong>Our practitioners are individually registered:</strong></p><ul><li>Prescribing clinicians — licensed in the state where they practise</li><li>Dispensing pharmacists — licensed with their state board of pharmacy</li></ul><p>You can verify any of our practitioners directly on their professional registers. We think that's exactly how it should be.</p>"
+      }
+    },
+    "team": {
+      "type": "chopinrx-about-team",
+      "blocks": {
+        "feature_1": {
+          "type": "feature",
+          "settings": { "text": "Overseen by licensed MDs and pharmacists" }
+        },
+        "feature_2": {
+          "type": "feature",
+          "settings": { "text": "Evidence-based protocols, not guesswork" }
+        },
+        "feature_3": {
+          "type": "feature",
+          "settings": { "text": "Licensed and fully regulated" }
+        },
+        "member_1": {
+          "type": "member",
+          "settings": {
+            "image": "shopify://shop_images/chx-about-team.jpg",
+            "name": "Dr Patrick Carroll",
+            "role": "Chief Medical Officer"
+          }
+        },
+        "member_2": {
+          "type": "member",
+          "settings": {
+            "image": "shopify://shop_images/chx-about-team.jpg",
+            "name": "Dr Amara Lewis",
+            "role": "Medical Director"
+          }
+        },
+        "member_3": {
+          "type": "member",
+          "settings": {
+            "image": "shopify://shop_images/chx-about-team.jpg",
+            "name": "Dr Sofia Marin",
+            "role": "Clinical Lead, Hormone Health"
+          }
+        },
+        "member_4": {
+          "type": "member",
+          "settings": {
+            "image": "shopify://shop_images/chx-about-team.jpg",
+            "name": "Daniel Okafor",
+            "role": "Head of Pharmacy"
+          }
+        },
+        "member_5": {
+          "type": "member",
+          "settings": {
+            "image": "shopify://shop_images/chx-about-team.jpg",
+            "name": "Dr Elena Ruiz",
+            "role": "Clinical Lead, Metabolic Health"
+          }
+        }
+      },
+      "block_order": [
+        "feature_1",
+        "feature_2",
+        "feature_3",
+        "member_1",
+        "member_2",
+        "member_3",
+        "member_4",
+        "member_5"
+      ],
+      "settings": {
+        "eyebrow": "Our Team",
+        "heading": "Built by clinicians, for <em>patients</em>.",
+        "body": "<p>Our medical team brings together decades of clinical expertise across emergency medicine, longevity science, and pharmacy leadership — united by a shared commitment to safe, evidence-based care.</p>"
+      }
+    }
+  },
+  "order": [
+    "hero",
+    "intro",
+    "story",
+    "mission",
+    "approach",
+    "stats",
+    "care",
+    "trust",
+    "team"
+  ]
+}

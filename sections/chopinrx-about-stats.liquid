@@ -1,0 +1,195 @@
+{% render 'chopinrx-tokens' %}
+
+<div class="chx-aboutstats">
+  <div class="chx-container">
+    <div class="chx-aboutstats__head">
+      {% render 'chopinrx-section-heading',
+        eyebrow: section.settings.eyebrow,
+        heading: section.settings.heading,
+        class: 'chx-aboutstats__heading'
+      %}
+
+      {%- if section.settings.body != blank -%}
+        <div class="chx-body-lg chx-aboutstats__text">{{ section.settings.body }}</div>
+      {%- endif -%}
+    </div>
+
+    {%- if section.blocks.size > 0 -%}
+      <ul class="chx-aboutstats__list" role="list">
+        {%- for block in section.blocks -%}
+          <li class="chx-aboutstat" {{ block.shopify_attributes }}>
+            <p class="chx-aboutstat__figure">{{ block.settings.figure }}</p>
+            <p class="chx-aboutstat__label">{{ block.settings.label }}</p>
+          </li>
+        {%- endfor -%}
+      </ul>
+    {%- endif -%}
+  </div>
+</div>
+
+{% stylesheet %}
+  .chx-aboutstats {
+    /* The band sits a step lighter than the ink surface, as drawn. Colour goes
+       through the inherited properties so the shared type primitives follow
+       without an equal-specificity contest. */
+    --chx-heading-color: var(--text-on-dark);
+    --chx-body-color: var(--text-on-dark-muted);
+
+    background-color: #1f252c;
+    padding-block: var(--space-16);
+    color: var(--text-on-dark);
+    overflow: clip;
+  }
+
+  .chx-aboutstats > .chx-container {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-10);
+  }
+
+  .chx-aboutstats__head {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-5);
+    text-align: center;
+  }
+
+  .chx-aboutstats__heading {
+    align-items: center;
+    text-align: center;
+  }
+
+  .chx-aboutstats__text > :first-child {
+    margin-block-start: 0;
+  }
+
+  .chx-aboutstats__text > :last-child {
+    margin-block-end: 0;
+  }
+
+  .chx-aboutstats__list {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 152px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .chx-aboutstat {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .chx-aboutstat__figure {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: var(--font-size-big-number);
+    font-weight: 500;
+    line-height: 1;
+    letter-spacing: -0.035em;
+    color: var(--text-on-dark);
+  }
+
+  .chx-aboutstat__label {
+    margin: 0;
+    font-family: var(--font-ui);
+    font-size: var(--font-size-body-large);
+    font-weight: 400;
+    line-height: 1.55;
+    letter-spacing: -0.005em;
+    color: var(--text-on-dark);
+  }
+
+  /* ── Breakpoints ────────────────────────────── */
+  @media screen and (max-width: 1024px) {
+    .chx-aboutstats__list {
+      gap: var(--space-16);
+    }
+  }
+
+  @media screen and (max-width: 767px) {
+    .chx-aboutstats {
+      padding-block: var(--space-10);
+    }
+
+    .chx-aboutstats__list {
+      flex-direction: column;
+      gap: var(--space-8);
+    }
+
+    /* Rich text renders a <p> the theme sizes itself, so the size has to be set
+       on it rather than inherited from the wrapper. */
+    .chx-aboutstats__text,
+    .chx-aboutstats__text p,
+    .chx-aboutstat__label {
+      font-size: var(--font-size-body);
+      line-height: 1.5;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "About stats",
+  "tag": "section",
+  "class": "chopinrx-about-stats-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Care designed around real people."
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "info": "Italic text is rendered in the accent colour.",
+      "default": "Where we stand"
+    },
+    {
+      "type": "richtext",
+      "id": "body",
+      "label": "Body",
+      "default": "<p>Since launching, we’ve grown rapidly: expanding treatments, developing an AI-powered health coach, and building a team dedicated to putting patients first.</p>"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "stat",
+      "name": "Stat",
+      "settings": [
+        {
+          "type": "text",
+          "id": "figure",
+          "label": "Figure",
+          "default": "1M+"
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label",
+          "default": "Patients served"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 4,
+  "presets": [
+    {
+      "name": "About stats",
+      "blocks": [
+        { "type": "stat" },
+        { "type": "stat", "settings": { "figure": "37%", "label": "Prescriptions filled" } },
+        { "type": "stat", "settings": { "figure": "120", "label": "Employees" } }
+      ]
+    }
+  ]
+}
+{% endschema %}
