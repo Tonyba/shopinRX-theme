@@ -83,7 +83,7 @@
 
 {% stylesheet %}
   .chx-reviews {
-    background-color: var(--surface-page);
+    background-color: var(--surface-muted);
     padding-block: var(--section-py-tight);
     overflow: clip;
   }
@@ -243,13 +243,14 @@
       "type": "text",
       "id": "eyebrow",
       "label": "Eyebrow",
-      "default": "Reviews"
+      "default": "4.8/5 on Trust Pilot"
     },
     {
-      "type": "text",
+      "type": "inline_richtext",
       "id": "heading",
       "label": "Heading",
-      "default": "Real people. Real results."
+      "info": "Italic text is rendered in the accent colour.",
+      "default": "More than <em>100,000</em> patients trust our treatment plans"
     },
     {
       "type": "header",

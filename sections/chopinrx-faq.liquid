@@ -180,6 +180,24 @@
     display: block;
   }
 
+  /* Progressive: browsers with ::details-content animate open/close, the rest
+     snap as before. */
+  @supports selector(::details-content) {
+    .chx-faq__item {
+      interpolate-size: allow-keywords;
+    }
+
+    .chx-faq__item::details-content {
+      block-size: 0;
+      overflow: hidden;
+      transition: block-size 0.32s var(--ease-out-cubic, ease), content-visibility 0.32s allow-discrete;
+    }
+
+    .chx-faq__item[open]::details-content {
+      block-size: auto;
+    }
+  }
+
   .chx-faq__answer {
     margin-block-start: var(--space-4);
     font-family: var(--font-ui);
@@ -199,6 +217,12 @@
   }
 
   /* ── Breakpoints ────────────────────────────── */
+  @media (prefers-reduced-motion: reduce) {
+    .chx-faq__item::details-content {
+      transition: none;
+    }
+  }
+
   @media screen and (max-width: 1024px) {
     .chx-faq__grid {
       grid-template-columns: 1fr;

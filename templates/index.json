@@ -191,7 +191,7 @@
             "cta_label": "Explore women's programs",
             "button_color": "#f9299b",
             "button_text_color": "#fcfaf9",
-            "image": "shopify://shop_images/chx-gender-women.png"
+            "image": "shopify://shop_images/chx-gender-women-v2.jpg"
           }
         }
       },
@@ -225,8 +225,8 @@
     "reviews": {
       "type": "chopinrx-reviews",
       "settings": {
-        "eyebrow": "Reviews",
-        "heading": "Real people. Real results.",
+        "eyebrow": "4.8/5 on Trust Pilot",
+        "heading": "More than <em>100,000</em> patients trust our treatment plans",
         "show_trustpilot": true,
         "trustpilot_rating": "Excellent",
         "trustpilot_count": "436 reviews on"
