@@ -3,11 +3,12 @@
   ones paired with the products in the cart first, then other supplements to
   fill the list, each with its own add form.
 
-  Pairings come from each cart product's custom.pairs_with metafield. When the
-  cart products have none, or fewer than the limit, the fallback collection
-  fills the remaining slots; without a fallback collection the whole catalogue
-  is used. The starting point rotates each day so the fill is not always the
-  same few products. Products already in the cart, unavailable products and
+  Related products come from each cart product's custom.pairs_with metafield
+  and from Shopify's own Related products (the Search & Discovery app's
+  metafield). When the cart products have none, or fewer than the limit,
+  random products fill the remaining slots: from the fallback collection, or
+  the whole catalogue when none is set, starting from a point that changes on
+  every render. Products already in the cart, unavailable products and
   prescription products (tagged `rx` or in the Rx collections from the theme
   settings) are never offered, so the Rx / intake flow is untouched.
 
@@ -27,36 +28,50 @@
 
 {%- if settings.cart_upsell_enabled and cart.item_count > 0 -%}
   {%- capture rows -%}
-    {%- comment -%} 1. Products paired with what is in the cart. {%- endcomment -%}
+    {%- comment -%} 1. Products related to what is in the cart. {%- endcomment -%}
     {%- for item in cart.items -%}
-      {%- for pick in item.product.metafields.custom.pairs_with.value -%}
-        {%- if shown >= limit -%}
-          {%- break -%}
-        {%- endif -%}
+      {%- liquid
+        assign paired = item.product.metafields.custom.pairs_with.value
+        assign discovery = item.product.metafields['shopify--discovery--product_recommendation'].related_products.value
+      -%}
+      {%- for source in (1..2) -%}
         {%- liquid
-          assign marker = pick.id | prepend: '|' | append: '|'
-          assign pick_rx = false
-          if pick.tags contains 'rx'
-            assign pick_rx = true
+          if source == 1
+            assign related = paired
+          else
+            assign related = discovery
           endif
-          for c in pick.collections
-            if rx_handles contains c.handle
+        -%}
+        {%- for pick in related -%}
+          {%- if shown >= limit -%}
+            {%- break -%}
+          {%- endif -%}
+          {%- liquid
+            assign marker = pick.id | prepend: '|' | append: '|'
+            assign pick_rx = false
+            if pick.tags contains 'rx'
               assign pick_rx = true
             endif
-          endfor
-          if pick_rx or pick.available == false or cart_ids contains pick.id or seen contains marker
-            continue
-          endif
-          assign seen = seen | append: marker
-          assign shown = shown | plus: 1
-        -%}
-        {%- render 'chopinrx-cart-upsell-item', product: pick -%}
+            for c in pick.collections
+              if rx_handles contains c.handle
+                assign pick_rx = true
+              endif
+            endfor
+            if pick_rx or pick.available == false or cart_ids contains pick.id or seen contains marker
+              continue
+            endif
+            assign seen = seen | append: marker
+            assign shown = shown | plus: 1
+          -%}
+          {%- render 'chopinrx-cart-upsell-item', product: pick -%}
+        {%- endfor -%}
       {%- endfor -%}
     {%- endfor -%}
 
     {%- comment -%}
-      2. Fill from the fallback collection, or the whole catalogue, starting
-      at a point that moves every day so the picks vary.
+      2. Random fill from the fallback collection, or the whole catalogue.
+      Liquid has no random filter, so the start point is derived from the
+      clock and the cart, which changes on every render of the drawer.
     {%- endcomment -%}
     {%- if shown < limit -%}
       {%- liquid
@@ -69,7 +84,8 @@
         endif
         assign start = 0
         if pool_size > 0
-          assign start = 'now' | date: '%j' | plus: 0 | modulo: pool_size
+          assign seed = 'now' | date: '%s' | plus: cart.total_price | plus: cart.item_count
+          assign start = seed | modulo: pool_size
         endif
       -%}
       {%- for pass in (1..2) -%}
