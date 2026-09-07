@@ -35,27 +35,6 @@
           "settings": {
             "heading": "Description",
             "source": "description",
-            "metafield_key": "",
-            "content": "",
-            "open": false
-          }
-        },
-        "detail_how_to_take": {
-          "type": "detail",
-          "settings": {
-            "heading": "How to take",
-            "source": "metafield",
-            "metafield_key": "how_to_take",
-            "content": "",
-            "open": false
-          }
-        },
-        "detail_side_effects": {
-          "type": "detail",
-          "settings": {
-            "heading": "Potential common side effects",
-            "source": "metafield",
-            "metafield_key": "side_effects",
             "content": "",
             "open": false
           }
@@ -65,9 +44,7 @@
         "feature_1",
         "feature_2",
         "feature_3",
-        "detail_description",
-        "detail_how_to_take",
-        "detail_side_effects"
+        "detail_description"
       ],
       "settings": {
         "eyebrow": "Treatment",
@@ -132,8 +109,8 @@
         "mobile_media_position": "bottom",
         "background": "page",
         "eyebrow": "{{ product.metafields.custom.benefits_eyebrow.value }}",
-        "heading": "What are the <em>benefits</em> of [product]?",
-        "body": "{{ product.metafields.custom.benefits_body | metafield_tag }}"
+        "heading": "{{ product.metafields.custom.benefits_heading.value }}",
+        "body": "<p>{{ product.metafields.custom.benefits_body.value }}</p>"
       }
     },
     "why_choose": {
@@ -145,6 +122,14 @@
             "icon": "icon-flask",
             "title": "Cellular Energy Support",
             "text": "Targets underlying cellular pathways involved in energy production and mitochondrial function."
+          }
+        },
+        "benefit_2": {
+          "type": "benefit",
+          "settings": {
+            "icon": "icon-flask",
+            "title": "Recovery & Vitality",
+            "text": "Designed to support recovery, sleep quality, and day-to-day vitality under provider guidance."
           }
         },
         "benefit_3": {
@@ -162,25 +147,17 @@
             "title": "Ongoing Support",
             "text": "Ongoing provider access is available to adjust your protocol as your goals evolve."
           }
-        },
-        "benefit_cAQHLV": {
-          "type": "benefit",
-          "settings": {
-            "icon": "icon-flask",
-            "title": "Provider-Guided Care",
-            "text": "An independent licensed provider reviews your case before any treatment decision is made."
-          }
         }
       },
       "block_order": [
         "benefit_1",
+        "benefit_2",
         "benefit_3",
-        "benefit_4",
-        "benefit_cAQHLV"
+        "benefit_4"
       ],
       "settings": {
         "eyebrow": "{{ product.metafields.custom.why_eyebrow.value }}",
-        "heading": ""
+        "heading": "{{ product.metafields.custom.why_heading.value }}"
       }
     },
     "how_it_works": {
@@ -217,8 +194,8 @@
         "step_3"
       ],
       "settings": {
-        "eyebrow": "How it works",
-        "heading": "How [product] works"
+        "eyebrow": "{{ product.metafields.custom.how_eyebrow.value }}",
+        "heading": "{{ product.metafields.custom.how_heading.value }}"
       }
     },
     "personalized_care": {
@@ -308,10 +285,10 @@
         "test_4"
       ],
       "settings": {
-        "image": "shopify://shop_images/chx-lab-testing.jpg",
+        "image": "{{ product.metafields.custom.lab_image.value }}",
         "media_position": "right",
-        "eyebrow": "Quality & Testing",
-        "heading": "Always lab <em>tested</em> for quality & consistency"
+        "eyebrow": "{{ product.metafields.custom.lab_eyebrow.value }}",
+        "heading": "{{ product.metafields.custom.lab_heading.value }}"
       }
     },
     "reviews": {
@@ -485,8 +462,8 @@
         "question_5"
       ],
       "settings": {
-        "eyebrow": "Have questions?",
-        "heading": "Frequently asked <em>questions</em>",
+        "eyebrow": "{{ product.metafields.custom.faq_eyebrow.value }}",
+        "heading": "{{ product.metafields.custom.faq_heading.value }}",
         "cta_label": "Get Started",
         "cta_url": "#pricing"
       }
@@ -499,7 +476,6 @@
         "collections": [
           "program"
         ],
-        "primary_collection": "",
         "products_count": 8,
         "price_prefix": "From",
         "price_unit": "/mo",
