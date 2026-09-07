@@ -117,11 +117,15 @@
         },
         "seal_1": {
           "type": "seal",
-          "settings": {}
+          "settings": {
+            "image": "shopify://shop_images/27549383_1_1.png"
+          }
         },
         "seal_2": {
           "type": "seal",
-          "settings": {}
+          "settings": {
+            "image": "shopify://shop_images/Vector.png"
+          }
         }
       },
       "block_order": [
