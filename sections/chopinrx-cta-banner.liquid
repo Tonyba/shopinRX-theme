@@ -4,6 +4,9 @@
   assign image = section.settings.image
   assign arrow_icon = 'icon-arrow-right.svg' | inline_asset_content
   assign check_icon = 'icon-check-accent.svg' | inline_asset_content
+
+  # On a product template the heading can name the product with [product].
+  assign heading = section.settings.heading | replace: '[product]', product.title
 %}
 
 <div class="chx-ctabanner">
@@ -28,8 +31,8 @@
     {%- endif -%}
 
     <div class="chx-ctabanner__content">
-      {%- if section.settings.heading != blank -%}
-        <h2 class="chx-h1 chx-ctabanner__title">{{ section.settings.heading }}</h2>
+      {%- if heading != blank -%}
+        <h2 class="chx-h1 chx-ctabanner__title">{{ heading }}</h2>
       {%- endif -%}
 
       {%- assign features = section.blocks | where: 'type', 'feature' -%}

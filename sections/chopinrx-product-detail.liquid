@@ -1,0 +1,770 @@
+{% render 'chopinrx-tokens' %}
+
+{% liquid
+  assign arrow_icon = 'icon-arrow-right.svg' | inline_asset_content | replace: '#FCFAF9', 'currentColor'
+  assign chevron_left = 'icon-chevron-left.svg' | inline_asset_content
+  assign chevron_right = 'icon-chevron-right.svg' | inline_asset_content
+  assign check_icon = 'icon-check-circle.svg' | inline_asset_content
+  assign slash_icon = 'icon-breadcrumb-slash.svg' | inline_asset_content
+  assign plus_icon = 'icon-faq-plus.svg' | inline_asset_content | replace: '#FCFAF9', 'currentColor'
+  assign minus_icon = 'icon-faq-minus.svg' | inline_asset_content | replace: '#FCFAF9', 'currentColor'
+
+  assign variant = product.selected_or_first_available_variant
+  assign unit = section.settings.price_unit
+
+  # The eyebrow is the product's goal, the summary its one-line pitch. Both
+  # come from product metafields so every treatment reads its own copy.
+  assign eyebrow = product.metafields.custom.goal.value
+  if eyebrow == blank
+    assign eyebrow = section.settings.eyebrow
+  endif
+
+  assign summary = product.metafields.custom.summary.value
+  if summary == blank
+    assign summary = product.description | strip_html | truncatewords: 20
+  endif
+
+  assign highlights = product.metafields.custom.highlights.value
+
+  # Breadcrumbs: Home / type collection / goal collection / product. The type
+  # collections are the catalogue roots (program, treatment); the goal is the
+  # first collection that is not one of them.
+  assign type_handles = section.settings.type_collections | downcase | replace: ' ', '' | split: ','
+  assign type_collection = blank
+  assign goal_collection = blank
+  for c in product.collections
+    if type_handles contains c.handle
+      if type_collection == blank
+        assign type_collection = c
+      endif
+    elsif goal_collection == blank
+      assign goal_collection = c
+    endif
+  endfor
+
+  assign has_media = false
+  if product.media.size > 0
+    assign has_media = true
+  endif
+%}
+
+<div class="chx-pdp">
+  <div class="chx-container chx-pdp__inner">
+    <nav class="chx-breadcrumbs chx-pdp__breadcrumbs" aria-label="Breadcrumb">
+      <ol class="chx-breadcrumbs__list" role="list">
+        <li class="chx-breadcrumbs__item">
+          <a class="chx-breadcrumbs__link" href="{{ routes.root_url }}">{{ section.settings.breadcrumb_home }}</a>
+        </li>
+        {%- if type_collection != blank -%}
+          <li class="chx-breadcrumbs__item">
+            <span class="chx-breadcrumbs__sep" aria-hidden="true">{{ slash_icon }}</span>
+            <a class="chx-breadcrumbs__link" href="{{ type_collection.url }}">{{ type_collection.title }}</a>
+          </li>
+        {%- endif -%}
+        {%- if goal_collection != blank -%}
+          <li class="chx-breadcrumbs__item">
+            <span class="chx-breadcrumbs__sep" aria-hidden="true">{{ slash_icon }}</span>
+            <a class="chx-breadcrumbs__link" href="{{ goal_collection.url }}">{{ goal_collection.title }}</a>
+          </li>
+        {%- endif -%}
+        <li class="chx-breadcrumbs__item">
+          <span class="chx-breadcrumbs__sep" aria-hidden="true">{{ slash_icon }}</span>
+          <span class="chx-breadcrumbs__current" aria-current="page">{{ product.title }}</span>
+        </li>
+      </ol>
+    </nav>
+
+    <div class="chx-pdp__body">
+      <div class="chx-pdp__gallery" data-chx-gallery>
+        <div class="chx-pdp__stage">
+          <div class="chx-pdp__viewport" data-chx-gallery-viewport>
+            <ul class="chx-pdp__slides" role="list">
+              {%- if has_media -%}
+                {%- for media in product.media -%}
+                  <li class="chx-pdp__slide">
+                    <img
+                      src="{{ media.preview_image | image_url: width: 1400 }}"
+                      srcset="
+                        {{ media.preview_image | image_url: width: 500 }} 500w,
+                        {{ media.preview_image | image_url: width: 800 }} 800w,
+                        {{ media.preview_image | image_url: width: 1100 }} 1100w,
+                        {{ media.preview_image | image_url: width: 1400 }} 1400w
+                      "
+                      sizes="(max-width: 1024px) 100vw, 694px"
+                      width="{{ media.preview_image.width }}"
+                      height="{{ media.preview_image.height }}"
+                      alt="{{ media.alt | default: product.title | escape }}"
+                      {% if forloop.first %}
+                        loading="eager"
+                        fetchpriority="high"
+                      {% else %}
+                        loading="lazy"
+                      {% endif %}
+                    >
+                  </li>
+                {%- endfor -%}
+              {%- else -%}
+                <li class="chx-pdp__slide chx-pdp__slide--empty">
+                  <span class="chx-pdp__placeholder">{{ section.settings.placeholder_label }}</span>
+                </li>
+              {%- endif -%}
+            </ul>
+          </div>
+
+          {%- if product.media.size > 1 -%}
+            <button
+              type="button"
+              class="chx-pdp__arrow chx-pdp__arrow--prev"
+              aria-label="{{ 'content.pagination.previous' | t }}"
+              data-chx-gallery-prev
+            >
+              <span class="chx-pdp__arrow-icon" aria-hidden="true">{{ chevron_left }}</span>
+            </button>
+            <button
+              type="button"
+              class="chx-pdp__arrow chx-pdp__arrow--next"
+              aria-label="{{ 'content.pagination.next' | t }}"
+              data-chx-gallery-next
+            >
+              <span class="chx-pdp__arrow-icon" aria-hidden="true">{{ chevron_right }}</span>
+            </button>
+          {%- endif -%}
+        </div>
+
+        {%- if product.media.size > 1 -%}
+          <ul class="chx-pdp__thumbs" role="list">
+            {%- for media in product.media -%}
+              <li class="chx-pdp__thumb">
+                <button
+                  type="button"
+                  class="chx-pdp__thumb-button"
+                  aria-label="{{ media.alt | default: product.title | escape }}"
+                  {% if forloop.first %}
+                    aria-current="true"
+                  {% endif %}
+                  data-chx-gallery-thumb="{{ forloop.index0 }}"
+                >
+                  <img
+                    src="{{ media.preview_image | image_url: width: 200 }}"
+                    srcset="
+                      {{ media.preview_image | image_url: width: 200 }} 200w,
+                      {{ media.preview_image | image_url: width: 400 }} 400w
+                    "
+                    sizes="100px"
+                    width="{{ media.preview_image.width }}"
+                    height="{{ media.preview_image.height }}"
+                    alt=""
+                    loading="lazy"
+                  >
+                </button>
+              </li>
+            {%- endfor -%}
+          </ul>
+        {%- endif -%}
+      </div>
+
+      <div class="chx-pdp__content">
+        {% render 'chopinrx-section-heading',
+          eyebrow: eyebrow,
+          heading: product.title,
+          heading_tag: 'h1',
+          class: 'chx-pdp__heading'
+        %}
+
+        <div class="chx-pdp__price">
+          <span class="chx-pdp__price-current">
+            <span class="chx-pdp__price-figure">{{ variant.price | money_without_trailing_zeros }}</span>
+            {%- if unit != blank -%}
+              <span class="chx-pdp__price-unit">{{ unit }}</span>
+            {%- endif -%}
+          </span>
+          {%- if variant.compare_at_price > variant.price -%}
+            <s class="chx-pdp__price-compare">
+              {{- variant.compare_at_price | money_without_trailing_zeros }} {{ unit -}}
+            </s>
+          {%- endif -%}
+        </div>
+
+        {%- if summary != blank -%}
+          <p class="chx-body chx-pdp__summary">{{ summary }}</p>
+        {%- endif -%}
+
+        {%- if highlights.size > 0 -%}
+          <ul class="chx-checklist chx-pdp__features" role="list">
+            {%- for line in highlights -%}
+              <li class="chx-checklist__item">
+                <span class="chx-checklist__icon" aria-hidden="true">{{ check_icon }}</span>
+                <span class="chx-checklist__text">{{ line }}</span>
+              </li>
+            {%- endfor -%}
+          </ul>
+        {%- else -%}
+          {%- assign features = section.blocks | where: 'type', 'feature' -%}
+          {%- if features.size > 0 -%}
+            <ul class="chx-checklist chx-pdp__features" role="list">
+              {%- for block in features -%}
+                <li class="chx-checklist__item" {{ block.shopify_attributes }}>
+                  <span class="chx-checklist__icon" aria-hidden="true">{{ check_icon }}</span>
+                  <span class="chx-checklist__text">{{ block.settings.text }}</span>
+                </li>
+              {%- endfor -%}
+            </ul>
+          {%- endif -%}
+        {%- endif -%}
+
+        {%- if section.settings.cta_label != blank -%}
+          <a class="chx-btn chx-btn--accent chx-pdp__cta" href="#{{ section.settings.cta_anchor | default: 'pricing' }}">
+            <span>{{ section.settings.cta_label }}</span>
+            <span class="chx-btn__icon" aria-hidden="true">{{ arrow_icon }}</span>
+          </a>
+        {%- endif -%}
+
+        {%- if section.settings.show_trustpilot -%}
+          {% render 'chopinrx-trustpilot',
+            variant: 'product',
+            ink: true,
+            rating: section.settings.trustpilot_rating,
+            score: section.settings.trustpilot_score,
+            count: section.settings.trustpilot_count,
+            url: section.settings.trustpilot_url
+          %}
+        {%- endif -%}
+
+        {%- assign details = section.blocks | where: 'type', 'detail' -%}
+        {%- if details.size > 0 -%}
+          <hr class="chx-pdp__divider">
+
+          <div class="chx-faq__list chx-pdp__details">
+            {%- for block in details -%}
+              {%- liquid
+                assign content = blank
+                if block.settings.source == 'description'
+                  assign content = product.description
+                elsif block.settings.source == 'metafield' and block.settings.metafield_key != blank
+                  assign key = block.settings.metafield_key | strip
+                  assign field = product.metafields.custom[key]
+                  if field != blank
+                    assign content = field | metafield_tag
+                  endif
+                endif
+                if content == blank
+                  assign content = block.settings.content
+                endif
+              -%}
+              {%- if content != blank -%}
+                <details
+                  class="chx-faq__item"
+                  {% if block.settings.open %}
+                    open
+                  {% endif %}
+                  {{ block.shopify_attributes }}
+                >
+                  <summary class="chx-faq__question">
+                    <span class="chx-faq__question-text">{{ block.settings.heading }}</span>
+                    <span class="chx-faq__toggle" aria-hidden="true">
+                      <span class="chx-faq__toggle-icon chx-faq__toggle-icon--closed">{{ plus_icon }}</span>
+                      <span class="chx-faq__toggle-icon chx-faq__toggle-icon--open">{{ minus_icon }}</span>
+                    </span>
+                  </summary>
+                  <div class="chx-faq__answer">{{ content }}</div>
+                </details>
+              {%- endif -%}
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</div>
+
+{%- if product.media.size > 1 -%}
+  <script type="module">
+    import EmblaCarousel from '{{ 'embla-carousel.js' | asset_url }}';
+    import { initGalleries } from '{{ 'chopinrx-product-gallery.js' | asset_url }}';
+    initGalleries(EmblaCarousel);
+  </script>
+{%- endif -%}
+
+{% stylesheet %}
+  .chx-pdp {
+    background-color: var(--surface-page);
+    padding-block: 48px;
+  }
+
+  .chx-pdp__inner {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+  }
+
+  /* Ink breadcrumbs on paper: the link hover follows the page, not the hero. */
+  .chx-pdp .chx-breadcrumbs__link:hover {
+    color: var(--text-heading);
+  }
+
+  .chx-pdp__body {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: center;
+    gap: var(--space-16);
+  }
+
+  /* ── Gallery ────────────────────────────────── */
+  .chx-pdp__gallery {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    min-width: 0;
+  }
+
+  .chx-pdp__stage {
+    position: relative;
+    aspect-ratio: 694 / 691;
+    border-radius: 6px;
+    background-color: var(--surface-well);
+    overflow: clip;
+  }
+
+  .chx-pdp__viewport {
+    height: 100%;
+    overflow: hidden;
+  }
+
+  .chx-pdp__slides {
+    display: flex;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    touch-action: pan-y pinch-zoom;
+  }
+
+  .chx-pdp__slide {
+    flex: 0 0 100%;
+    min-width: 0;
+    height: 100%;
+  }
+
+  .chx-pdp__slide img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .chx-pdp__slide--empty {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .chx-pdp__placeholder {
+    font-family: var(--font-ui);
+    font-size: var(--font-size-label-tag);
+    font-weight: 600;
+    letter-spacing: 0.005em;
+    color: var(--text-muted);
+  }
+
+  /* Ink discs 35px in from either edge, centred on the photograph. */
+  .chx-pdp__arrow {
+    position: absolute;
+    top: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 60px;
+    height: 60px;
+    padding: 0;
+    border: 0;
+    border-radius: var(--radius-pill);
+    background-color: var(--surface-dark);
+    color: var(--icon-on-dark);
+    transform: translateY(-50%);
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+  }
+
+  .chx-pdp__arrow:hover {
+    background-color: var(--action-primary-bg-hover);
+  }
+
+  .chx-pdp__arrow--prev {
+    left: 35px;
+  }
+
+  .chx-pdp__arrow--next {
+    right: 35px;
+  }
+
+  .chx-pdp__arrow-icon {
+    --icon-stroke-width: 1.75px;
+
+    display: block;
+    width: 8px;
+    height: 12px;
+  }
+
+  .chx-pdp__arrow-icon svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  .chx-pdp__thumbs {
+    display: flex;
+    gap: 7.353px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .chx-pdp__thumbs::-webkit-scrollbar {
+    display: none;
+  }
+
+  .chx-pdp__thumb {
+    flex: 0 0 100px;
+    min-width: 0;
+  }
+
+  /* The photograph on stage is not repeated in the strip. */
+  .chx-pdp__thumb:has(> [aria-current='true']) {
+    display: none;
+  }
+
+  .chx-pdp__thumb-button {
+    display: block;
+    width: 100%;
+    height: 100px;
+    padding: 0;
+    border: 0;
+    border-radius: 4.412px;
+    background-color: #c9c9c9;
+    overflow: clip;
+    cursor: pointer;
+  }
+
+  .chx-pdp__thumb-button img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  /* ── Content ────────────────────────────────── */
+  .chx-pdp__content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-6);
+    min-width: 0;
+  }
+
+  /* The eyebrow is set in ink here rather than the muted grey of a section. */
+  .chx-pdp__heading .chx-eyebrow__text {
+    color: var(--text-heading);
+  }
+
+  .chx-pdp__price {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+    white-space: nowrap;
+  }
+
+  .chx-pdp__price-current {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+  }
+
+  .chx-pdp__price-figure {
+    font-family: var(--font-display);
+    font-size: var(--font-size-h2);
+    font-weight: 500;
+    line-height: 1.04;
+    letter-spacing: -0.035em;
+    font-variant-numeric: tabular-nums;
+    color: var(--text-heading);
+  }
+
+  .chx-pdp__price-unit,
+  .chx-pdp__price-compare {
+    font-family: var(--font-ui);
+    font-size: var(--font-size-body-large);
+    font-weight: 400;
+    line-height: 1.55;
+    letter-spacing: -0.005em;
+    color: var(--text-muted);
+  }
+
+  .chx-pdp__summary {
+    color: var(--text-body);
+  }
+
+  .chx-pdp .chx-checklist__text {
+    font-size: var(--font-size-body);
+    line-height: 1.5;
+  }
+
+  .chx-pdp__cta {
+    width: 298px;
+  }
+
+  .chx-pdp__divider {
+    width: 100%;
+    height: var(--border-w);
+    margin: 0;
+    border: 0;
+    background-color: var(--border-hairline);
+  }
+
+  .chx-pdp__details {
+    width: 100%;
+    gap: var(--space-3);
+  }
+
+  .chx-pdp .chx-faq__item {
+    padding: var(--space-3) var(--space-6);
+  }
+
+  /* ── Breakpoints ────────────────────────────── */
+  @media screen and (max-width: 1024px) {
+    .chx-pdp__body {
+      grid-template-columns: minmax(0, 1fr);
+      gap: var(--space-6);
+    }
+  }
+
+  @media screen and (max-width: 767px) {
+    .chx-pdp {
+      padding-block: var(--space-10);
+    }
+
+    .chx-pdp .chx-breadcrumbs__list {
+      flex-wrap: wrap;
+    }
+
+    .chx-pdp .chx-breadcrumbs__link,
+    .chx-pdp .chx-breadcrumbs__current {
+      font-size: var(--font-size-body-small);
+      line-height: 1.43;
+    }
+
+    .chx-pdp__stage {
+      aspect-ratio: 359 / 380;
+    }
+
+    .chx-pdp__arrow {
+      width: 26.471px;
+      height: 26.471px;
+    }
+
+    .chx-pdp__arrow--prev {
+      left: 20px;
+    }
+
+    .chx-pdp__arrow--next {
+      right: 20px;
+    }
+
+    .chx-pdp__arrow-icon {
+      width: 6px;
+      height: 9px;
+    }
+
+    .chx-pdp__thumb {
+      flex: 1 1 0;
+    }
+
+    .chx-pdp__price,
+    .chx-pdp__price-current {
+      align-items: flex-start;
+    }
+
+    .chx-pdp__cta {
+      width: 100%;
+    }
+
+    .chx-pdp__content .chx-trustpilot {
+      align-self: center;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Product detail",
+  "tag": "section",
+  "class": "chopinrx-product-detail-section",
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Reads the product's custom.goal (eyebrow), custom.summary (line under the price) and custom.highlights (check list) metafields, falling back to the settings below."
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow fallback",
+      "default": "Treatment"
+    },
+    {
+      "type": "text",
+      "id": "price_unit",
+      "label": "Price unit",
+      "default": "/mo"
+    },
+    {
+      "type": "text",
+      "id": "placeholder_label",
+      "label": "Placeholder label",
+      "info": "Shown when a product has no image.",
+      "default": "Vial · placeholder"
+    },
+    {
+      "type": "header",
+      "content": "Breadcrumbs"
+    },
+    {
+      "type": "text",
+      "id": "breadcrumb_home",
+      "label": "Home label",
+      "default": "Home"
+    },
+    {
+      "type": "text",
+      "id": "type_collections",
+      "label": "Catalogue collections",
+      "info": "Comma-separated handles. The first of these the product belongs to is the second crumb; the product's first other collection is the third.",
+      "default": "program, treatment"
+    },
+    {
+      "type": "header",
+      "content": "Button"
+    },
+    {
+      "type": "text",
+      "id": "cta_label",
+      "label": "Button label",
+      "default": "Start intake"
+    },
+    {
+      "type": "text",
+      "id": "cta_anchor",
+      "label": "Scroll target id",
+      "info": "The button scrolls to the element with this id, e.g. the pricing section.",
+      "default": "pricing"
+    },
+    {
+      "type": "header",
+      "content": "Trustpilot"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_trustpilot",
+      "label": "Show Trustpilot strip",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "trustpilot_rating",
+      "label": "Rating word",
+      "default": "Excellent"
+    },
+    {
+      "type": "text",
+      "id": "trustpilot_score",
+      "label": "Score",
+      "default": "4.6"
+    },
+    {
+      "type": "text",
+      "id": "trustpilot_count",
+      "label": "Review count",
+      "default": "436 reviews"
+    },
+    {
+      "type": "url",
+      "id": "trustpilot_url",
+      "label": "Trustpilot link"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "feature",
+      "name": "Check line (fallback)",
+      "settings": [
+        {
+          "type": "paragraph",
+          "content": "Only shown when the product has no custom.highlights metafield."
+        },
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Text",
+          "default": "Plans tailored to your goals"
+        }
+      ]
+    },
+    {
+      "type": "detail",
+      "name": "Detail row",
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "default": "Description"
+        },
+        {
+          "type": "select",
+          "id": "source",
+          "label": "Content",
+          "options": [
+            { "value": "description", "label": "Product description" },
+            { "value": "metafield", "label": "Product metafield" },
+            { "value": "custom", "label": "Text below" }
+          ],
+          "default": "description"
+        },
+        {
+          "type": "text",
+          "id": "metafield_key",
+          "label": "Metafield key",
+          "info": "Key inside the custom namespace, e.g. how_to_take.",
+          "visible_if": "{{ block.settings.source == 'metafield' }}"
+        },
+        {
+          "type": "richtext",
+          "id": "content",
+          "label": "Text",
+          "info": "Used when the chosen source is empty."
+        },
+        {
+          "type": "checkbox",
+          "id": "open",
+          "label": "Open by default",
+          "default": false
+        }
+      ]
+    }
+  ],
+  "max_blocks": 12,
+  "presets": [
+    {
+      "name": "Product detail",
+      "blocks": [
+        { "type": "feature", "settings": { "text": "Lose weight with doctor-trusted treatment plans" } },
+        { "type": "feature", "settings": { "text": "Plans tailored to your goals" } },
+        { "type": "feature", "settings": { "text": "Access to 24/7 messaging, 100% online" } },
+        { "type": "detail", "settings": { "heading": "Description", "source": "description" } },
+        { "type": "detail", "settings": { "heading": "How to take", "source": "metafield", "metafield_key": "how_to_take" } },
+        { "type": "detail", "settings": { "heading": "Potential common side effects", "source": "metafield", "metafield_key": "side_effects" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

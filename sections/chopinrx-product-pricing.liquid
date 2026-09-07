@@ -1,0 +1,613 @@
+{% render 'chopinrx-tokens' %}
+
+{% liquid
+  assign arrow_icon = 'icon-arrow-right.svg' | inline_asset_content | replace: '#FCFAF9', 'currentColor'
+  assign check_icon = 'icon-check-circle.svg' | inline_asset_content
+  assign plan_icon = 'icon-target.svg' | inline_asset_content
+
+  # On a product template the copy can name the product with [product].
+  assign eyebrow = section.settings.eyebrow | replace: '[product]', product.title
+  assign heading = section.settings.heading | replace: '[product]', product.title
+
+  # Every selling plan on the product becomes a segment of the billing toggle.
+  # The first plan is selected on load and the cards render its prices.
+  assign default_plan = blank
+  assign plan_count = 0
+  for group in product.selling_plan_groups
+    for plan in group.selling_plans
+      if default_plan == blank
+        assign default_plan = plan
+      endif
+      assign plan_count = plan_count | plus: 1
+    endfor
+  endfor
+
+  assign includes = product.metafields.custom.plan_includes.value
+  assign fallback_features = section.blocks | where: 'type', 'feature'
+
+  assign unit = section.settings.price_unit
+%}
+
+<div class="chx-pricing" id="{{ section.settings.anchor_id | default: 'pricing' }}" data-chx-pricing>
+  <div class="chx-container chx-pricing__inner">
+    {% render 'chopinrx-section-heading', eyebrow: eyebrow, heading: heading, centered: true %}
+
+    {%- if plan_count > 1 -%}
+      <div class="chx-segmented chx-pricing__toggle" role="radiogroup" aria-label="{{ section.settings.toggle_label | escape }}">
+        {%- for group in product.selling_plan_groups -%}
+          {%- for plan in group.selling_plans -%}
+            {%- liquid
+              # The billing interval names the segment. Seal stores it as the
+              # plan's option value (month, week...), so that is read first and
+              # the plan name is the fallback.
+              assign interval = plan.options[0].value | downcase
+              assign label = plan.name
+              assign first_label = section.settings.first_label | replace: '[interval]', interval
+              assign short = interval
+              if interval contains 'week'
+                assign label = section.settings.weekly_label
+                assign short = 'wk.'
+              elsif interval contains 'month'
+                assign label = section.settings.monthly_label
+                assign short = 'mo.'
+              elsif interval contains 'year'
+                assign label = section.settings.yearly_label
+                assign short = 'yr.'
+              elsif interval contains 'day'
+                assign label = section.settings.daily_label
+                assign short = 'day'
+              endif
+              assign after_suffix = section.settings.after_label | replace: '[interval]', short
+            -%}
+            <button
+              type="button"
+              class="chx-segmented__item"
+              role="radio"
+              aria-checked="{% if plan.id == default_plan.id %}true{% else %}false{% endif %}"
+              tabindex="{% if plan.id == default_plan.id %}0{% else %}-1{% endif %}"
+              data-chx-plan="{{ plan.id }}"
+              data-chx-plan-first-label="{{ first_label | escape }}"
+              data-chx-plan-after-suffix="{{ after_suffix | escape }}"
+            >
+              {{- label | default: plan.name -}}
+            </button>
+          {%- endfor -%}
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+
+    <ul class="chx-pricing__cards" role="list">
+      {%- for variant in product.variants -%}
+        {%- liquid
+          assign title = variant.title
+          if title == 'Default Title'
+            assign title = product.title
+          endif
+
+          # Per-plan prices for this variant: the first delivery and the price
+          # every delivery after it, so the toggle can swap them without a
+          # round trip.
+          assign first_price = variant.price
+          assign after_price = variant.price
+          assign first_label = unit
+          assign after_line = blank
+
+          capture prices_json
+            echo '{'
+            for allocation in variant.selling_plan_allocations
+              assign plan = allocation.selling_plan
+              assign alloc_first = allocation.price
+              assign alloc_after = allocation.price
+              if allocation.price_adjustments.size > 0
+                assign alloc_first = allocation.price_adjustments.first.price
+                assign alloc_after = allocation.price_adjustments.last.price
+              endif
+              echo plan.id | json
+              echo ':{"first":'
+              echo alloc_first | money_without_trailing_zeros | json
+              echo ',"after":'
+              echo alloc_after | money_without_trailing_zeros | json
+              echo '}'
+              unless forloop.last
+                echo ','
+              endunless
+
+              if plan.id == default_plan.id
+                assign first_price = alloc_first
+                assign after_price = alloc_after
+                assign interval = plan.options[0].value | downcase
+                assign short = interval
+                if interval contains 'week'
+                  assign short = 'wk.'
+                elsif interval contains 'month'
+                  assign short = 'mo.'
+                elsif interval contains 'year'
+                  assign short = 'yr.'
+                elsif interval contains 'day'
+                  assign short = 'day'
+                endif
+                assign first_label = section.settings.first_label | replace: '[interval]', interval
+                assign after_suffix = section.settings.after_label | replace: '[interval]', short
+                assign after_line = after_price | money_without_trailing_zeros | append: after_suffix
+              endif
+            endfor
+            echo '}'
+          endcapture
+
+          assign form_id = 'chx-plan-form-' | append: section.id | append: '-' | append: variant.id
+          assign variant_media = variant.featured_media.preview_image | default: product.featured_media.preview_image
+        -%}
+        <li class="chx-plan" data-chx-plan-card data-chx-prices="{{ prices_json | strip | escape }}">
+          <product-form-component
+            data-section-id="{{ section.id }}"
+            data-product-id="{{ product.id }}"
+            data-product-url="{{ product.url }}"
+            on:submit="/handleSubmit"
+            data-quantity-default="1"
+            data-quantity-error-max="{{ 'products.product.quantity_error_max' | t }}"
+          >
+            <div class="visually-hidden" aria-live="assertive" role="status" aria-atomic="true" ref="liveRegion"></div>
+
+            {%- form 'product', product, id: form_id, data-type: 'add-to-cart-form', class: 'chx-plan__form' -%}
+              <input type="hidden" name="id" ref="variantId" value="{{ variant.id }}">
+              {%- if default_plan != blank -%}
+                <input type="hidden" name="selling_plan" value="{{ default_plan.id }}" data-chx-plan-input>
+              {%- endif -%}
+
+              <div class="chx-plan__header">
+                <div class="chx-plan__identity">
+                  <span class="chx-plan__icon" aria-hidden="true">{{ plan_icon }}</span>
+                  <h3 class="chx-h4 chx-plan__title">{{ title }}</h3>
+                </div>
+                <div class="chx-plan__pricing">
+                  <p class="chx-plan__price-row">
+                    <span class="chx-plan__price" data-chx-plan-price>{{ first_price | money_without_trailing_zeros }}</span>
+                    <span class="chx-plan__first" data-chx-plan-first-label>{{ first_label }}</span>
+                  </p>
+                  {%- if after_line != blank -%}
+                    <p class="chx-plan__after" data-chx-plan-after>{{ after_line }}</p>
+                  {%- endif -%}
+                </div>
+              </div>
+
+              <hr class="chx-plan__divider">
+
+              <div class="chx-plan__inclusions">
+                {%- if section.settings.includes_heading != blank -%}
+                  <p class="chx-plan__inclusions-title">{{ section.settings.includes_heading }}</p>
+                {%- endif -%}
+                {%- if includes.size > 0 -%}
+                  <ul class="chx-plan__features" role="list">
+                    {%- for line in includes -%}
+                      <li class="chx-plan__feature">
+                        <span class="chx-plan__feature-icon" aria-hidden="true">{{ check_icon }}</span>
+                        <span class="chx-plan__feature-text">{{ line }}</span>
+                      </li>
+                    {%- endfor -%}
+                  </ul>
+                {%- elsif fallback_features.size > 0 -%}
+                  <ul class="chx-plan__features" role="list">
+                    {%- for block in fallback_features -%}
+                      <li class="chx-plan__feature" {{ block.shopify_attributes }}>
+                        <span class="chx-plan__feature-icon" aria-hidden="true">{{ check_icon }}</span>
+                        <span class="chx-plan__feature-text">{{ block.settings.text }}</span>
+                      </li>
+                    {%- endfor -%}
+                  </ul>
+                {%- endif -%}
+              </div>
+
+              <span class="product-form-text__error hidden" ref="addToCartTextError">
+                <span class="svg-wrapper">{{- 'icon-error.svg' | inline_asset_content -}}</span>
+              </span>
+
+              <add-to-cart-component
+                ref="addToCartButtonContainer"
+                data-product-variant-media="{{ variant_media | image_url: width: 100 }}"
+                data-add-to-cart-animation="{{ settings.add_to_cart_animation }}"
+              >
+                <button
+                  type="submit"
+                  name="add"
+                  ref="addToCartButton"
+                  on:click="/handleClick"
+                  class="chx-btn chx-btn--accent chx-plan__cta"
+                  {% unless variant.available %}
+                    disabled
+                  {% endunless %}
+                >
+                  <span>
+                    {%- if variant.available -%}
+                      {{ section.settings.cta_label }}
+                    {%- else -%}
+                      {{ 'products.product.sold_out' | t }}
+                    {%- endif -%}
+                  </span>
+                  <span class="chx-btn__icon" aria-hidden="true">{{ arrow_icon }}</span>
+                </button>
+              </add-to-cart-component>
+            {%- endform -%}
+          </product-form-component>
+        </li>
+      {%- endfor -%}
+    </ul>
+  </div>
+</div>
+
+{%- if plan_count > 1 -%}
+  <script type="module">
+    import { initPricing } from '{{ 'chopinrx-pricing.js' | asset_url }}';
+    initPricing();
+  </script>
+{%- endif -%}
+
+{% stylesheet %}
+  .chx-pricing {
+    --chx-heading-color: var(--text-on-dark);
+
+    background-color: var(--surface-dark);
+    padding-block: var(--section-py-tight);
+    scroll-margin-block-start: calc(var(--header-height, 0px) + var(--space-6));
+  }
+
+  .chx-pricing__inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-4);
+  }
+
+  .chx-pricing .chx-eyebrow__text {
+    color: var(--text-on-dark-muted);
+  }
+
+  /* ── Billing toggle on ink ──────────────────── */
+  .chx-pricing__toggle {
+    border-radius: var(--radius-pill);
+    background-color: var(--alpha-paper-16);
+  }
+
+  .chx-pricing .chx-segmented__item {
+    color: var(--text-on-dark);
+  }
+
+  .chx-pricing .chx-segmented__item:hover {
+    color: var(--text-on-dark);
+  }
+
+  /* ── Cards ──────────────────────────────────── */
+  .chx-pricing__cards {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .chx-plan {
+    flex: 0 1 480px;
+    min-width: 0;
+    border: var(--border-w) solid var(--border-hairline);
+    border-radius: var(--radius-lg);
+    background-color: var(--surface-card);
+    overflow: clip;
+  }
+
+  .chx-plan__form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-8);
+    height: 100%;
+    padding: var(--space-8);
+  }
+
+  .chx-plan__header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: var(--space-4);
+  }
+
+  .chx-plan__identity {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-4);
+    min-width: 0;
+  }
+
+  .chx-plan__icon {
+    display: block;
+    width: 30px;
+    height: 30px;
+  }
+
+  .chx-plan__icon svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  .chx-plan__pricing {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    flex-shrink: 0;
+    gap: 4px;
+    text-align: end;
+    white-space: nowrap;
+  }
+
+  .chx-plan__price-row {
+    display: flex;
+    align-items: baseline;
+    gap: 4px;
+    margin: 0;
+  }
+
+  /* The intro price is the most consequential number on the page, so it
+     takes the strong accent that clears contrast on paper. */
+  .chx-plan__price {
+    font-family: var(--font-display);
+    font-size: var(--font-size-h3);
+    font-weight: 500;
+    line-height: 1.08;
+    letter-spacing: -0.035em;
+    font-variant-numeric: tabular-nums;
+    color: var(--text-accent-strong);
+  }
+
+  .chx-plan__first {
+    font-family: var(--font-ui);
+    font-size: var(--font-size-body);
+    font-weight: 600;
+    line-height: 1.5;
+    letter-spacing: -0.005em;
+    color: var(--text-heading);
+  }
+
+  .chx-plan__after {
+    margin: 0;
+    font-family: var(--font-ui);
+    font-size: var(--font-size-body);
+    font-weight: 500;
+    line-height: 1.5;
+    letter-spacing: -0.005em;
+    color: var(--text-muted);
+  }
+
+  .chx-plan__divider {
+    width: 100%;
+    height: var(--border-w);
+    margin: 0;
+    border: 0;
+    background-color: var(--border-hairline);
+  }
+
+  .chx-plan__inclusions {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 auto;
+    gap: var(--space-5);
+  }
+
+  .chx-plan__inclusions-title {
+    margin: 0;
+    font-family: var(--font-ui);
+    font-size: var(--font-size-body);
+    font-weight: 600;
+    line-height: 1.5;
+    letter-spacing: -0.005em;
+    color: var(--text-body);
+  }
+
+  .chx-plan__features {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-5);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .chx-plan__feature {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-4);
+  }
+
+  .chx-plan__feature-icon {
+    display: block;
+    flex-shrink: 0;
+    width: 20px;
+    height: 20px;
+    margin-block-start: 2px;
+  }
+
+  .chx-plan__feature-icon svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  .chx-plan__feature-text {
+    font-family: var(--font-ui);
+    font-size: var(--font-size-body);
+    font-weight: 400;
+    line-height: 1.5;
+    letter-spacing: -0.005em;
+    color: var(--text-heading);
+  }
+
+  .chx-plan__cta {
+    width: 100%;
+  }
+
+  .chx-plan .product-form-text__error {
+    color: var(--text-accent-strong);
+  }
+
+  /* ── Breakpoints ────────────────────────────── */
+  @media screen and (max-width: 1024px) {
+    .chx-plan {
+      flex-basis: calc(50% - 5px);
+    }
+  }
+
+  @media screen and (max-width: 767px) {
+    .chx-pricing {
+      padding-block: var(--space-10);
+    }
+
+    .chx-pricing__toggle {
+      width: 232px;
+    }
+
+    .chx-pricing .chx-segmented__item {
+      flex: 1 1 0;
+      min-width: 0;
+      padding-inline: var(--space-4);
+    }
+
+    .chx-plan {
+      flex-basis: 100%;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Product pricing",
+  "tag": "section",
+  "class": "chopinrx-product-pricing-section",
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "One card per variant. The billing toggle lists the product's selling plans (subscription frequencies); picking one sets the frequency every card adds to the cart with. Card inclusions read the custom.plan_includes product metafield and fall back to the blocks below."
+    },
+    {
+      "type": "text",
+      "id": "anchor_id",
+      "label": "Anchor id",
+      "info": "Lets buttons elsewhere on the page scroll here, e.g. #pricing.",
+      "default": "pricing"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "info": "[product] is replaced with the product title.",
+      "default": "Treatment"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Pricing"
+    },
+    {
+      "type": "header",
+      "content": "Billing toggle"
+    },
+    {
+      "type": "text",
+      "id": "toggle_label",
+      "label": "Accessible label",
+      "default": "Billing period"
+    },
+    {
+      "type": "text",
+      "id": "monthly_label",
+      "label": "Monthly plan label",
+      "default": "Monthly"
+    },
+    {
+      "type": "text",
+      "id": "weekly_label",
+      "label": "Weekly plan label",
+      "default": "Weekly"
+    },
+    {
+      "type": "text",
+      "id": "yearly_label",
+      "label": "Yearly plan label",
+      "default": "Yearly"
+    },
+    {
+      "type": "text",
+      "id": "daily_label",
+      "label": "Daily plan label",
+      "default": "Daily"
+    },
+    {
+      "type": "header",
+      "content": "Card"
+    },
+    {
+      "type": "text",
+      "id": "price_unit",
+      "label": "Price unit without a plan",
+      "info": "Shown after the price when the product has no selling plan.",
+      "default": "/mo"
+    },
+    {
+      "type": "text",
+      "id": "first_label",
+      "label": "First delivery label",
+      "info": "[interval] becomes the plan's interval, e.g. month.",
+      "default": "/first [interval]"
+    },
+    {
+      "type": "text",
+      "id": "after_label",
+      "label": "Ongoing price suffix",
+      "info": "Follows the ongoing price. [interval] becomes the short interval, e.g. mo.",
+      "default": "/[interval] after"
+    },
+    {
+      "type": "text",
+      "id": "includes_heading",
+      "label": "Inclusions heading",
+      "default": "What's included"
+    },
+    {
+      "type": "text",
+      "id": "cta_label",
+      "label": "Button label",
+      "default": "Get started"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "feature",
+      "name": "Inclusion (fallback)",
+      "settings": [
+        {
+          "type": "paragraph",
+          "content": "Only shown when the product has no custom.plan_includes metafield."
+        },
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Text",
+          "default": "Free shipping on every refill"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 8,
+  "presets": [
+    {
+      "name": "Product pricing",
+      "blocks": [
+        { "type": "feature", "settings": { "text": "High potency, third-party lab tested" } },
+        { "type": "feature", "settings": { "text": "Personalised protocols and provider messaging" } },
+        { "type": "feature", "settings": { "text": "Free shipping on every refill" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

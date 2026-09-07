@@ -4,6 +4,11 @@
   assign image = section.settings.image
   assign check_icon = 'icon-check-circle.svg' | inline_asset_content
   assign features = section.blocks | where: 'type', 'feature'
+
+  # On a product template the copy can name the product with [product].
+  assign eyebrow = section.settings.eyebrow | replace: '[product]', product.title
+  assign heading = section.settings.heading | replace: '[product]', product.title
+  assign body = section.settings.body | replace: '[product]', product.title
 %}
 
 <div class="chx-aboutsplit chx-aboutsplit--{{ section.settings.background }}">
@@ -31,12 +36,12 @@
 
       <div class="chx-aboutsplit__copy">
         {% render 'chopinrx-section-heading',
-          eyebrow: section.settings.eyebrow,
-          heading: section.settings.heading
+          eyebrow: eyebrow,
+          heading: heading
         %}
 
-        {%- if section.settings.body != blank -%}
-          <div class="chx-body-lg chx-aboutsplit__body">{{ section.settings.body }}</div>
+        {%- if body != blank -%}
+          <div class="chx-body-lg chx-aboutsplit__body">{{ body }}</div>
         {%- endif -%}
 
         {%- if features.size > 0 -%}
@@ -213,7 +218,8 @@
     {
       "type": "text",
       "id": "eyebrow",
-      "label": "Eyebrow"
+      "label": "Eyebrow",
+      "info": "On a product page, [product] is replaced with the product title."
     },
     {
       "type": "inline_richtext",

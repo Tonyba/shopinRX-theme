@@ -32,7 +32,7 @@
       <div
         class="chx-chips chx-explore__toolbar"
         role="tablist"
-        aria-label="{{ section.settings.heading | escape }}"
+        aria-label="{{ section.settings.heading | strip_html | escape }}"
       >
         {%- for tab in tabs -%}
           <button
@@ -487,9 +487,10 @@
       "default": "Explore solutions"
     },
     {
-      "type": "text",
+      "type": "inline_richtext",
       "id": "heading",
       "label": "Heading",
+      "info": "Italic text is rendered in the accent colour.",
       "default": "Explore Our Treatments"
     },
     {

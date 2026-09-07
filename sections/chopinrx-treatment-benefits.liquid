@@ -1,0 +1,216 @@
+{% render 'chopinrx-tokens' %}
+
+{% liquid
+  # On a product template the copy can name the product with [product].
+  assign eyebrow = section.settings.eyebrow | replace: '[product]', product.title
+  assign heading = section.settings.heading | replace: '[product]', product.title
+%}
+
+<div class="chx-tbenefits">
+  <div class="chx-container">
+    <div class="chx-tbenefits__header">
+      {% render 'chopinrx-section-heading', eyebrow: eyebrow, heading: heading %}
+    </div>
+
+    {%- if section.blocks.size > 0 -%}
+      <ul class="chx-tbenefits__grid" role="list">
+        {%- for block in section.blocks -%}
+          {%- liquid
+            assign icon_file = block.settings.icon | append: '.svg'
+            assign icon = icon_file | inline_asset_content
+          -%}
+          <li class="chx-tbenefit" {{ block.shopify_attributes }}>
+            <span class="chx-tbenefit__icon" aria-hidden="true">{{ icon }}</span>
+            <div class="chx-tbenefit__copy">
+              <h3 class="chx-subtitle chx-tbenefit__title">{{ block.settings.title }}</h3>
+              {%- if block.settings.text != blank -%}
+                <p class="chx-tbenefit__text">{{ block.settings.text }}</p>
+              {%- endif -%}
+            </div>
+          </li>
+        {%- endfor -%}
+      </ul>
+    {%- endif -%}
+  </div>
+</div>
+
+{% stylesheet %}
+  .chx-tbenefits {
+    background-color: var(--surface-well);
+    padding-block: var(--section-py-tight);
+    overflow: clip;
+  }
+
+  /* The heading sits on a rule that spans the well. */
+  .chx-tbenefits__header {
+    padding-block-end: var(--space-8);
+    border-block-end: var(--border-w) solid var(--border-strong);
+  }
+
+  .chx-tbenefits__grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: var(--space-3);
+    margin: var(--space-8) 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .chx-tbenefit {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: var(--space-5);
+    padding: var(--space-6);
+    border: var(--border-w) solid var(--border-hairline);
+    border-radius: var(--radius-lg);
+    background-color: var(--surface-card);
+  }
+
+  .chx-tbenefit__icon {
+    display: block;
+    width: 25px;
+    height: 25px;
+  }
+
+  .chx-tbenefit__icon svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  .chx-tbenefit__copy {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  .chx-tbenefit__text {
+    margin: 0;
+    font-family: var(--font-ui);
+    font-size: var(--font-size-body-large);
+    font-weight: 400;
+    line-height: 1.55;
+    letter-spacing: -0.005em;
+    color: var(--text-muted);
+  }
+
+  /* ── Breakpoints ────────────────────────────── */
+  @media screen and (max-width: 1024px) {
+    .chx-tbenefits__grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media screen and (max-width: 767px) {
+    .chx-tbenefits {
+      padding-block: var(--space-10);
+    }
+
+    .chx-tbenefits__header {
+      padding-block-end: var(--space-6);
+    }
+
+    .chx-tbenefits .chx-section-heading {
+      align-items: center;
+      text-align: center;
+    }
+
+    .chx-tbenefits__grid {
+      grid-template-columns: minmax(0, 1fr);
+      margin-block-start: var(--space-6);
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Treatment benefits",
+  "tag": "section",
+  "class": "chopinrx-treatment-benefits-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "info": "On a product page, [product] is replaced with the product title.",
+      "default": "Why Explore This Treatment"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "info": "Italic text is rendered in the accent colour.",
+      "default": "Designed around your treatment <em>goals</em>."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "benefit",
+      "name": "Benefit",
+      "settings": [
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icon",
+          "options": [
+            { "value": "icon-flask", "label": "Flask" },
+            { "value": "icon-check-badge", "label": "Check badge" },
+            { "value": "icon-shield-check", "label": "Shield" },
+            { "value": "icon-target", "label": "Target" }
+          ],
+          "default": "icon-flask"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Provider-Guided Care"
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Text",
+          "default": "An independent licensed provider reviews your case before any treatment decision is made."
+        }
+      ]
+    }
+  ],
+  "max_blocks": 8,
+  "presets": [
+    {
+      "name": "Treatment benefits",
+      "blocks": [
+        {
+          "type": "benefit",
+          "settings": {
+            "title": "Cellular Energy Support",
+            "text": "Targets underlying cellular pathways involved in energy production and mitochondrial function."
+          }
+        },
+        {
+          "type": "benefit",
+          "settings": {
+            "title": "Recovery & Vitality",
+            "text": "Designed to support recovery, sleep quality, and day-to-day vitality under provider guidance."
+          }
+        },
+        {
+          "type": "benefit",
+          "settings": {
+            "title": "Provider-Guided Care",
+            "text": "An independent licensed provider reviews your case before any treatment decision is made."
+          }
+        },
+        {
+          "type": "benefit",
+          "settings": {
+            "title": "Ongoing Support",
+            "text": "Ongoing provider access is available to adjust your protocol as your goals evolve."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
