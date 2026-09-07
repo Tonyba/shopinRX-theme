@@ -14,7 +14,7 @@
 <div class="chx-aboutsplit chx-aboutsplit--{{ section.settings.background }}">
   <div class="chx-container">
     <div
-      class="chx-aboutsplit__grid{% if section.settings.media_position == 'right' %} chx-aboutsplit__grid--media-right{% endif %}"
+      class="chx-aboutsplit__grid{% if section.settings.media_position == 'right' %} chx-aboutsplit__grid--media-right{% endif %}{% if section.settings.mobile_media_position == 'bottom' %} chx-aboutsplit__grid--media-bottom{% endif %}"
     >
       <div class="chx-aboutsplit__media">
         {%- if image != blank -%}
@@ -147,6 +147,11 @@
       order: 0;
     }
 
+    /* The photograph can follow the copy once the columns stack. */
+    .chx-aboutsplit__grid--media-bottom .chx-aboutsplit__media {
+      order: 2;
+    }
+
     .chx-aboutsplit__media {
       min-height: 0;
       aspect-ratio: 16 / 9;
@@ -203,6 +208,17 @@
         { "value": "right", "label": "Right" }
       ],
       "default": "left"
+    },
+    {
+      "type": "select",
+      "id": "mobile_media_position",
+      "label": "Image position when stacked",
+      "info": "Tablet and mobile.",
+      "options": [
+        { "value": "top", "label": "Above the copy" },
+        { "value": "bottom", "label": "Below the copy" }
+      ],
+      "default": "top"
     },
     {
       "type": "select",
