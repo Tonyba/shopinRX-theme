@@ -55,6 +55,13 @@ export class ThemeDrawer extends Component {
 
   connectedCallback() {
     super.connectedCallback();
+
+    // A drawer with the `overlay` attribute always opens as a modal overlay
+    // with a backdrop, on every viewport, instead of squeezing the page.
+    if (this.hasAttribute('overlay')) {
+      this.#modalQuery = window.matchMedia('all');
+    }
+
     this.#modalQuery.addEventListener('change', this.#onModalBreakpointChange);
 
     // Sync the static stack counter with any --drawer-stack-order set by the

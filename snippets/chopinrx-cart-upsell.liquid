@@ -1,15 +1,17 @@
 {% doc %}
-  Cart cross-sell. When the cart holds a prescription item, lists the
-  non-prescription supplements that pair with it, each with its own add form.
+  Cart cross-sell. Lists non-prescription supplements next to the cart: the
+  ones paired with the products in the cart first, then other supplements to
+  fill the list, each with its own add form.
 
-  An item counts as Rx when its product is tagged `rx` or belongs to one of the
-  collections named in the "Cart cross-sell" theme settings. Pairings come from
-  the product's custom.pairs_with metafield; the fallback collection fills the
-  list when a product has none. Products already in the cart, unavailable
-  products and Rx products are never offered.
+  Pairings come from each cart product's custom.pairs_with metafield. When the
+  cart products have none, or fewer than the limit, the fallback collection
+  fills the remaining slots; without a fallback collection the whole catalogue
+  is used. The starting point rotates each day so the fill is not always the
+  same few products. Products already in the cart, unavailable products and
+  prescription products (tagged `rx` or in the Rx collections from the theme
+  settings) are never offered, so the Rx / intake flow is untouched.
 
-  Rendered inside the cart drawer, so it re-renders with every cart change and
-  never touches the Rx line itself.
+  Rendered inside the cart drawer, so it re-renders with every cart change.
 
   @example
   {% render 'chopinrx-cart-upsell' %}
@@ -19,38 +21,24 @@
   assign rx_handles = settings.cart_upsell_rx_collections | downcase | replace: ' ', '' | split: ','
   assign limit = settings.cart_upsell_limit | default: 3
   assign cart_ids = cart.items | map: 'product_id'
-  assign has_rx = false
   assign seen = ''
   assign shown = 0
 -%}
 
 {%- if settings.cart_upsell_enabled and cart.item_count > 0 -%}
   {%- capture rows -%}
+    {%- comment -%} 1. Products paired with what is in the cart. {%- endcomment -%}
     {%- for item in cart.items -%}
-      {%- liquid
-        assign product = item.product
-        assign is_rx = false
-        if product.tags contains 'rx'
-          assign is_rx = true
-        endif
-        for c in product.collections
-          if rx_handles contains c.handle
-            assign is_rx = true
-          endif
-        endfor
-        if is_rx == false
-          continue
-        endif
-        assign has_rx = true
-      -%}
-
-      {%- for pick in product.metafields.custom.pairs_with.value -%}
+      {%- for pick in item.product.metafields.custom.pairs_with.value -%}
         {%- if shown >= limit -%}
           {%- break -%}
         {%- endif -%}
         {%- liquid
           assign marker = pick.id | prepend: '|' | append: '|'
           assign pick_rx = false
+          if pick.tags contains 'rx'
+            assign pick_rx = true
+          endif
           for c in pick.collections
             if rx_handles contains c.handle
               assign pick_rx = true
@@ -66,26 +54,53 @@
       {%- endfor -%}
     {%- endfor -%}
 
-    {%- if has_rx and shown < limit and settings.cart_upsell_collection != blank -%}
-      {%- for pick in settings.cart_upsell_collection.products -%}
+    {%- comment -%}
+      2. Fill from the fallback collection, or the whole catalogue, starting
+      at a point that moves every day so the picks vary.
+    {%- endcomment -%}
+    {%- if shown < limit -%}
+      {%- liquid
+        if settings.cart_upsell_collection != blank
+          assign pool = settings.cart_upsell_collection.products
+          assign pool_size = settings.cart_upsell_collection.all_products_count
+        else
+          assign pool = collections.all.products
+          assign pool_size = collections.all.all_products_count
+        endif
+        assign start = 0
+        if pool_size > 0
+          assign start = 'now' | date: '%j' | plus: 0 | modulo: pool_size
+        endif
+      -%}
+      {%- for pass in (1..2) -%}
         {%- if shown >= limit -%}
           {%- break -%}
         {%- endif -%}
-        {%- liquid
-          assign marker = pick.id | prepend: '|' | append: '|'
-          assign pick_rx = false
-          for c in pick.collections
-            if rx_handles contains c.handle
+        {%- for pick in pool offset: start -%}
+          {%- if shown >= limit -%}
+            {%- break -%}
+          {%- endif -%}
+          {%- liquid
+            assign marker = pick.id | prepend: '|' | append: '|'
+            assign pick_rx = false
+            if pick.tags contains 'rx'
               assign pick_rx = true
             endif
-          endfor
-          if pick_rx or pick.available == false or cart_ids contains pick.id or seen contains marker
-            continue
-          endif
-          assign seen = seen | append: marker
-          assign shown = shown | plus: 1
-        -%}
-        {%- render 'chopinrx-cart-upsell-item', product: pick -%}
+            for c in pick.collections
+              if rx_handles contains c.handle
+                assign pick_rx = true
+              endif
+            endfor
+            if pick_rx or pick.available == false or cart_ids contains pick.id or seen contains marker
+              continue
+            endif
+            assign seen = seen | append: marker
+            assign shown = shown | plus: 1
+          -%}
+          {%- render 'chopinrx-cart-upsell-item', product: pick -%}
+        {%- endfor -%}
+        {%- comment -%} The second pass wraps round to the start of the pool. {%- endcomment -%}
+        {%- assign start = 0 -%}
       {%- endfor -%}
     {%- endif -%}
   {%- endcapture -%}

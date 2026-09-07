@@ -35,7 +35,8 @@
     var dialogs = [];
     for (var i = 0; i < drawerIds.length; i++) {
       var drawer = document.getElementById(drawerIds[i]);
-      if (!drawer) continue;
+      // Overlay drawers are modal on every viewport and never restore.
+      if (!drawer || drawer.hasAttribute('overlay')) continue;
 
       drawer.setAttribute('open', '');
 
@@ -87,21 +88,23 @@
 
   // ── Squeeze coordination ──
   // Listens to all drawers. Only squeezes on wide viewports.
-  document.addEventListener('theme-drawer:open', () => {
-    if (squeezeQuery.matches) {
+  // Drawers with the `overlay` attribute float over the page and never squeeze it.
+  document.addEventListener('theme-drawer:open', (event) => {
+    const drawer = event.target instanceof Element ? event.target.closest('theme-drawer') : null;
+    if (squeezeQuery.matches && !drawer?.hasAttribute('overlay')) {
       pageWrapper?.classList.add('page-wrapper--drawer-open');
     }
   });
 
   document.addEventListener('theme-drawer:close', () => {
-    const openDrawer = document.querySelector('theme-drawer[open]');
+    const openDrawer = document.querySelector('theme-drawer[open]:not([overlay])');
     if (!openDrawer) {
       pageWrapper?.classList.remove('page-wrapper--drawer-open');
     }
   });
 
   squeezeQuery.addEventListener('change', () => {
-    const openDrawer = document.querySelector('theme-drawer[open]');
+    const openDrawer = document.querySelector('theme-drawer[open]:not([overlay])');
     pageWrapper?.classList.toggle('page-wrapper--drawer-open', Boolean(openDrawer) && squeezeQuery.matches);
   });
 

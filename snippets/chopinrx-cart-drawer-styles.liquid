@@ -15,6 +15,26 @@
     --theme-drawer-padding: var(--space-6);
   }
 
+  /* Opens like the menu offcanvas: a dimmed page behind, the panel sliding
+     in from the right. */
+  #cart-drawer .theme-drawer__dialog {
+    border-left: 0;
+  }
+
+  #cart-drawer .theme-drawer__dialog::backdrop {
+    background: rgb(20 24 29 / 45%);
+  }
+
+  #cart-drawer .theme-drawer__dialog--opening,
+  #cart-drawer .theme-drawer__dialog--closing {
+    animation-duration: 0.3s;
+    animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  #cart-drawer .cart-drawer__content {
+    padding-block-start: var(--space-6);
+  }
+
   #cart-drawer .theme-drawer__header {
     border-block-end: var(--border-w) solid var(--border-hairline);
   }
