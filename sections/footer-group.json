@@ -56,7 +56,7 @@
           "type": "column",
           "settings": {
             "title": "Company",
-            "menu": "footer"
+            "menu": "company-footer-menu"
           }
         },
         "social_1": {
