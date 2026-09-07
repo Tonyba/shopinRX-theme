@@ -2116,5 +2116,59 @@
         "default": "equal-width-buttons"
       }
     ]
+  },
+  {
+    "name": "Cart cross-sell",
+    "settings": [
+      {
+        "type": "paragraph",
+        "content": "When a prescription item is in the cart, the drawer offers the non-prescription supplements that pair with it. Each Rx product lists its pairings in the custom.pairs_with metafield; the fallback collection is used when it has none. Supplements are added as one-time purchases and never touch the Rx line."
+      },
+      {
+        "type": "checkbox",
+        "id": "cart_upsell_enabled",
+        "label": "Show pairings in the cart",
+        "default": true
+      },
+      {
+        "type": "text",
+        "id": "cart_upsell_heading",
+        "label": "Heading",
+        "default": "Pairs well with your treatment"
+      },
+      {
+        "type": "text",
+        "id": "cart_upsell_subheading",
+        "label": "Subheading",
+        "default": "Non-prescription. No doctor visit required."
+      },
+      {
+        "type": "text",
+        "id": "cart_upsell_rx_collections",
+        "label": "Prescription collections",
+        "info": "Comma-separated handles. Products in these collections, or tagged rx, count as prescription items.",
+        "default": "program, treatment"
+      },
+      {
+        "type": "collection",
+        "id": "cart_upsell_collection",
+        "label": "Fallback collection"
+      },
+      {
+        "type": "range",
+        "id": "cart_upsell_limit",
+        "label": "Maximum products",
+        "min": 1,
+        "max": 6,
+        "step": 1,
+        "default": 3
+      },
+      {
+        "type": "text",
+        "id": "cart_upsell_add_label",
+        "label": "Add button label",
+        "default": "Add"
+      }
+    ]
   }
 ]
