@@ -1,12 +1,3 @@
-/*
- * ------------------------------------------------------------
- * IMPORTANT: The contents of this file are auto-generated.
- *
- * This file may be updated by the Shopify admin theme editor
- * or related systems. Please exercise caution as any changes
- * made to this file may be overwritten.
- * ------------------------------------------------------------
- */
 {
   "sections": {
     "main": {
@@ -35,27 +26,6 @@
           "settings": {
             "heading": "Description",
             "source": "description",
-            "metafield_key": "",
-            "content": "",
-            "open": false
-          }
-        },
-        "detail_how_to_take": {
-          "type": "detail",
-          "settings": {
-            "heading": "How to take",
-            "source": "metafield",
-            "metafield_key": "how_to_take",
-            "content": "",
-            "open": false
-          }
-        },
-        "detail_side_effects": {
-          "type": "detail",
-          "settings": {
-            "heading": "Potential common side effects",
-            "source": "metafield",
-            "metafield_key": "side_effects",
             "content": "",
             "open": false
           }
@@ -65,9 +35,7 @@
         "feature_1",
         "feature_2",
         "feature_3",
-        "detail_description",
-        "detail_how_to_take",
-        "detail_side_effects"
+        "detail_description"
       ],
       "settings": {
         "eyebrow": "Treatment",
@@ -127,13 +95,13 @@
     "benefits": {
       "type": "chopinrx-about-split",
       "settings": {
-        "image": "shopify://shop_images/chx-program_c4bcb7a6-5d0f-4acd-b10d-48f34c9aa667.png",
+        "image": "{{ product.metafields.custom.benefits_image.value }}",
         "media_position": "right",
         "mobile_media_position": "bottom",
         "background": "page",
-        "eyebrow": "Understanding [product]",
-        "heading": "What are the <em>benefits</em> of [product]?",
-        "body": "<p>[product] pairs a dual-action GLP-1 (tirzepatide with B12) for appetite and weight with sermorelin, a growth hormone releasing hormone (GHRH) analogue that stimulates the pituitary gland to produce and release growth hormone naturally. It is used in body composition, recovery, and metabolic health contexts.</p><p>Rather than replacing hormones directly, the stack works with the body's own signalling. Both medications are typically administered via subcutaneous injection on a schedule set by an independent licensed provider.</p>"
+        "eyebrow": "{{ product.metafields.custom.benefits_eyebrow.value }}",
+        "heading": "{{ product.metafields.custom.benefits_heading.value }}",
+        "body": "<p>{{ product.metafields.custom.benefits_body.value }}</p>"
       }
     },
     "why_choose": {
@@ -179,8 +147,8 @@
         "benefit_4"
       ],
       "settings": {
-        "eyebrow": "Why Explore This Treatment",
-        "heading": "Designed around your treatment <em>goals</em>."
+        "eyebrow": "{{ product.metafields.custom.why_eyebrow.value }}",
+        "heading": "{{ product.metafields.custom.why_heading.value }}"
       }
     },
     "how_it_works": {
@@ -217,8 +185,8 @@
         "step_3"
       ],
       "settings": {
-        "eyebrow": "How it works",
-        "heading": "How [product] works"
+        "eyebrow": "{{ product.metafields.custom.how_eyebrow.value }}",
+        "heading": "{{ product.metafields.custom.how_heading.value }}"
       }
     },
     "personalized_care": {
@@ -308,10 +276,10 @@
         "test_4"
       ],
       "settings": {
-        "image": "shopify://shop_images/chx-lab-testing.jpg",
+        "image": "{{ product.metafields.custom.lab_image.value }}",
         "media_position": "right",
-        "eyebrow": "Quality & Testing",
-        "heading": "Always lab <em>tested</em> for quality & consistency"
+        "eyebrow": "{{ product.metafields.custom.lab_eyebrow.value }}",
+        "heading": "{{ product.metafields.custom.lab_heading.value }}"
       }
     },
     "reviews": {
@@ -485,8 +453,8 @@
         "question_5"
       ],
       "settings": {
-        "eyebrow": "Have questions?",
-        "heading": "Frequently asked <em>questions</em>",
+        "eyebrow": "{{ product.metafields.custom.faq_eyebrow.value }}",
+        "heading": "{{ product.metafields.custom.faq_heading.value }}",
         "cta_label": "Get Started",
         "cta_url": "#pricing"
       }

@@ -5,18 +5,17 @@
   assign eyebrow = section.settings.eyebrow | replace: '[product]', product.title
   assign heading = section.settings.heading | replace: '[product]', product.title
 
-  # A product's own custom fields (custom.how_*) take over when filled in.
-  assign mf = product.metafields.custom
-  if mf.how_eyebrow.value != blank
-    assign eyebrow = mf.how_eyebrow.value
+  # The steps come from the product's How it works custom field; the eyebrow
+  # and heading settings are connected to its fields in the template. A
+  # product with no heading hides the section.
+  assign items = product.metafields.custom.how_steps.value
+  assign hidden = false
+  if template.name == 'product' and heading == blank
+    assign hidden = true
   endif
-  if mf.how_heading.value != blank
-    capture heading
-      render 'chopinrx-rich-inline', field: mf.how_heading
-    endcapture
-  endif
-  assign items = mf.how_steps.value
 %}
+
+{%- unless hidden -%}
 
 <div class="chx-tsteps">
   <div class="chx-container">
@@ -95,6 +94,8 @@
     {%- endif -%}
   </div>
 </div>
+
+{%- endunless -%}
 
 {% stylesheet %}
   .chx-tsteps {
@@ -225,7 +226,7 @@
   "settings": [
     {
       "type": "paragraph",
-      "content": "On a product page the product's How it works custom fields (eyebrow, heading, steps) replace these settings and blocks when they are filled in."
+      "content": "On the product template the eyebrow and heading are connected to the product's How it works custom fields and the steps come from its How it works: steps field, falling back to the blocks below. A product without a heading hides the section."
     },
     {
       "type": "text",
@@ -234,10 +235,10 @@
       "default": "How it works"
     },
     {
-      "type": "text",
+      "type": "inline_richtext",
       "id": "heading",
       "label": "Heading",
-      "info": "On a product page, [product] is replaced with the product title.",
+      "info": "On a product page, [product] is replaced with the product title. Italic text is rendered in the accent colour.",
       "default": "How [product] works"
     }
   ],

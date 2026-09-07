@@ -230,22 +230,42 @@
           %}
         {%- endif -%}
 
-        {%- assign details = section.blocks | where: 'type', 'detail' -%}
-        {%- if details.size > 0 -%}
+        {%- liquid
+          # Detail rows come from the product's Detail rows custom field; the
+          # section's own rows are only used when a product has none.
+          assign rows = product.metafields.custom.detail_rows.value
+          if rows.size > 0
+            assign details = empty
+          else
+            assign details = section.blocks | where: 'type', 'detail'
+          endif
+        -%}
+        {%- if rows.size > 0 or details.size > 0 -%}
           <hr class="chx-pdp__divider">
 
           <div class="chx-faq__list chx-pdp__details">
+            {%- for row in rows -%}
+              <details
+                class="chx-faq__item"
+                {% if row.open.value %}
+                  open
+                {% endif %}
+              >
+                <summary class="chx-faq__question">
+                  <span class="chx-faq__question-text">{{ row.heading.value }}</span>
+                  <span class="chx-faq__toggle" aria-hidden="true">
+                    <span class="chx-faq__toggle-icon chx-faq__toggle-icon--closed">{{ plus_icon }}</span>
+                    <span class="chx-faq__toggle-icon chx-faq__toggle-icon--open">{{ minus_icon }}</span>
+                  </span>
+                </summary>
+                <div class="chx-faq__answer">{% render 'chopinrx-rich-block', field: row.content %}</div>
+              </details>
+            {%- endfor -%}
             {%- for block in details -%}
               {%- liquid
                 assign content = blank
                 if block.settings.source == 'description'
                   assign content = product.description
-                elsif block.settings.source == 'metafield' and block.settings.metafield_key != blank
-                  assign key = block.settings.metafield_key | strip
-                  assign field = product.metafields.custom[key]
-                  if field != blank
-                    assign content = field | metafield_tag
-                  endif
                 endif
                 if content == blank
                   assign content = block.settings.content
@@ -603,7 +623,7 @@
   "settings": [
     {
       "type": "paragraph",
-      "content": "Reads the product's custom.goal (eyebrow), custom.summary (line under the price) and custom.highlights (check list) metafields, falling back to the settings below."
+      "content": "Everything in this section is edited on the product: Goal (eyebrow), Summary (line under the price), Highlights (check list) and Detail rows (the accordion). The settings and blocks below are only fallbacks for products that have not been filled in."
     },
     {
       "type": "text",
@@ -699,7 +719,7 @@
       "settings": [
         {
           "type": "paragraph",
-          "content": "Only shown when the product has no custom.highlights metafield."
+          "content": "Only shown when the product has no Highlights."
         },
         {
           "type": "text",
@@ -711,8 +731,12 @@
     },
     {
       "type": "detail",
-      "name": "Detail row",
+      "name": "Detail row (fallback)",
       "settings": [
+        {
+          "type": "paragraph",
+          "content": "Only shown when the product has no Detail rows."
+        },
         {
           "type": "text",
           "id": "heading",
@@ -725,17 +749,9 @@
           "label": "Content",
           "options": [
             { "value": "description", "label": "Product description" },
-            { "value": "metafield", "label": "Product metafield" },
             { "value": "custom", "label": "Text below" }
           ],
           "default": "description"
-        },
-        {
-          "type": "text",
-          "id": "metafield_key",
-          "label": "Metafield key",
-          "info": "Key inside the custom namespace, e.g. how_to_take.",
-          "visible_if": "{{ block.settings.source == 'metafield' }}"
         },
         {
           "type": "richtext",
@@ -760,9 +776,7 @@
         { "type": "feature", "settings": { "text": "Lose weight with doctor-trusted treatment plans" } },
         { "type": "feature", "settings": { "text": "Plans tailored to your goals" } },
         { "type": "feature", "settings": { "text": "Access to 24/7 messaging, 100% online" } },
-        { "type": "detail", "settings": { "heading": "Description", "source": "description" } },
-        { "type": "detail", "settings": { "heading": "How to take", "source": "metafield", "metafield_key": "how_to_take" } },
-        { "type": "detail", "settings": { "heading": "Potential common side effects", "source": "metafield", "metafield_key": "side_effects" } }
+        { "type": "detail", "settings": { "heading": "Description", "source": "description" } }
       ]
     }
   ]

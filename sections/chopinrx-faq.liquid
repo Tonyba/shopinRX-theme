@@ -7,23 +7,22 @@
   assign eyebrow = section.settings.eyebrow
   assign heading = section.settings.heading
 
-  # A product's own custom fields (custom.faq_*) take over when filled in.
-  assign mf = product.metafields.custom
-  if mf.faq_eyebrow.value != blank
-    assign eyebrow = mf.faq_eyebrow.value
-  endif
-  if mf.faq_heading.value != blank
-    capture heading
-      render 'chopinrx-rich-inline', field: mf.faq_heading
-    endcapture
-  endif
-  assign items = mf.faq_items.value
+  # The questions come from the product's FAQ custom field; the eyebrow and
+  # heading settings are connected to its fields in the template. A product
+  # with no heading hides the section.
+  assign items = product.metafields.custom.faq_items.value
   if items.size > 0
     assign rows = empty
   else
     assign rows = section.blocks
   endif
+  assign hidden = false
+  if template.name == 'product' and heading == blank
+    assign hidden = true
+  endif
 %}
+
+{%- unless hidden -%}
 
 <div class="chx-faq">
   <div class="chx-container">
@@ -117,6 +116,7 @@
     {{ faq_schema }}
   </script>
 {%- endif -%}
+{%- endunless -%}
 
 {% stylesheet %}
   .chx-faq {
@@ -312,7 +312,7 @@
   "settings": [
     {
       "type": "paragraph",
-      "content": "On a product page the product's FAQ custom fields (eyebrow, heading, questions) replace these settings and blocks when they are filled in."
+      "content": "On the product template the eyebrow and heading are connected to the product's FAQ custom fields and the questions come from its FAQ: questions field, falling back to the blocks below. A product without a heading hides the section."
     },
     {
       "type": "text",

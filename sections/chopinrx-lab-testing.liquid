@@ -6,21 +6,17 @@
   assign eyebrow = section.settings.eyebrow
   assign heading = section.settings.heading
 
-  # A product's own custom fields (custom.lab_*) take over when filled in.
-  assign mf = product.metafields.custom
-  if mf.lab_eyebrow.value != blank
-    assign eyebrow = mf.lab_eyebrow.value
+  # The tests come from the product's Lab testing custom field; the eyebrow,
+  # heading and image settings are connected to its fields in the template.
+  # A product with no heading hides the section.
+  assign items = product.metafields.custom.lab_tests.value
+  assign hidden = false
+  if template.name == 'product' and heading == blank
+    assign hidden = true
   endif
-  if mf.lab_heading.value != blank
-    capture heading
-      render 'chopinrx-rich-inline', field: mf.lab_heading
-    endcapture
-  endif
-  if mf.lab_image.value != blank
-    assign image = mf.lab_image.value
-  endif
-  assign items = mf.lab_tests.value
 %}
+
+{%- unless hidden -%}
 
 <div class="chx-lab">
   <div class="chx-container">
@@ -82,6 +78,8 @@
     </div>
   </div>
 </div>
+
+{%- endunless -%}
 
 {% stylesheet %}
   .chx-lab {
@@ -250,7 +248,7 @@
   "settings": [
     {
       "type": "paragraph",
-      "content": "On a product page the product's Lab testing custom fields (eyebrow, heading, image, tests) replace these settings and blocks when they are filled in."
+      "content": "On the product template the eyebrow, heading and image are connected to the product's Lab testing custom fields and the tests come from its Lab testing: tests field, falling back to the blocks below. A product without a heading hides the section."
     },
     {
       "type": "image_picker",

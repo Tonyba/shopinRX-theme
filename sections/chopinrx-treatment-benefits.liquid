@@ -5,18 +5,17 @@
   assign eyebrow = section.settings.eyebrow | replace: '[product]', product.title
   assign heading = section.settings.heading | replace: '[product]', product.title
 
-  # A product's own custom fields (custom.why_*) take over when filled in.
-  assign mf = product.metafields.custom
-  if mf.why_eyebrow.value != blank
-    assign eyebrow = mf.why_eyebrow.value
+  # The cards come from the product's Why choose custom field; the eyebrow
+  # and heading settings are connected to its fields in the template. A
+  # product with no heading hides the section.
+  assign items = product.metafields.custom.why_benefits.value
+  assign hidden = false
+  if template.name == 'product' and heading == blank
+    assign hidden = true
   endif
-  if mf.why_heading.value != blank
-    capture heading
-      render 'chopinrx-rich-inline', field: mf.why_heading
-    endcapture
-  endif
-  assign items = mf.why_benefits.value
 %}
+
+{%- unless hidden -%}
 
 <div class="chx-tbenefits">
   <div class="chx-container">
@@ -63,6 +62,8 @@
     {%- endif -%}
   </div>
 </div>
+
+{%- endunless -%}
 
 {% stylesheet %}
   .chx-tbenefits {
@@ -161,7 +162,7 @@
   "settings": [
     {
       "type": "paragraph",
-      "content": "On a product page the product's Why choose custom fields (eyebrow, heading, cards) replace these settings and blocks when they are filled in."
+      "content": "On the product template the eyebrow and heading are connected to the product's Why choose custom fields and the cards come from its Why choose: cards field, falling back to the blocks below. A product without a heading hides the section."
     },
     {
       "type": "text",
