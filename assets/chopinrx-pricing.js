@@ -70,12 +70,49 @@ export function initPricing() {
 
 /**
  * In-page anchors such as "Start intake" scroll to the pricing section. On
- * desktop the theme scrolls `.page-wrapper` rather than the window and the
- * native fragment jump stalls a few pixels in, so the scroll is driven here.
+ * desktop the theme scrolls `.page-wrapper` rather than the window, and a
+ * native smooth scroll over a long page stalls as lazy images shift the
+ * layout, so the scroll is animated here and re-aims at the target each frame.
  */
 export function initAnchorLinks() {
   if (document.documentElement.dataset.chxAnchorsReady === 'true') return;
   document.documentElement.dataset.chxAnchorsReady = 'true';
+
+  const scrollerOf = (element) => {
+    let node = element.parentElement;
+    while (node && node !== document.body) {
+      const { overflowY } = getComputedStyle(node);
+      if ((overflowY === 'auto' || overflowY === 'scroll') && node.scrollHeight > node.clientHeight) return node;
+      node = node.parentElement;
+    }
+    return document.scrollingElement || document.documentElement;
+  };
+
+  const scrollTo = (target) => {
+    const scroller = scrollerOf(target);
+    const isRoot = scroller === document.scrollingElement || scroller === document.documentElement;
+    const margin = parseFloat(getComputedStyle(target).scrollMarginTop) || 0;
+    const offset = () => {
+      const top = target.getBoundingClientRect().top - (isRoot ? 0 : scroller.getBoundingClientRect().top);
+      return scroller.scrollTop + top - margin;
+    };
+
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      scroller.scrollTop = offset();
+      return;
+    }
+
+    const from = scroller.scrollTop;
+    const duration = 600;
+    const started = performance.now();
+    const ease = (t) => 1 - Math.pow(1 - t, 3);
+    const step = (now) => {
+      const progress = Math.min(1, (now - started) / duration);
+      scroller.scrollTop = from + (offset() - from) * ease(progress);
+      if (progress < 1) requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+  };
 
   document.addEventListener(
     'click',
@@ -87,8 +124,8 @@ export function initAnchorLinks() {
       if (!target) return;
 
       event.preventDefault();
-      target.scrollIntoView({ block: 'start' });
       history.pushState(null, '', link.getAttribute('href'));
+      scrollTo(target);
     },
     true
   );
