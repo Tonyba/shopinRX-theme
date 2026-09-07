@@ -235,12 +235,11 @@
   </div>
 </div>
 
-{%- if plan_count > 1 -%}
-  <script type="module">
-    import { initPricing } from '{{ 'chopinrx-pricing.js' | asset_url }}';
-    initPricing();
-  </script>
-{%- endif -%}
+<script type="module">
+  import { initPricing, initAnchorLinks } from '{{ 'chopinrx-pricing.js' | asset_url }}';
+  initPricing();
+  initAnchorLinks();
+</script>
 
 {% stylesheet %}
   .chx-pricing {
@@ -263,7 +262,7 @@
   }
 
   /* ── Billing toggle on ink ──────────────────── */
-  .chx-pricing__toggle {
+  .chx-pricing .chx-segmented {
     border-radius: var(--radius-pill);
     background-color: var(--alpha-paper-16);
   }
@@ -288,8 +287,13 @@
     list-style: none;
   }
 
+  /* Cards are ink-free paper inside the ink section, so the heading colour
+     the section set for its own title is reset here. */
   .chx-plan {
-    flex: 0 1 480px;
+    --chx-heading-color: var(--text-heading);
+
+    flex: 1 1 440px;
+    max-width: 480px;
     min-width: 0;
     border: var(--border-w) solid var(--border-hairline);
     border-radius: var(--radius-lg);
@@ -455,6 +459,7 @@
   @media screen and (max-width: 1024px) {
     .chx-plan {
       flex-basis: calc(50% - 5px);
+      max-width: none;
     }
   }
 
@@ -463,7 +468,7 @@
       padding-block: var(--space-10);
     }
 
-    .chx-pricing__toggle {
+    .chx-pricing .chx-segmented {
       width: 232px;
     }
 
