@@ -27,9 +27,9 @@
         "menu": "main-menu",
         "show_login": true,
         "login_label": "Login",
-        "login_url": "",
+        "login_url": "/account/login",
         "cta_label": "Find your program",
-        "cta_url": "",
+        "cta_url": "shopify://collections/program",
         "enable_sticky_header": true
       }
     }
