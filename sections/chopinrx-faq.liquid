@@ -4,17 +4,32 @@
   assign arrow_icon = 'icon-arrow-right.svg' | inline_asset_content | replace: '#FCFAF9', 'currentColor'
   assign plus_icon = 'icon-faq-plus.svg' | inline_asset_content | replace: '#FCFAF9', 'currentColor'
   assign minus_icon = 'icon-faq-minus.svg' | inline_asset_content | replace: '#FCFAF9', 'currentColor'
+  assign eyebrow = section.settings.eyebrow
+  assign heading = section.settings.heading
+
+  # A product's own custom fields (custom.faq_*) take over when filled in.
+  assign mf = product.metafields.custom
+  if mf.faq_eyebrow.value != blank
+    assign eyebrow = mf.faq_eyebrow.value
+  endif
+  if mf.faq_heading.value != blank
+    capture heading
+      render 'chopinrx-rich-inline', field: mf.faq_heading
+    endcapture
+  endif
+  assign items = mf.faq_items.value
+  if items.size > 0
+    assign rows = empty
+  else
+    assign rows = section.blocks
+  endif
 %}
 
 <div class="chx-faq">
   <div class="chx-container">
     <div class="chx-faq__grid">
       <div class="chx-faq__intro">
-        {% render 'chopinrx-section-heading',
-          eyebrow: section.settings.eyebrow,
-          heading: section.settings.heading,
-          heading_class: 'chx-h1'
-        %}
+        {% render 'chopinrx-section-heading', eyebrow: eyebrow, heading: heading, heading_class: 'chx-h1' %}
 
         {%- if section.settings.cta_label != blank -%}
           <a
@@ -28,7 +43,24 @@
       </div>
 
       <div class="chx-faq__list">
-        {%- for block in section.blocks -%}
+        {%- for item in items -%}
+          <details
+            class="chx-faq__item"
+            {% if item.open.value %}
+              open
+            {% endif %}
+          >
+            <summary class="chx-faq__question">
+              <span class="chx-faq__question-text">{{ item.question.value }}</span>
+              <span class="chx-faq__toggle" aria-hidden="true">
+                <span class="chx-faq__toggle-icon chx-faq__toggle-icon--closed">{{ plus_icon }}</span>
+                <span class="chx-faq__toggle-icon chx-faq__toggle-icon--open">{{ minus_icon }}</span>
+              </span>
+            </summary>
+            <div class="chx-faq__answer">{% render 'chopinrx-rich-block', field: item.answer %}</div>
+          </details>
+        {%- endfor -%}
+        {%- for block in rows -%}
           <details
             class="chx-faq__item"
             {% if block.settings.open %}
@@ -56,7 +88,17 @@
     "@context": "https://schema.org",
     "@type": "FAQPage",
     "mainEntity": [
-      {%- for block in section.blocks -%}
+      {%- for item in items -%}
+        {
+          "@type": "Question",
+          "name": {{ item.question.value | strip_html | json }},
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": {{ item.answer | metafield_tag | strip_html | strip | json }}
+          }
+        }{% unless forloop.last %},{% endunless %}
+      {%- endfor -%}
+      {%- for block in rows -%}
         {
           "@type": "Question",
           "name": {{ block.settings.question | strip_html | json }},
@@ -70,7 +112,7 @@
   }
 {%- endcapture -%}
 
-{%- if section.blocks.size > 0 -%}
+{%- if items.size > 0 or section.blocks.size > 0 -%}
   <script type="application/ld+json">
     {{ faq_schema }}
   </script>
@@ -268,6 +310,10 @@
   "tag": "section",
   "class": "chopinrx-faq-section",
   "settings": [
+    {
+      "type": "paragraph",
+      "content": "On a product page the product's FAQ custom fields (eyebrow, heading, questions) replace these settings and blocks when they are filled in."
+    },
     {
       "type": "text",
       "id": "eyebrow",

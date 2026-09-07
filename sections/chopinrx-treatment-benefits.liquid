@@ -4,6 +4,18 @@
   # On a product template the copy can name the product with [product].
   assign eyebrow = section.settings.eyebrow | replace: '[product]', product.title
   assign heading = section.settings.heading | replace: '[product]', product.title
+
+  # A product's own custom fields (custom.why_*) take over when filled in.
+  assign mf = product.metafields.custom
+  if mf.why_eyebrow.value != blank
+    assign eyebrow = mf.why_eyebrow.value
+  endif
+  if mf.why_heading.value != blank
+    capture heading
+      render 'chopinrx-rich-inline', field: mf.why_heading
+    endcapture
+  endif
+  assign items = mf.why_benefits.value
 %}
 
 <div class="chx-tbenefits">
@@ -12,7 +24,25 @@
       {% render 'chopinrx-section-heading', eyebrow: eyebrow, heading: heading %}
     </div>
 
-    {%- if section.blocks.size > 0 -%}
+    {%- if items.size > 0 -%}
+      <ul class="chx-tbenefits__grid" role="list">
+        {%- for item in items -%}
+          {%- liquid
+            assign icon_file = item.icon.value | default: 'icon-flask' | append: '.svg'
+            assign icon = icon_file | inline_asset_content
+          -%}
+          <li class="chx-tbenefit">
+            <span class="chx-tbenefit__icon" aria-hidden="true">{{ icon }}</span>
+            <div class="chx-tbenefit__copy">
+              <h3 class="chx-subtitle chx-tbenefit__title">{{ item.title.value }}</h3>
+              {%- if item.text.value != blank -%}
+                <p class="chx-tbenefit__text">{{ item.text.value | newline_to_br }}</p>
+              {%- endif -%}
+            </div>
+          </li>
+        {%- endfor -%}
+      </ul>
+    {%- elsif section.blocks.size > 0 -%}
       <ul class="chx-tbenefits__grid" role="list">
         {%- for block in section.blocks -%}
           {%- liquid
@@ -129,6 +159,10 @@
   "tag": "section",
   "class": "chopinrx-treatment-benefits-section",
   "settings": [
+    {
+      "type": "paragraph",
+      "content": "On a product page the product's Why choose custom fields (eyebrow, heading, cards) replace these settings and blocks when they are filled in."
+    },
     {
       "type": "text",
       "id": "eyebrow",
