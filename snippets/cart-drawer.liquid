@@ -22,6 +22,8 @@
     fetchpriority="low"
   ></script>
 
+  {% render 'chopinrx-cart-drawer-styles' %}
+
   {% capture empty_cart_drawer_content %}
     <div
       class="cart-drawer__content"
@@ -113,6 +115,8 @@
                 <scroll-hint class="cart-drawer__items">
                   {% render 'cart-products', context: 'drawer' %}
                 </scroll-hint>
+
+                {% render 'chopinrx-cart-upsell' %}
 
                 <div class="cart-drawer__summary">
                   {% render 'cart-summary', section_id: 'cart-drawer-section' %}

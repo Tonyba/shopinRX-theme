@@ -1,0 +1,73 @@
+{% doc %}
+  One cross-sell row in the cart drawer: thumbnail, title, summary, price and
+  an add form that posts the product's first available variant as a one-time
+  purchase (no selling plan).
+
+  @param {object} product - The supplement to offer.
+
+  @example
+  {% render 'chopinrx-cart-upsell-item', product: product %}
+{% enddoc %}
+
+{%- liquid
+  assign variant = product.selected_or_first_available_variant
+  assign summary = product.metafields.custom.summary.value
+  if summary == blank
+    assign summary = product.description | strip_html | truncatewords: 12
+  endif
+  assign form_id = 'chx-upsell-form-' | append: product.id
+-%}
+
+<li class="chx-upsell__item">
+  <a class="chx-upsell__media" href="{{ product.url }}" tabindex="-1" aria-hidden="true">
+    {%- if product.featured_image -%}
+      <img
+        src="{{ product.featured_image | image_url: width: 128 }}"
+        srcset="{{ product.featured_image | image_url: width: 128 }} 128w, {{ product.featured_image | image_url: width: 256 }} 256w"
+        sizes="64px"
+        width="{{ product.featured_image.width }}"
+        height="{{ product.featured_image.height }}"
+        alt=""
+        loading="lazy"
+      >
+    {%- else -%}
+      <span class="chx-upsell__placeholder">{{ product.title | slice: 0 }}</span>
+    {%- endif -%}
+  </a>
+
+  <div class="chx-upsell__body">
+    <a class="chx-upsell__title" href="{{ product.url }}">{{ product.title | escape }}</a>
+    {%- if summary != blank -%}
+      <p class="chx-upsell__text">{{ summary }}</p>
+    {%- endif -%}
+    <span class="chx-upsell__price">{{ variant.price | money_without_trailing_zeros }}</span>
+  </div>
+
+  <product-form-component
+    data-section-id="cart-drawer-section"
+    data-product-id="{{ product.id }}"
+    data-product-url="{{ product.url }}"
+    on:submit="/handleSubmit"
+    data-quantity-default="1"
+    data-quantity-error-max="{{ 'products.product.quantity_error_max' | t }}"
+  >
+    <div class="visually-hidden" aria-live="assertive" role="status" aria-atomic="true" ref="liveRegion"></div>
+    {%- form 'product', product, id: form_id, data-type: 'add-to-cart-form', class: 'chx-upsell__form' -%}
+      <input type="hidden" name="id" ref="variantId" value="{{ variant.id }}">
+      <input type="hidden" name="quantity" value="1">
+      <span class="product-form-text__error hidden" ref="addToCartTextError"></span>
+      <add-to-cart-component ref="addToCartButtonContainer" data-add-to-cart-animation="false">
+        <button
+          type="submit"
+          name="add"
+          ref="addToCartButton"
+          on:click="/handleClick"
+          class="chx-btn chx-btn--primary chx-upsell__add"
+          aria-label="{{ settings.cart_upsell_add_label }} {{ product.title | escape }}"
+        >
+          {{- settings.cart_upsell_add_label -}}
+        </button>
+      </add-to-cart-component>
+    {%- endform -%}
+  </product-form-component>
+</li>

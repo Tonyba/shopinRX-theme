@@ -1,0 +1,85 @@
+{% doc %}
+  ChopinRX overrides for Horizon's cart drawer so the mini cart reads like the
+  rest of the site: 480px panel, display-face title, hairline rules and the
+  accent pill checkout button. Structure and behaviour stay Horizon's.
+
+  @example
+  {% render 'chopinrx-cart-drawer-styles' %}
+{% enddoc %}
+
+{% render 'chopinrx-tokens' %}
+
+{% stylesheet %}
+  #cart-drawer {
+    --theme-drawer-width: min(480px, 100vw);
+    --theme-drawer-padding: var(--space-6);
+  }
+
+  #cart-drawer .theme-drawer__header {
+    border-block-end: var(--border-w) solid var(--border-hairline);
+  }
+
+  #cart-drawer .theme-drawer__title {
+    font-family: var(--font-display);
+    font-size: var(--font-size-h4);
+    font-weight: 500;
+    line-height: 1.12;
+    letter-spacing: -0.02em;
+    color: var(--text-heading);
+  }
+
+  #cart-drawer .theme-drawer__badge {
+    background-color: var(--surface-accent-soft);
+    color: var(--text-accent-strong);
+    font-family: var(--font-ui);
+    font-weight: 600;
+  }
+
+  #cart-drawer .cart-drawer__items .cart-items__table-row {
+    border-color: var(--border-hairline);
+  }
+
+  #cart-drawer .cart-items__title {
+    font-family: var(--font-ui);
+    font-weight: 500;
+    color: var(--text-heading);
+  }
+
+  #cart-drawer .cart-items__media-image {
+    border-radius: var(--radius-md);
+    background-color: var(--surface-well);
+  }
+
+  #cart-drawer .cart-drawer__summary {
+    border-block-start: var(--border-w) solid var(--border-hairline);
+  }
+
+  #cart-drawer .cart-totals__total-label,
+  #cart-drawer .cart-totals__total-value {
+    font-family: var(--font-display);
+    font-weight: 500;
+    color: var(--text-heading);
+  }
+
+  #cart-drawer .cart__checkout-button {
+    min-height: var(--control-h-lg);
+    border: 0;
+    border-radius: var(--radius-pill);
+    background-color: var(--action-accent-bg);
+    font-family: var(--font-ui);
+    font-size: var(--font-size-button-large);
+    font-weight: 600;
+    letter-spacing: -0.005em;
+    color: var(--action-primary-fg);
+    transition: background-color 0.2s ease;
+  }
+
+  #cart-drawer .cart__checkout-button:hover {
+    background-color: var(--action-accent-bg-hover);
+    color: var(--action-primary-fg);
+  }
+
+  #cart-drawer .cart-drawer--empty .theme-drawer__title {
+    font-size: var(--font-size-h5);
+  }
+{% endstylesheet %}

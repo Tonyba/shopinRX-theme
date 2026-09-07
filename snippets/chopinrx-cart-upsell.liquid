@@ -1,0 +1,249 @@
+{% doc %}
+  Cart cross-sell. When the cart holds a prescription item, lists the
+  non-prescription supplements that pair with it, each with its own add form.
+
+  An item counts as Rx when its product is tagged `rx` or belongs to one of the
+  collections named in the "Cart cross-sell" theme settings. Pairings come from
+  the product's custom.pairs_with metafield; the fallback collection fills the
+  list when a product has none. Products already in the cart, unavailable
+  products and Rx products are never offered.
+
+  Rendered inside the cart drawer, so it re-renders with every cart change and
+  never touches the Rx line itself.
+
+  @example
+  {% render 'chopinrx-cart-upsell' %}
+{% enddoc %}
+
+{%- liquid
+  assign rx_handles = settings.cart_upsell_rx_collections | downcase | replace: ' ', '' | split: ','
+  assign limit = settings.cart_upsell_limit | default: 3
+  assign cart_ids = cart.items | map: 'product_id'
+  assign has_rx = false
+  assign seen = ''
+  assign shown = 0
+-%}
+
+{%- if settings.cart_upsell_enabled and cart.item_count > 0 -%}
+  {%- capture rows -%}
+    {%- for item in cart.items -%}
+      {%- liquid
+        assign product = item.product
+        assign is_rx = false
+        if product.tags contains 'rx'
+          assign is_rx = true
+        endif
+        for c in product.collections
+          if rx_handles contains c.handle
+            assign is_rx = true
+          endif
+        endfor
+        if is_rx == false
+          continue
+        endif
+        assign has_rx = true
+      -%}
+
+      {%- for pick in product.metafields.custom.pairs_with.value -%}
+        {%- if shown >= limit -%}
+          {%- break -%}
+        {%- endif -%}
+        {%- liquid
+          assign marker = pick.id | prepend: '|' | append: '|'
+          assign pick_rx = false
+          for c in pick.collections
+            if rx_handles contains c.handle
+              assign pick_rx = true
+            endif
+          endfor
+          if pick_rx or pick.available == false or cart_ids contains pick.id or seen contains marker
+            continue
+          endif
+          assign seen = seen | append: marker
+          assign shown = shown | plus: 1
+        -%}
+        {%- render 'chopinrx-cart-upsell-item', product: pick -%}
+      {%- endfor -%}
+    {%- endfor -%}
+
+    {%- if has_rx and shown < limit and settings.cart_upsell_collection != blank -%}
+      {%- for pick in settings.cart_upsell_collection.products -%}
+        {%- if shown >= limit -%}
+          {%- break -%}
+        {%- endif -%}
+        {%- liquid
+          assign marker = pick.id | prepend: '|' | append: '|'
+          assign pick_rx = false
+          for c in pick.collections
+            if rx_handles contains c.handle
+              assign pick_rx = true
+            endif
+          endfor
+          if pick_rx or pick.available == false or cart_ids contains pick.id or seen contains marker
+            continue
+          endif
+          assign seen = seen | append: marker
+          assign shown = shown | plus: 1
+        -%}
+        {%- render 'chopinrx-cart-upsell-item', product: pick -%}
+      {%- endfor -%}
+    {%- endif -%}
+  {%- endcapture -%}
+
+  {%- if shown > 0 -%}
+    <aside class="chx-upsell" aria-labelledby="chx-upsell-heading">
+      <div class="chx-upsell__header">
+        <h3 class="chx-upsell__heading" id="chx-upsell-heading">{{ settings.cart_upsell_heading }}</h3>
+        {%- if settings.cart_upsell_subheading != blank -%}
+          <p class="chx-upsell__sub">{{ settings.cart_upsell_subheading }}</p>
+        {%- endif -%}
+      </div>
+      <ul class="chx-upsell__list" role="list">
+        {{ rows }}
+      </ul>
+    </aside>
+  {%- endif -%}
+{%- endif -%}
+
+{% stylesheet %}
+  .chx-upsell {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+    padding: var(--space-6) var(--cart-drawer-padding, var(--space-6)) 0;
+    margin-block-start: var(--space-6);
+    border-block-start: var(--border-w) solid var(--border-hairline);
+  }
+
+  .chx-upsell__header {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .chx-upsell__heading {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: var(--font-size-subtitle);
+    font-weight: 500;
+    line-height: 1.28;
+    letter-spacing: -0.02em;
+    color: var(--text-heading);
+  }
+
+  .chx-upsell__sub {
+    margin: 0;
+    font-family: var(--font-ui);
+    font-size: var(--font-size-body-small);
+    font-weight: 500;
+    line-height: 1.43;
+    letter-spacing: -0.005em;
+    color: var(--text-muted);
+  }
+
+  .chx-upsell__list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .chx-upsell__item {
+    display: grid;
+    grid-template-columns: 64px minmax(0, 1fr) auto;
+    align-items: center;
+    gap: var(--space-3);
+    padding: var(--space-3);
+    border: var(--border-w) solid var(--border-hairline);
+    border-radius: var(--radius-lg);
+    background-color: var(--surface-card);
+  }
+
+  .chx-upsell__media {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 64px;
+    height: 64px;
+    border-radius: var(--radius-md);
+    background-color: var(--surface-well);
+    overflow: clip;
+  }
+
+  .chx-upsell__media img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .chx-upsell__placeholder {
+    font-family: var(--font-display);
+    font-size: var(--font-size-h5);
+    font-weight: 500;
+    color: var(--text-muted);
+  }
+
+  .chx-upsell__body {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+  }
+
+  .chx-upsell__title {
+    font-family: var(--font-ui);
+    font-size: var(--font-size-body);
+    font-weight: 500;
+    line-height: 1.5;
+    letter-spacing: -0.005em;
+    color: var(--text-heading);
+    text-decoration: none;
+  }
+
+  .chx-upsell__title:hover {
+    color: var(--text-accent);
+    text-decoration: none;
+  }
+
+  .chx-upsell__text {
+    display: -webkit-box;
+    margin: 0;
+    font-family: var(--font-ui);
+    font-size: var(--font-size-body-small);
+    font-weight: 400;
+    line-height: 1.43;
+    letter-spacing: -0.005em;
+    color: var(--text-muted);
+    overflow: hidden;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+  }
+
+  .chx-upsell__price {
+    font-family: var(--font-ui);
+    font-size: var(--font-size-body-small);
+    font-weight: 600;
+    line-height: 1.43;
+    letter-spacing: -0.005em;
+    font-variant-numeric: tabular-nums;
+    color: var(--text-heading);
+  }
+
+  .chx-upsell__form {
+    margin: 0;
+  }
+
+  .chx-upsell__add {
+    height: 40px;
+    padding-inline: var(--space-4);
+    font-size: var(--font-size-body-small);
+    line-height: 1.43;
+  }
+
+  .chx-upsell .product-form-text__error {
+    display: none;
+  }
+{% endstylesheet %}
