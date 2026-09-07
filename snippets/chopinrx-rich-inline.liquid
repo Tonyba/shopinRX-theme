@@ -1,0 +1,17 @@
+{% doc %}
+  Renders a rich text metafield as inline HTML for a heading: the wrapper
+  and paragraph tags are dropped, bold and italic are kept, so an italic
+  clause takes the accent colour the same way an inline_richtext setting does.
+
+  @param {object} field - A rich_text_field metafield.
+
+  @example
+  {% render 'chopinrx-rich-inline', field: product.metafields.custom.why_heading %}
+{% enddoc %}
+
+{%- liquid
+  assign html = field | metafield_tag
+  assign html = html | replace: '<div class="metafield-rich_text_field">', '' | replace: '</div>', ''
+  assign html = html | replace: '</p><p>', ' ' | replace: '<p>', '' | replace: '</p>', ''
+  echo html | strip
+-%}

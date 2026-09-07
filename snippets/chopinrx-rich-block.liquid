@@ -1,0 +1,14 @@
+{% doc %}
+  Renders a rich text metafield as plain paragraphs, without Shopify's
+  wrapper div, so a section's own body styles apply directly.
+
+  @param {object} field - A rich_text_field metafield.
+
+  @example
+  {% render 'chopinrx-rich-block', field: product.metafields.custom.benefits_body %}
+{% enddoc %}
+
+{%- liquid
+  assign html = field | metafield_tag
+  echo html | replace: '<div class="metafield-rich_text_field">', '' | replace: '</div>', '' | strip
+-%}

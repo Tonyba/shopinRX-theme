@@ -3,18 +3,46 @@
 {% liquid
   assign flask_icon = 'icon-flask.svg' | inline_asset_content
   assign image = section.settings.image
+  assign eyebrow = section.settings.eyebrow
+  assign heading = section.settings.heading
+
+  # A product's own custom fields (custom.lab_*) take over when filled in.
+  assign mf = product.metafields.custom
+  if mf.lab_eyebrow.value != blank
+    assign eyebrow = mf.lab_eyebrow.value
+  endif
+  if mf.lab_heading.value != blank
+    capture heading
+      render 'chopinrx-rich-inline', field: mf.lab_heading
+    endcapture
+  endif
+  if mf.lab_image.value != blank
+    assign image = mf.lab_image.value
+  endif
+  assign items = mf.lab_tests.value
 %}
 
 <div class="chx-lab">
   <div class="chx-container">
     <div class="chx-lab__grid{% if section.settings.media_position == 'left' %} chx-lab__grid--media-left{% endif %}">
       <div class="chx-lab__copy">
-        {% render 'chopinrx-section-heading',
-          eyebrow: section.settings.eyebrow,
-          heading: section.settings.heading
-        %}
+        {% render 'chopinrx-section-heading', eyebrow: eyebrow, heading: heading %}
 
-        {%- if section.blocks.size > 0 -%}
+        {%- if items.size > 0 -%}
+          <ul class="chx-lab__list" role="list">
+            {%- for item in items -%}
+              <li class="chx-lab-card{% if forloop.first %} chx-lab-card--filled{% endif %}">
+                <span class="chx-lab-card__icon" aria-hidden="true">{{ flask_icon }}</span>
+                <span class="chx-lab-card__copy">
+                  <span class="chx-lab-card__title">{{ item.title.value }}</span>
+                  {%- if item.text.value != blank -%}
+                    <span class="chx-lab-card__text">{{ item.text.value | newline_to_br }}</span>
+                  {%- endif -%}
+                </span>
+              </li>
+            {%- endfor -%}
+          </ul>
+        {%- elsif section.blocks.size > 0 -%}
           <ul class="chx-lab__list" role="list">
             {%- for block in section.blocks -%}
               <li
@@ -220,6 +248,10 @@
   "tag": "section",
   "class": "chopinrx-lab-section",
   "settings": [
+    {
+      "type": "paragraph",
+      "content": "On a product page the product's Lab testing custom fields (eyebrow, heading, image, tests) replace these settings and blocks when they are filled in."
+    },
     {
       "type": "image_picker",
       "id": "image",

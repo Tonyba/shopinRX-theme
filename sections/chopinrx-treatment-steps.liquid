@@ -4,13 +4,60 @@
   # On a product template the copy can name the product with [product].
   assign eyebrow = section.settings.eyebrow | replace: '[product]', product.title
   assign heading = section.settings.heading | replace: '[product]', product.title
+
+  # A product's own custom fields (custom.how_*) take over when filled in.
+  assign mf = product.metafields.custom
+  if mf.how_eyebrow.value != blank
+    assign eyebrow = mf.how_eyebrow.value
+  endif
+  if mf.how_heading.value != blank
+    capture heading
+      render 'chopinrx-rich-inline', field: mf.how_heading
+    endcapture
+  endif
+  assign items = mf.how_steps.value
 %}
 
 <div class="chx-tsteps">
   <div class="chx-container">
     {% render 'chopinrx-section-heading', eyebrow: eyebrow, heading: heading, centered: true %}
 
-    {%- if section.blocks.size > 0 -%}
+    {%- if items.size > 0 -%}
+      <ol class="chx-tsteps__grid" role="list">
+        {%- for item in items -%}
+          {%- assign image = item.image.value -%}
+          <li class="chx-tstep">
+            <div class="chx-tstep__media">
+              {%- if image != blank -%}
+                <img
+                  src="{{ image | image_url: width: 1000 }}"
+                  srcset="
+                    {{ image | image_url: width: 500 }} 500w,
+                    {{ image | image_url: width: 750 }} 750w,
+                    {{ image | image_url: width: 1000 }} 1000w
+                  "
+                  sizes="(max-width: 767px) 100vw, (max-width: 1024px) 33vw, 471px"
+                  width="{{ image.width }}"
+                  height="{{ image.height }}"
+                  alt="{{ image.alt | escape }}"
+                  loading="lazy"
+                >
+              {%- endif -%}
+            </div>
+            <div class="chx-tstep__body">
+              <h3 class="chx-tstep__title">
+                <span class="chx-tstep__number">{{ forloop.index | prepend: '0' | slice: -2, 2 }}</span>
+                <span class="chx-tstep__rule" aria-hidden="true"></span>
+                <span class="chx-tstep__label">{{ item.title.value }}</span>
+              </h3>
+              {%- if item.text.value != blank -%}
+                <p class="chx-tstep__text">{{ item.text.value | newline_to_br }}</p>
+              {%- endif -%}
+            </div>
+          </li>
+        {%- endfor -%}
+      </ol>
+    {%- elsif section.blocks.size > 0 -%}
       <ol class="chx-tsteps__grid" role="list">
         {%- for block in section.blocks -%}
           {%- assign image = block.settings.image -%}
@@ -176,6 +223,10 @@
   "tag": "section",
   "class": "chopinrx-treatment-steps-section",
   "settings": [
+    {
+      "type": "paragraph",
+      "content": "On a product page the product's How it works custom fields (eyebrow, heading, steps) replace these settings and blocks when they are filled in."
+    },
     {
       "type": "text",
       "id": "eyebrow",

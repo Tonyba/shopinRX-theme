@@ -9,6 +9,26 @@
   assign eyebrow = section.settings.eyebrow | replace: '[product]', product.title
   assign heading = section.settings.heading | replace: '[product]', product.title
   assign body = section.settings.body | replace: '[product]', product.title
+
+  # A product's own custom fields (custom.benefits_*) take over the copy and
+  # the picture when they are filled in.
+  assign mf = product.metafields.custom
+  if mf.benefits_eyebrow.value != blank
+    assign eyebrow = mf.benefits_eyebrow.value
+  endif
+  if mf.benefits_heading.value != blank
+    capture heading
+      render 'chopinrx-rich-inline', field: mf.benefits_heading
+    endcapture
+  endif
+  if mf.benefits_body.value != blank
+    capture body
+      render 'chopinrx-rich-block', field: mf.benefits_body
+    endcapture
+  endif
+  if mf.benefits_image.value != blank
+    assign image = mf.benefits_image.value
+  endif
 %}
 
 <div class="chx-aboutsplit chx-aboutsplit--{{ section.settings.background }}">
@@ -193,6 +213,10 @@
   "tag": "section",
   "class": "chopinrx-about-split-section",
   "settings": [
+    {
+      "type": "paragraph",
+      "content": "On a product page the product's Benefits custom fields (eyebrow, heading, body, image) replace these settings when they are filled in."
+    },
     {
       "type": "image_picker",
       "id": "image",
