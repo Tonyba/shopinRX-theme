@@ -2122,12 +2122,12 @@
     "settings": [
       {
         "type": "paragraph",
-        "content": "When a prescription item is in the cart, the drawer offers the non-prescription supplements that pair with it. Each Rx product lists its pairings in the custom.pairs_with metafield; the fallback collection is used when it has none. Supplements are added as one-time purchases and never touch the Rx line."
+        "content": "The cart drawer offers non-prescription supplements: first the ones paired with the products in the cart (custom.pairs_with metafield), then products from the fallback collection to fill the list, rotating daily. Prescription products are never offered, and supplements are added as one-time purchases."
       },
       {
         "type": "checkbox",
         "id": "cart_upsell_enabled",
-        "label": "Show pairings in the cart",
+        "label": "Show supplements in the cart",
         "default": true
       },
       {
@@ -2146,7 +2146,7 @@
         "type": "text",
         "id": "cart_upsell_rx_collections",
         "label": "Prescription collections",
-        "info": "Comma-separated handles. Products in these collections, or tagged rx, count as prescription items.",
+        "info": "Comma-separated handles. Products in these collections, or tagged rx, are never offered as supplements.",
         "default": "program, treatment"
       },
       {
