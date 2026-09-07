@@ -11,8 +11,17 @@
   assign body = section.settings.body | replace: '[product]', product.title
 
   # On the product template the settings are connected to the product's
-  # Benefits custom fields, so a product with no heading has nothing to
-  # say here and the section stays out of the page.
+  # Benefits custom fields. A rich text field connected to the body setting
+  # arrives flattened into one paragraph, so the body is rendered from the
+  # field itself to keep its paragraphs.
+  if product.metafields.custom.benefits_body.value != blank
+    capture body
+      render 'chopinrx-rich-block', field: product.metafields.custom.benefits_body
+    endcapture
+  endif
+
+  # A product with no heading has nothing to say here and the section stays
+  # out of the page.
   assign hidden = false
   if template.name == 'product' and heading == blank
     assign hidden = true
