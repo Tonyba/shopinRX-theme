@@ -129,6 +129,7 @@
       "settings": {
         "image": "shopify://shop_images/chx-program_c4bcb7a6-5d0f-4acd-b10d-48f34c9aa667.png",
         "media_position": "right",
+        "mobile_media_position": "bottom",
         "background": "page",
         "eyebrow": "Understanding [product]",
         "heading": "What are the <em>benefits</em> of [product]?",
