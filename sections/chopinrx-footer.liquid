@@ -241,10 +241,11 @@
     border-block-start: var(--border-w) solid var(--alpha-paper-16);
   }
 
-  .chx-footer__col-title {
-    color: var(--text-on-dark);
+  /* Scoped under the section root: the .chx-subtitle primitive resets
+     margin at the same specificity and can land later in the bundle. */
+  .chx-footer .chx-footer__col-title {
     margin-block-end: var(--space-5);
-    margin-bottom: var(--space-5);
+    color: var(--text-on-dark);
   }
 
   .chx-footer__contacts,
