@@ -102,8 +102,9 @@
                 assign alloc_first = allocation.price_adjustments.first.price
                 assign alloc_after = allocation.price_adjustments.last.price
               endif
-              echo plan.id | json
-              echo ':{"first":'
+              echo '"'
+              echo plan.id
+              echo '":{"first":'
               echo alloc_first | money_without_trailing_zeros | json
               echo ',"after":'
               echo alloc_after | money_without_trailing_zeros | json
