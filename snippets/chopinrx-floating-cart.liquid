@@ -1,0 +1,120 @@
+{% doc %}
+  Floating cart button. Sits in the bottom-right corner, shows the number of
+  items, opens the cart drawer, and is only visible while the cart holds
+  something. The count follows every cart change without a reload and the
+  button steps aside while the drawer is open.
+
+  @example
+  {% render 'chopinrx-floating-cart' %}
+{% enddoc %}
+
+{% render 'chopinrx-tokens' %}
+
+{%- if settings.cart_type == 'drawer' and template.name != 'cart' -%}
+  <button
+    type="button"
+    class="chx-fab"
+    aria-controls="cart-drawer"
+    aria-expanded="false"
+    aria-label="{{ 'accessibility.cart' | t }}"
+    data-chx-fab
+    {% if cart.item_count == 0 %}
+      hidden
+    {% endif %}
+  >
+    <span class="chx-fab__icon" aria-hidden="true">
+      {{- 'icon-cart.svg' | inline_asset_content -}}
+    </span>
+    <span class="chx-fab__count" data-chx-fab-count>{{ cart.item_count }}</span>
+    <span class="visually-hidden">{{ 'accessibility.cart_count' | t }}: <span data-chx-fab-count>{{ cart.item_count }}</span></span>
+  </button>
+
+  <script src="{{ 'chopinrx-floating-cart.js' | asset_url }}" defer></script>
+{%- endif -%}
+
+{% stylesheet %}
+  .chx-fab {
+    --icon-stroke-width: 1.5px;
+
+    position: fixed;
+    inset-block-end: calc(var(--space-6) + var(--safe-area-inset-bottom, 0px));
+    inset-inline-end: calc(var(--space-6) + var(--safe-area-inset-right, 0px));
+    z-index: var(--layer-overlay, 16);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 60px;
+    height: 60px;
+    padding: 0;
+    border: 0;
+    border-radius: var(--radius-pill);
+    background-color: var(--surface-dark);
+    color: var(--text-on-dark);
+    box-shadow: 0 8px 24px rgb(20 24 29 / 24%);
+    cursor: pointer;
+    transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.25s ease, background-color 0.2s ease;
+  }
+
+  .chx-fab:hover {
+    background-color: var(--action-primary-bg-hover);
+  }
+
+  .chx-fab:active {
+    transform: scale(0.96);
+  }
+
+  .chx-fab[hidden] {
+    display: flex;
+    opacity: 0;
+    transform: translateY(16px) scale(0.9);
+    pointer-events: none;
+  }
+
+  .chx-fab__icon {
+    display: block;
+    width: 26px;
+    height: 26px;
+  }
+
+  .chx-fab__icon svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  .chx-fab__count {
+    position: absolute;
+    inset-block-start: -4px;
+    inset-inline-end: -4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 24px;
+    height: 24px;
+    padding-inline: 6px;
+    border: 2px solid var(--surface-page);
+    border-radius: var(--radius-pill);
+    background-color: var(--accent-500);
+    font-family: var(--font-ui);
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 1;
+    color: var(--text-on-dark);
+    font-variant-numeric: tabular-nums;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .chx-fab {
+      transition: none;
+    }
+  }
+
+  @media screen and (max-width: 767px) {
+    .chx-fab {
+      inset-block-end: calc(var(--space-4) + var(--safe-area-inset-bottom, 0px));
+      inset-inline-end: calc(var(--space-4) + var(--safe-area-inset-right, 0px));
+      width: 56px;
+      height: 56px;
+    }
+  }
+{% endstylesheet %}
