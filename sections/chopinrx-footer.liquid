@@ -148,7 +148,8 @@
     {%- endif -%}
 
     {%- if section.settings.copyright != blank -%}
-      <p class="chx-footer__copyright">{{ section.settings.copyright }}</p>
+      {%- assign current_year = 'now' | date: '%Y' -%}
+      <p class="chx-footer__copyright">{{ section.settings.copyright | replace: '[year]', current_year }}</p>
     {%- endif -%}
   </div>
 </div>
@@ -565,7 +566,8 @@
       "type": "text",
       "id": "copyright",
       "label": "Copyright",
-      "default": "Copyright ©2026 ChopinRX. All rights reserved."
+      "info": "[year] is replaced with the current year.",
+      "default": "Copyright ©[year] ChopinRX. All rights reserved."
     }
   ],
   "blocks": [
