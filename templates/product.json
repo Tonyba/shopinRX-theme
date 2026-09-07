@@ -86,12 +86,6 @@
             "padding-inline-end": 0
           },
           "blocks": {
-            "easy_subscriptions_subscription_widget_dQc3x3": {
-              "type": "shopify://apps/easy-subscriptions/blocks/subscription-widget/62ae0f16-e4ee-41c3-a62d-125b812e0b06",
-              "settings": {
-                "widget-feature-product": "{{ closest.product }}"
-              }
-            },
             "group_icgrde": {
               "type": "group",
               "name": "t:names.header",
@@ -309,7 +303,6 @@
             }
           },
           "block_order": [
-            "easy_subscriptions_subscription_widget_dQc3x3",
             "group_icgrde",
             "divider_VJhene",
             "variant_picker_R3rGDr",
