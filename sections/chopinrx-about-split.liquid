@@ -4,12 +4,17 @@
   assign image = section.settings.image
   assign check_icon = 'icon-check-circle.svg' | inline_asset_content
   assign features = section.blocks | where: 'type', 'feature'
+
+  # On a product template the copy can name the product with [product].
+  assign eyebrow = section.settings.eyebrow | replace: '[product]', product.title
+  assign heading = section.settings.heading | replace: '[product]', product.title
+  assign body = section.settings.body | replace: '[product]', product.title
 %}
 
 <div class="chx-aboutsplit chx-aboutsplit--{{ section.settings.background }}">
   <div class="chx-container">
     <div
-      class="chx-aboutsplit__grid{% if section.settings.media_position == 'right' %} chx-aboutsplit__grid--media-right{% endif %}"
+      class="chx-aboutsplit__grid{% if section.settings.media_position == 'right' %} chx-aboutsplit__grid--media-right{% endif %}{% if section.settings.mobile_media_position == 'bottom' %} chx-aboutsplit__grid--media-bottom{% endif %}"
     >
       <div class="chx-aboutsplit__media">
         {%- if image != blank -%}
@@ -31,12 +36,12 @@
 
       <div class="chx-aboutsplit__copy">
         {% render 'chopinrx-section-heading',
-          eyebrow: section.settings.eyebrow,
-          heading: section.settings.heading
+          eyebrow: eyebrow,
+          heading: heading
         %}
 
-        {%- if section.settings.body != blank -%}
-          <div class="chx-body-lg chx-aboutsplit__body">{{ section.settings.body }}</div>
+        {%- if body != blank -%}
+          <div class="chx-body-lg chx-aboutsplit__body">{{ body }}</div>
         {%- endif -%}
 
         {%- if features.size > 0 -%}
@@ -142,6 +147,11 @@
       order: 0;
     }
 
+    /* The photograph can follow the copy once the columns stack. */
+    .chx-aboutsplit__grid--media-bottom .chx-aboutsplit__media {
+      order: 2;
+    }
+
     .chx-aboutsplit__media {
       min-height: 0;
       aspect-ratio: 16 / 9;
@@ -201,6 +211,17 @@
     },
     {
       "type": "select",
+      "id": "mobile_media_position",
+      "label": "Image position when stacked",
+      "info": "Tablet and mobile.",
+      "options": [
+        { "value": "top", "label": "Above the copy" },
+        { "value": "bottom", "label": "Below the copy" }
+      ],
+      "default": "top"
+    },
+    {
+      "type": "select",
       "id": "background",
       "label": "Background",
       "options": [
@@ -213,7 +234,8 @@
     {
       "type": "text",
       "id": "eyebrow",
-      "label": "Eyebrow"
+      "label": "Eyebrow",
+      "info": "On a product page, [product] is replaced with the product title."
     },
     {
       "type": "inline_richtext",

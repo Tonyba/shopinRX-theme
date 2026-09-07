@@ -43,10 +43,14 @@
         "title_line_2": "Delivered to you.",
         "body": "<p>Connect with licensed U.S. clinicians for personalized treatment options through a simple online experience, with treatment delivered directly to your door.</p>",
         "primary_label": "Explore Programs",
+        "primary_url": "",
         "secondary_label": "View our treatments",
+        "secondary_url": "",
         "show_trustpilot": true,
         "trustpilot_rating": "Excellent",
-        "trustpilot_count": "436 reviews on"
+        "trustpilot_score": "4.6",
+        "trustpilot_count": "436 reviews on",
+        "trustpilot_url": ""
       }
     },
     "trust_bar": {
@@ -173,7 +177,8 @@
         "eyebrow": "Personalized Care",
         "heading": "With you <em>every step</em> of the way",
         "body": "<p>Your goals, your health history and your needs are different from everyone else's. ChopinRX connects you with independent, licensed providers who evaluate your information and determine whether a treatment is right for you.</p>",
-        "cta_label": "Explore treatments"
+        "cta_label": "Explore treatments",
+        "cta_url": ""
       }
     },
     "gender_split": {
@@ -308,7 +313,9 @@
         "heading": "More than <em>100,000</em> patients trust our treatment plans",
         "show_trustpilot": true,
         "trustpilot_rating": "Excellent",
-        "trustpilot_count": "436 reviews on"
+        "trustpilot_score": "4.6",
+        "trustpilot_count": "436 reviews on",
+        "trustpilot_url": ""
       }
     },
     "proof": {
@@ -455,7 +462,8 @@
       "settings": {
         "eyebrow": "How it works",
         "heading": "Four steps, about ten minutes",
-        "cta_label": "Get Started"
+        "cta_label": "Get Started",
+        "cta_url": ""
       }
     },
     "faq": {
@@ -512,7 +520,8 @@
       "settings": {
         "eyebrow": "Have questions?",
         "heading": "Frequently asked <em>questions</em>",
-        "cta_label": "Get Started"
+        "cta_label": "Get Started",
+        "cta_url": ""
       }
     },
     "insights": {
@@ -522,8 +531,10 @@
         "heading": "Latest insights",
         "blog": "news",
         "posts_count": 3,
+        "featured_tag": "featured",
         "read_more_label": "Read More",
-        "cta_label": "View all"
+        "cta_label": "View all",
+        "cta_url": ""
       }
     }
   },

@@ -11,7 +11,8 @@
   @param {string} [url] - Optional link to the Trustpilot profile.
   @param {boolean} [ink] - Sets the strip in ink rather than on-dark.
   @param {string} [variant] - 'about' leads with the wordmark on desktop and
-    sets the wider stars used on the About hero.
+    sets the wider stars used on the About hero. 'product' leads with the
+    wordmark on desktop and falls back to the default stacked layout on mobile.
 
   @example
   {% render 'chopinrx-trustpilot', rating: 'Excellent', score: '4.6', count: '436 reviews on' %}
@@ -97,30 +98,37 @@
     display: none;
   }
 
-  /* About hero: the wordmark leads and the score sits beside the word. */
-  .chx-trustpilot--about .chx-trustpilot__brand {
+  /* About hero and product page: the wordmark leads and the score sits
+     beside the word. */
+  .chx-trustpilot--about .chx-trustpilot__brand,
+  .chx-trustpilot--product .chx-trustpilot__brand {
     order: -1;
   }
 
-  .chx-trustpilot--about .chx-trustpilot__rating {
+  .chx-trustpilot--about .chx-trustpilot__rating,
+  .chx-trustpilot--product .chx-trustpilot__rating {
     gap: 6px;
   }
 
-  .chx-trustpilot--about .chx-trustpilot__stars {
+  .chx-trustpilot--about .chx-trustpilot__stars,
+  .chx-trustpilot--product .chx-trustpilot__stars {
     order: 1;
     margin-inline-end: 7px;
   }
 
-  .chx-trustpilot--about .chx-trustpilot__score {
+  .chx-trustpilot--about .chx-trustpilot__score,
+  .chx-trustpilot--product .chx-trustpilot__score {
     display: block;
     order: 2;
   }
 
-  .chx-trustpilot--about .chx-trustpilot__rating .chx-trustpilot__word {
+  .chx-trustpilot--about .chx-trustpilot__rating .chx-trustpilot__word,
+  .chx-trustpilot--product .chx-trustpilot__rating .chx-trustpilot__word {
     order: 3;
   }
 
-  .chx-trustpilot--about .chx-trustpilot__count {
+  .chx-trustpilot--about .chx-trustpilot__count,
+  .chx-trustpilot--product .chx-trustpilot__count {
     order: 4;
     margin-inline-start: 7px;
   }
@@ -184,6 +192,11 @@
 
     .chx-trustpilot__count {
       display: none;
+    }
+
+    /* Product page: the wordmark drops back under the rating line. */
+    .chx-trustpilot--product .chx-trustpilot__brand {
+      order: 0;
     }
 
     /* About hero: wider stars, one review line, wordmark underneath. */
