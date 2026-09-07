@@ -70,9 +70,8 @@ export function initPricing() {
 
 /**
  * In-page anchors such as "Start intake" scroll to the pricing section. On
- * desktop the theme scrolls `.page-wrapper` rather than the window, and a
- * native smooth scroll over a long page stalls as lazy images shift the
- * layout, so the scroll is animated here and re-aims at the target each frame.
+ * desktop the theme scrolls `.page-wrapper` rather than the window, so the
+ * scroll is animated here and re-aims at the target each frame.
  */
 export function initAnchorLinks() {
   if (document.documentElement.dataset.chxAnchorsReady === 'true') return;
@@ -97,8 +96,13 @@ export function initAnchorLinks() {
       return scroller.scrollTop + top - margin;
     };
 
+    // The theme sets scroll-behavior: smooth on the scroller and rewrites
+    // history while it scrolls, which cancels a browser-driven smooth scroll a
+    // few pixels in. Every step is therefore an instant scroll of its own.
+    const jump = (top) => scroller.scrollTo({ top, behavior: 'instant' });
+
     if (matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      scroller.scrollTop = offset();
+      jump(offset());
       return;
     }
 
@@ -108,7 +112,7 @@ export function initAnchorLinks() {
     const ease = (t) => 1 - Math.pow(1 - t, 3);
     const step = (now) => {
       const progress = Math.min(1, (now - started) / duration);
-      scroller.scrollTop = from + (offset() - from) * ease(progress);
+      jump(from + (offset() - from) * ease(progress));
       if (progress < 1) requestAnimationFrame(step);
     };
     requestAnimationFrame(step);
