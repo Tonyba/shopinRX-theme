@@ -147,14 +147,6 @@
             "text": "Targets underlying cellular pathways involved in energy production and mitochondrial function."
           }
         },
-        "benefit_2": {
-          "type": "benefit",
-          "settings": {
-            "icon": "icon-flask",
-            "title": "Recovery & Vitality",
-            "text": "Designed to support recovery, sleep quality, and day-to-day vitality under provider guidance."
-          }
-        },
         "benefit_3": {
           "type": "benefit",
           "settings": {
@@ -170,17 +162,25 @@
             "title": "Ongoing Support",
             "text": "Ongoing provider access is available to adjust your protocol as your goals evolve."
           }
+        },
+        "benefit_cAQHLV": {
+          "type": "benefit",
+          "settings": {
+            "icon": "icon-flask",
+            "title": "Provider-Guided Care",
+            "text": "An independent licensed provider reviews your case before any treatment decision is made."
+          }
         }
       },
       "block_order": [
         "benefit_1",
-        "benefit_2",
         "benefit_3",
-        "benefit_4"
+        "benefit_4",
+        "benefit_cAQHLV"
       ],
       "settings": {
-        "eyebrow": "Why Explore This Treatment",
-        "heading": "Designed around your treatment <em>goals</em>."
+        "eyebrow": "{{ product.metafields.custom.why_eyebrow.value }}",
+        "heading": ""
       }
     },
     "how_it_works": {
