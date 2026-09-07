@@ -10,26 +10,16 @@
   assign heading = section.settings.heading | replace: '[product]', product.title
   assign body = section.settings.body | replace: '[product]', product.title
 
-  # A product's own custom fields (custom.benefits_*) take over the copy and
-  # the picture when they are filled in.
-  assign mf = product.metafields.custom
-  if mf.benefits_eyebrow.value != blank
-    assign eyebrow = mf.benefits_eyebrow.value
-  endif
-  if mf.benefits_heading.value != blank
-    capture heading
-      render 'chopinrx-rich-inline', field: mf.benefits_heading
-    endcapture
-  endif
-  if mf.benefits_body.value != blank
-    capture body
-      render 'chopinrx-rich-block', field: mf.benefits_body
-    endcapture
-  endif
-  if mf.benefits_image.value != blank
-    assign image = mf.benefits_image.value
+  # On the product template the settings are connected to the product's
+  # Benefits custom fields, so a product with no heading has nothing to
+  # say here and the section stays out of the page.
+  assign hidden = false
+  if template.name == 'product' and heading == blank
+    assign hidden = true
   endif
 %}
+
+{%- unless hidden -%}
 
 <div class="chx-aboutsplit chx-aboutsplit--{{ section.settings.background }}">
   <div class="chx-container">
@@ -78,6 +68,8 @@
     </div>
   </div>
 </div>
+
+{%- endunless -%}
 
 {% stylesheet %}
   .chx-aboutsplit {
@@ -215,7 +207,7 @@
   "settings": [
     {
       "type": "paragraph",
-      "content": "On a product page the product's Benefits custom fields (eyebrow, heading, body, image) replace these settings when they are filled in."
+      "content": "On the product template these settings are connected to the product's Benefits custom fields. A product without a heading hides the section."
     },
     {
       "type": "image_picker",
