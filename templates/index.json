@@ -15,6 +15,12 @@
         "feature_1": {
           "type": "feature",
           "settings": {
+            "text": "Highest quality products at the most reasonable rates"
+          }
+        },
+        "feature_d7mLmg": {
+          "type": "feature",
+          "settings": {
             "text": "Treatment options selected around your health needs and goals"
           }
         },
@@ -33,6 +39,7 @@
       },
       "block_order": [
         "feature_1",
+        "feature_d7mLmg",
         "feature_2",
         "feature_3"
       ],
