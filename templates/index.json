@@ -103,8 +103,8 @@
     "programs": {
       "type": "chopinrx-programs",
       "settings": {
-        "eyebrow": "Flagship Programs",
-        "heading": "Start With A Flagship Program",
+        "eyebrow": "Premier Programs",
+        "heading": "Start With One of Our Premier Programs",
         "collection": "program",
         "products_count": 3,
         "price_prefix": "From",
