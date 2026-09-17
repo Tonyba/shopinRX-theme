@@ -134,8 +134,8 @@
         "price_prefix": "From",
         "price_unit": "/mo",
         "card_cta_label": "Start intake",
-        "badge_tag": "flagship",
-        "badge_label": "Flagship",
+        "badge_tag": "popular",
+        "badge_label": "Most Popular",
         "cta_label": "See All Programs",
         "cta_url": ""
       }
