@@ -108,6 +108,11 @@
         "type": "shopify://apps/accesspro-accessibility/blocks/accesspro-widget/d1a2aee8-6737-4a3e-a6aa-13d82b562c31",
         "disabled": false,
         "settings": {}
+      },
+      "8086182589341073271": {
+        "type": "shopify://apps/accesspro-accessibility/blocks/accesspro-cookie-banner/d1a2aee8-6737-4a3e-a6aa-13d82b562c31",
+        "disabled": false,
+        "settings": {}
       }
     },
     "color_palette": {
