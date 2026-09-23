@@ -23,7 +23,7 @@
     "header_section": {
       "type": "chopinrx-header",
       "settings": {
-        "wordmark": "ChopinRX",
+        "wordmark": "Chopin RX",
         "menu": "main-menu",
         "show_login": true,
         "login_label": "Login",
