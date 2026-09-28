@@ -470,7 +470,7 @@
         "eyebrow": "How It Works",
         "heading": "Four Simple Steps to Get Started",
         "cta_label": "Get Started",
-        "cta_url": "shopify://collections/program"
+        "cta_url": "#"
       }
     },
     "faq": {
@@ -528,7 +528,7 @@
         "eyebrow": "Have questions?",
         "heading": "Frequently asked <em>questions</em>",
         "cta_label": "Get Started",
-        "cta_url": ""
+        "cta_url": "#"
       }
     },
     "insights": {
@@ -541,7 +541,7 @@
         "featured_tag": "featured",
         "read_more_label": "Read More",
         "cta_label": "View all",
-        "cta_url": ""
+        "cta_url": "shopify://blogs/news"
       }
     }
   },
