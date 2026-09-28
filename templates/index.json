@@ -113,7 +113,7 @@
         "badge_tag": "popular",
         "badge_label": "Most Popular",
         "cta_label": "See All Programs",
-        "cta_url": ""
+        "cta_url": "shopify://collections/program"
       }
     },
     "program_list": {
