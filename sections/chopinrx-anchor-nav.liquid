@@ -1,0 +1,141 @@
+{% render 'chopinrx-tokens' %}
+
+<nav class="chx-anchor-nav" aria-label="{{ section.settings.label | escape }}">
+  <div class="chx-container">
+    <ul class="chx-anchor-nav__list" role="list">
+      {%- for block in section.blocks -%}
+        <li {{ block.shopify_attributes }}>
+          <a
+            class="chx-anchor-nav__link{% if block.settings.highlight %} chx-anchor-nav__link--strong{% endif %}"
+            href="#{{ block.settings.anchor | handleize }}"
+          >
+            {{- block.settings.label -}}
+          </a>
+        </li>
+      {%- endfor -%}
+    </ul>
+  </div>
+</nav>
+
+<script type="module">
+  import { initAnchorLinks } from '{{ 'chopinrx-pricing.js' | asset_url }}';
+  initAnchorLinks();
+</script>
+
+{% stylesheet %}
+  .chx-anchor-nav {
+    padding-block: var(--space-3);
+    border-bottom: var(--border-w) solid var(--border-hairline);
+    background-color: var(--surface-page);
+  }
+
+  /* A single row that scrolls sideways when the links outgrow the well. */
+  .chx-anchor-nav__list {
+    display: flex;
+    gap: 10px;
+    margin: 0;
+    padding: 4px 0;
+    list-style: none;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .chx-anchor-nav__list::-webkit-scrollbar {
+    display: none;
+  }
+
+  .chx-anchor-nav__list > li {
+    flex-shrink: 0;
+  }
+
+  .chx-anchor-nav__link {
+    display: inline-flex;
+    align-items: center;
+    height: 42px;
+    padding-inline: var(--space-4);
+    border-radius: var(--radius-pill);
+    background-color: var(--surface-card-flat);
+    font-family: var(--font-ui);
+    font-size: var(--font-size-body-small);
+    font-weight: 600;
+    line-height: 1;
+    letter-spacing: -0.005em;
+    white-space: nowrap;
+    color: var(--text-heading);
+    text-decoration: none;
+    transition: background-color 0.2s ease, color 0.2s ease;
+  }
+
+  .chx-anchor-nav__link:hover {
+    background-color: var(--surface-well);
+    color: var(--text-heading);
+    text-decoration: none;
+  }
+
+  .chx-anchor-nav__link--strong,
+  .chx-anchor-nav__link--strong:hover {
+    background-color: var(--action-primary-bg);
+    color: var(--action-primary-fg);
+  }
+
+  .chx-anchor-nav__link:focus-visible {
+    outline: 2px solid var(--text-accent);
+    outline-offset: 2px;
+  }
+
+  /* Below the desktop well the row runs to the screen edge. */
+  @media screen and (max-width: 1024px) {
+    .chx-anchor-nav__list {
+      margin-inline: calc(var(--section-px) * -1);
+      padding-inline: var(--section-px);
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Anchor links",
+  "tag": "section",
+  "class": "chopinrx-anchor-nav-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "label",
+      "label": "Accessible name",
+      "default": "On this page"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "link",
+      "name": "Link",
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label",
+          "default": "Shop by goal"
+        },
+        {
+          "type": "text",
+          "id": "anchor",
+          "label": "Anchor id",
+          "info": "The id of the target, without #. Section and group ids are set in their own settings.",
+          "default": "shop-by-goal"
+        },
+        {
+          "type": "checkbox",
+          "id": "highlight",
+          "label": "Highlight",
+          "default": false
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Anchor links"
+    }
+  ]
+}
+{% endschema %}

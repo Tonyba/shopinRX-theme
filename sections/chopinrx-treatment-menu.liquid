@@ -1,0 +1,516 @@
+{% render 'chopinrx-tokens' %}
+
+{%- liquid
+  assign heading_id = section.id | append: '-heading'
+  assign search_id = section.id | append: '-search'
+-%}
+
+<section
+  class="chx-menu"
+  id="{{ section.settings.anchor | default: 'full-menu' | handleize }}"
+  aria-labelledby="{{ heading_id }}"
+  data-chx-menu
+>
+  <div class="chx-container">
+    {% render 'chopinrx-split-heading',
+      eyebrow: section.settings.eyebrow,
+      heading: section.settings.heading,
+      body: section.settings.body,
+      heading_id: heading_id
+    %}
+
+    <form class="chx-menu__search" role="search" action="#">
+      <label class="visually-hidden" for="{{ search_id }}">{{ section.settings.search_label }}</label>
+      <span class="chx-menu__search-icon" aria-hidden="true">{{ 'icon-search.svg' | inline_asset_content }}</span>
+      <input
+        class="chx-menu__search-input"
+        id="{{ search_id }}"
+        type="search"
+        placeholder="{{ section.settings.search_placeholder | escape }}"
+        autocomplete="off"
+        data-chx-menu-search
+      >
+    </form>
+
+    <div class="chx-menu__chips" role="group" aria-label="{{ section.settings.chips_label | escape }}">
+      <button type="button" class="chx-menu__chip" data-chx-menu-chip="all" aria-pressed="true">
+        {{- section.settings.all_label -}}
+      </button>
+      {%- for block in section.blocks -%}
+        {%- if block.settings.collection != blank -%}
+          <button type="button" class="chx-menu__chip" data-chx-menu-chip="{{ block.id }}" aria-pressed="false">
+            {{- block.settings.label | default: block.settings.collection.title -}}
+          </button>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+
+    <div class="chx-menu__groups">
+      {%- for block in section.blocks -%}
+        {%- liquid
+          assign collection_ref = block.settings.collection
+          if collection_ref == blank
+            continue
+          endif
+          assign label = block.settings.label | default: collection_ref.title
+          assign count_text = section.settings.count_label | replace: '[count]', collection_ref.products_count
+        -%}
+        <div class="chx-menu__group" data-chx-menu-group="{{ block.id }}" {{ block.shopify_attributes }}>
+          <div class="chx-menu__group-head">
+            <h3 class="chx-menu__group-title">{{ label }}</h3>
+            <p class="chx-menu__group-count">{{ count_text }}</p>
+          </div>
+          <ul class="chx-menu__rows" role="list">
+            {%- for item in collection_ref.products limit: 50 -%}
+              {%- liquid
+                assign subtitle = item.metafields.custom.subtitle.value
+                assign actives = item.metafields.custom.ingredients.value | join: ' '
+                assign forms = item.variants | map: 'option1' | uniq
+                assign search_text = item.title | append: ' ' | append: subtitle | append: ' ' | append: actives | downcase | escape
+                assign intake_url = item.metafields.custom.mydos_link.value | default: '#'
+              -%}
+              <li class="chx-menu__row" data-chx-menu-row data-chx-menu-text="{{ search_text }}">
+                <div class="chx-menu__name-wrap">
+                  <p class="chx-menu__name">
+                    <span>{{ item.title }}{% if item.tags contains 'investigational' %}*{% endif %}</span>
+                    {%- if item.tags contains 'protocol' -%}
+                      <span class="chx-menu__badge">{{ section.settings.protocol_badge }}</span>
+                    {%- elsif item.tags contains 'branded' -%}
+                      <span class="chx-menu__badge chx-menu__badge--branded">{{ section.settings.branded_badge }}</span>
+                    {%- endif -%}
+                  </p>
+                  {%- if subtitle != blank -%}
+                    <p class="chx-menu__sub">{{ subtitle }}</p>
+                  {%- endif -%}
+                </div>
+                <ul class="chx-menu__forms" role="list" aria-label="{{ section.settings.forms_label | escape }}">
+                  {%- for form in forms -%}
+                    {%- if form != 'Default Title' -%}
+                      <li class="chx-menu__form">{{ form }}</li>
+                    {%- endif -%}
+                  {%- endfor -%}
+                </ul>
+                {% render 'chopinrx-price-from',
+                  amount: item.price_min,
+                  prefix: section.settings.price_prefix,
+                  unit: section.settings.price_unit,
+                  stack: true
+                %}
+                <a
+                  class="chx-btn chx-btn--sm chx-btn--secondary chx-menu__cta"
+                  href="{{ intake_url }}"
+                  aria-label="{{ section.settings.cta_label | escape }}: {{ item.title | escape }}"
+                >
+                  {{- section.settings.cta_label -}}
+                </a>
+              </li>
+            {%- endfor -%}
+          </ul>
+        </div>
+      {%- endfor -%}
+
+      <p class="chx-menu__empty" data-chx-menu-empty role="status" hidden>{{ section.settings.empty_text }}</p>
+    </div>
+  </div>
+</section>
+
+<script type="module">
+  import { initMenuFilter } from '{{ 'chopinrx-menu-filter.js' | asset_url }}';
+  initMenuFilter();
+</script>
+
+{% stylesheet %}
+  .chx-menu {
+    padding-block: var(--section-py-tight);
+    background-color: var(--surface-card-flat);
+    scroll-margin-top: var(--space-6);
+  }
+
+  .chx-menu [hidden] {
+    display: none;
+  }
+
+  .chx-menu__search {
+    position: relative;
+    margin-block-start: var(--space-8);
+  }
+
+  .chx-menu__search-icon {
+    position: absolute;
+    top: 50%;
+    left: var(--space-5);
+    width: 20px;
+    height: 20px;
+    color: var(--text-muted);
+    transform: translateY(-50%);
+    pointer-events: none;
+    --icon-stroke-width: 1.5px;
+  }
+
+  .chx-menu__search-icon svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  .chx-menu__search-input {
+    width: 100%;
+    height: 54px;
+    padding-inline: 52px var(--space-5);
+    border: var(--border-w) solid var(--border-hairline);
+    border-radius: var(--radius-pill);
+    background-color: var(--surface-card);
+    font-family: var(--font-ui);
+    font-size: 17px;
+    color: var(--text-body);
+    -webkit-appearance: none;
+    appearance: none;
+  }
+
+  .chx-menu__search-input::placeholder {
+    color: var(--text-muted);
+  }
+
+  .chx-menu__search-input:focus-visible {
+    outline: 2px solid var(--text-accent);
+    outline-offset: 2px;
+  }
+
+  .chx-menu__chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-block-start: var(--space-4);
+  }
+
+  .chx-menu__chip {
+    display: inline-flex;
+    align-items: center;
+    height: 44px;
+    padding-inline: var(--space-4);
+    border: var(--border-w) solid var(--border-hairline);
+    border-radius: var(--radius-pill);
+    background-color: var(--surface-card);
+    font-family: var(--font-ui);
+    font-size: 15px;
+    font-weight: 600;
+    line-height: 1;
+    white-space: nowrap;
+    color: var(--text-heading);
+    cursor: pointer;
+    transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+  }
+
+  .chx-menu__chip:hover {
+    border-color: var(--border-strong);
+  }
+
+  .chx-menu__chip[aria-pressed='true'] {
+    border-color: var(--ink-900);
+    background-color: var(--ink-900);
+    color: var(--text-on-dark);
+  }
+
+  .chx-menu__chip:focus-visible {
+    outline: 2px solid var(--text-accent);
+    outline-offset: 2px;
+  }
+
+  .chx-menu__groups {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-5);
+    margin-block-start: var(--space-6);
+  }
+
+  .chx-menu__group {
+    overflow: hidden;
+    border: var(--border-w) solid var(--border-hairline);
+    border-radius: var(--radius-lg);
+    background-color: var(--surface-card);
+  }
+
+  .chx-menu__group-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-4);
+    padding: var(--space-6);
+    border-bottom: var(--border-w) solid var(--border-hairline);
+  }
+
+  .chx-menu__group-title {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: var(--font-size-subtitle);
+    font-weight: 600;
+    line-height: 1.28;
+    letter-spacing: -0.01em;
+    color: var(--text-heading);
+  }
+
+  .chx-menu__group-count {
+    margin: 0;
+    font-family: var(--font-ui);
+    font-size: var(--font-size-body-small);
+    color: var(--text-muted);
+  }
+
+  .chx-menu__rows {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .chx-menu__row {
+    display: grid;
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr) 110px auto;
+    align-items: center;
+    gap: var(--space-4);
+    padding: var(--space-4) var(--space-6);
+    border-top: var(--border-w) solid var(--border-hairline);
+  }
+
+  .chx-menu__row:first-child {
+    border-top: 0;
+  }
+
+  .chx-menu__name {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 6px;
+    margin: 0;
+    font-family: var(--font-ui);
+    font-size: var(--font-size-body);
+    font-weight: 600;
+    line-height: 1.4;
+    color: var(--text-heading);
+  }
+
+  .chx-menu__badge {
+    display: inline-flex;
+    align-items: center;
+    height: 20px;
+    padding-inline: 8px;
+    border-radius: var(--radius-pill);
+    background-color: var(--ink-900);
+    font-size: 11px;
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-on-dark);
+  }
+
+  .chx-menu__badge--branded {
+    background-color: var(--surface-info-soft);
+    color: var(--text-info);
+  }
+
+  .chx-menu__sub {
+    margin: 2px 0 0;
+    font-family: var(--font-ui);
+    font-size: var(--font-size-body-small);
+    line-height: 1.43;
+    color: var(--text-muted);
+  }
+
+  .chx-menu__forms {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .chx-menu__form {
+    display: inline-flex;
+    align-items: center;
+    height: 26px;
+    padding-inline: 10px;
+    border: var(--border-w) solid var(--border-hairline);
+    border-radius: var(--radius-pill);
+    font-family: var(--font-ui);
+    font-size: 13px;
+    line-height: 1;
+    color: var(--text-body);
+  }
+
+  .chx-menu__row .chx-price-from {
+    font-size: 15px;
+  }
+
+  .chx-menu__empty {
+    margin: 0;
+    padding: var(--space-6);
+    font-family: var(--font-ui);
+    font-size: var(--font-size-body);
+    color: var(--text-muted);
+    text-align: center;
+  }
+
+  @media screen and (max-width: 767px) {
+    .chx-menu__group-head {
+      padding: var(--space-4);
+    }
+
+    .chx-menu__row {
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: var(--space-3);
+      padding: var(--space-4);
+    }
+
+    .chx-menu__name-wrap,
+    .chx-menu__forms {
+      grid-column: 1 / -1;
+    }
+
+    .chx-menu__row .chx-price-from--stack .chx-price-from__prefix {
+      display: inline;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Treatment menu",
+  "tag": "div",
+  "class": "chopinrx-menu-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "anchor",
+      "label": "Anchor id",
+      "default": "full-menu"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Full treatment menu"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Know what you want?"
+    },
+    {
+      "type": "richtext",
+      "id": "body",
+      "label": "Text"
+    },
+    {
+      "type": "header",
+      "content": "Search and filters"
+    },
+    {
+      "type": "text",
+      "id": "search_label",
+      "label": "Search label",
+      "default": "Search treatments"
+    },
+    {
+      "type": "text",
+      "id": "search_placeholder",
+      "label": "Search placeholder",
+      "default": "Search treatments, e.g. tadalafil"
+    },
+    {
+      "type": "text",
+      "id": "chips_label",
+      "label": "Category filter label",
+      "default": "Filter by category"
+    },
+    {
+      "type": "text",
+      "id": "all_label",
+      "label": "All label",
+      "default": "All"
+    },
+    {
+      "type": "text",
+      "id": "empty_text",
+      "label": "No results text",
+      "default": "No treatments match your search."
+    },
+    {
+      "type": "header",
+      "content": "Rows"
+    },
+    {
+      "type": "text",
+      "id": "count_label",
+      "label": "Count label",
+      "info": "[count] is replaced with the number of treatments.",
+      "default": "[count] treatments"
+    },
+    {
+      "type": "text",
+      "id": "protocol_badge",
+      "label": "Protocol badge",
+      "info": "Shown on products tagged protocol.",
+      "default": "Protocol"
+    },
+    {
+      "type": "text",
+      "id": "branded_badge",
+      "label": "Branded badge",
+      "info": "Shown on products tagged branded.",
+      "default": "Branded"
+    },
+    {
+      "type": "text",
+      "id": "forms_label",
+      "label": "Forms label",
+      "default": "Available forms"
+    },
+    {
+      "type": "text",
+      "id": "price_prefix",
+      "label": "Price prefix",
+      "default": "From"
+    },
+    {
+      "type": "text",
+      "id": "price_unit",
+      "label": "Price unit",
+      "default": "/mo"
+    },
+    {
+      "type": "text",
+      "id": "cta_label",
+      "label": "Button label",
+      "info": "Links to the product's Mydos Link field.",
+      "default": "Start intake"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "category",
+      "name": "Category",
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label",
+          "info": "Defaults to the collection title."
+        },
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "Collection",
+          "info": "Rows follow the collection's sort order."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Treatment menu"
+    }
+  ]
+}
+{% endschema %}
