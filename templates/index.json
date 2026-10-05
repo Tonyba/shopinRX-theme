@@ -15,7 +15,13 @@
         "feature_1": {
           "type": "feature",
           "settings": {
-            "text": "Highest quality products for human consumption at the most reasonable rates"
+            "text": "Highest quality products for human consumption at reasonable rates"
+          }
+        },
+        "feature_69m9LP": {
+          "type": "feature",
+          "settings": {
+            "text": "Plans tailored to your goals"
           }
         },
         "feature_d7mLmg": {
@@ -45,6 +51,7 @@
       },
       "block_order": [
         "feature_1",
+        "feature_69m9LP",
         "feature_d7mLmg",
         "feature_2",
         "feature_3",
