@@ -1,0 +1,885 @@
+{% render 'chopinrx-tokens' %}
+
+{%- liquid
+  assign copy_keys = 'brand,close_label,back_label,note,question_label,start_eyebrow,gender_heading,gender_text,mens_label,mens_text,womens_label,womens_text,q1_heading,q1_text,unsure_title,unsure_text,stage_heading,stage_text,stage_options,q2_heading,q2_text,q2_options,q2_points,q3_heading,q3_text,q3_options,q3_points,q4_heading,q4_text,q4_options,q4_chips,q5_heading,q5_text,q5_options,q5_points,q6_heading,q6_text,q6_options,q6_points,q7_heading,q7_text,continue_label,building_heading,building_text,format_any,format_needle_free,check_goal,check_format,check_tier,show_results,results_eyebrow,results_heading,recommended_label,tier_names,intake_badge,form_prefix,price_prefix,price_unit,cta_label,next_heading,next_suffix,see_all,browse_menu,start_over,disclaimer,footnote' | split: ','
+  assign slots = '1,2,3' | split: ','
+-%}
+
+<div class="chx-quiz-root" data-chx-quiz>
+  <dialog class="chx-quiz" aria-labelledby="ChxQuizHeading">
+    <div class="chx-quiz__panel">
+      <div class="chx-quiz__bar">
+        <p class="chx-quiz__brand">{{ section.settings.brand }}</p>
+        <button type="button" class="chx-quiz__close" data-chx-quiz-close aria-label="{{ section.settings.close_label | escape }}">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+            <path d="M5 5l10 10M15 5L5 15" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+          </svg>
+        </button>
+      </div>
+      <div class="chx-quiz__progress" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" data-chx-quiz-progress>
+        <span class="chx-quiz__progress-fill"></span>
+      </div>
+      <div class="chx-quiz__body" data-chx-quiz-body aria-live="polite"></div>
+      <div class="chx-quiz__foot" data-chx-quiz-foot>
+        <button type="button" class="chx-quiz__back" data-chx-quiz-back>← {{ section.settings.back_label }}</button>
+        <p class="chx-quiz__note">{{ section.settings.note }}</p>
+      </div>
+    </div>
+  </dialog>
+
+  <script type="application/json" data-chx-quiz-data>
+    {
+      "copy": {
+        {%- for key in copy_keys -%}
+          {{ key | json }}: {{ section.settings[key] | default: '' | json }}{% unless forloop.last %},{% endunless %}
+        {%- endfor -%}
+      },
+      "pages": {
+        "mens": {{ section.settings.mens_collection.url | default: '' | json }},
+        "womens": {{ section.settings.womens_collection.url | default: '' | json }}
+      },
+      "goals": [
+        {%- for block in section.blocks -%}
+          {
+            "id": {{ block.id | json }},
+            "gender": {{ block.settings.gender | json }},
+            "letter": {{ block.settings.letter | json }},
+            "title": {{ block.settings.title | json }},
+            "phrase": {{ block.settings.phrase | default: block.settings.title | downcase | json }},
+            "subtitle": {{ block.settings.subtitle | default: '' | json }},
+            "stage": {{ block.settings.stage_question }},
+            "strict": {{ block.settings.strict_advanced }},
+            "sets": {
+              {%- for set in (1..2) -%}
+                {%- if set == 1 %}"inj"{% else %},"nf"{% endif %}: [
+                  {%- for n in slots -%}
+                    {%- liquid
+                      if set == 1
+                        assign prefix = 'inj_' | append: n
+                      else
+                        assign prefix = 'nf_' | append: n
+                      endif
+                      assign product_key = prefix | append: '_product'
+                      assign name_key = prefix | append: '_name'
+                      assign sub_key = prefix | append: '_sub'
+                      assign form_key = prefix | append: '_form'
+                      assign variant_key = prefix | append: '_variant'
+                      assign slot_product = block.settings[product_key]
+                    -%}
+                    {%- if slot_product != blank -%}
+                      {% render 'chopinrx-quiz-item',
+                        item: slot_product,
+                        name: block.settings[name_key],
+                        sub: block.settings[sub_key],
+                        form: block.settings[form_key],
+                        variant_form: block.settings[variant_key]
+                      %}
+                    {%- else -%}
+                      null
+                    {%- endif -%}
+                    {%- unless forloop.last %},{% endunless -%}
+                  {%- endfor -%}
+                ]
+              {%- endfor -%}
+            },
+            "next": [
+              {%- assign first_next = true -%}
+              {%- for n in (1..2) -%}
+                {%- liquid
+                  assign product_key = 'next_' | append: n | append: '_product'
+                  assign name_key = 'next_' | append: n | append: '_name'
+                  assign next_product = block.settings[product_key]
+                -%}
+                {%- if next_product != blank -%}
+                  {%- unless first_next %},{% endunless -%}
+                  {%- assign first_next = false -%}
+                  {% render 'chopinrx-quiz-item', item: next_product, name: block.settings[name_key] %}
+                {%- endif -%}
+              {%- endfor -%}
+            ],
+            "extra":
+              {%- if block.settings.extra_product != blank -%}
+                {% render 'chopinrx-quiz-item', item: block.settings.extra_product, name: block.settings.extra_name %}
+              {%- else -%}
+                null
+              {%- endif -%}
+          }{% unless forloop.last %},{% endunless %}
+        {%- endfor -%}
+      ]
+    }
+  </script>
+</div>
+
+<script type="module">
+  // The quiz script loads on the first click that asks for it.
+  const root = document.querySelector('[data-chx-quiz]');
+  const pattern = /#find-your-program(?:-(mens|womens))?$/;
+  let quiz;
+
+  document.addEventListener(
+    'click',
+    async (event) => {
+      const trigger = event.target instanceof Element ? event.target.closest('a[href*="#find-your-program"], [data-chx-quiz-open]') : null;
+      if (!trigger || !root) return;
+      const match = (trigger.getAttribute('href') || '').match(pattern);
+      if (trigger.tagName === 'A' && !match) return;
+
+      event.preventDefault();
+      event.stopPropagation();
+      if (!quiz) {
+        const { createQuiz } = await import('{{ 'chopinrx-quiz.js' | asset_url }}');
+        quiz = createQuiz(root);
+      }
+      quiz.open(trigger.dataset.chxQuizOpen || match?.[1] || '', trigger);
+    },
+    true
+  );
+</script>
+
+{% stylesheet %}
+  .chx-quiz {
+    width: min(480px, calc(100vw - 32px));
+    max-width: none;
+    max-height: min(860px, calc(100dvh - 48px));
+    margin: auto;
+    padding: 0;
+    border: 0;
+    border-radius: var(--radius-xl);
+    background-color: var(--surface-card);
+    color: var(--text-body);
+    box-shadow: 0 24px 64px rgb(20 24 29 / 0.24);
+    overflow: hidden;
+  }
+
+  .chx-quiz[open] {
+    display: flex;
+  }
+
+  .chx-quiz::backdrop {
+    background-color: rgb(20 24 29 / 0.56);
+  }
+
+  .chx-quiz__panel {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-height: inherit;
+    min-height: 620px;
+  }
+
+  .chx-quiz__bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-4);
+    padding: var(--space-5) var(--space-6) var(--space-3);
+  }
+
+  .chx-quiz__brand {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: var(--font-size-subtitle);
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+    color: var(--text-heading);
+  }
+
+  .chx-quiz__close {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    margin-inline-end: -8px;
+    padding: 0;
+    border: 0;
+    border-radius: var(--radius-pill);
+    background: none;
+    color: var(--text-heading);
+    cursor: pointer;
+  }
+
+  .chx-quiz__close:hover {
+    background-color: var(--surface-card-flat);
+  }
+
+  .chx-quiz__progress {
+    height: 4px;
+    margin-inline: var(--space-6);
+    border-radius: var(--radius-pill);
+    background-color: var(--surface-card-flat);
+    overflow: hidden;
+  }
+
+  .chx-quiz__progress-fill {
+    display: block;
+    width: var(--chx-quiz-progress, 0%);
+    height: 100%;
+    border-radius: inherit;
+    background-color: var(--accent-500);
+    transition: width 0.3s ease;
+  }
+
+  .chx-quiz__body {
+    flex: 1 1 auto;
+    padding: var(--space-6);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+
+  .chx-quiz__foot {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-4);
+    padding: var(--space-4) var(--space-6) var(--space-5);
+  }
+
+  .chx-quiz__foot[hidden] {
+    display: none;
+  }
+
+  .chx-quiz__back {
+    padding: 0;
+    border: 0;
+    background: none;
+    font-family: var(--font-ui);
+    font-size: var(--font-size-body-small);
+    color: var(--text-muted);
+    cursor: pointer;
+  }
+
+  .chx-quiz__back:hover {
+    color: var(--text-heading);
+  }
+
+  .chx-quiz__note {
+    margin: 0;
+    font-family: var(--font-ui);
+    font-size: var(--font-size-body-small);
+    color: var(--text-muted);
+  }
+
+  .chx-quiz button:focus-visible,
+  .chx-quiz a:focus-visible {
+    outline: 2px solid var(--text-accent);
+    outline-offset: 2px;
+  }
+
+  /* ── Step content ─────────────────────────── */
+  .chx-quiz__eyebrow {
+    margin: 0 0 var(--space-2);
+    font-family: var(--font-ui);
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 1.3;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--text-accent);
+  }
+
+  .chx-quiz__heading {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: 28px;
+    font-weight: 600;
+    line-height: 1.12;
+    letter-spacing: -0.02em;
+    color: var(--text-heading);
+  }
+
+  .chx-quiz__heading:focus {
+    outline: none;
+  }
+
+  .chx-quiz__text {
+    margin: var(--space-2) 0 0;
+    font-family: var(--font-ui);
+    font-size: var(--font-size-body-small);
+    line-height: 1.5;
+    color: var(--text-muted);
+  }
+
+  .chx-quiz__options {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin: var(--space-5) 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .chx-quiz__option {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    width: 100%;
+    min-height: 54px;
+    padding: var(--space-3) var(--space-4);
+    border: var(--border-w) solid var(--border-hairline);
+    border-radius: var(--radius-md);
+    background-color: var(--surface-card);
+    font-family: var(--font-ui);
+    text-align: start;
+    text-decoration: none;
+    color: var(--text-heading);
+    cursor: pointer;
+    transition: background-color 0.15s ease, border-color 0.15s ease;
+  }
+
+  .chx-quiz__option:hover,
+  .chx-quiz__option[aria-pressed='true'] {
+    border-color: var(--accent-500);
+    background-color: var(--surface-accent-soft);
+    color: var(--text-heading);
+    text-decoration: none;
+  }
+
+  .chx-quiz__option--dashed {
+    border-style: dashed;
+  }
+
+  .chx-quiz__letter {
+    display: inline-flex;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    background-color: var(--ink-900);
+    font-size: var(--font-size-body-small);
+    font-weight: 700;
+    color: var(--accent-500);
+  }
+
+  .chx-quiz__option--dashed .chx-quiz__letter {
+    background-color: var(--surface-card-flat);
+    color: var(--text-heading);
+  }
+
+  .chx-quiz__option-copy {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+  }
+
+  .chx-quiz__option-title {
+    font-size: 15px;
+    font-weight: 600;
+    line-height: 1.35;
+  }
+
+  .chx-quiz__option-sub {
+    font-size: 13px;
+    line-height: 1.35;
+    color: var(--text-muted);
+  }
+
+  .chx-quiz__chevron {
+    flex-shrink: 0;
+    font-size: 18px;
+    line-height: 1;
+    color: var(--text-muted);
+  }
+
+  .chx-quiz__option[aria-pressed='true'] .chx-quiz__chevron {
+    color: var(--text-accent);
+  }
+
+  .chx-quiz__genders {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-3);
+    margin-block-start: var(--space-5);
+  }
+
+  .chx-quiz__gender {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-3);
+    padding: var(--space-4);
+    min-height: 170px;
+  }
+
+  .chx-quiz__gender .chx-quiz__letter {
+    width: 40px;
+    height: 40px;
+    font-size: var(--font-size-body-large);
+  }
+
+  .chx-quiz__continue {
+    width: 100%;
+    margin-block-start: var(--space-5);
+  }
+
+  /* ── Building ─────────────────────────────── */
+  .chx-quiz__building {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100%;
+    text-align: center;
+  }
+
+  .chx-quiz__spinner {
+    width: 44px;
+    height: 44px;
+    margin-block-end: var(--space-6);
+    border: 3px solid var(--surface-card-flat);
+    border-top-color: var(--accent-500);
+    border-radius: 50%;
+    animation: chx-quiz-spin 0.9s linear infinite;
+  }
+
+  .chx-quiz__checks {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin: var(--space-5) 0 0;
+    padding: 0;
+    list-style: none;
+    font-family: var(--font-ui);
+    font-size: var(--font-size-body-small);
+    font-weight: 600;
+    text-align: start;
+    color: var(--text-heading);
+  }
+
+  .chx-quiz__checks .is-pending {
+    font-weight: 400;
+    color: var(--text-muted);
+  }
+
+  .chx-quiz__show {
+    margin-block-start: var(--space-6);
+  }
+
+  @keyframes chx-quiz-spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .chx-quiz__spinner {
+      animation: none;
+    }
+
+    .chx-quiz__progress-fill {
+      transition: none;
+    }
+  }
+
+  /* ── Results ──────────────────────────────── */
+  .chx-quiz__chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin: var(--space-3) 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .chx-quiz__chip {
+    display: inline-flex;
+    align-items: center;
+    height: 30px;
+    padding-inline: var(--space-3);
+    border-radius: var(--radius-pill);
+    background-color: var(--surface-card-flat);
+    font-family: var(--font-ui);
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-heading);
+  }
+
+  .chx-quiz__tiers {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    margin-block-start: var(--space-5);
+  }
+
+  .chx-quiz-tier {
+    display: flex;
+    flex-direction: column;
+    padding: var(--space-4) var(--space-5);
+    border: var(--border-w) solid var(--border-hairline);
+    border-radius: var(--radius-lg);
+    background-color: var(--surface-card);
+  }
+
+  .chx-quiz-tier--pick {
+    border: 2px solid var(--ink-900);
+    padding: calc(var(--space-4) - 1px) calc(var(--space-5) - 1px);
+    box-shadow: 0 10px 24px rgb(20 24 29 / 0.08);
+  }
+
+  .chx-quiz-tier__pill {
+    align-self: flex-start;
+    margin-block-end: var(--space-2);
+    padding: 4px 10px;
+    border-radius: var(--radius-pill);
+    background-color: var(--accent-500);
+    font-family: var(--font-ui);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-on-dark);
+  }
+
+  .chx-quiz-tier__top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-2);
+  }
+
+  .chx-quiz-tier__tier {
+    margin: 0;
+    font-family: var(--font-ui);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+
+  .chx-quiz-tier--pick .chx-quiz-tier__tier {
+    color: var(--text-accent);
+  }
+
+  .chx-quiz-tier__badge {
+    display: inline-flex;
+    align-items: center;
+    height: 22px;
+    padding-inline: 8px;
+    border-radius: var(--radius-pill);
+    background-color: var(--ink-900);
+    font-family: var(--font-ui);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-on-dark);
+  }
+
+  .chx-quiz-tier__name {
+    margin: var(--space-2) 0 0;
+    font-family: var(--font-display);
+    font-size: var(--font-size-subtitle);
+    font-weight: 600;
+    line-height: 1.25;
+    letter-spacing: -0.01em;
+    color: var(--text-heading);
+  }
+
+  .chx-quiz-tier__sub {
+    margin: 2px 0 0;
+    font-family: var(--font-ui);
+    font-size: var(--font-size-body-small);
+    color: var(--text-muted);
+  }
+
+  .chx-quiz-tier__form {
+    margin: var(--space-2) 0 0;
+    font-family: var(--font-ui);
+    font-size: var(--font-size-body-small);
+    color: var(--text-body);
+  }
+
+  .chx-quiz-tier__form strong {
+    font-weight: 600;
+    color: var(--text-heading);
+  }
+
+  .chx-quiz-tier__foot {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-3);
+    margin-block-start: var(--space-4);
+  }
+
+  .chx-quiz-tier__foot .chx-price-from {
+    font-size: var(--font-size-subtitle);
+  }
+
+  .chx-quiz__next {
+    margin-block-start: var(--space-5);
+    padding: var(--space-4) var(--space-5);
+    border-radius: var(--radius-lg);
+    background-color: var(--surface-card-flat);
+  }
+
+  .chx-quiz__next-title {
+    margin: 0;
+    padding-block-end: var(--space-3);
+    border-bottom: var(--border-w) solid var(--border-hairline);
+    font-family: var(--font-ui);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+
+  .chx-quiz__next-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .chx-quiz__next-link {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-3);
+    padding-block: var(--space-3);
+    font-family: var(--font-ui);
+    text-decoration: none;
+    color: var(--text-heading);
+  }
+
+  .chx-quiz__next-list li + li .chx-quiz__next-link {
+    border-top: var(--border-w) solid var(--border-hairline);
+  }
+
+  .chx-quiz__next-link:hover {
+    color: var(--text-accent);
+    text-decoration: none;
+  }
+
+  .chx-quiz__next-name {
+    display: block;
+    font-size: 15px;
+    font-weight: 600;
+  }
+
+  .chx-quiz__next-meta {
+    display: block;
+    font-size: 13px;
+    color: var(--text-muted);
+  }
+
+  .chx-quiz__links {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-2);
+    margin-block-start: var(--space-5);
+  }
+
+  .chx-quiz__link {
+    padding: 0;
+    border: 0;
+    background: none;
+    font-family: var(--font-ui);
+    font-size: 15px;
+    font-weight: 600;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    color: var(--text-heading);
+    cursor: pointer;
+  }
+
+  .chx-quiz__link:hover {
+    color: var(--text-accent);
+  }
+
+  .chx-quiz__fineprint {
+    margin: var(--space-4) 0 0;
+    font-family: var(--font-ui);
+    font-size: 12px;
+    line-height: 1.5;
+    color: var(--text-muted);
+  }
+
+  /* Phones get a full-screen sheet instead of a floating card. */
+  @media screen and (max-width: 767px) {
+    .chx-quiz {
+      width: 100vw;
+      height: 100dvh;
+      max-height: none;
+      border-radius: 0;
+    }
+
+    .chx-quiz__panel {
+      min-height: 0;
+      height: 100%;
+    }
+
+    .chx-quiz__bar,
+    .chx-quiz__body,
+    .chx-quiz__foot {
+      padding-inline: var(--space-5);
+    }
+
+    .chx-quiz__progress {
+      margin-inline: var(--space-5);
+    }
+
+    .chx-quiz__heading {
+      font-size: 26px;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Program quiz",
+  "tag": "div",
+  "class": "chopinrx-quiz-section",
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Opens from any link to #find-your-program, #find-your-program-mens or #find-your-program-womens."
+    },
+    { "type": "collection", "id": "mens_collection", "label": "Men's page" },
+    { "type": "collection", "id": "womens_collection", "label": "Women's page" },
+    { "type": "text", "id": "brand", "label": "Brand", "default": "Chopin RX" },
+    { "type": "text", "id": "close_label", "label": "Close label", "default": "Close" },
+    { "type": "text", "id": "back_label", "label": "Back label", "default": "Back" },
+    { "type": "text", "id": "note", "label": "Footer note", "default": "Not medical advice" },
+    { "type": "text", "id": "question_label", "label": "Question counter", "info": "[n] and [total] are replaced.", "default": "Question [n] of [total]" },
+    { "type": "header", "content": "Who is this for?" },
+    { "type": "text", "id": "start_eyebrow", "label": "Eyebrow", "default": "Let's start" },
+    { "type": "text", "id": "gender_heading", "label": "Heading", "default": "Who is this for?" },
+    { "type": "text", "id": "gender_text", "label": "Text", "default": "We'll tailor the questions and options." },
+    { "type": "text", "id": "mens_label", "label": "Men label", "default": "Men's health" },
+    { "type": "text", "id": "mens_text", "label": "Men text", "default": "Weight, performance, recovery" },
+    { "type": "text", "id": "womens_label", "label": "Women label", "default": "Women's health" },
+    { "type": "text", "id": "womens_text", "label": "Women text", "default": "Hormones, weight, intimacy, skin" },
+    { "type": "header", "content": "Goal" },
+    { "type": "text", "id": "q1_heading", "label": "Heading", "default": "What do you want help with most?" },
+    { "type": "text", "id": "q1_text", "label": "Text", "default": "Pick one. You can explore everything else later." },
+    { "type": "text", "id": "unsure_title", "label": "Not sure option", "default": "I'm not sure, show me everything" },
+    { "type": "text", "id": "unsure_text", "label": "Not sure text", "default": "Goes to Shop by goal" },
+    { "type": "header", "content": "Hormone stage" },
+    { "type": "text", "id": "stage_heading", "label": "Heading", "default": "Which sounds most like you?" },
+    { "type": "text", "id": "stage_text", "label": "Text", "default": "So we show the right hormone options." },
+    { "type": "textarea", "id": "stage_options", "label": "Answers", "info": "One per line.", "default": "My cycles are changing\nMy periods have stopped\nNot sure" },
+    { "type": "header", "content": "Timing" },
+    { "type": "text", "id": "q2_heading", "label": "Heading", "default": "How soon do you want to see progress?" },
+    { "type": "text", "id": "q2_text", "label": "Text", "default": "There's no wrong answer. This helps us weigh your options." },
+    { "type": "textarea", "id": "q2_options", "label": "Answers", "info": "One per line.", "default": "Within weeks\nOver a few months\nI'm in it for the long term" },
+    { "type": "text", "id": "q2_points", "label": "Points per answer", "info": "Comma separated, in answer order.", "default": "1,0,-1" },
+    { "type": "header", "content": "Familiarity" },
+    { "type": "text", "id": "q3_heading", "label": "Heading", "default": "How familiar are you with treatments like these?" },
+    { "type": "text", "id": "q3_text", "label": "Text", "default": "We'll match the starting point to your comfort level." },
+    { "type": "textarea", "id": "q3_options", "label": "Answers", "info": "One per line.", "default": "Brand new\nSomewhat familiar\nVery familiar" },
+    { "type": "text", "id": "q3_points", "label": "Points per answer", "default": "-1,0,1" },
+    { "type": "header", "content": "Injections" },
+    { "type": "text", "id": "q4_heading", "label": "Heading", "default": "Are injections OK?" },
+    { "type": "text", "id": "q4_text", "label": "Text", "default": "Many options come in pills, creams, sprays or strips." },
+    { "type": "textarea", "id": "q4_options", "label": "Answers", "info": "Injections OK first, avoid needles second.", "default": "Yes, injections are fine\nI'd rather avoid needles" },
+    { "type": "textarea", "id": "q4_chips", "label": "Result chips", "info": "Short labels for the two answers.", "default": "Injections OK\nNeedle-free" },
+    { "type": "header", "content": "Routine" },
+    { "type": "text", "id": "q5_heading", "label": "Heading", "default": "How much routine do you want?" },
+    { "type": "text", "id": "q5_text", "label": "Text", "default": "Some options are daily, some weekly." },
+    { "type": "textarea", "id": "q5_options", "label": "Answers", "info": "One per line.", "default": "As little as possible\nWeekly is fine\nWhatever works best" },
+    { "type": "text", "id": "q5_points", "label": "Points per answer", "default": "-1,0,1" },
+    { "type": "header", "content": "Budget" },
+    { "type": "text", "id": "q6_heading", "label": "Heading", "default": "What monthly budget feels right?" },
+    { "type": "text", "id": "q6_text", "label": "Text", "default": "Starting prices range from about $99 to $349 a month." },
+    { "type": "textarea", "id": "q6_options", "label": "Answers", "info": "One per line.", "default": "Under $150\n$150 to $300\n$300+\nShow me everything" },
+    { "type": "text", "id": "q6_points", "label": "Points per answer", "default": "-1,0,1,0" },
+    { "type": "header", "content": "Anything else" },
+    { "type": "text", "id": "q7_heading", "label": "Heading", "default": "Anything else you'd like help with?" },
+    { "type": "text", "id": "q7_text", "label": "Text", "default": "Pick any. Each is its own short intake later." },
+    { "type": "text", "id": "continue_label", "label": "Continue label", "default": "Continue →" },
+    { "type": "header", "content": "Building your options" },
+    { "type": "text", "id": "building_heading", "label": "Heading", "default": "Building your options for [goal]" },
+    { "type": "text", "id": "building_text", "label": "Text", "default": "Matching [timing] and [format] to what's available." },
+    { "type": "text", "id": "format_any", "label": "Format phrase, injections OK", "default": "your format preferences" },
+    { "type": "text", "id": "format_needle_free", "label": "Format phrase, needle-free", "default": "needle-free formats" },
+    { "type": "text", "id": "check_goal", "label": "Goal check", "default": "Goal: [goal]" },
+    { "type": "text", "id": "check_format", "label": "Format check", "default": "Format: [format]" },
+    { "type": "text", "id": "check_tier", "label": "Tier check", "default": "Picking your recommended tier" },
+    { "type": "text", "id": "show_results", "label": "Button", "default": "Show results" },
+    { "type": "header", "content": "Results" },
+    { "type": "text", "id": "results_eyebrow", "label": "Eyebrow", "default": "Your options" },
+    { "type": "text", "id": "results_heading", "label": "Heading", "info": "[count] and [goal] are replaced.", "default": "[count] ways to start with [goal]" },
+    { "type": "text", "id": "recommended_label", "label": "Recommended pill", "default": "Recommended for you" },
+    { "type": "textarea", "id": "tier_names", "label": "Tier names", "default": "Essential\nEnhanced\nAdvanced" },
+    { "type": "text", "id": "intake_badge", "label": "Intake badge", "default": "1 intake" },
+    { "type": "text", "id": "form_prefix", "label": "Form label", "default": "Form:" },
+    { "type": "text", "id": "price_prefix", "label": "Price prefix", "default": "From" },
+    { "type": "text", "id": "price_unit", "label": "Price unit", "default": "/mo" },
+    { "type": "text", "id": "cta_label", "label": "Button label", "info": "Links to the Mydos Link of the form, then the product.", "default": "Start intake" },
+    { "type": "text", "id": "next_heading", "label": "Next heading", "default": "Where you can go next" },
+    { "type": "text", "id": "next_suffix", "label": "Next suffix", "default": "separate intake" },
+    { "type": "text", "id": "see_all", "label": "See all link", "default": "See all [goal] options" },
+    { "type": "text", "id": "browse_menu", "label": "Menu link", "default": "Browse the full menu" },
+    { "type": "text", "id": "start_over", "label": "Start over link", "default": "Start over" },
+    { "type": "textarea", "id": "disclaimer", "label": "Disclaimer", "default": "Common starting points only. A licensed provider reviews your intake and decides what's appropriate." },
+    { "type": "text", "id": "footnote", "label": "Investigational footnote", "info": "Shown when a product tagged investigational is in the results.", "default": "*Retatrutide is an investigational medication and is not FDA-approved." }
+  ],
+  "blocks": [
+    {
+      "type": "goal",
+      "name": "Goal",
+      "settings": [
+        { "type": "select", "id": "gender", "label": "For", "options": [{ "value": "mens", "label": "Men" }, { "value": "womens", "label": "Women" }], "default": "mens" },
+        { "type": "text", "id": "letter", "label": "Letter", "default": "W" },
+        { "type": "text", "id": "title", "label": "Title", "default": "Lose weight" },
+        { "type": "text", "id": "subtitle", "label": "Subtitle" },
+        { "type": "text", "id": "phrase", "label": "Phrase in sentences", "info": "e.g. lose weight. Defaults to the title in lower case." },
+        { "type": "checkbox", "id": "stage_question", "label": "Ask the hormone stage question", "default": false },
+        { "type": "checkbox", "id": "strict_advanced", "label": "Strict advanced", "info": "Advanced is highlighted only for the top timing, familiarity and budget answers.", "default": false },
+        { "type": "header", "content": "Injections OK" },
+        { "type": "product", "id": "inj_1_product", "label": "Essential product" },
+        { "type": "text", "id": "inj_1_name", "label": "Essential name" },
+        { "type": "text", "id": "inj_1_sub", "label": "Essential subtitle" },
+        { "type": "text", "id": "inj_1_form", "label": "Essential form" },
+        { "type": "text", "id": "inj_1_variant", "label": "Essential price from form", "info": "Optional form variant, e.g. Patch." },
+        { "type": "product", "id": "inj_2_product", "label": "Enhanced product" },
+        { "type": "text", "id": "inj_2_name", "label": "Enhanced name" },
+        { "type": "text", "id": "inj_2_sub", "label": "Enhanced subtitle" },
+        { "type": "text", "id": "inj_2_form", "label": "Enhanced form" },
+        { "type": "text", "id": "inj_2_variant", "label": "Enhanced price from form" },
+        { "type": "product", "id": "inj_3_product", "label": "Advanced product" },
+        { "type": "text", "id": "inj_3_name", "label": "Advanced name" },
+        { "type": "text", "id": "inj_3_sub", "label": "Advanced subtitle" },
+        { "type": "text", "id": "inj_3_form", "label": "Advanced form" },
+        { "type": "text", "id": "inj_3_variant", "label": "Advanced price from form" },
+        { "type": "header", "content": "Needle-free", "info": "Leave every product empty to reuse the injections OK set." },
+        { "type": "product", "id": "nf_1_product", "label": "Essential product" },
+        { "type": "text", "id": "nf_1_name", "label": "Essential name" },
+        { "type": "text", "id": "nf_1_sub", "label": "Essential subtitle" },
+        { "type": "text", "id": "nf_1_form", "label": "Essential form" },
+        { "type": "text", "id": "nf_1_variant", "label": "Essential price from form" },
+        { "type": "product", "id": "nf_2_product", "label": "Enhanced product" },
+        { "type": "text", "id": "nf_2_name", "label": "Enhanced name" },
+        { "type": "text", "id": "nf_2_sub", "label": "Enhanced subtitle" },
+        { "type": "text", "id": "nf_2_form", "label": "Enhanced form" },
+        { "type": "text", "id": "nf_2_variant", "label": "Enhanced price from form" },
+        { "type": "product", "id": "nf_3_product", "label": "Advanced product" },
+        { "type": "text", "id": "nf_3_name", "label": "Advanced name" },
+        { "type": "text", "id": "nf_3_sub", "label": "Advanced subtitle" },
+        { "type": "text", "id": "nf_3_form", "label": "Advanced form" },
+        { "type": "text", "id": "nf_3_variant", "label": "Advanced price from form" },
+        { "type": "header", "content": "Where you can go next" },
+        { "type": "product", "id": "next_1_product", "label": "Always suggest" },
+        { "type": "text", "id": "next_1_name", "label": "Name" },
+        { "type": "product", "id": "next_2_product", "label": "Always suggest" },
+        { "type": "text", "id": "next_2_name", "label": "Name" },
+        { "type": "product", "id": "extra_product", "label": "When picked as an extra goal", "info": "Suggested when this goal is ticked in \"Anything else\"." },
+        { "type": "text", "id": "extra_name", "label": "Name" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Program quiz"
+    }
+  ]
+}
+{% endschema %}

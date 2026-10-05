@@ -64,7 +64,7 @@
         </div>
       </div>
 
-      {%- if section.settings.primary_label != blank or section.settings.secondary_label != blank -%}
+      {%- if section.settings.primary_label != blank or section.settings.secondary_label != blank or section.settings.tertiary_label != blank -%}
         <div class="chx-hero__actions">
           {%- if section.settings.primary_label != blank -%}
             <a
@@ -81,6 +81,14 @@
               href="{{ section.settings.secondary_url | default: routes.all_products_collection_url }}"
             >
               {{- section.settings.secondary_label -}}
+            </a>
+          {%- endif -%}
+          {%- if section.settings.tertiary_label != blank -%}
+            <a
+              class="chx-btn chx-btn--inverse"
+              href="{{ section.settings.tertiary_url | default: routes.all_products_collection_url }}"
+            >
+              {{- section.settings.tertiary_label -}}
             </a>
           {%- endif -%}
         </div>
@@ -253,6 +261,7 @@
 
   .chx-hero__actions {
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
     gap: var(--space-3);
   }
@@ -429,6 +438,17 @@
       "type": "url",
       "id": "secondary_url",
       "label": "Secondary button link"
+    },
+    {
+      "type": "text",
+      "id": "tertiary_label",
+      "label": "Third button label",
+      "info": "Optional."
+    },
+    {
+      "type": "url",
+      "id": "tertiary_url",
+      "label": "Third button link"
     },
     {
       "type": "header",

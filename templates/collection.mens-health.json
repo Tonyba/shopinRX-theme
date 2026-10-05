@@ -51,9 +51,11 @@
         "body": "<p>Shop by goal if you're not sure where to start, choose a protocol that combines several actives in one prescription, or go straight to the full menu.</p>",
         "primary_label": "Shop by goal",
         "primary_url": "#shop-by-goal",
-        "secondary_label": "Protocols",
-        "secondary_url": "#protocols",
-        "show_trustpilot": false
+        "secondary_label": "Help me choose",
+        "secondary_url": "#find-your-program-mens",
+        "show_trustpilot": false,
+        "tertiary_label": "Full treatment menu",
+        "tertiary_url": "#full-menu"
       }
     },
     "anchor_nav": {

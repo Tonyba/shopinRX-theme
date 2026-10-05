@@ -1,0 +1,38 @@
+{% doc %}
+  One quiz option as a JSON object for chopinrx-quiz.js. Names, subtitles and
+  forms default to the product's own fields; a form value picks that variant's
+  price and intake link (e.g. the estradiol patch).
+
+  @param {object} item - Product.
+  @param {string} [name] - Display name, defaults to the product title.
+  @param {string} [sub] - Subtitle, defaults to the product's Subtitle field.
+  @param {string} [form] - Form text, defaults to the Form label field.
+  @param {string} [variant_form] - Form option value whose variant to use.
+
+  @example
+  {% render 'chopinrx-quiz-item', item: block.settings.inj_1_product, name: block.settings.inj_1_name %}
+{% enddoc %}
+
+{%- liquid
+  assign variant = item.selected_or_first_available_variant
+  assign amount = item.price_min
+  if variant_form != blank
+    for v in item.variants
+      if v.option1 == variant_form
+        assign variant = v
+        assign amount = v.price
+        break
+      endif
+    endfor
+  endif
+
+  assign label = name | default: item.title
+  assign subtitle = sub | default: item.metafields.custom.subtitle.value
+  assign form_text = form | default: item.metafields.custom.form_label.value | default: variant.option1
+  assign intake_url = variant.metafields.custom.mydos_link.value | default: item.metafields.custom.mydos_link.value | default: '#'
+  assign flagged = false
+  if item.tags contains 'investigational'
+    assign flagged = true
+  endif
+-%}
+{"name":{{ label | json }},"sub":{{ subtitle | default: '' | json }},"form":{{ form_text | default: '' | json }},"price":{{ amount | money_without_trailing_zeros | json }},"url":{{ intake_url | json }},"flag":{{ flagged }}}
