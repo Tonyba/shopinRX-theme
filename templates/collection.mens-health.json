@@ -1,0 +1,793 @@
+{
+  "sections": {
+    "hero": {
+      "type": "chopinrx-hero",
+      "blocks": {
+        "feature_01": {
+          "type": "feature",
+          "settings": {
+            "text": "Licensed US providers"
+          }
+        },
+        "feature_02": {
+          "type": "feature",
+          "settings": {
+            "text": "Discreet shipping"
+          }
+        },
+        "feature_03": {
+          "type": "feature",
+          "settings": {
+            "text": "No insurance needed"
+          }
+        },
+        "feature_04": {
+          "type": "feature",
+          "settings": {
+            "text": "Cancel anytime"
+          }
+        }
+      },
+      "block_order": [
+        "feature_01",
+        "feature_02",
+        "feature_03",
+        "feature_04"
+      ],
+      "settings": {
+        "image": "shopify://shop_images/chx-hero.jpg",
+        "eyebrow": "Chopin RX Men's health",
+        "title_line_1": "Men's health,",
+        "title_line_2": "made simple.",
+        "body": "<p>Shop by goal if you're not sure where to start, choose a protocol that combines several actives in one prescription, or go straight to the full menu.</p>",
+        "primary_label": "Shop by goal",
+        "primary_url": "#shop-by-goal",
+        "secondary_label": "Protocols",
+        "secondary_url": "#protocols",
+        "show_trustpilot": false
+      }
+    },
+    "anchor_nav": {
+      "type": "chopinrx-anchor-nav",
+      "blocks": {
+        "link_01": {
+          "type": "link",
+          "settings": {
+            "label": "Shop by goal",
+            "anchor": "shop-by-goal",
+            "highlight": false
+          }
+        },
+        "link_02": {
+          "type": "link",
+          "settings": {
+            "label": "Protocols",
+            "anchor": "protocols",
+            "highlight": false
+          }
+        },
+        "link_03": {
+          "type": "link",
+          "settings": {
+            "label": "Weight",
+            "anchor": "weight",
+            "highlight": false
+          }
+        },
+        "link_04": {
+          "type": "link",
+          "settings": {
+            "label": "Sexual Performance",
+            "anchor": "sexual-performance",
+            "highlight": false
+          }
+        },
+        "link_05": {
+          "type": "link",
+          "settings": {
+            "label": "Recovery & Peptides",
+            "anchor": "recovery-peptides",
+            "highlight": false
+          }
+        },
+        "link_06": {
+          "type": "link",
+          "settings": {
+            "label": "Hair",
+            "anchor": "hair",
+            "highlight": false
+          }
+        },
+        "link_07": {
+          "type": "link",
+          "settings": {
+            "label": "Full menu",
+            "anchor": "full-menu",
+            "highlight": true
+          }
+        }
+      },
+      "block_order": [
+        "link_01",
+        "link_02",
+        "link_03",
+        "link_04",
+        "link_05",
+        "link_06",
+        "link_07"
+      ],
+      "settings": {
+        "label": "On this page"
+      }
+    },
+    "goals": {
+      "type": "chopinrx-shop-by-goal",
+      "blocks": {
+        "goal_01": {
+          "type": "goal",
+          "settings": {
+            "title": "Lose weight",
+            "subtitle": "GLP-1 and needle-free options"
+          }
+        },
+        "pick_02": {
+          "type": "pick",
+          "settings": {
+            "label": "Recommended start",
+            "product": "retatrutide-b12",
+            "name": "Retatrutide Protocol*",
+            "subtitle": "Retatrutide + B12",
+            "form": "Weekly injection"
+          }
+        },
+        "pick_03": {
+          "type": "pick",
+          "settings": {
+            "label": "Also consider",
+            "product": "tirzepatide-b12",
+            "name": "Tirzepatide Protocol",
+            "subtitle": "Dual GIP/GLP-1 with B12 or B6",
+            "form": "Weekly injection"
+          }
+        },
+        "pick_04": {
+          "type": "pick",
+          "settings": {
+            "label": "Needle-free option",
+            "product": "bupropion-naltrexone",
+            "name": "Oral Weight Protocol",
+            "subtitle": "Bupropion + Naltrexone",
+            "form": "Capsule"
+          }
+        },
+        "goal_05": {
+          "type": "goal",
+          "settings": {
+            "title": "Energy and drive",
+            "subtitle": "Hormone support without TRT"
+          }
+        },
+        "pick_06": {
+          "type": "pick",
+          "settings": {
+            "label": "Recommended start",
+            "product": "enclomiphene",
+            "name": "Enclomiphene",
+            "subtitle": "Supports your own production",
+            "form": "Capsule"
+          }
+        },
+        "pick_07": {
+          "type": "pick",
+          "settings": {
+            "label": "Also consider",
+            "product": "dhea-pregnenolone",
+            "name": "DHEA + Pregnenolone",
+            "subtitle": "Oral hormone precursor support",
+            "form": "Capsule"
+          }
+        },
+        "goal_08": {
+          "type": "goal",
+          "settings": {
+            "title": "Performance in the bedroom",
+            "subtitle": "Discreet, fast options"
+          }
+        },
+        "pick_09": {
+          "type": "pick",
+          "settings": {
+            "label": "Recommended start",
+            "product": "sildenafil-tadalafil-oxytocin",
+            "name": "Drive ODT",
+            "subtitle": "Sildenafil + Tadalafil + Oxytocin",
+            "form": "Dissolving tablet"
+          }
+        },
+        "pick_10": {
+          "type": "pick",
+          "settings": {
+            "label": "Everyday option",
+            "product": "tadalafil",
+            "name": "Tadalafil",
+            "subtitle": "Daily or as needed",
+            "form": "Tablet"
+          }
+        },
+        "pick_11": {
+          "type": "pick",
+          "settings": {
+            "label": "Stronger option",
+            "product": "trimix",
+            "name": "Trimix",
+            "subtitle": "When oral isn't enough",
+            "form": "Injection"
+          }
+        },
+        "goal_12": {
+          "type": "goal",
+          "settings": {
+            "title": "Recover and build",
+            "subtitle": "Training and repair"
+          }
+        },
+        "pick_13": {
+          "type": "pick",
+          "settings": {
+            "label": "Recommended start",
+            "product": "wolverine-blend",
+            "name": "Wolverine Blend",
+            "subtitle": "BPC-157 + TB-500",
+            "form": "Injection"
+          }
+        },
+        "pick_14": {
+          "type": "pick",
+          "settings": {
+            "label": "Also consider",
+            "product": "cjc-1295-ipamorelin",
+            "name": "CJC + Ipamorelin",
+            "subtitle": "GH-axis peptide pair",
+            "form": "Injection"
+          }
+        },
+        "pick_15": {
+          "type": "pick",
+          "settings": {
+            "label": "Needle-free option",
+            "product": "sermorelin",
+            "name": "Sermorelin",
+            "subtitle": "GH-axis support",
+            "form": "Film strip or troche"
+          }
+        },
+        "goal_16": {
+          "type": "goal",
+          "settings": {
+            "title": "Age well",
+            "subtitle": "Energy and longevity"
+          }
+        },
+        "pick_17": {
+          "type": "pick",
+          "settings": {
+            "label": "Recommended start",
+            "product": "nad",
+            "name": "NAD+",
+            "subtitle": "Cellular energy support",
+            "form": "Injection, nasal spray or strip"
+          }
+        },
+        "pick_18": {
+          "type": "pick",
+          "settings": {
+            "label": "Also consider",
+            "product": "mic-b12-l-carnitine",
+            "name": "Lipotropic Boost",
+            "subtitle": "Lipotropics + B12",
+            "form": "Injection or capsule"
+          }
+        },
+        "pick_19": {
+          "type": "pick",
+          "settings": {
+            "label": "Also consider",
+            "product": "glutathione",
+            "name": "Glutathione",
+            "subtitle": "Antioxidant support",
+            "form": "Injection or nasal spray"
+          }
+        },
+        "goal_20": {
+          "type": "goal",
+          "settings": {
+            "title": "Regrow hair",
+            "subtitle": "Topical and oral"
+          }
+        },
+        "pick_21": {
+          "type": "pick",
+          "settings": {
+            "label": "Recommended start",
+            "product": "minoxidil-finasteride-tretinoin",
+            "name": "Hair Regrowth Spray",
+            "subtitle": "Minoxidil + Finasteride + Tretinoin",
+            "form": "Topical spray"
+          }
+        },
+        "pick_22": {
+          "type": "pick",
+          "settings": {
+            "label": "Simple option",
+            "product": "finasteride",
+            "name": "Finasteride",
+            "subtitle": "One daily tablet",
+            "form": "Tablet"
+          }
+        }
+      },
+      "block_order": [
+        "goal_01",
+        "pick_02",
+        "pick_03",
+        "pick_04",
+        "goal_05",
+        "pick_06",
+        "pick_07",
+        "goal_08",
+        "pick_09",
+        "pick_10",
+        "pick_11",
+        "goal_12",
+        "pick_13",
+        "pick_14",
+        "pick_15",
+        "goal_16",
+        "pick_17",
+        "pick_18",
+        "pick_19",
+        "goal_20",
+        "pick_21",
+        "pick_22"
+      ],
+      "settings": {
+        "anchor": "shop-by-goal",
+        "eyebrow": "Shop by goal",
+        "heading": "Not sure where to start?",
+        "body": "<p>Pick your goal. We show a common starting point and a couple of alternatives. Each one is a single intake, and a licensed provider decides what's appropriate.</p>",
+        "footnote": "Common starting points only. Your provider makes the final call at intake.",
+        "intake_note": "1 intake",
+        "price_prefix": "From",
+        "price_unit": "/mo",
+        "cta_label": "Start intake"
+      }
+    },
+    "protocols": {
+      "type": "chopinrx-protocols",
+      "blocks": {
+        "feature_01": {
+          "type": "feature",
+          "settings": {
+            "title": "One prescription",
+            "text": "Several actives compounded together into one product."
+          }
+        },
+        "feature_02": {
+          "type": "feature",
+          "settings": {
+            "title": "One intake",
+            "text": "A single short intake. A licensed provider reviews it and prescribes if appropriate."
+          }
+        },
+        "feature_03": {
+          "type": "feature",
+          "settings": {
+            "title": "One monthly price",
+            "text": "No separate bills for each ingredient."
+          }
+        },
+        "group_04": {
+          "type": "group",
+          "settings": {
+            "title": "Weight",
+            "subtitle": "GLP-1 and non-GLP-1 options"
+          }
+        },
+        "protocol_05": {
+          "type": "protocol",
+          "settings": {
+            "title": "Retatrutide Protocol*",
+            "subtitle": "Triple-agonist weight protocol with B12",
+            "products": [
+              "retatrutide-b12"
+            ],
+            "featured": true
+          }
+        },
+        "protocol_06": {
+          "type": "protocol",
+          "settings": {
+            "title": "Tirzepatide Protocol",
+            "subtitle": "Dual GIP/GLP-1 weight protocol",
+            "products": [
+              "tirzepatide-b12",
+              "tirzepatide-b6",
+              "tirzepatide-ondansetron"
+            ],
+            "featured": false
+          }
+        },
+        "protocol_07": {
+          "type": "protocol",
+          "settings": {
+            "title": "Semaglutide Protocol",
+            "subtitle": "GLP-1 weight protocol",
+            "products": [
+              "semaglutide-b12",
+              "semaglutide-b6",
+              "semaglutide-ondansetron"
+            ],
+            "featured": false
+          }
+        },
+        "protocol_08": {
+          "type": "protocol",
+          "settings": {
+            "title": "Oral Weight Protocol",
+            "subtitle": "Non-GLP-1, needle-free",
+            "products": [
+              "bupropion-naltrexone",
+              "topiramate-bupropion-yohimbine"
+            ],
+            "featured": false
+          }
+        },
+        "protocol_09": {
+          "type": "protocol",
+          "settings": {
+            "title": "Lipotropic Boost",
+            "subtitle": "Metabolic and energy support",
+            "products": [
+              "lipo-b12",
+              "lipo-mino-l-carnitine",
+              "lipo-b6-mic-choline",
+              "mic-b12-l-carnitine"
+            ],
+            "featured": false
+          }
+        },
+        "group_10": {
+          "type": "group",
+          "settings": {
+            "title": "Sexual Performance",
+            "subtitle": "Oral, topical and injectable options"
+          }
+        },
+        "protocol_11": {
+          "type": "protocol",
+          "settings": {
+            "title": "Drive ODT",
+            "subtitle": "Fast-dissolving triple formula",
+            "products": [
+              "sildenafil-tadalafil-oxytocin"
+            ],
+            "featured": false
+          }
+        },
+        "protocol_12": {
+          "type": "protocol",
+          "settings": {
+            "title": "Dual PDE5",
+            "subtitle": "Two ED actives in one dose",
+            "products": [
+              "sildenafil-tadalafil"
+            ],
+            "featured": false
+          }
+        },
+        "protocol_13": {
+          "type": "protocol",
+          "settings": {
+            "title": "Sildenafil + Papaverine",
+            "subtitle": "Oral dissolving formula",
+            "products": [
+              "sildenafil-papaverine"
+            ],
+            "featured": false
+          }
+        },
+        "protocol_14": {
+          "type": "protocol",
+          "settings": {
+            "title": "Performance Cream",
+            "subtitle": "Topical, applied as needed",
+            "products": [
+              "sildenafil-pentoxifylline-arginine"
+            ],
+            "featured": false
+          }
+        },
+        "protocol_15": {
+          "type": "protocol",
+          "settings": {
+            "title": "Trimix",
+            "subtitle": "Injectable option when oral isn't enough",
+            "products": [
+              "trimix"
+            ],
+            "featured": false
+          }
+        },
+        "group_16": {
+          "type": "group",
+          "settings": {
+            "title": "Recovery & Peptides",
+            "subtitle": "Training, repair and GH-axis support"
+          }
+        },
+        "protocol_17": {
+          "type": "protocol",
+          "settings": {
+            "title": "Wolverine Blend",
+            "subtitle": "Recovery peptide pair",
+            "products": [
+              "wolverine-blend"
+            ],
+            "featured": false
+          }
+        },
+        "protocol_18": {
+          "type": "protocol",
+          "settings": {
+            "title": "CJC + Ipamorelin",
+            "subtitle": "GH-axis peptide pair",
+            "products": [
+              "cjc-1295-ipamorelin"
+            ],
+            "featured": false
+          }
+        },
+        "group_19": {
+          "type": "group",
+          "settings": {
+            "title": "Hair",
+            "subtitle": "Topical regrowth formulas"
+          }
+        },
+        "protocol_20": {
+          "type": "protocol",
+          "settings": {
+            "title": "Hair Regrowth Spray",
+            "subtitle": "Three formulas, one intake each",
+            "products": [
+              "minoxidil-finasteride-tretinoin",
+              "minoxidil-finasteride-latanoprost-ketoconazole",
+              "minoxidil-finasteride-tretinoin-fluocinolone"
+            ],
+            "featured": false
+          }
+        }
+      },
+      "block_order": [
+        "feature_01",
+        "feature_02",
+        "feature_03",
+        "group_04",
+        "protocol_05",
+        "protocol_06",
+        "protocol_07",
+        "protocol_08",
+        "protocol_09",
+        "group_10",
+        "protocol_11",
+        "protocol_12",
+        "protocol_13",
+        "protocol_14",
+        "protocol_15",
+        "group_16",
+        "protocol_17",
+        "protocol_18",
+        "group_19",
+        "protocol_20"
+      ],
+      "settings": {
+        "anchor": "protocols",
+        "eyebrow": "Protocols",
+        "heading": "Multiple actives.\nOne intake.",
+        "body": "<p>Each protocol is a single pre-formulated prescription with more than one active ingredient, so it takes one short intake and one provider review.</p>",
+        "intake_badge": "1 intake",
+        "actives_label": "Actives",
+        "versions_label": "Choose a version",
+        "form_label": "Form:",
+        "price_prefix": "From",
+        "price_unit": "/mo",
+        "cta_label": "Start intake"
+      }
+    },
+    "menu": {
+      "type": "chopinrx-treatment-menu",
+      "blocks": {
+        "category_01": {
+          "type": "category",
+          "settings": {
+            "label": "Weight & Metabolic",
+            "collection": "weight-metabolic"
+          }
+        },
+        "category_02": {
+          "type": "category",
+          "settings": {
+            "label": "Hormones",
+            "collection": "mens-hormones"
+          }
+        },
+        "category_03": {
+          "type": "category",
+          "settings": {
+            "label": "Sexual Health",
+            "collection": "mens-sexual-health"
+          }
+        },
+        "category_04": {
+          "type": "category",
+          "settings": {
+            "label": "Recovery & Peptides",
+            "collection": "recovery-peptides"
+          }
+        },
+        "category_05": {
+          "type": "category",
+          "settings": {
+            "label": "Longevity & Energy",
+            "collection": "mens-longevity-energy"
+          }
+        },
+        "category_06": {
+          "type": "category",
+          "settings": {
+            "label": "Hair & Skin",
+            "collection": "mens-hair-skin"
+          }
+        }
+      },
+      "block_order": [
+        "category_01",
+        "category_02",
+        "category_03",
+        "category_04",
+        "category_05",
+        "category_06"
+      ],
+      "settings": {
+        "anchor": "full-menu",
+        "eyebrow": "Full treatment menu",
+        "heading": "Know what you want?",
+        "body": "<p>Every treatment we offer for men. Each one is a single intake. Protocols are marked.</p>",
+        "search_label": "Search treatments",
+        "search_placeholder": "Search treatments, e.g. tadalafil",
+        "chips_label": "Filter by category",
+        "all_label": "All",
+        "empty_text": "No treatments match your search.",
+        "count_label": "[count] treatments",
+        "protocol_badge": "Protocol",
+        "branded_badge": "Branded",
+        "forms_label": "Available forms",
+        "price_prefix": "From",
+        "price_unit": "/mo",
+        "cta_label": "Start intake"
+      }
+    },
+    "steps": {
+      "type": "chopinrx-intake-steps",
+      "blocks": {
+        "step_01": {
+          "type": "step",
+          "settings": {
+            "title": "Choose",
+            "text": "Pick a protocol or any treatment from the full menu."
+          }
+        },
+        "step_02": {
+          "type": "step",
+          "settings": {
+            "title": "Short intake",
+            "text": "Answer a few questions online. A licensed provider reviews them, usually within a day."
+          }
+        },
+        "step_03": {
+          "type": "step",
+          "settings": {
+            "title": "Delivered",
+            "text": "If prescribed, your treatment ships from a licensed U.S. pharmacy in discreet packaging."
+          }
+        }
+      },
+      "block_order": [
+        "step_01",
+        "step_02",
+        "step_03"
+      ],
+      "settings": {
+        "eyebrow": "How it works",
+        "heading": "Three steps. No waiting room.",
+        "body": "<p>Every treatment gets its own licensed provider review. That's how we make sure each prescription is right for you.</p>"
+      }
+    },
+    "faq": {
+      "type": "chopinrx-faq-grid",
+      "blocks": {
+        "question_01": {
+          "type": "question",
+          "settings": {
+            "question": "Not sure what to choose?",
+            "answer": "<p>Start with Shop by goal. It shows a common starting point for each goal, and your provider makes the final call.</p>"
+          }
+        },
+        "question_02": {
+          "type": "question",
+          "settings": {
+            "question": "What's a protocol?",
+            "answer": "<p>A single pre-formulated prescription that combines more than one active ingredient. It takes one intake and one provider review.</p>"
+          }
+        },
+        "question_03": {
+          "type": "question",
+          "settings": {
+            "question": "Why does each treatment need its own intake?",
+            "answer": "<p>Every prescription gets its own licensed provider review. Each intake takes only a few minutes.</p>"
+          }
+        },
+        "question_04": {
+          "type": "question",
+          "settings": {
+            "question": "Can I start more than one treatment?",
+            "answer": "<p>Yes. Start an intake for each treatment you want. A provider reviews each one.</p>"
+          }
+        },
+        "question_05": {
+          "type": "question",
+          "settings": {
+            "question": "Do I need labs?",
+            "answer": "<p>Your provider will tell you during intake if a treatment needs labs first.</p>"
+          }
+        },
+        "question_06": {
+          "type": "question",
+          "settings": {
+            "question": "Is it discreet?",
+            "answer": "<p>Plain packaging, shipped to your door.</p>"
+          }
+        },
+        "question_07": {
+          "type": "question",
+          "settings": {
+            "question": "Do I need insurance?",
+            "answer": "<p>No. Simple monthly pricing with no insurance required.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "question_01",
+        "question_02",
+        "question_03",
+        "question_04",
+        "question_05",
+        "question_06",
+        "question_07"
+      ],
+      "settings": {
+        "eyebrow": "FAQ",
+        "heading": "Good questions"
+      }
+    }
+  },
+  "order": [
+    "hero",
+    "anchor_nav",
+    "goals",
+    "protocols",
+    "menu",
+    "steps",
+    "faq"
+  ]
+}

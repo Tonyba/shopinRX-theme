@@ -1,0 +1,336 @@
+{% render 'chopinrx-tokens' %}
+
+{%- liquid
+  # Blocks are flat: "feature" blocks form the intro row, a "group" block opens
+  # a category and the "protocol" blocks after it fill that category's grid.
+  assign heading_id = section.id | append: '-heading'
+  assign protocols_heading = section.settings.heading | escape | newline_to_br
+  assign features = section.blocks | where: 'type', 'feature'
+-%}
+
+<section
+  class="chx-protocols"
+  id="{{ section.settings.anchor | default: 'protocols' | handleize }}"
+  aria-labelledby="{{ heading_id }}"
+>
+  <div class="chx-container">
+    {% render 'chopinrx-split-heading',
+      eyebrow: section.settings.eyebrow,
+      heading: protocols_heading,
+      body: section.settings.body,
+      heading_id: heading_id
+    %}
+
+    {%- if features.size > 0 -%}
+      <ul class="chx-protocols__features" role="list">
+        {%- for block in features -%}
+          <li class="chx-protocols__feature" {{ block.shopify_attributes }}>
+            <h3 class="chx-protocols__feature-title">{{ block.settings.title }}</h3>
+            <p class="chx-protocols__feature-text">{{ block.settings.text }}</p>
+          </li>
+        {%- endfor -%}
+      </ul>
+    {%- endif -%}
+
+    {%- for group in section.blocks -%}
+      {%- if group.type != 'group' -%}
+        {%- continue -%}
+      {%- endif -%}
+      {%- liquid
+        assign first_card = forloop.index
+        assign group_tag = group.settings.tag | default: group.settings.title
+        assign group_anchor = group.settings.anchor | default: group.settings.title | handleize
+      -%}
+      <div class="chx-protocols__group" id="{{ group_anchor }}" {{ group.shopify_attributes }}>
+        <div class="chx-protocols__group-head">
+          <h3 class="chx-h4 chx-protocols__group-title">{{ group.settings.title }}</h3>
+          {%- if group.settings.subtitle != blank -%}
+            <p class="chx-protocols__group-text">{{ group.settings.subtitle }}</p>
+          {%- endif -%}
+        </div>
+        <div class="chx-protocols__grid">
+          {%- for block in section.blocks offset: first_card -%}
+            {%- if block.type == 'group' -%}
+              {%- break -%}
+            {%- endif -%}
+            {%- if block.type == 'protocol' -%}
+              {% render 'chopinrx-protocol-card', block: block, tag: group_tag, settings: section.settings %}
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+      </div>
+    {%- endfor -%}
+  </div>
+</section>
+
+<script type="module">
+  import { initVersionSwitch } from '{{ 'chopinrx-version-switch.js' | asset_url }}';
+  initVersionSwitch();
+</script>
+
+{% stylesheet %}
+  .chx-protocols {
+    padding-block: var(--section-py-tight);
+    background-color: var(--surface-page);
+    scroll-margin-top: calc(var(--header-height, 84px) + var(--space-4));
+  }
+
+  .chx-protocols__features {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-5);
+    margin: var(--space-8) 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .chx-protocols__feature {
+    padding: var(--space-6);
+    border-radius: var(--radius-lg);
+    background-color: var(--surface-card-flat);
+  }
+
+  .chx-protocols__feature-title {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: var(--font-size-body-large);
+    font-weight: 600;
+    line-height: 1.33;
+    letter-spacing: -0.01em;
+    color: var(--text-heading);
+  }
+
+  .chx-protocols__feature-text {
+    margin: var(--space-2) 0 0;
+    font-family: var(--font-ui);
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--text-muted);
+  }
+
+  .chx-protocols__group {
+    margin-block-start: var(--space-16);
+    scroll-margin-top: calc(var(--header-height, 84px) + var(--space-4));
+  }
+
+  .chx-protocols__group-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    column-gap: var(--space-4);
+    row-gap: var(--space-1);
+    padding-block-end: var(--space-4);
+    border-bottom: var(--border-w) solid var(--border-hairline);
+  }
+
+  .chx-protocols .chx-protocols__group-title {
+    font-weight: 600;
+  }
+
+  .chx-protocols__group-text {
+    margin: 0;
+    font-family: var(--font-ui);
+    font-size: var(--font-size-body);
+    line-height: 1.5;
+    color: var(--text-muted);
+  }
+
+  .chx-protocols__grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-5);
+    margin-block-start: var(--space-6);
+  }
+
+  @media screen and (max-width: 1024px) {
+    .chx-protocols__features,
+    .chx-protocols__grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .chx-protocols__group {
+      margin-block-start: var(--space-10);
+    }
+  }
+
+  @media screen and (max-width: 767px) {
+    .chx-protocols__features,
+    .chx-protocols__grid {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Protocols",
+  "tag": "div",
+  "class": "chopinrx-protocols-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "anchor",
+      "label": "Anchor id",
+      "default": "protocols"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Protocols"
+    },
+    {
+      "type": "textarea",
+      "id": "heading",
+      "label": "Heading",
+      "info": "Line breaks are kept.",
+      "default": "Multiple actives.\nOne intake."
+    },
+    {
+      "type": "richtext",
+      "id": "body",
+      "label": "Text"
+    },
+    {
+      "type": "header",
+      "content": "Cards"
+    },
+    {
+      "type": "text",
+      "id": "intake_badge",
+      "label": "Intake badge",
+      "default": "1 intake"
+    },
+    {
+      "type": "text",
+      "id": "actives_label",
+      "label": "Actives label",
+      "default": "Actives"
+    },
+    {
+      "type": "text",
+      "id": "versions_label",
+      "label": "Versions label",
+      "default": "Choose a version"
+    },
+    {
+      "type": "text",
+      "id": "form_label",
+      "label": "Form label",
+      "default": "Form:"
+    },
+    {
+      "type": "text",
+      "id": "price_prefix",
+      "label": "Price prefix",
+      "default": "From"
+    },
+    {
+      "type": "text",
+      "id": "price_unit",
+      "label": "Price unit",
+      "default": "/mo"
+    },
+    {
+      "type": "text",
+      "id": "cta_label",
+      "label": "Button label",
+      "info": "Links to the product's Mydos Link field.",
+      "default": "Start intake"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "feature",
+      "name": "Feature",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "One prescription"
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Text"
+        }
+      ]
+    },
+    {
+      "type": "group",
+      "name": "Category",
+      "settings": [
+        {
+          "type": "paragraph",
+          "content": "Starts a category. The protocol blocks after it become its cards."
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Weight"
+        },
+        {
+          "type": "text",
+          "id": "subtitle",
+          "label": "Subtitle"
+        },
+        {
+          "type": "text",
+          "id": "tag",
+          "label": "Card tag",
+          "info": "Defaults to the title."
+        },
+        {
+          "type": "text",
+          "id": "anchor",
+          "label": "Anchor id",
+          "info": "Defaults to the title, e.g. weight."
+        }
+      ]
+    },
+    {
+      "type": "protocol",
+      "name": "Protocol",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Tirzepatide Protocol"
+        },
+        {
+          "type": "text",
+          "id": "subtitle",
+          "label": "Subtitle"
+        },
+        {
+          "type": "product_list",
+          "id": "products",
+          "label": "Products",
+          "info": "Several products become \"Choose a version\" pills, labelled by each product's Version label field. A single product with several forms shows its forms instead.",
+          "limit": 6
+        },
+        {
+          "type": "text",
+          "id": "form",
+          "label": "Form",
+          "info": "Single-product cards only. Defaults to the product's Form label field."
+        },
+        {
+          "type": "checkbox",
+          "id": "featured",
+          "label": "Highlight",
+          "default": false
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Protocols"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,48 @@
+{% doc %}
+  "From $349/mo" price line used by the health landing page cards and rows.
+
+  @param {number} amount - Price in cents.
+  @param {string} [prefix] - Text before the amount, defaults to 'From'.
+  @param {string} [unit] - Text after the amount, defaults to '/mo'.
+  @param {boolean} [stack] - Puts the prefix on its own line (menu rows).
+
+  @example
+  {% render 'chopinrx-price-from', amount: product.price_min %}
+{% enddoc %}
+
+{%- liquid
+  assign prefix = prefix | default: 'From'
+  assign unit = unit | default: '/mo'
+-%}
+<p class="chx-price-from{% if stack %} chx-price-from--stack{% endif %}">
+  <span class="chx-price-from__prefix">{{ prefix }}</span>
+  <span class="chx-price-from__amount" data-chx-price>{{ amount | money_without_trailing_zeros }}</span><span class="chx-price-from__unit">{{ unit }}</span>
+</p>
+
+{% stylesheet %}
+  .chx-price-from {
+    margin: 0;
+    font-family: var(--font-ui);
+    font-weight: 600;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+    color: var(--text-heading);
+  }
+
+  .chx-price-from__unit {
+    font-size: 0.6em;
+    font-weight: 400;
+    color: var(--text-muted);
+  }
+
+  /* Menu rows stack "From" over the amount and keep the unit at full weight. */
+  .chx-price-from--stack .chx-price-from__prefix {
+    display: block;
+  }
+
+  .chx-price-from--stack .chx-price-from__unit {
+    font-size: inherit;
+    font-weight: inherit;
+    color: inherit;
+  }
+{% endstylesheet %}

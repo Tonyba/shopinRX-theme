@@ -1,0 +1,75 @@
+{% doc %}
+  Section intro used on the health landing pages: an uppercase accent eyebrow
+  and a heading on the left, supporting copy on the right.
+
+  @param {string} [eyebrow] - Uppercase label above the heading.
+  @param {string} heading - Heading text.
+  @param {string} [body] - Supporting copy, shown in the right column.
+  @param {string} [heading_id] - id for the heading, so the section can point aria-labelledby at it.
+
+  @example
+  {% render 'chopinrx-split-heading', eyebrow: 'Shop by goal', heading: 'Not sure where to start?', body: section.settings.body %}
+{% enddoc %}
+
+<div class="chx-split-heading">
+  <div class="chx-split-heading__main">
+    {%- if eyebrow != blank -%}
+      <p class="chx-split-heading__eyebrow">{{ eyebrow }}</p>
+    {%- endif -%}
+    <h2 class="chx-h2 chx-split-heading__title"{% if heading_id %} id="{{ heading_id }}"{% endif %}>{{ heading }}</h2>
+  </div>
+  {%- if body != blank -%}
+    <div class="chx-split-heading__body">{{ body }}</div>
+  {%- endif -%}
+</div>
+
+{% stylesheet %}
+  .chx-split-heading {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    align-items: end;
+    gap: var(--space-8);
+  }
+
+  .chx-split-heading__main {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  .chx-split-heading__eyebrow {
+    margin: 0;
+    font-family: var(--font-ui);
+    font-size: var(--font-size-body-small);
+    font-weight: 600;
+    line-height: 1.43;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--text-accent);
+  }
+
+  .chx-split-heading__title {
+    max-width: 14em;
+  }
+
+  .chx-split-heading__body {
+    max-width: 600px;
+    font-family: var(--font-ui);
+    font-size: var(--font-size-body);
+    font-weight: 400;
+    line-height: 1.6;
+    letter-spacing: -0.005em;
+    color: var(--text-muted);
+  }
+
+  .chx-split-heading__body > * {
+    margin: 0;
+  }
+
+  @media screen and (max-width: 767px) {
+    .chx-split-heading {
+      grid-template-columns: minmax(0, 1fr);
+      gap: var(--space-4);
+    }
+  }
+{% endstylesheet %}
