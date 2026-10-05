@@ -1,0 +1,297 @@
+{% doc %}
+  Protocol card for the health landing pages. Versions come from the block's
+  product list (one product per version, labelled by its Version label field)
+  or, for a single product with several forms, from its Form variants.
+
+  @param {object} block - The "protocol" block.
+  @param {string} tag - Category tag shown top left.
+  @param {object} settings - Section settings (labels, price prefix/unit, CTA).
+
+  @example
+  {% render 'chopinrx-protocol-card', block: block, tag: group_tag, settings: section.settings %}
+{% enddoc %}
+
+{%- liquid
+  assign products = block.settings.products
+  assign first = products | first
+
+  # One option per version: the listed products, or the forms of a single
+  # product. Every loop below walks the same list, so index i lines up.
+  assign mode = 'single'
+  assign options = products
+  if products.size > 1
+    assign mode = 'products'
+  elsif first.variants.size > 1
+    assign mode = 'variants'
+    assign options = first.variants
+  endif
+-%}
+
+{%- if first != blank -%}
+
+<article
+  class="chx-proto-card{% if block.settings.featured %} chx-proto-card--featured{% endif %}"
+  data-chx-versions
+  {{ block.shopify_attributes }}
+>
+  <div class="chx-proto-card__tags">
+    {%- if tag != blank -%}
+      <span class="chx-proto-card__tag">{{ tag }}</span>
+    {%- endif -%}
+    {%- if settings.intake_badge != blank -%}
+      <span class="chx-proto-card__tag chx-proto-card__tag--dark">{{ settings.intake_badge }}</span>
+    {%- endif -%}
+  </div>
+
+  <h4 class="chx-proto-card__name">{{ block.settings.title | default: first.title }}</h4>
+  {%- if block.settings.subtitle != blank -%}
+    <p class="chx-proto-card__sub">{{ block.settings.subtitle }}</p>
+  {%- endif -%}
+
+  {%- for option in options -%}
+    {%- liquid
+      if mode == 'products'
+        assign item = option
+      else
+        assign item = first
+      endif
+    -%}
+    <div class="chx-proto-card__field" data-chx-version="{{ forloop.index0 }}"{% unless forloop.first %} hidden{% endunless %}>
+      <p class="chx-proto-card__key">{{ settings.actives_label }}</p>
+      <p class="chx-proto-card__actives">{{ item.metafields.custom.ingredients.value | join: ' · ' }}</p>
+    </div>
+  {%- endfor -%}
+
+  {%- if mode != 'single' -%}
+    <div class="chx-proto-card__field">
+      <p class="chx-proto-card__key" id="{{ block.id }}-versions">{{ settings.versions_label }}</p>
+      <div class="chx-proto-card__pills" role="group" aria-labelledby="{{ block.id }}-versions">
+        {%- for option in options -%}
+          {%- liquid
+            if mode == 'products'
+              assign pill = option.metafields.custom.version_label.value | default: option.title
+            else
+              assign pill = option.option1
+            endif
+          -%}
+          <button
+            type="button"
+            class="chx-proto-card__pill"
+            data-chx-version-pill="{{ forloop.index0 }}"
+            aria-pressed="{% if forloop.first %}true{% else %}false{% endif %}"
+          >
+            {{- pill -}}
+          </button>
+        {%- endfor -%}
+      </div>
+    </div>
+  {%- endif -%}
+
+  {%- for option in options -%}
+    {%- liquid
+      if mode == 'products'
+        assign form = option.metafields.custom.form_label.value | default: option.variants.first.option1
+      elsif mode == 'variants'
+        assign form = option.option1
+      else
+        assign form = block.settings.form | default: first.metafields.custom.form_label.value | default: first.variants.first.option1
+      endif
+    -%}
+    <p class="chx-proto-card__form" data-chx-version="{{ forloop.index0 }}"{% unless forloop.first %} hidden{% endunless %}>
+      {{ settings.form_label }} <strong>{{ form }}</strong>
+    </p>
+  {%- endfor -%}
+
+  {%- for option in options -%}
+    {%- liquid
+      if mode == 'products'
+        assign item = option
+        assign variant = item.selected_or_first_available_variant
+        assign amount = item.price_min
+      elsif mode == 'variants'
+        assign item = first
+        assign variant = option
+        assign amount = option.price
+      else
+        assign item = first
+        assign variant = first.selected_or_first_available_variant
+        assign amount = first.price_min
+      endif
+
+      # A form can have its own intake link; otherwise the product's applies.
+      assign intake_url = variant.metafields.custom.mydos_link.value | default: item.metafields.custom.mydos_link.value | default: '#'
+      assign name = block.settings.title | default: item.title
+    -%}
+    <div class="chx-proto-card__foot" data-chx-version="{{ forloop.index0 }}"{% unless forloop.first %} hidden{% endunless %}>
+      {% render 'chopinrx-price-from', amount: amount, prefix: settings.price_prefix, unit: settings.price_unit %}
+      <a
+        class="chx-btn chx-btn--sm chx-btn--accent"
+        href="{{ intake_url }}"
+        aria-label="{{ settings.cta_label | escape }}: {{ name | escape }}"
+      >
+        {{- settings.cta_label -}}
+      </a>
+    </div>
+  {%- endfor -%}
+</article>
+{%- endif -%}
+
+{% stylesheet %}
+  .chx-proto-card {
+    display: flex;
+    flex-direction: column;
+    padding: var(--space-6);
+    border: var(--border-w) solid var(--border-hairline);
+    border-radius: var(--radius-lg);
+    background-color: var(--surface-card);
+  }
+
+  .chx-proto-card--featured {
+    border: 2px solid var(--ink-900);
+    padding: calc(var(--space-6) - 1px);
+  }
+
+  .chx-proto-card [hidden] {
+    display: none;
+  }
+
+  .chx-proto-card__tags {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-2);
+    margin-block-end: var(--space-4);
+  }
+
+  .chx-proto-card__tag {
+    display: inline-flex;
+    align-items: center;
+    height: 26px;
+    padding-inline: 10px;
+    border-radius: var(--radius-pill);
+    background-color: var(--surface-card-flat);
+    font-family: var(--font-ui);
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 1;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-body);
+  }
+
+  .chx-proto-card__tag--dark {
+    background-color: var(--ink-900);
+    color: var(--text-on-dark);
+  }
+
+  .chx-proto-card__name {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: var(--font-size-h5);
+    font-weight: 600;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+    color: var(--text-heading);
+  }
+
+  .chx-proto-card__sub {
+    margin: var(--space-2) 0 0;
+    font-family: var(--font-ui);
+    font-size: 15px;
+    line-height: 1.45;
+    color: var(--text-muted);
+  }
+
+  .chx-proto-card__field {
+    margin-block-start: var(--space-4);
+  }
+
+  .chx-proto-card__key {
+    margin: 0 0 6px;
+    font-family: var(--font-ui);
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 1.3;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+
+  .chx-proto-card__actives {
+    margin: 0;
+    font-family: var(--font-ui);
+    font-size: 15px;
+    font-weight: 600;
+    line-height: 1.45;
+    color: var(--text-heading);
+  }
+
+  .chx-proto-card__pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .chx-proto-card__pill {
+    display: inline-flex;
+    align-items: center;
+    height: 34px;
+    padding-inline: var(--space-3);
+    border: var(--border-w) solid var(--border-hairline);
+    border-radius: var(--radius-pill);
+    background-color: var(--surface-card);
+    font-family: var(--font-ui);
+    font-size: var(--font-size-body-small);
+    font-weight: 600;
+    line-height: 1;
+    color: var(--text-body);
+    cursor: pointer;
+    transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+  }
+
+  .chx-proto-card__pill:hover {
+    border-color: var(--border-strong);
+  }
+
+  .chx-proto-card__pill[aria-pressed='true'] {
+    border-color: var(--ink-900);
+    background-color: var(--ink-900);
+    color: var(--text-on-dark);
+  }
+
+  .chx-proto-card__pill:focus-visible {
+    outline: 2px solid var(--text-accent);
+    outline-offset: 2px;
+  }
+
+  /* The bottom margin keeps space above the rule; the foot is pushed to the
+     bottom so prices line up across a row of cards. */
+  .chx-proto-card__form {
+    margin: var(--space-4) 0 var(--space-8);
+    font-family: var(--font-ui);
+    font-size: var(--font-size-body-small);
+    line-height: 1.43;
+    color: var(--text-muted);
+  }
+
+  .chx-proto-card__form strong {
+    font-weight: 600;
+    color: var(--text-heading);
+  }
+
+  .chx-proto-card__foot {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-3);
+    margin-block-start: auto;
+    padding-block-start: var(--space-4);
+    border-top: var(--border-w) solid var(--border-hairline);
+  }
+
+  .chx-proto-card__foot .chx-price-from {
+    font-size: var(--font-size-h5);
+  }
+{% endstylesheet %}
