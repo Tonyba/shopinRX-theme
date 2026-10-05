@@ -106,15 +106,20 @@
     {%- liquid
       if mode == 'products'
         assign item = option
+        assign variant = item.selected_or_first_available_variant
         assign amount = item.price_min
       elsif mode == 'variants'
         assign item = first
+        assign variant = option
         assign amount = option.price
       else
         assign item = first
+        assign variant = first.selected_or_first_available_variant
         assign amount = first.price_min
       endif
-      assign intake_url = item.metafields.custom.mydos_link.value | default: '#'
+
+      # A form can have its own intake link; otherwise the product's applies.
+      assign intake_url = variant.metafields.custom.mydos_link.value | default: item.metafields.custom.mydos_link.value | default: '#'
       assign name = block.settings.title | default: item.title
     -%}
     <div class="chx-proto-card__foot" data-chx-version="{{ forloop.index0 }}"{% unless forloop.first %} hidden{% endunless %}>
