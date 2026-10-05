@@ -69,7 +69,7 @@
         "secondary_url": "#find-your-program",
         "tertiary_label": "",
         "tertiary_url": "",
-        "show_trustpilot": true,
+        "show_trustpilot": false,
         "trustpilot_rating": "Excellent",
         "trustpilot_score": "4.6",
         "trustpilot_count": "436 reviews on",
