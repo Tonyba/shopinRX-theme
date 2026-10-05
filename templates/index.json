@@ -18,6 +18,12 @@
             "text": "Highest quality products for human consumption at reasonable rates"
           }
         },
+        "feature_TFVM6N": {
+          "type": "feature",
+          "settings": {
+            "text": "All products manufactured in USA"
+          }
+        },
         "feature_69m9LP": {
           "type": "feature",
           "settings": {
@@ -41,21 +47,15 @@
           "settings": {
             "text": "A secure, convenient online experience, no insurance required"
           }
-        },
-        "feature_TFVM6N": {
-          "type": "feature",
-          "settings": {
-            "text": "All products manufactured in USA"
-          }
         }
       },
       "block_order": [
         "feature_1",
+        "feature_TFVM6N",
         "feature_69m9LP",
         "feature_d7mLmg",
         "feature_2",
-        "feature_3",
-        "feature_TFVM6N"
+        "feature_3"
       ],
       "settings": {
         "image": "shopify://shop_images/chx-hero.jpg",
