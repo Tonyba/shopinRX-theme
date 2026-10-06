@@ -147,7 +147,10 @@
                 {%- endif -%}
               </div>
 
-              <a class="chx-btn chx-btn--md chx-btn--primary chx-programrow__cta" href="{{ product.url }}">
+              {%- # The intake lives on MyDose: the first form's link, then the product's. -%}
+              {%- assign intake_variant = product.selected_or_first_available_variant -%}
+              {%- assign intake_url = intake_variant.metafields.custom.mydos_link.value | default: product.metafields.custom.mydos_link.value | default: '#' -%}
+              <a class="chx-btn chx-btn--md chx-btn--primary chx-programrow__cta" href="{{ intake_url }}">
                 <span>{{ section.settings.card_cta_label }}</span>
                 <span class="chx-btn__icon" aria-hidden="true">{{ arrow_icon }}</span>
               </a>
