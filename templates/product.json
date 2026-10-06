@@ -44,7 +44,6 @@
         "breadcrumb_home": "Home",
         "type_collections": "program, treatment",
         "cta_label": "Start intake",
-        "cta_anchor": "pricing",
         "show_trustpilot": true,
         "trustpilot_rating": "Excellent",
         "trustpilot_score": "4.6",
@@ -399,7 +398,8 @@
         "after_label": "/[interval] after",
         "includes_heading": "What's included",
         "cta_label": "Get started"
-      }
+      },
+      "disabled": true
     },
     "faq": {
       "type": "chopinrx-faq",
@@ -456,7 +456,8 @@
         "eyebrow": "{{ product.metafields.custom.faq_eyebrow.value }}",
         "heading": "{{ product.metafields.custom.faq_heading.value }}",
         "cta_label": "Get Started",
-        "cta_url": "#pricing"
+        "cta_url": "#pricing",
+        "cta_to_intake": true
       }
     },
     "explore": {
@@ -512,7 +513,8 @@
         "trustpilot_rating": "Excellent",
         "trustpilot_score": "4.6",
         "trustpilot_count": "436 reviews on",
-        "trustpilot_url": ""
+        "trustpilot_url": "",
+        "cta_to_intake": true
       }
     }
   },

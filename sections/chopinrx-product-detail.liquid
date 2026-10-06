@@ -213,7 +213,9 @@
         {%- endif -%}
 
         {%- if section.settings.cta_label != blank -%}
-          <a class="chx-btn chx-btn--accent chx-pdp__cta" href="#{{ section.settings.cta_anchor | default: 'pricing' }}">
+          {%- # The intake lives on MyDose: the form's own link first, then the product's. -%}
+          {%- assign intake_url = variant.metafields.custom.mydos_link.value | default: product.metafields.custom.mydos_link.value | default: '#' -%}
+          <a class="chx-btn chx-btn--accent chx-pdp__cta" href="{{ intake_url }}">
             <span>{{ section.settings.cta_label }}</span>
             <span class="chx-btn__icon" aria-hidden="true">{{ arrow_icon }}</span>
           </a>
@@ -669,14 +671,8 @@
       "type": "text",
       "id": "cta_label",
       "label": "Button label",
+      "info": "Links to the Mydos Link of the selected form, then the product's.",
       "default": "Start intake"
-    },
-    {
-      "type": "text",
-      "id": "cta_anchor",
-      "label": "Scroll target id",
-      "info": "The button scrolls to the element with this id, e.g. the pricing section.",
-      "default": "pricing"
     },
     {
       "type": "header",
