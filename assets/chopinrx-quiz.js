@@ -205,7 +205,9 @@ export function createQuiz(root) {
     const format = needleFree() ? copy.format_needle_free : copy.format_any;
     body.innerHTML = `
       <div class="chx-quiz__building">
-        <span class="chx-quiz__spinner" aria-hidden="true"></span>
+        <span class="chx-quiz__spinner" aria-hidden="true" data-chx-quiz-spinner>
+          <svg class="chx-quiz__spinner-check" viewBox="0 0 24 24" fill="none"><path d="M6 12.5l4 4 8-9" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </span>
         ${heading(fill(copy.building_heading, { goal: goalPhrase }))}
         ${intro(fill(copy.building_text, { timing, format }))}
         <ul class="chx-quiz__checks" role="list">
@@ -222,6 +224,8 @@ export function createQuiz(root) {
         if (!pending) return;
         pending.classList.remove('is-pending');
         pending.textContent = `✓ ${copy.check_tier}`;
+        // The spinner turns into a check so it is clear the results are ready.
+        body.querySelector('[data-chx-quiz-spinner]')?.classList.add('is-done');
       },
       reduceMotion ? 0 : 900
     );
