@@ -64,7 +64,7 @@
         "title_line_2": "Fast & Easy Prescriptions. Delivered to You.",
         "body": "<h3>Connect with licensed U.S. clinicians and 503A & 503B pharmacies for personalized treatment options through a simple online experience.</h3>",
         "primary_label": "Explore Programs",
-        "primary_url": "",
+        "primary_url": "shopify://collections/program",
         "secondary_label": "Start Now",
         "secondary_url": "#find-your-program",
         "tertiary_label": "",
