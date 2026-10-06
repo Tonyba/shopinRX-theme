@@ -31,9 +31,16 @@
         {% render 'chopinrx-section-heading', eyebrow: eyebrow, heading: heading, heading_class: 'chx-h1' %}
 
         {%- if section.settings.cta_label != blank -%}
+          {%- liquid
+            assign cta_url = section.settings.cta_url | default: routes.all_products_collection_url
+            if section.settings.cta_to_intake and product
+              assign intake_variant = product.selected_or_first_available_variant
+              assign cta_url = intake_variant.metafields.custom.mydos_link.value | default: product.metafields.custom.mydos_link.value | default: '#'
+            endif
+          -%}
           <a
             class="chx-btn chx-btn--primary chx-faq__cta"
-            href="{{ section.settings.cta_url | default: routes.all_products_collection_url }}"
+            href="{{ cta_url }}"
           >
             <span>{{ section.settings.cta_label }}</span>
             <span class="chx-btn__icon" aria-hidden="true">{{ arrow_icon }}</span>
@@ -337,6 +344,13 @@
       "type": "url",
       "id": "cta_url",
       "label": "Button link"
+    },
+    {
+      "type": "checkbox",
+      "id": "cta_to_intake",
+      "label": "On product pages, link to the intake",
+      "info": "Uses the product's Mydos Link instead of the button link.",
+      "default": false
     }
   ],
   "blocks": [
