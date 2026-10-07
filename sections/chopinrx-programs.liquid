@@ -253,14 +253,6 @@
     white-space: nowrap;
   }
 
-  /* On the premier cards the category pill takes the palette's Premier
-     Program badge treatment: Champagne with Deep Navy text. */
-  .chx-program-card .chx-pill {
-    border-color: var(--badge-luxury-bg);
-    background-color: var(--badge-luxury-bg);
-    color: var(--badge-luxury-fg);
-  }
-
   .chx-program-card__titles {
     display: flex;
     flex-direction: column;
@@ -281,16 +273,24 @@
     text-decoration: none;
   }
 
+  /* The ingredient line takes the palette's Premier Program badge
+     treatment: a Champagne pill with Deep Navy text. */
   .chx-program-card__ingredients {
+    display: inline-flex;
+    align-items: center;
+    align-self: flex-start;
+    min-height: var(--pill-h);
     margin: 0;
+    padding: 4px var(--space-3);
+    border-radius: var(--radius-pill);
+    background-color: var(--badge-luxury-bg);
     font-family: var(--font-ui);
-    font-size: var(--font-size-body);
+    font-size: var(--font-size-label-tag);
     font-weight: 600;
-    line-height: 1.5;
-    letter-spacing: -0.005em;
-    /* Premier cards sit on Deep Navy, where the palette's Champagne accent
-       carries the ingredient line instead of Cobalt. */
-    color: var(--text-luxury);
+    line-height: 1.14;
+    letter-spacing: 0.005em;
+    text-transform: uppercase;
+    color: var(--badge-luxury-fg);
   }
 
   .chx-program-card__text {
