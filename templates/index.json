@@ -61,8 +61,8 @@
         "image": "shopify://shop_images/chx-hero.jpg",
         "eyebrow": "Chopin RX",
         "title_line_1": "Life Enhancement RX Provider",
-        "title_line_2": "Fast & Easy Prescriptions. Delivered to You.",
-        "body": "<h3>Connect with licensed U.S. clinicians and 503A & 503B pharmacies for personalized treatment options through a simple online experience.</h3>",
+        "title_line_2": "Fast & Easy Process. Delivered to You.",
+        "body": "<h3>Connect with licensed U.S. clinicians and 503A & 503B pharmacy partners for personalized peptide and treatment options through a simple online experience.</h3>",
         "primary_label": "Explore Programs",
         "primary_url": "shopify://collections/program",
         "secondary_label": "Start Now",
@@ -544,7 +544,8 @@
         "eyebrow": "Have questions?",
         "heading": "Frequently asked <em>questions</em>",
         "cta_label": "Get Started",
-        "cta_url": "#find-your-program"
+        "cta_url": "#find-your-program",
+        "cta_to_intake": false
       }
     },
     "insights": {
