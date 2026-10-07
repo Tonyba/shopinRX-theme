@@ -80,7 +80,7 @@
         "feature_3": {
           "type": "feature",
           "settings": {
-            "title": "HIPAA Compliant",
+            "title": "Confidential Care",
             "text": "Your data is always protected"
           }
         },
@@ -393,6 +393,7 @@
         "feature_2",
         "feature_3"
       ],
+      "disabled": true,
       "settings": {
         "anchor_id": "pricing",
         "eyebrow": "Treatment",
@@ -407,8 +408,7 @@
         "after_label": "/[interval] after",
         "includes_heading": "What's included",
         "cta_label": "Get started"
-      },
-      "disabled": true
+      }
     },
     "faq": {
       "type": "chopinrx-faq",
@@ -477,6 +477,7 @@
         "collections": [
           "program"
         ],
+        "primary_collection": "",
         "products_count": 8,
         "price_prefix": "From",
         "price_unit": "/mo",
@@ -518,12 +519,12 @@
         "image": "shopify://shop_images/Media_frame.png",
         "cta_label": "Get Started",
         "cta_url": "#pricing",
+        "cta_to_intake": true,
         "show_trustpilot": true,
         "trustpilot_rating": "Excellent",
         "trustpilot_score": "4.6",
         "trustpilot_count": "436 reviews on",
-        "trustpilot_url": "",
-        "cta_to_intake": true
+        "trustpilot_url": ""
       }
     }
   },
