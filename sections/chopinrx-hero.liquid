@@ -3,7 +3,7 @@
 {% liquid
   assign image = section.settings.image
   assign check_icon = 'icon-check-circle.svg' | inline_asset_content
-  assign arrow_icon = 'icon-arrow-right.svg' | inline_asset_content | replace: '#FCFAF9', 'currentColor'
+  assign arrow_icon = 'icon-arrow-right.svg' | inline_asset_content
 %}
 
 <div class="chx-hero">
@@ -114,6 +114,8 @@
   }
 
   .chx-hero__frame {
+    --text-accent: var(--text-accent-on-dark);
+    --text-accent-strong: var(--text-accent-on-dark);
     --chx-hero-lede: 646px;
     --chx-heading-color: var(--text-on-dark);
     --chx-body-color: var(--text-on-dark);
@@ -129,6 +131,7 @@
     border-radius: var(--radius-xl);
     overflow: clip;
     background-color: var(--surface-dark);
+    background-image: var(--gradient-hero);
     color: var(--text-on-dark);
   }
 
@@ -152,12 +155,12 @@
     position: absolute;
     inset: 0;
     background-image:
-      linear-gradient(269.34deg, rgb(0 0 0 / 0%) 45.502%, rgb(0 0 0 / 100%) 72.911%),
+      linear-gradient(269.34deg, rgb(13 37 53 / 0%) 45.502%, rgb(13 37 53 / 100%) 72.911%),
       linear-gradient(
         to right,
-        rgb(0 0 0 / 96%) 0,
-        rgb(0 0 0 / 88%) calc(var(--chx-gutter) + var(--chx-hero-lede) * 0.72),
-        rgb(0 0 0 / 0%) calc(var(--chx-gutter) + var(--chx-hero-lede) + 300px)
+        rgb(13 37 53 / 96%) 0,
+        rgb(13 37 53 / 88%) calc(var(--chx-gutter) + var(--chx-hero-lede) * 0.72),
+        rgb(13 37 53 / 0%) calc(var(--chx-gutter) + var(--chx-hero-lede) + 300px)
       );
   }
 
@@ -300,8 +303,8 @@
        black layer under the 40% ink scrim. */
     .chx-hero__scrim {
       background-image:
-        linear-gradient(rgb(38 38 38 / 40%), rgb(38 38 38 / 40%)),
-        linear-gradient(rgb(0 0 0 / 60%), rgb(0 0 0 / 60%));
+        linear-gradient(rgb(13 37 53 / 40%), rgb(13 37 53 / 40%)),
+        linear-gradient(rgb(13 37 53 / 60%), rgb(13 37 53 / 60%));
     }
 
     .chx-hero__inner {

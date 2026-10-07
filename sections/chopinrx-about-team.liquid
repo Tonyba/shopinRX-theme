@@ -1,7 +1,7 @@
 {% render 'chopinrx-tokens' %}
 
 {% liquid
-  assign arrow_icon = 'icon-arrow-right.svg' | inline_asset_content | replace: '#FCFAF9', 'currentColor'
+  assign arrow_icon = 'icon-arrow-right.svg' | inline_asset_content
   assign check_icon = 'icon-check-circle.svg' | inline_asset_content
   assign features = section.blocks | where: 'type', 'feature'
   assign members = section.blocks | where: 'type', 'member'

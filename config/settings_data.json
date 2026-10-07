@@ -51,14 +51,14 @@
     "badge_corner_radius": 100,
     "badge_sold_out_background_color": "{{ settings.color_palette.color2 }}",
     "badge_text_transform": "none",
-    "palette_primary_button_background": "#14181d",
-    "palette_primary_button_text": "#fcfaf9",
-    "palette_primary_button_border": "#14181d",
+    "palette_primary_button_background": "#2864dc",
+    "palette_primary_button_text": "#ffffff",
+    "palette_primary_button_border": "#2864dc",
     "primary_button_border_width": 0,
     "button_border_radius_primary": 100,
     "palette_secondary_button_background": "#ffffff",
-    "palette_secondary_button_text": "#14181d",
-    "palette_secondary_button_border": "#c9c3b8",
+    "palette_secondary_button_text": "#0d2535",
+    "palette_secondary_button_border": "#0d2535",
     "secondary_button_border_width": 1,
     "button_border_radius_secondary": 100,
     "pills_border_radius": 40,
@@ -116,11 +116,11 @@
       }
     },
     "color_palette": {
-      "background": "#ffffff",
-      "foreground": "#14181d",
-      "color1": "#2369D9",
-      "color2": "#faf8f5",
-      "color3": "#c9c3b8"
+      "background": "#fafcfe",
+      "foreground": "#16212b",
+      "color1": "#2864dc",
+      "color2": "#eaf3f8",
+      "color3": "#d7e6ef"
     }
   },
   "presets": {

@@ -1,7 +1,7 @@
 {% render 'chopinrx-tokens' %}
 
 {% liquid
-  assign arrow_icon = 'icon-arrow-right.svg' | inline_asset_content | replace: '#FCFAF9', 'currentColor'
+  assign arrow_icon = 'icon-arrow-right.svg' | inline_asset_content
   assign dot_icon = 'icon-eyebrow-dot.svg' | inline_asset_content
 %}
 
@@ -195,7 +195,7 @@
           "type": "color",
           "id": "overlay_color",
           "label": "Overlay",
-          "default": "#124643b3"
+          "default": "#0d2535b3"
         },
         {
           "type": "text",
@@ -230,13 +230,13 @@
           "type": "color",
           "id": "button_color",
           "label": "Button background",
-          "default": "#22eee4"
+          "default": "#2864dc"
         },
         {
           "type": "color",
           "id": "button_text_color",
           "label": "Button text",
-          "default": "#14181d"
+          "default": "#ffffff"
         }
       ]
     }
@@ -249,25 +249,25 @@
         {
           "type": "panel",
           "settings": {
-            "overlay_color": "#124643b3",
+            "overlay_color": "#0d2535b3",
             "eyebrow": "Find your path",
             "heading": "Built for men",
             "text": "TRT foundation, drive, recovery and performance protocols reviewed by independent licensed providers.",
             "cta_label": "Explore men's programs",
-            "button_color": "#22eee4",
-            "button_text_color": "#14181d"
+            "button_color": "#2864dc",
+            "button_text_color": "#ffffff"
           }
         },
         {
           "type": "panel",
           "settings": {
-            "overlay_color": "#5b2542b3",
+            "overlay_color": "#0d2535b3",
             "eyebrow": "Find your path",
             "heading": "Built for women",
             "text": "Menopause, HRT, balance and aesthetics protocols reviewed by independent licensed providers.",
             "cta_label": "Explore women's programs",
-            "button_color": "#f9299b",
-            "button_text_color": "#fcfaf9"
+            "button_color": "#2864dc",
+            "button_text_color": "#ffffff"
           }
         }
       ]

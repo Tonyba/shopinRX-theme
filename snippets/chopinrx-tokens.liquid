@@ -13,48 +13,68 @@
   :root {
     /* ── Surfaces ─────────────────────────────── */
     --paper-000: #ffffff;
-    --surface-page: #ffffff;
+    --surface-page: #fafcfe; /* Soft White */
     --surface-card: #ffffff;
-    --surface-muted: #fcfaf9;
-    --surface-card-flat: #f5f3f1;
-    --surface-well: #e9e6df;
-    --surface-dark: #14181d;
-    --surface-accent: #ff6e42;
-    --surface-accent-soft: #ffe8e2;
-    --surface-info-soft: #e8eef7;
-    --alpha-paper-16: #faf8f529;
+    --surface-muted: #f2f7fa; /* midpoint of the section gradient */
+    --surface-card-flat: #eaf3f8; /* Clinical Blue */
+    --surface-well: #d7e6ef; /* Light Gray Blue */
+    --surface-dark: #0d2535; /* Deep Navy */
+    --surface-dark-soft: #16212b; /* Charcoal */
+    --surface-accent: #2864dc; /* Cobalt Blue */
+    --surface-accent-soft: #eaf3f8;
+    --surface-info-soft: #eaf3f8;
+    --surface-luxury: #c9a97e; /* Champagne */
+    --alpha-paper-16: #ffffff29;
+
+    /* ── Gradients & overlays ─────────────────── */
+    --gradient-hero: linear-gradient(135deg, #0d2535 0%, #2864dc 100%);
+    --gradient-section: linear-gradient(180deg, #eaf3f8 0%, #ffffff 100%);
+    --gradient-cta-hover: linear-gradient(90deg, #2864dc 0%, #4a80f0 100%);
+    --overlay-image: rgb(13 37 53 / 75%);
 
     /* ── Ink & accent ramps ───────────────────── */
-    --ink-900: #14181d;
-    --ink-300: #a8aeb8;
-    --accent-500: #ff6e42;
+    --ink-900: #0d2535;
+    --ink-300: #6b7c8a;
+    --accent-500: #2864dc;
+    --accent-400: #4a80f0;
 
     /* ── Text ─────────────────────────────────── */
-    --text-heading: #14181d;
-    --text-body: #1f252c;
-    --text-muted: #6b7480;
-    --text-on-dark: #fcfaf9;
-    --text-on-dark-muted: #9ba3ae;
-    --text-accent: #ff6e42;
-    --text-accent-strong: #944128;
-    --text-info: #244a7a;
-    --icon-on-dark: #faf8f5;
+    --text-heading: #0d2535;
+    --text-body: #16212b;
+    --text-muted: #6b7c8a;
+    --text-on-dark: #ffffff;
+    --text-on-dark-muted: #d7e6ef;
+    --text-on-luxury: #0d2535;
+    --text-accent: #2864dc;
+    --text-accent-strong: #2864dc;
+    /* Cobalt on Deep Navy is too low in contrast, so dark surfaces redefine
+       --text-accent to this lighter step of the CTA hover gradient. */
+    --text-accent-on-dark: #4a80f0;
+    --text-info: #2864dc;
+    --icon-on-dark: #ffffff;
     --icon-success: #34c759;
 
     /* ── Borders ──────────────────────────────── */
-    --border-hairline: #ddd8cf;
-    --border-strong: #c9c3b8;
+    --border-hairline: #d7e6ef;
+    --border-strong: #d7e6ef;
+    --border-on-dark: #ffffff66;
     --border-w: 1px;
 
     /* ── Actions ──────────────────────────────── */
-    --action-primary-bg: #14181d;
-    --action-primary-fg: #fcfaf9;
-    --action-primary-bg-hover: #000000;
-    --action-accent-bg: #ff6e42;
-    --action-accent-fg: #14181d;
-    --action-accent-bg-hover: #e85b2d;
-    --action-secondary-fg: #14181d;
-    --action-secondary-border: #c9c3b8;
+    --action-primary-bg: #2864dc;
+    --action-primary-fg: #ffffff;
+    --action-primary-bg-hover: #4a80f0;
+    --action-accent-bg: #2864dc;
+    --action-accent-fg: #ffffff;
+    --action-accent-bg-hover: #4a80f0;
+    --action-secondary-fg: #0d2535;
+    --action-secondary-border: #0d2535;
+
+    /* ── Badges ───────────────────────────────── */
+    --badge-featured-bg: #16212b; /* Most popular */
+    --badge-featured-fg: #ffffff;
+    --badge-luxury-bg: #c9a97e; /* Premier program */
+    --badge-luxury-fg: #0d2535;
 
     /* ── Spacing ──────────────────────────────── */
     --space-1: 0px;
@@ -354,6 +374,7 @@
 
   .chx-btn--primary:hover {
     background-color: var(--action-primary-bg-hover);
+    background-image: var(--gradient-cta-hover);
     color: var(--action-primary-fg);
   }
 
@@ -374,12 +395,13 @@
 
   .chx-btn--accent:hover {
     background-color: var(--action-accent-bg-hover);
+    background-image: var(--gradient-cta-hover);
     color: var(--action-primary-fg);
   }
 
   /* Outlined action on photography or ink surfaces */
   .chx-btn--inverse {
-    border-color: var(--action-secondary-border);
+    border-color: var(--border-on-dark);
     color: var(--text-on-dark);
   }
 

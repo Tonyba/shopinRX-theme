@@ -211,28 +211,28 @@
           "type": "panel",
           "settings": {
             "image": "shopify://shop_images/chx-gender-men.jpg",
-            "overlay_color": "#124643b3",
+            "overlay_color": "#0d2535b3",
             "eyebrow": "Find your path",
             "heading": "Built for men",
             "text": "Explore provider-guided options for hormone health, sexual wellness, performance, recovery, metabolic health, hair, and skin.",
             "cta_label": "Explore men's programs",
             "cta_url": "shopify://collections/mens-health",
-            "button_color": "#22eee4",
-            "button_text_color": "#14181d"
+            "button_color": "#2864dc",
+            "button_text_color": "#ffffff"
           }
         },
         "panel_2": {
           "type": "panel",
           "settings": {
             "image": "shopify://shop_images/chx-gender-women-v2.jpg",
-            "overlay_color": "#5b2542b3",
+            "overlay_color": "#0d2535b3",
             "eyebrow": "Find your path",
             "heading": "Built for women",
             "text": "Explore provider-guided options for weight management, hormone health, menopause support, energy, hair, and skin.",
             "cta_label": "Explore women's programs",
             "cta_url": "shopify://collections/womens-health",
-            "button_color": "#f9299b",
-            "button_text_color": "#fcfaf9"
+            "button_color": "#2864dc",
+            "button_text_color": "#ffffff"
           }
         }
       },

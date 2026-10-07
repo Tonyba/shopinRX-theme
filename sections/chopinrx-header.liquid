@@ -9,8 +9,8 @@
     assign login_url = routes.account_login_url
   endif
 
-  assign chevron_icon = 'icon-chevron-down.svg' | inline_asset_content | replace: '#FF6E42', 'currentColor'
-  assign arrow_icon = 'icon-arrow-right.svg' | inline_asset_content | replace: '#FCFAF9', 'currentColor'
+  assign chevron_icon = 'icon-chevron-down.svg' | inline_asset_content
+  assign arrow_icon = 'icon-arrow-right.svg' | inline_asset_content
 %}
 
 <script type="application/ld+json">
@@ -398,7 +398,7 @@
     border: var(--border-w) solid var(--action-secondary-border);
     border-radius: var(--radius-panel);
     background-color: var(--surface-page);
-    box-shadow: 0 12px 32px rgb(20 24 29 / 12%);
+    box-shadow: 0 12px 32px rgb(13 37 53 / 12%);
     opacity: 0;
     visibility: hidden;
     translate: 0 8px;
@@ -499,7 +499,7 @@
   .chx-drawer__backdrop {
     position: absolute;
     inset: 0;
-    background-color: rgb(20 24 29 / 45%);
+    background-color: rgb(13 37 53 / 45%);
     opacity: 0;
     transition: opacity 0.3s ease;
   }

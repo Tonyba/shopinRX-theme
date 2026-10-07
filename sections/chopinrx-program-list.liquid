@@ -1,7 +1,7 @@
 {% render 'chopinrx-tokens' %}
 
 {% liquid
-  assign arrow_icon = 'icon-arrow-right.svg' | inline_asset_content | replace: '#FCFAF9', 'currentColor'
+  assign arrow_icon = 'icon-arrow-right.svg' | inline_asset_content
   assign tabs = section.settings.collections
   assign unit = section.settings.price_unit
   assign primary = section.settings.primary_collection
@@ -279,14 +279,14 @@
     height: var(--pill-h);
     padding-inline: var(--space-3);
     border-radius: var(--radius-pill);
-    background-color: var(--surface-accent);
+    background-color: var(--badge-featured-bg);
     font-family: var(--font-ui);
     font-size: var(--font-size-label-tag);
     font-weight: 600;
     line-height: 1.14;
     letter-spacing: 0.005em;
     text-transform: uppercase;
-    color: var(--text-on-dark);
+    color: var(--badge-featured-fg);
     white-space: nowrap;
   }
 

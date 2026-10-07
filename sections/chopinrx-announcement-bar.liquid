@@ -1,8 +1,8 @@
 {% render 'chopinrx-tokens' %}
 
 {% liquid
-  assign background_color = section.settings.background_color | default: '#14181d'
-  assign text_color = section.settings.text_color | default: '#fcfaf9'
+  assign background_color = section.settings.background_color | default: '#0d2535'
+  assign text_color = section.settings.text_color | default: '#ffffff'
 %}
 
 <div
@@ -12,7 +12,7 @@
   <div class="chx-trust-bar__inner chx-container">
     {%- if section.settings.show_icon -%}
       <span class="chx-trust-bar__icon" aria-hidden="true">
-        {{- 'icon-shield-check.svg' | inline_asset_content | replace: '#FAF8F5', 'currentColor' -}}
+        {{- 'icon-shield-check.svg' | inline_asset_content -}}
       </span>
     {%- endif -%}
     <p class="chx-trust-bar__text">{{ section.settings.text }}</p>
@@ -99,13 +99,13 @@
       "type": "color",
       "id": "background_color",
       "label": "Background",
-      "default": "#14181d"
+      "default": "#0d2535"
     },
     {
       "type": "color",
       "id": "text_color",
       "label": "Text",
-      "default": "#fcfaf9"
+      "default": "#ffffff"
     }
   ],
   "presets": [

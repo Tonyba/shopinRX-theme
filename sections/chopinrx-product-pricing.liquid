@@ -1,7 +1,7 @@
 {% render 'chopinrx-tokens' %}
 
 {% liquid
-  assign arrow_icon = 'icon-arrow-right.svg' | inline_asset_content | replace: '#FCFAF9', 'currentColor'
+  assign arrow_icon = 'icon-arrow-right.svg' | inline_asset_content
   assign check_icon = 'icon-check-circle.svg' | inline_asset_content
   assign plan_icon = 'icon-target.svg' | inline_asset_content
 
@@ -243,6 +243,8 @@
 
 {% stylesheet %}
   .chx-pricing {
+    --text-accent: var(--text-accent-on-dark);
+    --text-accent-strong: var(--text-accent-on-dark);
     --chx-heading-color: var(--text-on-dark);
 
     background-color: var(--surface-dark);

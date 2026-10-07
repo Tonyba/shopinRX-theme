@@ -16,8 +16,8 @@
       "settings": {
         "text": "Board-certified providers · Licensed U.S. compounding pharmacies",
         "show_icon": true,
-        "background_color": "#14181d",
-        "text_color": "#fcfaf9"
+        "background_color": "#0d2535",
+        "text_color": "#ffffff"
       }
     },
     "header_section": {

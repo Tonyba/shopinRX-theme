@@ -1,7 +1,7 @@
 {% render 'chopinrx-tokens' %}
 
 {% liquid
-  assign arrow_icon = 'icon-arrow-right.svg' | inline_asset_content | replace: '#FCFAF9', 'currentColor'
+  assign arrow_icon = 'icon-arrow-right.svg' | inline_asset_content
   assign dot_icon = 'icon-eyebrow-dot.svg' | inline_asset_content
   assign tabs = section.settings.collections
   assign unit = section.settings.price_unit

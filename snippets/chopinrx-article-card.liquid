@@ -14,7 +14,7 @@
 {% enddoc %}
 
 {% liquid
-  assign arrow_icon = 'icon-arrow-right.svg' | inline_asset_content | replace: '#FCFAF9', 'currentColor'
+  assign arrow_icon = 'icon-arrow-right.svg' | inline_asset_content
   assign dot_icon = 'icon-eyebrow-dot.svg' | inline_asset_content
   assign label = read_more | default: 'Read More'
   assign image_sizes = sizes | default: '(min-width: 1025px) 33vw, 100vw'

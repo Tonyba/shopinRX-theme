@@ -1,7 +1,7 @@
 {% render 'chopinrx-tokens' %}
 
 {% liquid
-  assign arrow_icon = 'icon-arrow-right.svg' | inline_asset_content | replace: '#FCFAF9', 'currentColor'
+  assign arrow_icon = 'icon-arrow-right.svg' | inline_asset_content
   assign collection = collections[section.settings.collection]
   assign unit = section.settings.price_unit
 %}
@@ -163,6 +163,8 @@
 
   /* ── Program card ───────────────────────────── */
   .chx-program-card {
+    --text-accent: var(--text-accent-on-dark);
+    --text-accent-strong: var(--text-accent-on-dark);
     --chx-heading-color: var(--text-on-dark);
     --chx-body-color: var(--text-on-dark);
 
@@ -206,7 +208,7 @@
     aspect-ratio: 407 / 210;
     border-radius: var(--radius-md);
     overflow: clip;
-    background-color: #d9d9d9;
+    background-color: var(--surface-well);
   }
 
   .chx-program-card__media img {
@@ -238,8 +240,10 @@
     gap: var(--space-2);
     height: var(--pill-h);
     padding-inline: var(--space-3);
-    border: var(--border-w) solid var(--text-accent);
+    border: var(--border-w) solid var(--surface-accent-soft);
     border-radius: var(--radius-pill);
+    background-color: var(--surface-accent-soft);
+    color: var(--accent-500);
     font-family: var(--font-ui);
     font-size: var(--font-size-label-tag);
     font-weight: 600;

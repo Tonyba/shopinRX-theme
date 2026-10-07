@@ -1,13 +1,13 @@
 {% render 'chopinrx-tokens' %}
 
 {% liquid
-  assign arrow_icon = 'icon-arrow-right.svg' | inline_asset_content | replace: '#FCFAF9', 'currentColor'
+  assign arrow_icon = 'icon-arrow-right.svg' | inline_asset_content
   assign chevron_left = 'icon-chevron-left.svg' | inline_asset_content
   assign chevron_right = 'icon-chevron-right.svg' | inline_asset_content
   assign check_icon = 'icon-check-circle.svg' | inline_asset_content
   assign slash_icon = 'icon-breadcrumb-slash.svg' | inline_asset_content
-  assign plus_icon = 'icon-faq-plus.svg' | inline_asset_content | replace: '#FCFAF9', 'currentColor'
-  assign minus_icon = 'icon-faq-minus.svg' | inline_asset_content | replace: '#FCFAF9', 'currentColor'
+  assign plus_icon = 'icon-faq-plus.svg' | inline_asset_content
+  assign minus_icon = 'icon-faq-minus.svg' | inline_asset_content
 
   assign variant = product.selected_or_first_available_variant
   assign unit = section.settings.price_unit
@@ -464,7 +464,7 @@
     padding: 0;
     border: 0;
     border-radius: 4.412px;
-    background-color: #c9c9c9;
+    background-color: var(--surface-well);
     overflow: clip;
     cursor: pointer;
   }

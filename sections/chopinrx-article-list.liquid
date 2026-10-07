@@ -1,7 +1,7 @@
 {% render 'chopinrx-tokens' %}
 
 {% liquid
-  assign chevron_icon = 'icon-chevron-right.svg' | inline_asset_content | replace: '#FF6E42', 'currentColor'
+  assign chevron_icon = 'icon-chevron-right.svg' | inline_asset_content
   assign featured_tag = section.settings.featured_tag | downcase
   assign per_page = section.settings.per_page | default: 9
 %}

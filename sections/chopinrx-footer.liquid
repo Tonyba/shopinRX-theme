@@ -1,7 +1,7 @@
 {% render 'chopinrx-tokens' %}
 
 {% liquid
-  assign arrow_icon = 'icon-arrow-right.svg' | inline_asset_content | replace: '#FCFAF9', 'currentColor'
+  assign arrow_icon = 'icon-arrow-right.svg' | inline_asset_content
   assign contacts = section.blocks | where: 'type', 'contact'
   assign columns = section.blocks | where: 'type', 'column'
   assign legal_links = section.blocks | where: 'type', 'legal'
@@ -156,6 +156,8 @@
 
 {% stylesheet %}
   .chx-footer {
+    --text-accent: var(--text-accent-on-dark);
+    --text-accent-strong: var(--text-accent-on-dark);
     --chx-heading-color: var(--text-on-dark);
     --chx-body-color: var(--text-on-dark);
 
