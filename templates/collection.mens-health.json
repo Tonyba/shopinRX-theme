@@ -44,7 +44,7 @@
         "feature_04"
       ],
       "settings": {
-        "image": "shopify://shop_images/chx-hero.jpg",
+        "image": "shopify://shop_images/mens_health-700kb.jpg",
         "eyebrow": "Chopin RX Men's health",
         "title_line_1": "Men's health,",
         "title_line_2": "made simple.",
@@ -53,9 +53,13 @@
         "primary_url": "#shop-by-goal",
         "secondary_label": "Help me choose",
         "secondary_url": "#find-your-program-mens",
-        "show_trustpilot": false,
         "tertiary_label": "Full treatment menu",
-        "tertiary_url": "#full-menu"
+        "tertiary_url": "#full-menu",
+        "show_trustpilot": false,
+        "trustpilot_rating": "Excellent",
+        "trustpilot_score": "4.6",
+        "trustpilot_count": "436 reviews on",
+        "trustpilot_url": ""
       }
     },
     "anchor_nav": {
@@ -148,7 +152,8 @@
             "product": "retatrutide-b12",
             "name": "Retatrutide Protocol*",
             "subtitle": "Retatrutide + B12",
-            "form": "Weekly injection"
+            "form": "Weekly injection",
+            "variant_form": ""
           }
         },
         "pick_03": {
@@ -158,7 +163,8 @@
             "product": "tirzepatide-b12",
             "name": "Tirzepatide Protocol",
             "subtitle": "Dual GIP/GLP-1 with B12 or B6",
-            "form": "Weekly injection"
+            "form": "Weekly injection",
+            "variant_form": ""
           }
         },
         "pick_04": {
@@ -168,7 +174,8 @@
             "product": "bupropion-naltrexone",
             "name": "Oral Weight Protocol",
             "subtitle": "Bupropion + Naltrexone",
-            "form": "Capsule"
+            "form": "Capsule",
+            "variant_form": ""
           }
         },
         "goal_05": {
@@ -185,7 +192,8 @@
             "product": "enclomiphene",
             "name": "Enclomiphene",
             "subtitle": "Supports your own production",
-            "form": "Capsule"
+            "form": "Capsule",
+            "variant_form": ""
           }
         },
         "pick_07": {
@@ -195,7 +203,8 @@
             "product": "dhea-pregnenolone",
             "name": "DHEA + Pregnenolone",
             "subtitle": "Oral hormone precursor support",
-            "form": "Capsule"
+            "form": "Capsule",
+            "variant_form": ""
           }
         },
         "goal_08": {
@@ -212,7 +221,8 @@
             "product": "sildenafil-tadalafil-oxytocin",
             "name": "Drive ODT",
             "subtitle": "Sildenafil + Tadalafil + Oxytocin",
-            "form": "Dissolving tablet"
+            "form": "Dissolving tablet",
+            "variant_form": ""
           }
         },
         "pick_10": {
@@ -222,7 +232,8 @@
             "product": "tadalafil",
             "name": "Tadalafil",
             "subtitle": "Daily or as needed",
-            "form": "Tablet"
+            "form": "Tablet",
+            "variant_form": ""
           }
         },
         "pick_11": {
@@ -232,7 +243,8 @@
             "product": "trimix",
             "name": "Trimix",
             "subtitle": "When oral isn't enough",
-            "form": "Injection"
+            "form": "Injection",
+            "variant_form": ""
           }
         },
         "goal_12": {
@@ -249,7 +261,8 @@
             "product": "wolverine-blend",
             "name": "Wolverine Blend",
             "subtitle": "BPC-157 + TB-500",
-            "form": "Injection"
+            "form": "Injection",
+            "variant_form": ""
           }
         },
         "pick_14": {
@@ -259,7 +272,8 @@
             "product": "cjc-1295-ipamorelin",
             "name": "CJC + Ipamorelin",
             "subtitle": "GH-axis peptide pair",
-            "form": "Injection"
+            "form": "Injection",
+            "variant_form": ""
           }
         },
         "pick_15": {
@@ -269,7 +283,8 @@
             "product": "sermorelin",
             "name": "Sermorelin",
             "subtitle": "GH-axis support",
-            "form": "Film strip or troche"
+            "form": "Film strip or troche",
+            "variant_form": ""
           }
         },
         "goal_16": {
@@ -286,7 +301,8 @@
             "product": "nad",
             "name": "NAD+",
             "subtitle": "Cellular energy support",
-            "form": "Injection, nasal spray or strip"
+            "form": "Injection, nasal spray or strip",
+            "variant_form": ""
           }
         },
         "pick_18": {
@@ -296,7 +312,8 @@
             "product": "mic-b12-l-carnitine",
             "name": "Lipotropic Boost",
             "subtitle": "Lipotropics + B12",
-            "form": "Injection or capsule"
+            "form": "Injection or capsule",
+            "variant_form": ""
           }
         },
         "pick_19": {
@@ -306,7 +323,8 @@
             "product": "glutathione",
             "name": "Glutathione",
             "subtitle": "Antioxidant support",
-            "form": "Injection or nasal spray"
+            "form": "Injection or nasal spray",
+            "variant_form": ""
           }
         },
         "goal_20": {
@@ -323,7 +341,8 @@
             "product": "minoxidil-finasteride-tretinoin",
             "name": "Hair Regrowth Spray",
             "subtitle": "Minoxidil + Finasteride + Tretinoin",
-            "form": "Topical spray"
+            "form": "Topical spray",
+            "variant_form": ""
           }
         },
         "pick_22": {
@@ -333,7 +352,8 @@
             "product": "finasteride",
             "name": "Finasteride",
             "subtitle": "One daily tablet",
-            "form": "Tablet"
+            "form": "Tablet",
+            "variant_form": ""
           }
         }
       },
@@ -401,7 +421,9 @@
           "type": "group",
           "settings": {
             "title": "Weight",
-            "subtitle": "GLP-1 and non-GLP-1 options"
+            "subtitle": "GLP-1 and non-GLP-1 options",
+            "tag": "",
+            "anchor": ""
           }
         },
         "protocol_05": {
@@ -412,6 +434,7 @@
             "products": [
               "retatrutide-b12"
             ],
+            "form": "",
             "featured": true
           }
         },
@@ -425,6 +448,7 @@
               "tirzepatide-b6",
               "tirzepatide-ondansetron"
             ],
+            "form": "",
             "featured": false
           }
         },
@@ -438,6 +462,7 @@
               "semaglutide-b6",
               "semaglutide-ondansetron"
             ],
+            "form": "",
             "featured": false
           }
         },
@@ -450,6 +475,7 @@
               "bupropion-naltrexone",
               "topiramate-bupropion-yohimbine"
             ],
+            "form": "",
             "featured": false
           }
         },
@@ -464,6 +490,7 @@
               "lipo-b6-mic-choline",
               "mic-b12-l-carnitine"
             ],
+            "form": "",
             "featured": false
           }
         },
@@ -471,7 +498,9 @@
           "type": "group",
           "settings": {
             "title": "Sexual Performance",
-            "subtitle": "Oral, topical and injectable options"
+            "subtitle": "Oral, topical and injectable options",
+            "tag": "",
+            "anchor": ""
           }
         },
         "protocol_11": {
@@ -482,6 +511,7 @@
             "products": [
               "sildenafil-tadalafil-oxytocin"
             ],
+            "form": "",
             "featured": false
           }
         },
@@ -493,6 +523,7 @@
             "products": [
               "sildenafil-tadalafil"
             ],
+            "form": "",
             "featured": false
           }
         },
@@ -504,6 +535,7 @@
             "products": [
               "sildenafil-papaverine"
             ],
+            "form": "",
             "featured": false
           }
         },
@@ -515,6 +547,7 @@
             "products": [
               "sildenafil-pentoxifylline-arginine"
             ],
+            "form": "",
             "featured": false
           }
         },
@@ -526,6 +559,7 @@
             "products": [
               "trimix"
             ],
+            "form": "",
             "featured": false
           }
         },
@@ -533,7 +567,9 @@
           "type": "group",
           "settings": {
             "title": "Recovery & Peptides",
-            "subtitle": "Training, repair and GH-axis support"
+            "subtitle": "Training, repair and GH-axis support",
+            "tag": "",
+            "anchor": ""
           }
         },
         "protocol_17": {
@@ -544,6 +580,7 @@
             "products": [
               "wolverine-blend"
             ],
+            "form": "",
             "featured": false
           }
         },
@@ -555,6 +592,7 @@
             "products": [
               "cjc-1295-ipamorelin"
             ],
+            "form": "",
             "featured": false
           }
         },
@@ -562,7 +600,9 @@
           "type": "group",
           "settings": {
             "title": "Hair",
-            "subtitle": "Topical regrowth formulas"
+            "subtitle": "Topical regrowth formulas",
+            "tag": "",
+            "anchor": ""
           }
         },
         "protocol_20": {
@@ -575,6 +615,7 @@
               "minoxidil-finasteride-latanoprost-ketoconazole",
               "minoxidil-finasteride-tretinoin-fluocinolone"
             ],
+            "form": "",
             "featured": false
           }
         }
@@ -788,7 +829,8 @@
       ],
       "settings": {
         "eyebrow": "FAQ",
-        "heading": "Good questions"
+        "heading": "Good questions",
+        "body": ""
       }
     }
   },
