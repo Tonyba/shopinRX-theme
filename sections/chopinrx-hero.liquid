@@ -6,7 +6,7 @@
   assign arrow_icon = 'icon-arrow-right.svg' | inline_asset_content
 %}
 
-<div class="chx-hero">
+<div class="chx-hero {% if section.settings.css_class != blank %}{{ section.settings.css_class }}{% endif %}">
   <div class="chx-hero__frame">
     {%- if image != blank -%}
       <img
@@ -64,7 +64,10 @@
         </div>
       </div>
 
-      {%- if section.settings.primary_label != blank or section.settings.secondary_label != blank or section.settings.tertiary_label != blank -%}
+      {%- if section.settings.primary_label != blank
+        or section.settings.secondary_label != blank
+        or section.settings.tertiary_label != blank
+      -%}
         <div class="chx-hero__actions">
           {%- if section.settings.primary_label != blank -%}
             <a
@@ -154,8 +157,7 @@
   .chx-hero__scrim {
     position: absolute;
     inset: 0;
-    background-image:
-      linear-gradient(269.34deg, rgb(13 37 53 / 0%) 45.502%, rgb(13 37 53 / 100%) 72.911%),
+    background-image: linear-gradient(269.34deg, rgb(13 37 53 / 0%) 45.502%, rgb(13 37 53 / 100%) 72.911%),
       linear-gradient(
         to right,
         rgb(13 37 53 / 96%) 0,
@@ -302,8 +304,7 @@
     /* Mobile drops the directional wash for the design's flat overlay: a 60%
        black layer under the 40% ink scrim. */
     .chx-hero__scrim {
-      background-image:
-        linear-gradient(rgb(13 37 53 / 40%), rgb(13 37 53 / 40%)),
+      background-image: linear-gradient(rgb(13 37 53 / 40%), rgb(13 37 53 / 40%)),
         linear-gradient(rgb(13 37 53 / 60%), rgb(13 37 53 / 60%));
     }
 
@@ -376,7 +377,6 @@
     .chx-hero__actions .chx-btn {
       width: 100%;
     }
-
   }
 {% endstylesheet %}
 
@@ -386,6 +386,11 @@
   "tag": "section",
   "class": "chopinrx-hero-section",
   "settings": [
+    {
+      "type": "text",
+      "id": "css_class",
+      "label": "Custom Css Class"
+    },
     {
       "type": "image_picker",
       "id": "image",
