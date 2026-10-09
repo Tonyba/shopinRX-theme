@@ -110,7 +110,10 @@
 
           {%- # The intake lives on MyDose: the first form's link, then the product's. -%}
           {%- assign intake_variant = product.selected_or_first_available_variant -%}
-          {%- assign intake_url = intake_variant.metafields.custom.mydos_link.value | default: product.metafields.custom.mydos_link.value | default: '#' -%}
+          {%- assign intake_url = intake_variant.metafields.custom.mydos_link.value
+            | default: product.metafields.custom.mydos_link.value
+            | default: '#'
+          -%}
           <a class="chx-btn chx-btn--accent chx-program-card__cta" href="{{ intake_url }}">
             <span>{{ section.settings.card_cta_label }}</span>
             <span class="chx-btn__icon" aria-hidden="true">{{ arrow_icon }}</span>
@@ -261,6 +264,7 @@
 
   .chx-program-card__title {
     color: var(--text-on-dark);
+    font-size: 30px;
   }
 
   .chx-program-card__title a {
@@ -361,6 +365,10 @@
   @media screen and (max-width: 767px) {
     .chx-programs {
       padding-block: var(--space-10);
+    }
+
+    .chx-program-card__title {
+      font-size: 21px;
     }
 
     /* The action moves under the cards on mobile. `display: contents` lifts the

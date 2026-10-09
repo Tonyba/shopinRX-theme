@@ -57,6 +57,11 @@
         "feature_2",
         "feature_3"
       ],
+      "custom_css": [
+        "h1 {font-size: 65px;}",
+        "@media (max-width: 1024px) {h1 {font-size: 55px; }}",
+        "@media (max-width: 767px) {h1 {font-size: 42px; }}"
+      ],
       "settings": {
         "image": "shopify://shop_images/Chopin_RX_-_Sunlit_Luxury_Patio_Couple_Heathly_Lifestyle_Enhancement.webp",
         "eyebrow": "Chopin RX",
