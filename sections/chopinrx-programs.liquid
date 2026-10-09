@@ -219,6 +219,9 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
+    /* The slot is about twice as wide as it is tall, so a centred crop of a
+       portrait or square photo loses the head. Anchor to the top instead. */
+    object-position: center top;
   }
 
   .chx-program-card__content {
