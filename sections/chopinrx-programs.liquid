@@ -300,6 +300,22 @@
     color: var(--badge-luxury-fg);
   }
 
+  /* Smaller pills inside the cards only. .chx-pill is shared with the other
+     program sections, so the override is scoped under the card. */
+  .chx-program-card .chx-program-card__goal,
+  .chx-program-card .chx-program-card__ingredients {
+    padding-inline: 10px;
+    font-size: 12px;
+  }
+
+  .chx-program-card .chx-program-card__goal {
+    height: 24px;
+  }
+
+  .chx-program-card .chx-program-card__ingredients {
+    min-height: 24px;
+  }
+
   .chx-program-card__text {
     flex: 1 1 auto;
     margin: 0;
