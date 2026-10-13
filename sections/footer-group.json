@@ -120,12 +120,6 @@
           "settings": {
             "image": "shopify://shop_images/27549383_1_1.png"
           }
-        },
-        "seal_2": {
-          "type": "seal",
-          "settings": {
-            "image": "shopify://shop_images/Vector.png"
-          }
         }
       },
       "block_order": [
@@ -143,8 +137,7 @@
         "legal_3",
         "legal_4",
         "legal_5",
-        "seal_1",
-        "seal_2"
+        "seal_1"
       ],
       "settings": {
         "heading": "Ready to Take <em>Control</em> of Your Health",
