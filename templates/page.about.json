@@ -129,6 +129,7 @@
         "stat_2",
         "stat_3"
       ],
+      "disabled": true,
       "settings": {
         "eyebrow": "Care designed around real people.",
         "heading": "Where we stand",
