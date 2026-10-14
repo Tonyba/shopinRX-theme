@@ -508,8 +508,8 @@
         "question_2": {
           "type": "question",
           "settings": {
-            "question": "Does ChopinRX provide medical care or prescribe medication?",
-            "answer": "<p>No. ChopinRX is a technology and lead-generation platform that helps connect consumers with independent, licensed medical providers. Those providers—not ChopinRX—evaluate patients, make prescribing decisions, and direct medical care.</p>",
+            "question": "Does Chopin RX provide medical care or prescribe medication?",
+            "answer": "<p>No. ChopinRX is a platform that connects patients with independent licensed providers. Those providers, not ChopinRX, evaluate patients, make prescribing decisions, and direct medical care.</p>",
             "open": false
           }
         },
