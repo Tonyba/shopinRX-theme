@@ -15,13 +15,13 @@
         "feature_01": {
           "type": "feature",
           "settings": {
-            "text": "Licensed US providers"
+            "text": "Licensed U.S. Clinicians"
           }
         },
         "feature_02": {
           "type": "feature",
           "settings": {
-            "text": "Discreet shipping"
+            "text": "Personalized Treatment Options"
           }
         },
         "feature_03": {
@@ -33,7 +33,13 @@
         "feature_04": {
           "type": "feature",
           "settings": {
-            "text": "Cancel anytime"
+            "text": "Discreet Delivery"
+          }
+        },
+        "feature_aJcFj7": {
+          "type": "feature",
+          "settings": {
+            "text": "No Insurance Required"
           }
         }
       },
@@ -41,7 +47,8 @@
         "feature_01",
         "feature_02",
         "feature_03",
-        "feature_04"
+        "feature_04",
+        "feature_aJcFj7"
       ],
       "settings": {
         "image": "shopify://shop_images/Chopin_RX_-_Women_s_Health_-_Sunlit_Terrace_Friendship_by_the_Sea.webp",
