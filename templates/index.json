@@ -547,7 +547,7 @@
       ],
       "settings": {
         "eyebrow": "Have questions?",
-        "heading": "Frequently asked <em>questions</em>",
+        "heading": "Frequently Asked <em>Questions</em>",
         "cta_label": "Get Started",
         "cta_url": "#find-your-program",
         "cta_to_intake": false
