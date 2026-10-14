@@ -256,6 +256,7 @@
         "member_4",
         "member_5"
       ],
+      "disabled": true,
       "settings": {
         "eyebrow": "Our Team",
         "heading": "Built by clinicians, for <em>patients</em>.",
