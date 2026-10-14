@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "banner": {
@@ -9,17 +18,19 @@
         "breadcrumb_current": "Blog",
         "heading": "Guides & Tips",
         "body": "<p>Discover expert-backed guidance on weight loss and personalised tips to help you succeed in your health journey.</p>",
-        "show_trustpilot": true,
+        "show_trustpilot": false,
         "trustpilot_rating": "Excellent",
         "trustpilot_score": "4.6",
         "trustpilot_count": "436 reviews",
-        "trustpilot_mobile_count": "Check out our 436 reviews"
+        "trustpilot_mobile_count": "Check out our 436 reviews",
+        "trustpilot_url": ""
       }
     },
     "featured": {
       "type": "chopinrx-featured-articles",
       "settings": {
         "heading": "Featured articles",
+        "blog": "",
         "featured_tag": "featured",
         "read_more_label": "Read More"
       }
@@ -37,5 +48,9 @@
       }
     }
   },
-  "order": ["banner", "featured", "articles"]
+  "order": [
+    "banner",
+    "featured",
+    "articles"
+  ]
 }
