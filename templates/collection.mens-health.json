@@ -15,25 +15,25 @@
         "feature_01": {
           "type": "feature",
           "settings": {
-            "text": "Licensed US providers"
+            "text": "Licensed U.S. Clinicians"
           }
         },
         "feature_02": {
           "type": "feature",
           "settings": {
-            "text": "Discreet shipping"
+            "text": "Personalized Treatment Options"
           }
         },
         "feature_03": {
           "type": "feature",
           "settings": {
-            "text": "No insurance needed"
+            "text": "Discreet Delivery"
           }
         },
         "feature_04": {
           "type": "feature",
           "settings": {
-            "text": "Cancel anytime"
+            "text": "No Insurance Required"
           }
         }
       },
