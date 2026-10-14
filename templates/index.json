@@ -500,8 +500,8 @@
         "question_1": {
           "type": "question",
           "settings": {
-            "question": "How does ChopinRX work?",
-            "answer": "<p>Choose a goal-based program or individual treatment and complete a secure online medical intake. ChopinRX connects you with an independent, licensed clinician who reviews your information and determines whether treatment is appropriate. If prescribed, a licensed U.S. pharmacy fulfills and ships your treatment.</p><h3></h3>",
+            "question": "How does Chopin RX work?",
+            "answer": "<p>Choose a goal-based program or individual treatment and complete a secure online medical intake. Chopin RX connects you with an independent, licensed clinician who reviews your information and determines whether treatment is appropriate. If prescribed, a licensed U.S. pharmacy fulfills and ships your treatment.</p><h3></h3>",
             "open": true
           }
         },
