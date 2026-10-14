@@ -23,7 +23,8 @@
         "trustpilot_rating": "Excellent",
         "trustpilot_score": "4.6",
         "trustpilot_count": "436 reviews",
-        "trustpilot_mobile_count": "Check out our 436 reviews"
+        "trustpilot_mobile_count": "Check out our 436 reviews",
+        "trustpilot_url": ""
       }
     },
     "intro": {
@@ -37,8 +38,9 @@
     "story": {
       "type": "chopinrx-about-split",
       "settings": {
-        "image": "shopify://shop_images/chx-about-story.png",
+        "image": "shopify://shop_images/Chopin_RX_-_Warm_Telehealth_Consultation_at_Home.webp",
         "media_position": "left",
+        "mobile_media_position": "top",
         "background": "muted",
         "eyebrow": "Our Story",
         "heading": "Online <em>healthcare</em> made safe and easy",
@@ -85,7 +87,12 @@
           }
         }
       },
-      "block_order": ["card_1", "card_2", "card_3", "card_4"],
+      "block_order": [
+        "card_1",
+        "card_2",
+        "card_3",
+        "card_4"
+      ],
       "settings": {
         "eyebrow": "Our Approach",
         "heading": "A new <em>approach</em> to everyday care.",
@@ -97,18 +104,31 @@
       "blocks": {
         "stat_1": {
           "type": "stat",
-          "settings": { "figure": "1M+", "label": "Patients served" }
+          "settings": {
+            "figure": "1M+",
+            "label": "Patients served"
+          }
         },
         "stat_2": {
           "type": "stat",
-          "settings": { "figure": "37%", "label": "Prescriptions filled" }
+          "settings": {
+            "figure": "37%",
+            "label": "Prescriptions filled"
+          }
         },
         "stat_3": {
           "type": "stat",
-          "settings": { "figure": "120", "label": "Employees" }
+          "settings": {
+            "figure": "120",
+            "label": "Employees"
+          }
         }
       },
-      "block_order": ["stat_1", "stat_2", "stat_3"],
+      "block_order": [
+        "stat_1",
+        "stat_2",
+        "stat_3"
+      ],
       "settings": {
         "eyebrow": "Care designed around real people.",
         "heading": "Where we stand",
@@ -120,22 +140,34 @@
       "blocks": {
         "feature_1": {
           "type": "feature",
-          "settings": { "text": "Been reviewed against your individual health profile" }
+          "settings": {
+            "text": "Been reviewed against your individual health profile"
+          }
         },
         "feature_2": {
           "type": "feature",
-          "settings": { "text": "Been cross-checked against current clinical standards" }
+          "settings": {
+            "text": "Been cross-checked against current clinical standards"
+          }
         },
         "feature_3": {
           "type": "feature",
-          "settings": { "text": "Been approved by a qualified clinician, not an algorithm" }
+          "settings": {
+            "text": "Been approved by a qualified clinician, not an algorithm"
+          }
         }
       },
-      "block_order": ["feature_1", "feature_2", "feature_3"],
+      "block_order": [
+        "feature_1",
+        "feature_2",
+        "feature_3"
+      ],
       "settings": {
         "image": "shopify://shop_images/chx-about-care.jpg",
         "media_position": "right",
+        "mobile_media_position": "top",
         "background": "page",
+        "eyebrow": "",
         "heading": "What patient <em>care</em> means to us",
         "body": "<p>We know we've made a tangible difference to people's lives. It's what drives us to keep raising the bar. Our patients have discovered undiagnosed conditions with simple blood tests, regained mental clarity with targeted hormone treatment, and reduced their risk of type 2 diabetes through weight loss.</p><p>Every treatment pathway follows recognised clinical guidelines. Our multidisciplinary team — bringing together doctors, pharmacists, and specialist clinicians — reviews every protocol to ensure your care meets the highest clinical standards.</p><p>When you receive a prescription through ChopinRX, you can be confident it has:</p>"
       }
@@ -145,7 +177,9 @@
       "settings": {
         "image": "shopify://shop_images/chx-about-trust.jpg",
         "media_position": "left",
+        "mobile_media_position": "top",
         "background": "band",
+        "eyebrow": "",
         "heading": "<em>Trust</em> matters",
         "body": "<p>When it comes to health, trust is non-negotiable. That's why every part of ChopinRX is regulated, inspected, and verifiable.</p><p><strong>We are registered with:</strong></p><ul><li><strong>Legitimate pharmacy programs</strong> — our partner pharmacies are licensed in the states they ship to and are inspected against national standards for safety and quality.</li><li><strong>HIPAA</strong> — your health information is handled under federal privacy and security rules.</li></ul><p>Regulation is central to how we work, not a box to tick.</p><p><strong>Our practitioners are individually registered:</strong></p><ul><li>Prescribing clinicians — licensed in the state where they practise</li><li>Dispensing pharmacists — licensed with their state board of pharmacy</li></ul><p>You can verify any of our practitioners directly on their professional registers. We think that's exactly how it should be.</p>"
       }
@@ -155,15 +189,21 @@
       "blocks": {
         "feature_1": {
           "type": "feature",
-          "settings": { "text": "Overseen by licensed MDs and pharmacists" }
+          "settings": {
+            "text": "Overseen by licensed MDs and pharmacists"
+          }
         },
         "feature_2": {
           "type": "feature",
-          "settings": { "text": "Evidence-based protocols, not guesswork" }
+          "settings": {
+            "text": "Evidence-based protocols, not guesswork"
+          }
         },
         "feature_3": {
           "type": "feature",
-          "settings": { "text": "Licensed and fully regulated" }
+          "settings": {
+            "text": "Licensed and fully regulated"
+          }
         },
         "member_1": {
           "type": "member",
