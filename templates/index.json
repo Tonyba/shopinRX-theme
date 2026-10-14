@@ -15,7 +15,7 @@
         "feature_1": {
           "type": "feature",
           "settings": {
-            "text": "Highest quality products for human consumption at reasonable rates"
+            "text": "Premium quality products for human consumption at reasonable rates"
           }
         },
         "feature_TFVM6N": {
@@ -576,11 +576,11 @@
             "show_after": 400,
             "button_size": 52,
             "edge_offset": 20,
-            "button_background": "#16212B",
-            "button_icon_color": "#FFFFFF",
-            "button_border": "#16212B",
-            "button_hover_background": "#2864DC",
-            "button_hover_icon_color": "#FFFFFF"
+            "button_background": "#16212b",
+            "button_icon_color": "#ffffff",
+            "button_border": "#16212b",
+            "button_hover_background": "#2864dc",
+            "button_hover_icon_color": "#ffffff"
           },
           "blocks": {}
         }
