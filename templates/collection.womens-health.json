@@ -24,12 +24,6 @@
             "text": "Personalized Treatment Options"
           }
         },
-        "feature_03": {
-          "type": "feature",
-          "settings": {
-            "text": "No insurance needed"
-          }
-        },
         "feature_04": {
           "type": "feature",
           "settings": {
@@ -46,7 +40,6 @@
       "block_order": [
         "feature_01",
         "feature_02",
-        "feature_03",
         "feature_04",
         "feature_aJcFj7"
       ],
