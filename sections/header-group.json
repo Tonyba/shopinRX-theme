@@ -14,7 +14,7 @@
     "trust_bar": {
       "type": "chopinrx-announcement-bar",
       "settings": {
-        "text": "Board-certified providers · Licensed U.S. compounding pharmacies",
+        "text": "Board-Certified Providers · Licensed U.S. Compounding Pharmacies",
         "show_icon": true,
         "background_color": "#0d2535",
         "text_color": "#ffffff"
