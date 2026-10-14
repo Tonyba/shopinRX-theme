@@ -59,13 +59,6 @@
             "menu": "company-footer-menu"
           }
         },
-        "social_1": {
-          "type": "social",
-          "settings": {
-            "platform": "linkedin",
-            "url": ""
-          }
-        },
         "social_2": {
           "type": "social",
           "settings": {
@@ -129,7 +122,6 @@
         "column_1",
         "column_2",
         "column_3",
-        "social_1",
         "social_2",
         "social_3",
         "legal_1",
@@ -140,7 +132,7 @@
         "seal_1"
       ],
       "settings": {
-        "heading": "Ready to Take <em>Control</em> of Your Health",
+        "heading": "Ready to Take <em>Control</em> of Your Health?",
         "cta_label": "Explore treatments",
         "cta_url": "shopify://collections/treatment",
         "follow_label": "Follow Us",
