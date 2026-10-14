@@ -25,9 +25,9 @@
         "contact_2": {
           "type": "contact",
           "settings": {
-            "label": "help@chopinrx.com",
+            "label": "hello@chopinrx.com",
             "text": "We aim to reply in 24 hours",
-            "url": "mailto:help@chopinrx.com"
+            "url": "mailto:hello@chopinrx.com"
           }
         },
         "contact_3": {
