@@ -28,7 +28,7 @@
         "show_login": true,
         "login_label": "Login",
         "login_url": "/account/login",
-        "cta_label": "Find your program",
+        "cta_label": "Find Your Program",
         "cta_url": "#find-your-program",
         "enable_sticky_header": true
       }
