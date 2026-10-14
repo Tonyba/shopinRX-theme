@@ -16,6 +16,7 @@
       "blocks": {
         "contact_1": {
           "type": "contact",
+          "disabled": true,
           "settings": {
             "label": "073 8016 9186",
             "text": "Monday - Friday 9am - 5pm",
@@ -32,6 +33,7 @@
         },
         "contact_3": {
           "type": "contact",
+          "disabled": true,
           "settings": {
             "label": "press@chopinrx.com",
             "text": "Press & media inquiries",
