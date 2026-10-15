@@ -17,8 +17,8 @@
         "ai_gen_block_fd356d2_LbWwix": {
           "type": "ai_gen_block_fd356d2",
           "settings": {
-            "desktop_width_percent": 100,
-            "show_after": 400,
+            "desktop_width_percent": 50,
+            "show_after": 100,
             "button_size": 52,
             "edge_offset": 20,
             "button_background": "#16212b",
