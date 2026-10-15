@@ -11,57 +11,6 @@
   "type": "footer",
   "name": "t:names.footer",
   "sections": {
-    "blocks_4tWGB8": {
-      "type": "_blocks",
-      "blocks": {
-        "ai_gen_block_fd356d2_LbWwix": {
-          "type": "ai_gen_block_fd356d2",
-          "settings": {
-            "desktop_width_percent": 50,
-            "show_after": 100,
-            "button_size": 52,
-            "edge_offset": 20,
-            "button_background": "#16212b",
-            "button_icon_color": "#ffffff",
-            "button_border": "#16212b",
-            "button_hover_background": "#2864dc",
-            "button_hover_icon_color": "#ffffff"
-          },
-          "blocks": {}
-        }
-      },
-      "block_order": [
-        "ai_gen_block_fd356d2_LbWwix"
-      ],
-      "settings": {
-        "content_direction": "column",
-        "vertical_on_mobile": true,
-        "horizontal_alignment": "flex-start",
-        "vertical_alignment": "center",
-        "align_baseline": false,
-        "horizontal_alignment_flex_direction_column": "flex-start",
-        "vertical_alignment_flex_direction_column": "center",
-        "gap": 12,
-        "section_width": "page-width",
-        "section_height": "",
-        "section_height_custom": 50,
-        "background_media": "none",
-        "background_color": "",
-        "video_position": "cover",
-        "background_image_position": "cover",
-        "toggle_overlay": false,
-        "overlay_color": "#00000026",
-        "overlay_style": "solid",
-        "gradient_direction": "to top",
-        "border": "none",
-        "border_width": 1,
-        "border_opacity": 100,
-        "border_color": "",
-        "border_radius": 0,
-        "padding-block-start": 0,
-        "padding-block-end": 0
-      }
-    },
     "site_footer": {
       "type": "chopinrx-footer",
       "blocks": {
@@ -861,7 +810,6 @@
     }
   },
   "order": [
-    "blocks_4tWGB8",
     "site_footer",
     "quiz"
   ]
