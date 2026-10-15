@@ -10,6 +10,7 @@
 {
   "accessibility": {
     "account": "Account",
+    "back_to_top": "Back to top",
     "active_filters": "Active filters:",
     "cart": "Cart",
     "cart_count": "Total items in cart",
