@@ -14,35 +14,37 @@
       "settings": {
         "style": "dark",
         "alignment": "center",
-        "image": "shopify://shop_images/chx-about-hero.jpg",
+        "image": "shopify://shop_images/Chopin_RX_-_Telehealth_Peptides_-_Serene_Coastal_Terrace_Couple.webp",
         "breadcrumb_home": "Home",
         "breadcrumb_current": "About us",
-        "heading": "A platform built around the patient, not the system.",
-        "body": "<p>ChopinRX exists to make provider-guided telehealth care more accessible, more transparent, and more personal — without the complexity of traditional healthcare.</p>",
-        "show_trustpilot": true,
+        "heading": "Where Medical Expertise Meets Human Potential.",
+        "body": "<p>Experience a more personalized approach to healthcare, combining industry expertise, modern telehealth, and a focus on performance, longevity, vitality, and your individual goals.</p>",
+        "show_trustpilot": false,
         "trustpilot_rating": "Excellent",
         "trustpilot_score": "4.6",
         "trustpilot_count": "436 reviews",
-        "trustpilot_mobile_count": "Check out our 436 reviews"
+        "trustpilot_mobile_count": "Check out our 436 reviews",
+        "trustpilot_url": ""
       }
     },
     "intro": {
       "type": "chopinrx-about-intro",
       "settings": {
         "eyebrow": "About Us",
-        "heading": "Your health is <em>personal</em>. Now, so is your care.",
-        "body": "<p>Most people who want to explore treatments for weight management, hormone health, or longevity run into the same problem: the traditional healthcare system is not designed for this kind of proactive, personalized care.</p><p>Long appointment waitlists, dismissive consultations, insurance gatekeeping, and fragmented care make it unnecessarily difficult to access treatments that are safe, available, and appropriate for many adults.</p><p>ChopinRX was built to close that gap — connecting consumers with independent licensed U.S. providers through a streamlined online process that puts the individual first.</p>"
+        "heading": "<strong>Elevating Personalized Healthcare to </strong><em><strong>Live Your Best Life.</strong></em>",
+        "body": "<p>At Chopin RX, we believe longevity isn't just about living longer, it's about living better, feeling your best, and making the most of every stage of life. We believe better health opens the door to a better life, more confidence, greater vitality, improved performance, and the freedom to pursue your personal goals.</p><p>Built on extensive healthcare industry experience and relationships with doctors, medical professionals, and pharmacy partners, Chopin RX brings medical expertise, innovation, and personalized care together in one convenient online experience.</p><p>Whether your goals involve weight management, hormone health, performance, or healthy aging, our platform connects you with independent, licensed U.S. clinicians who evaluate your individual needs and help determine appropriate treatment options, including peptide-focused care where medically and legally available.</p><p>With Chopin RX, you gain a more convenient way to access professional medical guidance, explore personalized treatment options, and make informed decisions about your health, all with transparency, discretion, and your goals at the center.</p><p><strong>Chopin RX. Your Goals. Expert Guidance. Your Best Life.</strong></p>"
       }
     },
     "story": {
       "type": "chopinrx-about-split",
       "settings": {
-        "image": "shopify://shop_images/chx-about-story.png",
+        "image": "shopify://shop_images/Chopin_RX_-_Warm_Telehealth_Consultation_at_Home.webp",
         "media_position": "left",
+        "mobile_media_position": "top",
         "background": "muted",
         "eyebrow": "Our Story",
-        "heading": "Online <em>healthcare</em> made safe and easy",
-        "body": "<p>ChopinRX is an online platform connecting people with independent, licensed U.S. providers. We support confidential health consultations and prescription treatments across the country.</p><p>We started because online healthcare was a landscape of misleading information and illegitimate products, and we knew that something had to change.</p><p>What people needed was a reliable platform for essential medication, thorough consultations and expert medical advice. ChopinRX exists to give access to all those things.</p><p>When you order through ChopinRX, you are cared for by qualified providers and pharmacists. No deceptive products, no wrong prescriptions, no unreasonable prices.</p>"
+        "heading": "Healthcare Is <em>Evolving</em>. So Are <em>We.</em>",
+        "body": "<p><strong>Built on Experience. Driven by Trust. Designed Around You.</strong></p><p>Healthcare should be personal, transparent, and accessible. Yet navigating treatment options can often feel complicated, time-consuming, and overwhelming.</p><p>Chopin RX was created to offer a better experience.</p><p>Through years of working alongside doctors, healthcare professionals, and industry partners, we recognized an opportunity to connect people with qualified medical expertise through a more convenient, personalized approach.</p><p>We built Chopin RX to simplify that connection, bringing independent, licensed U.S. clinicians, individualized medical evaluations, and access to qualified pharmacy partners together through a streamlined online experience.</p><p>Whether exploring weight management, hormone health, or longevity-focused care, individuals deserve clear information, professional guidance, and treatment decisions based on their unique medical needs.</p><p>Our commitment extends beyond convenience. We believe lasting trust is earned through transparency, responsible practices, and a consistent focus on the patient experience.</p><p><strong>Because better healthcare isn't just about access. It's about having confidence in the care you receive.</strong></p>"
       }
     },
     "mission": {
@@ -50,7 +52,7 @@
       "settings": {
         "eyebrow": "Our Mission Statement",
         "heading": "Our <em>Mission</em> Statement",
-        "body": "<p>Managing prescriptions isn’t always easy, but at ChopinRX, we are constantly working to make it as uncomplicated and trouble-free as possible. We aim to build a world where everyone has easy access to high-quality healthcare services, whenever and wherever they need it. Patient-centred healthcare is at the heart of everything we do at ChopinRX. By bringing pharmacy care and online clinic consultations to a secure online platform, we strive to lead the way in providing expert, on-demand access to healthcare, available at the patient’s convenience.</p>"
+        "body": "<p><strong>Personalized Treatments. Elevated Standards. Trusted Care.</strong></p><p>Chopin RX is redefining access to personalized healthcare through modern telehealth, clinician-guided treatment options, including peptides for human consumption.</p><p>Our mission is to connect individuals with qualified, licensed U.S. medical professionals and trusted 503A compounding pharmacy and 503B facility partners, providing access to quality products sourced in the USA through a convenient, transparent experience. We make it easier to explore personalized treatment options with confidence, backed by medical expertise and a commitment to quality, safety, and individualized care.</p><p><strong>Better Access. Premium USA Sourced Quality. A Higher Standard.</strong></p>"
       }
     },
     "approach": {
@@ -85,11 +87,16 @@
           }
         }
       },
-      "block_order": ["card_1", "card_2", "card_3", "card_4"],
+      "block_order": [
+        "card_1",
+        "card_2",
+        "card_3",
+        "card_4"
+      ],
       "settings": {
         "eyebrow": "Our Approach",
-        "heading": "A new <em>approach</em> to everyday care.",
-        "body": "<p>ChopinRX is a networking platform. It connects consumers with independent, licensed U.S. medical providers who make all prescribing decisions independently. ChopinRX does not employ these providers, does not direct their clinical decisions, and is not itself a medical provider.</p><p>Fulfillment is handled by licensed U.S.-based compounding pharmacies that follow USP testing and quality standards.</p>"
+        "heading": "A new approach to <em>everyday care.</em>",
+        "body": "<p>Chopin RX is a networking platform. It connects consumers with independent, licensed U.S. medical providers who make all prescribing decisions independently. ChopinRX does not employ these providers, does not direct their clinical decisions, and is not itself a medical provider.</p><p>Fulfillment is handled by licensed U.S.-based compounding pharmacies that follow USP testing and quality standards.</p>"
       }
     },
     "stats": {
@@ -97,18 +104,32 @@
       "blocks": {
         "stat_1": {
           "type": "stat",
-          "settings": { "figure": "1M+", "label": "Patients served" }
+          "settings": {
+            "figure": "1M+",
+            "label": "Patients served"
+          }
         },
         "stat_2": {
           "type": "stat",
-          "settings": { "figure": "37%", "label": "Prescriptions filled" }
+          "settings": {
+            "figure": "37%",
+            "label": "Prescriptions filled"
+          }
         },
         "stat_3": {
           "type": "stat",
-          "settings": { "figure": "120", "label": "Employees" }
+          "settings": {
+            "figure": "120",
+            "label": "Employees"
+          }
         }
       },
-      "block_order": ["stat_1", "stat_2", "stat_3"],
+      "block_order": [
+        "stat_1",
+        "stat_2",
+        "stat_3"
+      ],
+      "disabled": true,
       "settings": {
         "eyebrow": "Care designed around real people.",
         "heading": "Where we stand",
@@ -120,34 +141,48 @@
       "blocks": {
         "feature_1": {
           "type": "feature",
-          "settings": { "text": "Been reviewed against your individual health profile" }
+          "settings": {
+            "text": "Been reviewed against your individual health profile"
+          }
         },
         "feature_2": {
           "type": "feature",
-          "settings": { "text": "Been cross-checked against current clinical standards" }
+          "settings": {
+            "text": "Been cross-checked against current clinical standards"
+          }
         },
         "feature_3": {
           "type": "feature",
-          "settings": { "text": "Been approved by a qualified clinician, not an algorithm" }
+          "settings": {
+            "text": "Been approved by a qualified clinician, not an algorithm"
+          }
         }
       },
-      "block_order": ["feature_1", "feature_2", "feature_3"],
+      "block_order": [
+        "feature_1",
+        "feature_2",
+        "feature_3"
+      ],
       "settings": {
         "image": "shopify://shop_images/chx-about-care.jpg",
         "media_position": "right",
+        "mobile_media_position": "top",
         "background": "page",
+        "eyebrow": "",
         "heading": "What patient <em>care</em> means to us",
-        "body": "<p>We know we've made a tangible difference to people's lives. It's what drives us to keep raising the bar. Our patients have discovered undiagnosed conditions with simple blood tests, regained mental clarity with targeted hormone treatment, and reduced their risk of type 2 diabetes through weight loss.</p><p>Every treatment pathway follows recognised clinical guidelines. Our multidisciplinary team — bringing together doctors, pharmacists, and specialist clinicians — reviews every protocol to ensure your care meets the highest clinical standards.</p><p>When you receive a prescription through ChopinRX, you can be confident it has:</p>"
+        "body": "<p>We know we've made a tangible difference to people's lives. It's what drives us to keep raising the bar. Our patients have discovered undiagnosed conditions with simple blood tests, regained mental clarity with targeted hormone treatment, and reduced their risk of type 2 diabetes through weight loss.</p><p>Every treatment pathway follows recognized clinical guidelines. Our multidisciplinary team, bringing together doctors, pharmacists, and specialist clinicians, reviews every protocol to ensure your care meets the highest clinical standards.</p><p>When you receive a prescription through Chopin RX, you can be confident it has:</p>"
       }
     },
     "trust": {
       "type": "chopinrx-about-split",
       "settings": {
-        "image": "shopify://shop_images/chx-about-trust.jpg",
+        "image": "shopify://shop_images/Chopin_RX_-_Compassionate_Consultation_Across_the_Desk.webp",
         "media_position": "left",
+        "mobile_media_position": "top",
         "background": "band",
+        "eyebrow": "",
         "heading": "<em>Trust</em> matters",
-        "body": "<p>When it comes to health, trust is non-negotiable. That's why every part of ChopinRX is regulated, inspected, and verifiable.</p><p><strong>We are registered with:</strong></p><ul><li><strong>Legitimate pharmacy programs</strong> — our partner pharmacies are licensed in the states they ship to and are inspected against national standards for safety and quality.</li><li><strong>HIPAA</strong> — your health information is handled under federal privacy and security rules.</li></ul><p>Regulation is central to how we work, not a box to tick.</p><p><strong>Our practitioners are individually registered:</strong></p><ul><li>Prescribing clinicians — licensed in the state where they practise</li><li>Dispensing pharmacists — licensed with their state board of pharmacy</li></ul><p>You can verify any of our practitioners directly on their professional registers. We think that's exactly how it should be.</p>"
+        "body": "<p>When it comes to health, trust is non-negotiable. That's why every part of ChopinRX is regulated, inspected, and verifiable.</p><p><strong>We are registered with:</strong></p><ul><li><strong>Legitimate pharmacy programs</strong> — Our partner pharmacies are 503A & 503B licensed in the states they ship to and are inspected against national standards for safety and quality.</li><li><strong>Privacy-Focused Care</strong> — Your personal health information is handled with confidentiality, care, and discretion.</li></ul><p>Regulation is central to how we work, not a box to tick.</p><p><strong>Our practitioners are individually registered:</strong></p><ul><li>Prescribing clinicians — Licensed in the state where they practise</li><li>Dispensing pharmacists — Licensed with their state board of pharmacy</li></ul><p>You can verify any of our practitioners directly on their professional registers. We think that's exactly how it should be.</p>"
       }
     },
     "team": {
@@ -155,15 +190,21 @@
       "blocks": {
         "feature_1": {
           "type": "feature",
-          "settings": { "text": "Overseen by licensed MDs and pharmacists" }
+          "settings": {
+            "text": "Overseen by licensed MDs and pharmacists"
+          }
         },
         "feature_2": {
           "type": "feature",
-          "settings": { "text": "Evidence-based protocols, not guesswork" }
+          "settings": {
+            "text": "Evidence-based protocols, not guesswork"
+          }
         },
         "feature_3": {
           "type": "feature",
-          "settings": { "text": "Licensed and fully regulated" }
+          "settings": {
+            "text": "Licensed and fully regulated"
+          }
         },
         "member_1": {
           "type": "member",
@@ -216,6 +257,7 @@
         "member_4",
         "member_5"
       ],
+      "disabled": true,
       "settings": {
         "eyebrow": "Our Team",
         "heading": "Built by clinicians, for <em>patients</em>.",

@@ -53,7 +53,7 @@
         "breadcrumb_home": "Home",
         "type_collections": "program, treatment",
         "cta_label": "Start intake",
-        "show_trustpilot": true,
+        "show_trustpilot": false,
         "trustpilot_rating": "Excellent",
         "trustpilot_score": "4.6",
         "trustpilot_count": "436 reviews",
@@ -236,7 +236,7 @@
         "feature_4"
       ],
       "settings": {
-        "image": "shopify://shop_images/chx-personalized-care.jpg",
+        "image": "shopify://shop_images/Chopin_RX_-_Warm_Telemedicine_Consultation.webp",
         "media_position": "left",
         "eyebrow": "Personalized Care",
         "heading": "With you <em>every step</em> of the way",

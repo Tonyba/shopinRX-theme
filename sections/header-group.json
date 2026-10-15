@@ -14,7 +14,7 @@
     "trust_bar": {
       "type": "chopinrx-announcement-bar",
       "settings": {
-        "text": "Board-certified providers · Licensed U.S. compounding pharmacies",
+        "text": "Board-Certified Providers · Licensed U.S. Compounding Pharmacies",
         "show_icon": true,
         "background_color": "#0d2535",
         "text_color": "#ffffff"
@@ -28,7 +28,7 @@
         "show_login": true,
         "login_label": "Login",
         "login_url": "/account/login",
-        "cta_label": "Find your program",
+        "cta_label": "Find Your Program",
         "cta_url": "#find-your-program",
         "enable_sticky_header": true
       }

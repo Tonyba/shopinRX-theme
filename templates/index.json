@@ -15,19 +15,19 @@
         "feature_1": {
           "type": "feature",
           "settings": {
-            "text": "Highest quality products for human consumption at reasonable rates"
+            "text": "Premium quality products for human consumption at reasonable rates"
           }
         },
         "feature_TFVM6N": {
           "type": "feature",
           "settings": {
-            "text": "All products manufactured in USA"
+            "text": "Manufactured in USA"
           }
         },
         "feature_69m9LP": {
           "type": "feature",
           "settings": {
-            "text": "Plans tailored to your goals"
+            "text": "Personalize your monthly order"
           }
         },
         "feature_d7mLmg": {
@@ -45,7 +45,7 @@
         "feature_3": {
           "type": "feature",
           "settings": {
-            "text": "A secure, convenient online experience, no insurance required"
+            "text": "A secure & convenient online experience, no insurance required"
           }
         }
       },
@@ -220,7 +220,7 @@
             "eyebrow": "Find your path",
             "heading": "Built for men",
             "text": "Explore provider-guided options for hormone health, sexual wellness, performance, recovery, metabolic health, hair, and skin.",
-            "cta_label": "Explore men's programs",
+            "cta_label": "Explore Men's Programs",
             "cta_url": "shopify://collections/mens-health",
             "button_color": "#2864dc",
             "button_text_color": "#ffffff"
@@ -234,7 +234,7 @@
             "eyebrow": "Find your path",
             "heading": "Built for women",
             "text": "Explore provider-guided options for weight management, hormone health, menopause support, energy, hair, and skin.",
-            "cta_label": "Explore women's programs",
+            "cta_label": "Explore Women's Programs",
             "cta_url": "shopify://collections/womens-health",
             "button_color": "#2864dc",
             "button_text_color": "#ffffff"

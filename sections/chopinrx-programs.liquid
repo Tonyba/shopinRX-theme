@@ -219,6 +219,9 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
+    /* The slot is about twice as wide as it is tall, so a centred crop of a
+       portrait or square photo loses the head. Anchor to the top instead. */
+    object-position: center top;
   }
 
   .chx-program-card__content {
@@ -264,12 +267,12 @@
 
   .chx-program-card__title {
     color: var(--text-on-dark);
-    font-size: 30px;
   }
 
   .chx-program-card__title a {
     color: inherit;
     text-decoration: none;
+    font-size: 30px;
   }
 
   .chx-program-card__title a:hover {
@@ -295,6 +298,22 @@
     letter-spacing: 0.005em;
     text-transform: uppercase;
     color: var(--badge-luxury-fg);
+  }
+
+  /* Smaller pills inside the cards only. .chx-pill is shared with the other
+     program sections, so the override is scoped under the card. */
+  .chx-program-card .chx-program-card__goal,
+  .chx-program-card .chx-program-card__ingredients {
+    padding-inline: 10px;
+    font-size: 12px;
+  }
+
+  .chx-program-card .chx-program-card__goal {
+    height: 24px;
+  }
+
+  .chx-program-card .chx-program-card__ingredients {
+    min-height: 24px;
   }
 
   .chx-program-card__text {
@@ -367,7 +386,7 @@
       padding-block: var(--space-10);
     }
 
-    .chx-program-card__title {
+    .chx-program-card__title a {
       font-size: 21px;
     }
 

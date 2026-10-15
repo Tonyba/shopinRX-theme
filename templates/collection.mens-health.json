@@ -15,25 +15,25 @@
         "feature_01": {
           "type": "feature",
           "settings": {
-            "text": "Licensed US providers"
+            "text": "Licensed U.S. Clinicians"
           }
         },
         "feature_02": {
           "type": "feature",
           "settings": {
-            "text": "Discreet shipping"
+            "text": "Personalized Treatment Options"
           }
         },
         "feature_03": {
           "type": "feature",
           "settings": {
-            "text": "No insurance needed"
+            "text": "Discreet Delivery"
           }
         },
         "feature_04": {
           "type": "feature",
           "settings": {
-            "text": "Cancel anytime"
+            "text": "No Insurance Required"
           }
         }
       },
@@ -45,10 +45,10 @@
       ],
       "settings": {
         "image": "shopify://shop_images/mens_health-700kb.jpg",
-        "eyebrow": "Chopin RX Men's health",
-        "title_line_1": "Men's health,",
-        "title_line_2": "made simple.",
-        "body": "<p>Shop by goal if you're not sure where to start, choose a protocol that combines several actives in one prescription, or go straight to the full menu.</p>",
+        "eyebrow": "Chopin RX Men's Health",
+        "title_line_1": "Men's Health.",
+        "title_line_2": "Elevated.",
+        "body": "<p><strong>Personalized Care for Men Who Want More.</strong></p><p>Take a proactive approach to your health with personalized treatment options designed around your goals. From weight management and hormone health to performance and longevity, Chopin RX connects you with licensed U.S. clinicians through a convenient online experience.</p>",
         "primary_label": "Shop by goal",
         "primary_url": "#shop-by-goal",
         "secondary_label": "Help me choose",

@@ -1,0 +1,197 @@
+{% doc %}
+  @prompt
+    Create a scroll-to-top button that appears in the bottom right corner of the page. The button should only become visible after the user scrolls down a certain amount, and smoothly scrolls back to the top when clicked. It should have a clean, minimal design that complements the store's style, with a subtle arrow or chevron icon pointing upward.
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-scroll-top-{{ ai_gen_id }} {
+    display: block;
+    width: 100%;
+  }
+
+  .ai-scroll-top-{{ ai_gen_id }}__button {
+    position: fixed;
+    right: {{ block.settings.edge_offset }}px;
+    bottom: {{ block.settings.edge_offset }}px;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: {{ block.settings.button_size }}px;
+    height: {{ block.settings.button_size }}px;
+    padding: 0;
+    border: 1px solid {{ block.settings.button_border }};
+    border-radius: 50%;
+    background: {{ block.settings.button_background }};
+    color: {{ block.settings.button_icon_color }};
+    cursor: pointer;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    box-shadow: 0 2px 10px rgba(22, 33, 43, 0.16);
+  }
+
+  .ai-scroll-top-{{ ai_gen_id }}__button.is-visible {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+  }
+
+  .ai-scroll-top-{{ ai_gen_id }}__button:hover {
+    background: {{ block.settings.button_hover_background }};
+    color: {{ block.settings.button_hover_icon_color }};
+  }
+
+  .ai-scroll-top-{{ ai_gen_id }}__button:focus-visible {
+    outline: 2px solid {{ block.settings.button_icon_color }};
+    outline-offset: 3px;
+  }
+
+  .ai-scroll-top-{{ ai_gen_id }}__button svg {
+    display: block;
+    width: 22px;
+    height: 22px;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .ai-scroll-top-{{ ai_gen_id }}__button {
+      transition: opacity 180ms ease, visibility 180ms ease, background-color 180ms ease, color 180ms ease;
+    }
+  }
+
+  @media screen and (max-width: 749px) {
+    .ai-scroll-top-{{ ai_gen_id }}__button {
+      right: {{ block.settings.edge_offset | at_most: 24 }}px;
+      bottom: {{ block.settings.edge_offset | at_most: 24 }}px;
+    }
+  }
+{% endstyle %}
+
+<scroll-to-top-{{ ai_gen_id }} class="ai-scroll-top-{{ ai_gen_id }}" style="width: {{ block.settings.desktop_width_percent }}%;" data-show-after="{{ block.settings.show_after }}" {{ block.shopify_attributes }}>
+  <button class="ai-scroll-top-{{ ai_gen_id }}__button" type="button" aria-label="Back to top" aria-hidden="true" tabindex="-1">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false">
+      <path d="M12 19V5M5.5 11.5 12 5l6.5 6.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</scroll-to-top-{{ ai_gen_id }}>
+
+<script>
+  (function() {
+    const elementName = 'scroll-to-top-{{ ai_gen_id }}';
+    if (customElements.get(elementName)) return;
+
+    class ScrollToTop{{ ai_gen_id }} extends HTMLElement {
+      connectedCallback() {
+        this.button = this.querySelector('button');
+        this.threshold = Number(this.dataset.showAfter) || 400;
+        this.onScroll = this.updateVisibility.bind(this);
+        window.addEventListener('scroll', this.onScroll, { passive: true });
+        this.button.addEventListener('click', this.scrollToTop.bind(this));
+        this.updateVisibility();
+      }
+
+      disconnectedCallback() {
+        window.removeEventListener('scroll', this.onScroll);
+      }
+
+      updateVisibility() {
+        const visible = window.scrollY >= this.threshold;
+        this.button.classList.toggle('is-visible', visible);
+        this.button.setAttribute('aria-hidden', visible ? 'false' : 'true');
+        this.button.tabIndex = visible ? 0 : -1;
+      }
+
+      scrollToTop() {
+        window.scrollTo({ top: 0, behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth' });
+      }
+    }
+
+    customElements.define(elementName, ScrollToTop{{ ai_gen_id }});
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Scroll to top",
+  "settings": [
+    {
+      "type": "range",
+      "id": "desktop_width_percent",
+      "label": "Desktop width",
+      "min": 50,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "default": 100
+    },
+    {
+      "type": "range",
+      "id": "show_after",
+      "label": "Show after scrolling",
+      "min": 100,
+      "max": 1000,
+      "step": 50,
+      "unit": "px",
+      "default": 400
+    },
+    {
+      "type": "range",
+      "id": "button_size",
+      "label": "Button size",
+      "min": 40,
+      "max": 72,
+      "step": 4,
+      "unit": "px",
+      "default": 52
+    },
+    {
+      "type": "range",
+      "id": "edge_offset",
+      "label": "Edge spacing",
+      "min": 8,
+      "max": 48,
+      "step": 4,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "color",
+      "id": "button_background",
+      "label": "Background",
+      "default": "#16212B"
+    },
+    {
+      "type": "color",
+      "id": "button_icon_color",
+      "label": "Icon",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "button_border",
+      "label": "Border",
+      "default": "#16212B"
+    },
+    {
+      "type": "color",
+      "id": "button_hover_background",
+      "label": "Hover background",
+      "default": "#2864DC"
+    },
+    {
+      "type": "color",
+      "id": "button_hover_icon_color",
+      "label": "Hover icon",
+      "default": "#FFFFFF"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Scroll to top"
+    }
+  ],
+  "tag": null,
+  "class": "scroll-to-top-block"
+}
+{% endschema %}

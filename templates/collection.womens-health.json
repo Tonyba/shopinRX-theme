@@ -15,47 +15,51 @@
         "feature_01": {
           "type": "feature",
           "settings": {
-            "text": "Licensed US providers"
+            "text": "Licensed U.S. Clinicians"
           }
         },
         "feature_02": {
           "type": "feature",
           "settings": {
-            "text": "Discreet shipping"
-          }
-        },
-        "feature_03": {
-          "type": "feature",
-          "settings": {
-            "text": "No insurance needed"
+            "text": "Personalized Treatment Options"
           }
         },
         "feature_04": {
           "type": "feature",
           "settings": {
-            "text": "Cancel anytime"
+            "text": "Discreet Delivery"
+          }
+        },
+        "feature_aJcFj7": {
+          "type": "feature",
+          "settings": {
+            "text": "No Insurance Required"
           }
         }
       },
       "block_order": [
         "feature_01",
         "feature_02",
-        "feature_03",
-        "feature_04"
+        "feature_04",
+        "feature_aJcFj7"
       ],
       "settings": {
-        "image": "shopify://shop_images/chx-hero.jpg",
-        "eyebrow": "Chopin RX Women's health",
-        "title_line_1": "Women's health,",
-        "title_line_2": "made simple.",
-        "body": "<p>Hormones, weight, intimacy and skin. Shop by goal, choose a protocol that combines several actives in one prescription, or go straight to the full menu.</p>",
+        "image": "shopify://shop_images/Chopin_RX_-_Women_s_Health_-_Sunlit_Terrace_Friendship_by_the_Sea.webp",
+        "eyebrow": "Chopin RX Women's Health",
+        "title_line_1": "Women's Health.",
+        "title_line_2": "Personalized Around You.",
+        "body": "<p><strong>Personalized Care for Every Stage of Life.</strong></p><p>Feel empowered to take charge of your well-being with clinician-guided treatment options focused on weight management, hormone health, intimate wellness, and longevity, all personalized around your individual needs and goals.</p>",
         "primary_label": "Shop by goal",
         "primary_url": "#shop-by-goal",
         "secondary_label": "Help me choose",
         "secondary_url": "#find-your-program-womens",
-        "show_trustpilot": false,
         "tertiary_label": "Full treatment menu",
-        "tertiary_url": "#full-menu"
+        "tertiary_url": "#full-menu",
+        "show_trustpilot": false,
+        "trustpilot_rating": "Excellent",
+        "trustpilot_score": "4.6",
+        "trustpilot_count": "436 reviews on",
+        "trustpilot_url": ""
       }
     },
     "anchor_nav": {
@@ -166,7 +170,8 @@
             "product": "bi-est-progesterone",
             "name": "Balance",
             "subtitle": "Bi-Est + Progesterone",
-            "form": "Cream or injection"
+            "form": "Cream or injection",
+            "variant_form": ""
           }
         },
         "pick_03": {
@@ -176,7 +181,8 @@
             "product": "progesterone",
             "name": "Progesterone",
             "subtitle": "Often a first step in perimenopause",
-            "form": "Capsule"
+            "form": "Capsule",
+            "variant_form": ""
           }
         },
         "pick_04": {
@@ -204,7 +210,8 @@
             "product": "retatrutide-b12",
             "name": "Retatrutide Protocol*",
             "subtitle": "Retatrutide + B12",
-            "form": "Weekly injection"
+            "form": "Weekly injection",
+            "variant_form": ""
           }
         },
         "pick_07": {
@@ -214,7 +221,8 @@
             "product": "tirzepatide-b12",
             "name": "Tirzepatide Protocol",
             "subtitle": "Dual GIP/GLP-1 with B12 or B6",
-            "form": "Weekly injection"
+            "form": "Weekly injection",
+            "variant_form": ""
           }
         },
         "pick_08": {
@@ -224,7 +232,8 @@
             "product": "bupropion-naltrexone",
             "name": "Oral Weight Protocol",
             "subtitle": "Bupropion + Naltrexone",
-            "form": "Capsule"
+            "form": "Capsule",
+            "variant_form": ""
           }
         },
         "goal_09": {
@@ -241,7 +250,8 @@
             "product": "pt-141-oxytocin",
             "name": "Intimacy Gummy",
             "subtitle": "PT-141 + Oxytocin",
-            "form": "Gummy"
+            "form": "Gummy",
+            "variant_form": ""
           }
         },
         "pick_11": {
@@ -251,7 +261,8 @@
             "product": "estradiol-dhea",
             "name": "Comfort Cream",
             "subtitle": "Estradiol + DHEA",
-            "form": "Vaginal cream"
+            "form": "Vaginal cream",
+            "variant_form": ""
           }
         },
         "pick_12": {
@@ -261,7 +272,8 @@
             "product": "oxytocin-apomorphine",
             "name": "Arousal Troche",
             "subtitle": "Oxytocin + Apomorphine",
-            "form": "Troche"
+            "form": "Troche",
+            "variant_form": ""
           }
         },
         "goal_13": {
@@ -278,7 +290,8 @@
             "product": "glow-blend",
             "name": "Glow Blend",
             "subtitle": "GHK-Cu + BPC-157 + TB-500",
-            "form": "Injection"
+            "form": "Injection",
+            "variant_form": ""
           }
         },
         "pick_15": {
@@ -288,7 +301,8 @@
             "product": "estriol-niacinamide-ghk-cu-ha",
             "name": "Renew Face Cream",
             "subtitle": "Estriol + GHK-Cu + Hyaluronic acid",
-            "form": "Cream"
+            "form": "Cream",
+            "variant_form": ""
           }
         },
         "pick_16": {
@@ -298,7 +312,8 @@
             "product": "hydroquinone-tretinoin-fluocinolone",
             "name": "Brightening Cream",
             "subtitle": "Hydroquinone + Tretinoin",
-            "form": "Cream"
+            "form": "Cream",
+            "variant_form": ""
           }
         },
         "goal_17": {
@@ -315,7 +330,8 @@
             "product": "minoxidil-tretinoin-fluocinolone-biotin-melatonin",
             "name": "Hair Renew Spray",
             "subtitle": "Five-active topical formula",
-            "form": "Topical spray"
+            "form": "Topical spray",
+            "variant_form": ""
           }
         },
         "pick_19": {
@@ -325,7 +341,8 @@
             "product": "spironolactone",
             "name": "Spironolactone",
             "subtitle": "Oral option",
-            "form": "Tablet"
+            "form": "Tablet",
+            "variant_form": ""
           }
         },
         "goal_20": {
@@ -342,7 +359,8 @@
             "product": "nad",
             "name": "NAD+",
             "subtitle": "Cellular energy support",
-            "form": "Injection, nasal spray or strip"
+            "form": "Injection, nasal spray or strip",
+            "variant_form": ""
           }
         },
         "pick_22": {
@@ -352,7 +370,8 @@
             "product": "sermorelin",
             "name": "Sermorelin",
             "subtitle": "GH-axis support",
-            "form": "Injection or strip"
+            "form": "Injection or strip",
+            "variant_form": ""
           }
         },
         "pick_23": {
@@ -362,7 +381,8 @@
             "product": "mic-b12-l-carnitine",
             "name": "Lipotropic Boost",
             "subtitle": "Lipotropics + B12",
-            "form": "Injection or capsule"
+            "form": "Injection or capsule",
+            "variant_form": ""
           }
         }
       },
@@ -431,7 +451,9 @@
           "type": "group",
           "settings": {
             "title": "Hormones & Menopause",
-            "subtitle": "Compounded HRT in one prescription"
+            "subtitle": "Compounded HRT in one prescription",
+            "tag": "",
+            "anchor": ""
           }
         },
         "protocol_05": {
@@ -442,6 +464,7 @@
             "products": [
               "bi-est-progesterone"
             ],
+            "form": "",
             "featured": true
           }
         },
@@ -453,6 +476,7 @@
             "products": [
               "dhea-pregnenolone"
             ],
+            "form": "",
             "featured": false
           }
         },
@@ -460,7 +484,9 @@
           "type": "group",
           "settings": {
             "title": "Weight",
-            "subtitle": "GLP-1 and non-GLP-1 options"
+            "subtitle": "GLP-1 and non-GLP-1 options",
+            "tag": "",
+            "anchor": ""
           }
         },
         "protocol_08": {
@@ -471,6 +497,7 @@
             "products": [
               "retatrutide-b12"
             ],
+            "form": "",
             "featured": false
           }
         },
@@ -484,6 +511,7 @@
               "tirzepatide-b6",
               "tirzepatide-ondansetron"
             ],
+            "form": "",
             "featured": false
           }
         },
@@ -497,6 +525,7 @@
               "semaglutide-b6",
               "semaglutide-ondansetron"
             ],
+            "form": "",
             "featured": false
           }
         },
@@ -509,6 +538,7 @@
               "bupropion-naltrexone",
               "topiramate-bupropion-yohimbine"
             ],
+            "form": "",
             "featured": false
           }
         },
@@ -523,6 +553,7 @@
               "lipo-b6-mic-choline",
               "mic-b12-l-carnitine"
             ],
+            "form": "",
             "featured": false
           }
         },
@@ -530,7 +561,9 @@
           "type": "group",
           "settings": {
             "title": "Intimacy & Vaginal Health",
-            "subtitle": "Desire, arousal and comfort"
+            "subtitle": "Desire, arousal and comfort",
+            "tag": "",
+            "anchor": ""
           }
         },
         "protocol_14": {
@@ -541,6 +574,7 @@
             "products": [
               "pt-141-oxytocin"
             ],
+            "form": "",
             "featured": false
           }
         },
@@ -552,6 +586,7 @@
             "products": [
               "estradiol-dhea"
             ],
+            "form": "",
             "featured": false
           }
         },
@@ -563,6 +598,7 @@
             "products": [
               "oxytocin-apomorphine"
             ],
+            "form": "",
             "featured": false
           }
         },
@@ -574,6 +610,7 @@
             "products": [
               "vitamin-e-vitamin-a"
             ],
+            "form": "",
             "featured": false
           }
         },
@@ -581,7 +618,9 @@
           "type": "group",
           "settings": {
             "title": "Skin & Glow",
-            "subtitle": "Inside-out and topical"
+            "subtitle": "Inside-out and topical",
+            "tag": "",
+            "anchor": ""
           }
         },
         "protocol_19": {
@@ -592,6 +631,7 @@
             "products": [
               "glow-blend"
             ],
+            "form": "",
             "featured": false
           }
         },
@@ -603,6 +643,7 @@
             "products": [
               "estriol-niacinamide-ghk-cu-ha"
             ],
+            "form": "",
             "featured": false
           }
         },
@@ -614,6 +655,7 @@
             "products": [
               "hydroquinone-tretinoin-fluocinolone"
             ],
+            "form": "",
             "featured": false
           }
         },
@@ -621,7 +663,9 @@
           "type": "group",
           "settings": {
             "title": "Hair",
-            "subtitle": "Finasteride-free"
+            "subtitle": "Finasteride-free",
+            "tag": "",
+            "anchor": ""
           }
         },
         "protocol_23": {
@@ -632,6 +676,7 @@
             "products": [
               "minoxidil-tretinoin-fluocinolone-biotin-melatonin"
             ],
+            "form": "",
             "featured": false
           }
         },
@@ -639,7 +684,9 @@
           "type": "group",
           "settings": {
             "title": "Recovery & Peptides",
-            "subtitle": "Training, repair and GH-axis support"
+            "subtitle": "Training, repair and GH-axis support",
+            "tag": "",
+            "anchor": ""
           }
         },
         "protocol_25": {
@@ -650,6 +697,7 @@
             "products": [
               "wolverine-blend"
             ],
+            "form": "",
             "featured": false
           }
         },
@@ -661,6 +709,7 @@
             "products": [
               "cjc-1295-ipamorelin"
             ],
+            "form": "",
             "featured": false
           }
         }
@@ -888,7 +937,8 @@
       ],
       "settings": {
         "eyebrow": "FAQ",
-        "heading": "Good questions"
+        "heading": "Good questions",
+        "body": ""
       }
     }
   },
