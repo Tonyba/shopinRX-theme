@@ -5,6 +5,7 @@
   assign dot_icon = 'icon-eyebrow-dot.svg' | inline_asset_content
   assign share_url = shop.url | append: article.url
   assign share_title = article.title | url_encode
+  assign author = settings.blog_author | default: 'Chopin RX'
 
   assign skip = section.settings.featured_tag | downcase
   assign topic = ''
@@ -50,6 +51,8 @@
             <time datetime="{{ article.published_at | date: '%Y-%m-%d' }}">
               {{- article.published_at | date: format: 'date' -}}
             </time>
+            <span class="chx-eyebrow__dot" aria-hidden="true">{{ dot_icon }}</span>
+            <span class="chx-articlehero__author">By {{ author }}</span>
           </p>
 
           {%- if section.settings.show_share -%}
@@ -106,6 +109,38 @@
   </div>
 </div>
 
+{%- comment -%}
+  Hand-written rather than `article | structured_data`, which names the staff
+  account that wrote the post instead of the brand author.
+{%- endcomment -%}
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "mainEntityOfPage": {{ share_url | json }},
+    "url": {{ share_url | json }},
+    "headline": {{ article.title | json }},
+    {%- if article.excerpt_or_content != blank %}
+      "description": {{ article.excerpt_or_content | strip_html | truncatewords: 40 | json }},
+    {%- endif %}
+    {%- if article.image != blank %}
+      "image": {{ article.image | image_url: width: 1200 | prepend: 'https:' | json }},
+    {%- endif %}
+    "datePublished": {{ article.published_at | date: '%Y-%m-%dT%H:%M:%S%z' | json }},
+    "dateModified": {{ article.updated_at | date: '%Y-%m-%dT%H:%M:%S%z' | json }},
+    "author": {
+      "@type": "Organization",
+      "name": {{ author | json }},
+      "url": {{ shop.url | json }}
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": {{ author | json }},
+      "url": {{ shop.url | json }}
+    }
+  }
+</script>
+
 {% stylesheet %}
   .chx-articlehero {
     background-color: var(--surface-card-flat);
@@ -137,6 +172,7 @@
 
   .chx-articlehero__eyebrow {
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
     gap: var(--space-2);
     margin: 0;

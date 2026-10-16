@@ -2170,5 +2170,17 @@
         "default": "Add"
       }
     ]
+  },
+  {
+    "name": "Blog",
+    "settings": [
+      {
+        "type": "text",
+        "id": "blog_author",
+        "label": "Article author",
+        "info": "Shown as the author of every blog post, on the article page and on article cards, in place of the staff account that wrote it.",
+        "default": "Chopin RX"
+      }
+    ]
   }
 ]
