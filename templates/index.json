@@ -502,16 +502,16 @@
         "question_1": {
           "type": "question",
           "settings": {
-            "question": "How does ChopinRX work?",
-            "answer": "<p>Choose a goal-based program or individual treatment and complete a secure online medical intake. ChopinRX connects you with an independent, licensed clinician who reviews your information and determines whether treatment is appropriate. If prescribed, a licensed U.S. pharmacy fulfills and ships your treatment.</p><h3></h3>",
+            "question": "How does Chopin Wellness work?",
+            "answer": "<p>Choose a goal-based program or individual treatment and complete a secure online medical intake. Chopin Wellness connects you with an independent, licensed clinician who reviews your information and determines whether treatment is appropriate. If prescribed, a licensed U.S. pharmacy fulfills and ships your treatment.</p><h3></h3>",
             "open": true
           }
         },
         "question_2": {
           "type": "question",
           "settings": {
-            "question": "Does ChopinRX provide medical care or prescribe medication?",
-            "answer": "<p>No. ChopinRX is a technology and lead-generation platform that helps connect consumers with independent, licensed medical providers. Those providers—not ChopinRX—evaluate patients, make prescribing decisions, and direct medical care.</p>",
+            "question": "Does Chopin Wellness provide medical care or prescribe medication?",
+            "answer": "<p>No. Chopin Wellness is a technology and lead-generation platform that helps connect consumers with independent, licensed medical providers. Those providers, not Chopin Wellness, evaluate patients, make prescribing decisions, and direct medical care.</p>",
             "open": false
           }
         },
