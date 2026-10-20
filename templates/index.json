@@ -64,8 +64,8 @@
       ],
       "settings": {
         "image": "shopify://shop_images/Chopin_RX_-_Sunlit_Luxury_Patio_Couple_Heathly_Lifestyle_Enhancement.webp",
-        "eyebrow": "Chopin RX",
-        "title_line_1": "Life Enhancement RX Provider",
+        "eyebrow": "Chopin Wellness",
+        "title_line_1": "Life Enhancement Provider",
         "title_line_2": "Fast & Easy Process. Delivered to You.",
         "body": "<h4>Connect with licensed U.S. clinicians and 503A & 503B pharmacy partners for personalized peptide and treatment options through a simple online experience.</h4>",
         "primary_label": "Explore Programs",
@@ -502,16 +502,16 @@
         "question_1": {
           "type": "question",
           "settings": {
-            "question": "How does ChopinRX work?",
-            "answer": "<p>Choose a goal-based program or individual treatment and complete a secure online medical intake. ChopinRX connects you with an independent, licensed clinician who reviews your information and determines whether treatment is appropriate. If prescribed, a licensed U.S. pharmacy fulfills and ships your treatment.</p><h3></h3>",
+            "question": "How does Chopin Wellness work?",
+            "answer": "<p>Choose a goal-based program or individual treatment and complete a secure online medical intake. Chopin Wellness connects you with an independent, licensed clinician who reviews your information and determines whether treatment is appropriate. If prescribed, a licensed U.S. pharmacy fulfills and ships your treatment.</p><h3></h3>",
             "open": true
           }
         },
         "question_2": {
           "type": "question",
           "settings": {
-            "question": "Does ChopinRX provide medical care or prescribe medication?",
-            "answer": "<p>No. ChopinRX is a technology and lead-generation platform that helps connect consumers with independent, licensed medical providers. Those providers—not ChopinRX—evaluate patients, make prescribing decisions, and direct medical care.</p>",
+            "question": "Does Chopin Wellness provide medical care or prescribe medication?",
+            "answer": "<p>No. Chopin Wellness is a technology and lead-generation platform that helps connect consumers with independent, licensed medical providers. Those providers, not Chopin Wellness, evaluate patients, make prescribing decisions, and direct medical care.</p>",
             "open": false
           }
         },

@@ -356,6 +356,7 @@
         "review_5",
         "review_6"
       ],
+      "disabled": true,
       "settings": {
         "eyebrow": "4.8/5 on Trust Pilot",
         "heading": "More than <em>100,000</em> patients trust our treatment plans",
@@ -520,7 +521,7 @@
         "cta_label": "Get Started",
         "cta_url": "#pricing",
         "cta_to_intake": true,
-        "show_trustpilot": true,
+        "show_trustpilot": false,
         "trustpilot_rating": "Excellent",
         "trustpilot_score": "4.6",
         "trustpilot_count": "436 reviews on",

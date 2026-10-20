@@ -23,7 +23,7 @@
     "header_section": {
       "type": "chopinrx-header",
       "settings": {
-        "wordmark": "Chopin RX",
+        "wordmark": "Chopin Wellness",
         "menu": "main-menu",
         "show_login": true,
         "login_label": "Login",
