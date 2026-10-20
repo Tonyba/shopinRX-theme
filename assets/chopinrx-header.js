@@ -1,5 +1,5 @@
 /**
- * ChopinRX header.
+ * Chopin Wellness header.
  *
  * Two responsibilities, both deliberately small:
  *   1. Toggle the offcanvas navigation drawer (tablet and below).

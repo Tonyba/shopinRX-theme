@@ -203,7 +203,7 @@
         "question_1": {
           "type": "question",
           "settings": {
-            "question": "How does ChopinRX work?",
+            "question": "How does Chopin Wellness work?",
             "answer": "<p>You pick a program or a single treatment, complete the intake in about ten minutes, and an independent licensed provider reviews it and prescribes if appropriate. A licensed U.S. compounding pharmacy ships to your door.</p>",
             "open": true
           }
@@ -227,7 +227,7 @@
         "question_4": {
           "type": "question",
           "settings": {
-            "question": "Is ChopinRX available in my state?",
+            "question": "Is Chopin Wellness available in my state?",
             "answer": "<p>Availability depends on provider licensing in your state. You will see this during intake before anything is prescribed.</p>",
             "open": false
           }

@@ -240,7 +240,7 @@
         "media_position": "left",
         "eyebrow": "Personalized Care",
         "heading": "With you <em>every step</em> of the way",
-        "body": "<p>Your goals, your health history and your needs are different from everyone else's. ChopinRX connects you with independent, licensed providers who evaluate your information and determine whether a treatment is right for you.</p>",
+        "body": "<p>Your goals, your health history and your needs are different from everyone else's. Chopin Wellness connects you with independent, licensed providers who evaluate your information and determine whether a treatment is right for you.</p>",
         "cta_label": "Explore treatments",
         "cta_url": "shopify://collections/treatment"
       }
@@ -417,7 +417,7 @@
         "question_1": {
           "type": "question",
           "settings": {
-            "question": "How does ChopinRX work?",
+            "question": "How does Chopin Wellness work?",
             "answer": "<p>You pick a program or a single treatment, complete the intake in about ten minutes, and an independent licensed provider reviews it and prescribes if appropriate. A licensed U.S. compounding pharmacy ships to your door.</p>",
             "open": true
           }
@@ -441,7 +441,7 @@
         "question_4": {
           "type": "question",
           "settings": {
-            "question": "Is ChopinRX available in my state?",
+            "question": "Is Chopin Wellness available in my state?",
             "answer": "<p>Availability depends on provider licensing in your state. You will see this during intake before anything is prescribed.</p>",
             "open": false
           }

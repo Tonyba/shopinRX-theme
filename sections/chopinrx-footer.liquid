@@ -396,10 +396,16 @@
   }
 
   /* ── Wordmark ───────────────────────────────── */
+  /* The wordmark is sized from the column width so it never overflows. */
+  .chx-footer .chx-container {
+    container-type: inline-size;
+  }
+
   .chx-footer__wordmark {
     margin: var(--space-16) 0 0;
     font-family: var(--font-display);
-    font-size: 250px;
+    /* "Chopin Wellness" is ~6.95em wide, so 14cqi fills ~97% of the column. */
+    font-size: 14cqi;
     font-weight: 500;
     line-height: 0.73;
     letter-spacing: -0.035em;
@@ -429,10 +435,6 @@
       flex-direction: column;
       align-items: flex-start;
       gap: var(--space-6);
-    }
-
-    .chx-footer__wordmark {
-      font-size: 100px;
     }
 
     .chx-footer__columns {
@@ -510,11 +512,8 @@
       height: 80px;
     }
 
-    /* The wordmark is set to the width drawn in the design (299 of 393), which
-       is narrower than the desktop rule's 30vw. */
     .chx-footer__wordmark {
       margin-block-start: var(--space-10);
-      font-size: 17.8vw;
     }
   }
 {% endstylesheet %}
@@ -562,14 +561,14 @@
       "type": "text",
       "id": "wordmark",
       "label": "Wordmark",
-      "default": "ChopinRX"
+      "default": "Chopin Wellness"
     },
     {
       "type": "text",
       "id": "copyright",
       "label": "Copyright",
       "info": "[year] is replaced with the current year.",
-      "default": "Copyright ©[year] ChopinRX. All rights reserved."
+      "default": "Copyright ©[year] Chopin Wellness. All rights reserved."
     }
   ],
   "blocks": [

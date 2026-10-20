@@ -5,7 +5,7 @@
   assign dot_icon = 'icon-eyebrow-dot.svg' | inline_asset_content
   assign share_url = shop.url | append: article.url
   assign share_title = article.title | url_encode
-  assign author = settings.blog_author | default: 'Chopin RX'
+  assign author = settings.blog_author | default: 'Chopin Wellness'
 
   assign skip = section.settings.featured_tag | downcase
   assign topic = ''
