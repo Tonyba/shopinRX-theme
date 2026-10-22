@@ -91,6 +91,7 @@
         },
         "legal_3": {
           "type": "legal",
+          "disabled": true,
           "settings": {
             "label": "Terms of Sale",
             "url": ""
@@ -98,6 +99,7 @@
         },
         "legal_4": {
           "type": "legal",
+          "disabled": true,
           "settings": {
             "label": "Complaints",
             "url": ""
