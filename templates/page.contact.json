@@ -26,13 +26,14 @@
           "type": "channel",
           "settings": {
             "icon": "chat",
-            "label": "help@chopinrx.com",
+            "label": "hello@chopinwellness.com",
             "text": "We aim to reply in 24 hours",
-            "url": "mailto:help@chopinrx.com"
+            "url": "mailto:hello@chopinwellness.com"
           }
         },
         "channel_3": {
           "type": "channel",
+          "disabled": true,
           "settings": {
             "icon": "mail",
             "label": "press@chopinrx.com",
