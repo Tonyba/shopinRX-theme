@@ -19,7 +19,7 @@
         "breadcrumb_current": "{{ closest.collection.title }}",
         "heading": "Complete care, from diagnosis to delivery, 100% online.",
         "body": "<p>Explore personalized treatment paths designed to support the goals that matter most to you. All programs are prescribed by independent licensed providers after reviewing your intake.</p>",
-        "show_trustpilot": true,
+        "show_trustpilot": false,
         "trustpilot_rating": "Excellent",
         "trustpilot_score": "4.6",
         "trustpilot_count": "436 reviews",
@@ -147,6 +147,7 @@
         "review_7",
         "review_8"
       ],
+      "disabled": true,
       "settings": {
         "eyebrow": "4.8/5 on Trust Pilot",
         "heading": "More than <em>100,000</em> patients trust our treatment plans",
@@ -189,7 +190,8 @@
         "image": "shopify://shop_images/Media_frame.png",
         "cta_label": "Get Started",
         "cta_url": "",
-        "show_trustpilot": true,
+        "cta_to_intake": false,
+        "show_trustpilot": false,
         "trustpilot_rating": "Excellent",
         "trustpilot_score": "4.6",
         "trustpilot_count": "436 reviews on",
