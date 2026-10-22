@@ -79,7 +79,7 @@
           "type": "legal",
           "settings": {
             "label": "Privacy Policy",
-            "url": ""
+            "url": "shopify://pages/data-sharing-opt-out"
           }
         },
         "legal_2": {
