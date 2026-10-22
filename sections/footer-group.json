@@ -109,7 +109,7 @@
           "type": "legal",
           "settings": {
             "label": "Manage Cookies",
-            "url": ""
+            "url": "shopify://pages/data-sharing-opt-out"
           }
         },
         "seal_1": {
