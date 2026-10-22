@@ -19,7 +19,7 @@
         "breadcrumb_current": "{{ closest.collection.title }}",
         "heading": "Complete care, from diagnosis to delivery, 100% online.",
         "body": "<p>Browse the full treatment menu. Every option is prescribed by an independent licensed provider after reviewing your intake, and dispensed by a licensed U.S. compounding pharmacy.</p>",
-        "show_trustpilot": true,
+        "show_trustpilot": false,
         "trustpilot_rating": "Excellent",
         "trustpilot_score": "4.6",
         "trustpilot_count": "436 reviews",
@@ -142,6 +142,7 @@
         "review_7",
         "review_8"
       ],
+      "disabled": true,
       "settings": {
         "eyebrow": "4.8/5 on Trust Pilot",
         "heading": "More than <em>100,000</em> patients trust our treatment plans",
@@ -252,7 +253,8 @@
         "eyebrow": "Have questions?",
         "heading": "Frequently asked <em>questions</em>",
         "cta_label": "Get Started",
-        "cta_url": ""
+        "cta_url": "",
+        "cta_to_intake": false
       }
     }
   },
