@@ -317,11 +317,11 @@ export function createQuiz(root) {
     body.innerHTML = `
       ${eyebrow(copy.results_eyebrow)}${heading(title)}
       <ul class="chx-quiz__chips" role="list">${chips.map((chip) => `<li class="chx-quiz__chip">${escapeHtml(chip)}</li>`).join('')}</ul>
+      <a class="chx-btn chx-btn--md chx-btn--accent chx-quiz__menu-btn" href="${escapeHtml(pageUrl('#full-menu'))}" data-chx-quiz-leave>${escapeHtml(copy.browse_menu)}</a>
       <div class="chx-quiz__tiers">${cards}</div>
       ${nextBlock}
       <div class="chx-quiz__links">
         <a class="chx-quiz__link" href="${escapeHtml(pageUrl('#shop-by-goal'))}" data-chx-quiz-leave>${escapeHtml(fill(copy.see_all, { goal: goal.phrase }))}</a>
-        <a class="chx-quiz__link" href="${escapeHtml(pageUrl('#full-menu'))}" data-chx-quiz-leave>${escapeHtml(copy.browse_menu)}</a>
         <button type="button" class="chx-quiz__link" data-chx-quiz-restart>${escapeHtml(copy.start_over)}</button>
       </div>
       <p class="chx-quiz__fineprint">${escapeHtml(copy.disclaimer + footnote)}</p>`;

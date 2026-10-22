@@ -695,6 +695,10 @@
     color: var(--text-muted);
   }
 
+  .chx-quiz .chx-quiz__menu-btn {
+    margin-block-start: var(--space-4);
+  }
+
   .chx-quiz__links {
     display: flex;
     flex-direction: column;
@@ -730,6 +734,10 @@
 
   /* Phones get a full-screen sheet instead of a floating card. */
   @media screen and (max-width: 767px) {
+    .chx-quiz .chx-quiz__menu-btn {
+      width: 100%;
+    }
+
     .chx-quiz {
       width: 100vw;
       height: 100dvh;
