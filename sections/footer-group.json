@@ -79,14 +79,14 @@
           "type": "legal",
           "settings": {
             "label": "Privacy Policy",
-            "url": "shopify://pages/data-sharing-opt-out"
+            "url": "shopify://policies/privacy-policy"
           }
         },
         "legal_2": {
           "type": "legal",
           "settings": {
             "label": "Terms & Conditions",
-            "url": ""
+            "url": "shopify://policies/terms-of-service"
           }
         },
         "legal_3": {
