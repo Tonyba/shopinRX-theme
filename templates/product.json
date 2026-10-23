@@ -66,14 +66,14 @@
         "feature_1": {
           "type": "feature",
           "settings": {
-            "title": "UK licensed",
+            "title": "USA Licensed",
             "text": "Medications and clinicians."
           }
         },
         "feature_2": {
           "type": "feature",
           "settings": {
-            "title": "Ongoing clinical support",
+            "title": "Ongoing Clinical Support",
             "text": "Trusted medical advice from expert clinicians."
           }
         },
