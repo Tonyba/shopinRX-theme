@@ -434,7 +434,7 @@
           "type": "test",
           "settings": {
             "title": "Transparency & Accountability",
-            "text": "Clear treatment information and professional guidance help you make informed decisions about your care."
+            "text": "Clear treatment information and professional guidance to help you make informed decisions about your care."
           }
         }
       },
@@ -445,7 +445,7 @@
         "test_4"
       ],
       "settings": {
-        "image": "shopify://shop_images/chx-lab-testing.jpg",
+        "image": "shopify://shop_images/Chopin_Wellness_-_Modern_Doctor_Reviewing_Medical_Tablet.webp",
         "media_position": "right",
         "eyebrow": "Quality & Standards",
         "heading": "Quality you can <em>trust</em>. Standards you can <em>count on</em>."
