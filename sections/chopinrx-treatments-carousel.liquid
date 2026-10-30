@@ -95,18 +95,29 @@
               endif
             -%}
             <li class="chx-carousel__slide chx-productcard">
+              {%- liquid
+                assign card_image = product.featured_image
+                if template.name == 'index'
+                  for img in product.images
+                    if img.src contains 'ChopinWellness_'
+                      assign card_image = img
+                      break
+                    endif
+                  endfor
+                endif
+              -%}
               <a class="chx-productcard__media" href="{{ product.url }}" tabindex="-1" aria-hidden="true">
-                {%- if product.featured_image -%}
+                {%- if card_image -%}
                   <img
-                    src="{{ product.featured_image | image_url: width: 700 }}"
+                    src="{{ card_image | image_url: width: 700 }}"
                     srcset="
-                      {{ product.featured_image | image_url: width: 350 }} 350w,
-                      {{ product.featured_image | image_url: width: 700 }} 700w
+                      {{ card_image | image_url: width: 350 }} 350w,
+                      {{ card_image | image_url: width: 700 }} 700w
                     "
                     sizes="348px"
-                    width="{{ product.featured_image.width }}"
-                    height="{{ product.featured_image.height }}"
-                    alt="{{ product.featured_image.alt | escape }}"
+                    width="{{ card_image.width }}"
+                    height="{{ card_image.height }}"
+                    alt="{{ card_image.alt | escape }}"
                     loading="lazy"
                   >
                 {%- else -%}
