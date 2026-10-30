@@ -168,6 +168,12 @@
       </div>
     </div>
   {%- endfor -%}
+
+  {%- if section.settings.disclaimer != blank -%}
+    <div class="chx-container">
+      <p class="chx-disclaimer chx-explore__disclaimer">{{ section.settings.disclaimer | escape }}</p>
+    </div>
+  {%- endif -%}
 </div>
 
 <script type="module">
@@ -214,6 +220,10 @@
 
   .chx-explore__rail[hidden] {
     display: none;
+  }
+
+  .chx-explore .chx-explore__disclaimer {
+    margin-block-start: var(--space-6);
   }
 
   .chx-explore__empty {
@@ -458,6 +468,11 @@
       margin-block-start: var(--space-6);
     }
 
+    .chx-explore .chx-explore__disclaimer {
+      order: 5;
+      padding-inline: var(--section-px);
+    }
+
     /* Card width plus the slide's own spacing padding. */
     .chx-carousel__slide {
       flex-basis: 320px;
@@ -563,6 +578,12 @@
       "type": "url",
       "id": "cta_url",
       "label": "Button link"
+    },
+    {
+      "type": "textarea",
+      "id": "disclaimer",
+      "label": "Disclaimer",
+      "default": "Disclaimer: Images are for illustrative purposes only and may not represent the actual products, packaging, formulations, or treatments provided. Product appearance and packaging may vary. All treatments are subject to medical evaluation, eligibility, and availability."
     }
   ],
   "presets": [

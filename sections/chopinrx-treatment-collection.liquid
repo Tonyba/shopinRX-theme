@@ -182,6 +182,10 @@
         <span class="chx-btn__icon" aria-hidden="true">{{ arrow_down_icon }}</span>
       </button>
     {%- endif -%}
+
+    {%- if section.settings.disclaimer != blank -%}
+      <p class="chx-disclaimer">{{ section.settings.disclaimer | escape }}</p>
+    {%- endif -%}
   </div>
 </div>
 
@@ -478,6 +482,12 @@
       "max": 24,
       "step": 3,
       "default": 9
+    },
+    {
+      "type": "textarea",
+      "id": "disclaimer",
+      "label": "Disclaimer",
+      "default": "Disclaimer: Images are for illustrative purposes only and may not represent the actual products, packaging, formulations, or treatments provided. Product appearance and packaging may vary. All treatments are subject to medical evaluation, eligibility, and availability."
     }
   ],
   "presets": [

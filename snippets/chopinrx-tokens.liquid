@@ -114,6 +114,7 @@
     --font-size-body-large: 18px;
     --font-size-body: 16px;
     --font-size-body-small: 14px;
+    --font-size-caption: 12px;
     --font-size-button-large: 18px;
     --font-size-button: 16px;
     --font-size-label-tag: 14px;
@@ -249,6 +250,17 @@
   .chx-body-sm {
     font-size: var(--font-size-body-small);
     line-height: 1.43;
+  }
+
+  /* Fine print. Body colour, not muted: muted fails 4.5:1 at this size. */
+  .chx-disclaimer {
+    margin: 0;
+    max-width: 960px;
+    font-family: var(--font-ui);
+    font-size: var(--font-size-caption);
+    font-weight: 400;
+    line-height: 1.5;
+    color: var(--chx-body-color, var(--text-body));
   }
 
   .chx-label-tag {
