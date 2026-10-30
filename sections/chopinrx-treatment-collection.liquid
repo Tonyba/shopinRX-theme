@@ -125,19 +125,28 @@
           data-chx-collections="{{ handles | escape }}"
           data-chx-tags="{{ tag_list | escape }}"
         >
+          {%- liquid
+            assign card_image = product.featured_image
+            for img in product.images
+              if img.src contains 'ChopinWellness_'
+                assign card_image = img
+                break
+              endif
+            endfor
+          -%}
           <a class="chx-productcard__media" href="{{ product.url }}" tabindex="-1" aria-hidden="true">
-            {%- if product.featured_image -%}
+            {%- if card_image -%}
               <img
-                src="{{ product.featured_image | image_url: width: 960 }}"
+                src="{{ card_image | image_url: width: 960 }}"
                 srcset="
-                  {{ product.featured_image | image_url: width: 480 }} 480w,
-                  {{ product.featured_image | image_url: width: 720 }} 720w,
-                  {{ product.featured_image | image_url: width: 960 }} 960w
+                  {{ card_image | image_url: width: 480 }} 480w,
+                  {{ card_image | image_url: width: 720 }} 720w,
+                  {{ card_image | image_url: width: 960 }} 960w
                 "
                 sizes="(max-width: 767px) 100vw, (max-width: 1024px) 45vw, 471px"
-                width="{{ product.featured_image.width }}"
-                height="{{ product.featured_image.height }}"
-                alt="{{ product.featured_image.alt | escape }}"
+                width="{{ card_image.width }}"
+                height="{{ card_image.height }}"
+                alt="{{ card_image.alt | escape }}"
                 loading="lazy"
               >
             {%- else -%}
