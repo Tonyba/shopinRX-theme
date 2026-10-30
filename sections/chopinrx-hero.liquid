@@ -79,12 +79,22 @@
             </a>
           {%- endif -%}
           {%- if section.settings.secondary_label != blank -%}
-            <a
-              class="chx-btn chx-btn--inverse"
-              href="{{ section.settings.secondary_url | default: routes.all_products_collection_url }}"
-            >
-              {{- section.settings.secondary_label -}}
-            </a>
+            {%- if section.settings.secondary_style == 'dark' -%}
+              <a
+                class="chx-btn chx-btn--dark"
+                href="{{ section.settings.secondary_url | default: routes.all_products_collection_url }}"
+              >
+                <span>{{ section.settings.secondary_label }}</span>
+                <span class="chx-btn__icon" aria-hidden="true">{{ arrow_icon }}</span>
+              </a>
+            {%- else -%}
+              <a
+                class="chx-btn chx-btn--inverse"
+                href="{{ section.settings.secondary_url | default: routes.all_products_collection_url }}"
+              >
+                {{- section.settings.secondary_label -}}
+              </a>
+            {%- endif -%}
           {%- endif -%}
           {%- if section.settings.tertiary_label != blank -%}
             <a
@@ -436,6 +446,16 @@
       "id": "secondary_label",
       "label": "Secondary button label",
       "default": "View our treatments"
+    },
+    {
+      "type": "select",
+      "id": "secondary_style",
+      "label": "Secondary button style",
+      "options": [
+        { "value": "outline", "label": "Outline" },
+        { "value": "dark", "label": "Black with arrow" }
+      ],
+      "default": "outline"
     },
     {
       "type": "url",

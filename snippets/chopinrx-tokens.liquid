@@ -68,6 +68,8 @@
     --action-accent-bg: #2864dc;
     --action-accent-fg: #ffffff;
     --action-accent-bg-hover: #4a80f0;
+    --action-dark-bg: #000000;
+    --action-dark-bg-hover: #16212b;
     --action-secondary-fg: #0d2535;
     --action-secondary-border: #0d2535;
 
@@ -410,6 +412,17 @@
   .chx-btn--accent:hover {
     background-color: var(--action-accent-bg-hover);
     background-image: var(--gradient-cta-hover);
+    color: var(--action-primary-fg);
+  }
+
+  /* Filled black action, same shape as accent */
+  .chx-btn--dark {
+    background-color: var(--action-dark-bg);
+    color: var(--action-primary-fg);
+  }
+
+  .chx-btn--dark:hover {
+    background-color: var(--action-dark-bg-hover);
     color: var(--action-primary-fg);
   }
 
