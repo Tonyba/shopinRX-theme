@@ -164,19 +164,19 @@
         "feature_1": {
           "type": "feature",
           "settings": {
-            "text": "Lose weight with doctor-trusted treatment plans"
+            "text": "Personalized Treatment Options"
           }
         },
         "feature_2": {
           "type": "feature",
           "settings": {
-            "text": "Plans tailored to your goals"
+            "text": "Trusted U.S. Medical & Pharmacy Partners"
           }
         },
         "feature_3": {
           "type": "feature",
           "settings": {
-            "text": "Access to 24/7 messaging, 100% online"
+            "text": "Convenient Online Access & Discreet Delivery"
           }
         }
       },
@@ -186,7 +186,7 @@
         "feature_3"
       ],
       "settings": {
-        "heading": "Ready to get assessed?",
+        "heading": "Your Next Step Toward Better Wellness.",
         "image": "shopify://shop_images/Media_frame.png",
         "cta_label": "Get Started",
         "cta_url": "",
