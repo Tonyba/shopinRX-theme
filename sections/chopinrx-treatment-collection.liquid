@@ -106,7 +106,8 @@
     {%- endif -%}
 
     <ul class="chx-treatcol__grid" role="list">
-      {%- for product in source.products limit: section.settings.products_count -%}
+      {%- paginate source.products by 250 -%}
+      {%- for product in source.products -%}
         {%- liquid
           # Chips match collections, the segmented control matches tags.
           # Handles are slugs so a space separates them safely, but a tag can
@@ -179,6 +180,7 @@
           </a>
         </li>
       {%- endfor -%}
+      {%- endpaginate -%}
     </ul>
 
     <p class="chx-treatcol__empty" data-chx-empty hidden>{{ 'content.no_products_found' | t }}</p>
