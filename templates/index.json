@@ -409,38 +409,38 @@
     "lab_testing": {
       "type": "chopinrx-lab-testing",
       "blocks": {
-        "test_1": {
-          "type": "test",
-          "settings": {
-            "title": "Potency tested",
-            "text": "Testing intended to confirm the concentration of the active ingredient."
-          }
-        },
         "test_2": {
           "type": "test",
           "settings": {
-            "title": "Sterility Tested",
-            "text": "Testing intended to detect microbial contamination in sterile preparations."
+            "title": "Trusted U.S. Medical & Pharmacy Partners",
+            "text": "Treatments are prescribed by licensed U.S. clinicians, when medically appropriate, and supplied through 503A compounding pharmacy and 503B facility partners."
+          }
+        },
+        "test_1": {
+          "type": "test",
+          "settings": {
+            "title": "Quality-Focused Standards",
+            "text": "We work with pharmacy partners operating under applicable federal and state quality, safety, and regulatory requirements."
           }
         },
         "test_3": {
           "type": "test",
           "settings": {
-            "title": "pH Level Tested",
-            "text": "Testing used, when applicable, to evaluate whether a preparation falls within its specified pH range."
+            "title": "Personalized Medical Oversight",
+            "text": "Licensed U.S. clinicians evaluate your individual health needs and determine appropriate treatment options."
           }
         },
         "test_4": {
           "type": "test",
           "settings": {
-            "title": "Endotoxicity Tested",
-            "text": "A test to check the medication adheres to endotoxin safety recommendations."
+            "title": "Transparency & Accountability",
+            "text": "Clear treatment information and professional medical guidance help you make informed decisions about your care."
           }
         }
       },
       "block_order": [
-        "test_1",
         "test_2",
+        "test_1",
         "test_3",
         "test_4"
       ],
@@ -448,7 +448,7 @@
         "image": "shopify://shop_images/chx-lab-testing.jpg",
         "media_position": "right",
         "eyebrow": "Quality & Testing",
-        "heading": "Always lab tested for <em>quality</em> and <em>consistency</em>"
+        "heading": "Quality you can <em>trust</em>. Standards you can <em>count on</em>."
       }
     },
     "how_it_works": {
