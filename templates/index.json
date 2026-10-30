@@ -70,7 +70,7 @@
         "body": "<h4>Connect with licensed U.S. clinicians and 503A & 503B pharmacy partners for personalized peptide and treatment options through a simple online experience.</h4>",
         "primary_label": "Explore Programs",
         "primary_url": "shopify://collections/program",
-        "secondary_label": "Explore All Treatments",
+        "secondary_label": "View All Treatments",
         "secondary_style": "dark",
         "secondary_url": "shopify://collections/treatment",
         "tertiary_label": "Start Now",
