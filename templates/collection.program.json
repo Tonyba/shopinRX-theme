@@ -14,7 +14,7 @@
       "settings": {
         "style": "dark",
         "alignment": "center",
-        "image": "shopify://shop_images/Screenshot_27.png",
+        "image": "shopify://shop_images/Chopin_Wellness_-_Health_Performance_Wellness_Goals.webp",
         "breadcrumb_home": "Home",
         "breadcrumb_current": "{{ closest.collection.title }}",
         "heading": "Feel Better. Perform Better. Live Better.",
