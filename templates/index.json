@@ -71,7 +71,7 @@
         "primary_label": "Explore Programs",
         "primary_url": "shopify://collections/program",
         "secondary_label": "View All Treatments",
-        "secondary_style": "dark",
+        "secondary_style": "luxury",
         "secondary_url": "shopify://collections/treatment",
         "tertiary_label": "Start Now",
         "tertiary_url": "#find-your-program",

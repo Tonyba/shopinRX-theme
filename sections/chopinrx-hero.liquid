@@ -79,9 +79,9 @@
             </a>
           {%- endif -%}
           {%- if section.settings.secondary_label != blank -%}
-            {%- if section.settings.secondary_style == 'dark' -%}
+            {%- if section.settings.secondary_style == 'dark' or section.settings.secondary_style == 'luxury' -%}
               <a
-                class="chx-btn chx-btn--dark"
+                class="chx-btn chx-btn--{{ section.settings.secondary_style }}"
                 href="{{ section.settings.secondary_url | default: routes.all_products_collection_url }}"
               >
                 <span>{{ section.settings.secondary_label }}</span>
@@ -453,7 +453,8 @@
       "label": "Secondary button style",
       "options": [
         { "value": "outline", "label": "Outline" },
-        { "value": "dark", "label": "Black with arrow" }
+        { "value": "dark", "label": "Black with arrow" },
+        { "value": "luxury", "label": "Champagne with arrow" }
       ],
       "default": "outline"
     },

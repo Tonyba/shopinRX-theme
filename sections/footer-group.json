@@ -63,6 +63,7 @@
         },
         "social_2": {
           "type": "social",
+          "disabled": true,
           "settings": {
             "platform": "instagram",
             "url": ""
@@ -70,6 +71,7 @@
         },
         "social_3": {
           "type": "social",
+          "disabled": true,
           "settings": {
             "platform": "facebook",
             "url": ""

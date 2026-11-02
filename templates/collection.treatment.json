@@ -18,7 +18,7 @@
         "breadcrumb_home": "Home",
         "breadcrumb_current": "{{ closest.collection.title }}",
         "heading": "Your Wellness. Your Way.",
-        "body": "<p>Discover treatment options for weight management, hormone health, performance, and overall wellness. Explore what fits your goals and take the next step through a convenient online experience.</p><p><br/>*<em>Prescription treatments are subject to evaluation and approval by licensed U.S. clinicians and, when prescribed, are fulfilled through qualified U.S. 503(A) & 503(B) pharmacy partners.</em></p>",
+        "body": "<p>Discover treatment options for weight management, hormone health, performance, and overall wellness. Explore what fits your goals and take the next step through a convenient online experience.</p><p><br/>*<em>Prescription treatments are subject to evaluation and approval by licensed U.S. clinicians and, when prescribed, are fulfilled through qualified U.S. 503A & 503B pharmacy partners.</em></p>",
         "show_trustpilot": false,
         "trustpilot_rating": "Excellent",
         "trustpilot_score": "4.6",

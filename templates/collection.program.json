@@ -18,7 +18,7 @@
         "breadcrumb_home": "Home",
         "breadcrumb_current": "{{ closest.collection.title }}",
         "heading": "Feel Better. Perform Better. Live Better.",
-        "body": "<p>Explore treatment options designed to support your health, performance, and wellness goals. Choose what fits your needs and get started online.</p>",
+        "body": "<p>Explore treatment options designed to support your health, performance, and wellness goals. Choose what fits your needs and get started online.</p><p><br/>*<em>Prescription treatments are subject to evaluation and approval by licensed U.S. clinicians and, when prescribed, are fulfilled through qualified U.S. 503A & 503B pharmacy partners.</em></p>",
         "show_trustpilot": false,
         "trustpilot_rating": "Excellent",
         "trustpilot_score": "4.6",
@@ -164,19 +164,19 @@
         "feature_1": {
           "type": "feature",
           "settings": {
-            "text": "Lose weight with doctor-trusted treatment plans"
+            "text": "Personalized Treatment Options"
           }
         },
         "feature_2": {
           "type": "feature",
           "settings": {
-            "text": "Plans tailored to your goals"
+            "text": "Trusted U.S. Medical & Pharmacy Partners"
           }
         },
         "feature_3": {
           "type": "feature",
           "settings": {
-            "text": "Access to 24/7 messaging, 100% online"
+            "text": "Convenient Online Access & Discreet Delivery"
           }
         }
       },
@@ -186,8 +186,8 @@
         "feature_3"
       ],
       "settings": {
-        "heading": "Ready to get assessed?",
-        "image": "shopify://shop_images/Media_frame.png",
+        "heading": "Your Next Step Toward Better Wellness.",
+        "image": "shopify://shop_images/Chopin_Wellness_-_Coastal_Luxury_Terrace.webp",
         "cta_label": "Get Started",
         "cta_url": "",
         "cta_to_intake": false,

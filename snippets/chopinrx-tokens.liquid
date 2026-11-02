@@ -70,6 +70,9 @@
     --action-accent-bg-hover: #4a80f0;
     --action-dark-bg: rgb(0 0 0 / 0.75);
     --action-dark-bg-hover: #16212b;
+    --action-luxury-bg: #c9a97e; /* Champagne */
+    --action-luxury-fg: #0d2535;
+    --action-luxury-bg-hover: #b8955f;
     --action-secondary-fg: #0d2535;
     --action-secondary-border: #0d2535;
 
@@ -427,6 +430,17 @@
   .chx-btn--dark:hover {
     background-color: var(--action-dark-bg-hover);
     color: var(--action-primary-fg);
+  }
+
+  /* Champagne (luxury accent) filled action */
+  .chx-btn--luxury {
+    background-color: var(--action-luxury-bg);
+    color: var(--action-luxury-fg);
+  }
+
+  .chx-btn--luxury:hover {
+    background-color: var(--action-luxury-bg-hover);
+    color: var(--action-luxury-fg);
   }
 
   /* Outlined action on photography or ink surfaces */
