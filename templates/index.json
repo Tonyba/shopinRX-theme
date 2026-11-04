@@ -65,7 +65,7 @@
       "settings": {
         "image": "shopify://shop_images/Chopin_RX_-_Sunlit_Luxury_Patio_Couple_Heathly_Lifestyle_Enhancement.webp",
         "eyebrow": "Chopin Wellness",
-        "title_line_1": "Life Enhancement Provider",
+        "title_line_1": "Lifestyle Enhancement Provider",
         "title_line_2": "Fast & Easy Process. Delivered to You.",
         "body": "<h4>Connect with licensed U.S. clinicians and 503A & 503B pharmacy partners for personalized peptide and treatment options through a simple online experience.</h4>",
         "primary_label": "Explore Programs",
@@ -268,7 +268,8 @@
         "placeholder_label": "Vial · placeholder",
         "card_cta_label": "Explore",
         "cta_label": "See All Treatments",
-        "cta_url": "shopify://collections/treatment"
+        "cta_url": "shopify://collections/treatment",
+        "disclaimer": "Disclaimer: Images are for illustrative purposes only and may not represent the actual products, packaging, formulations, or treatments provided. Product appearance and packaging may vary. All treatments are subject to medical evaluation, eligibility, and availability."
       }
     },
     "reviews": {
