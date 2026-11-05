@@ -215,10 +215,16 @@
         {%- if section.settings.cta_label != blank -%}
           {%- # The intake lives on MyDose: the form's own link first, then the product's. -%}
           {%- assign intake_url = variant.metafields.custom.mydos_link.value | default: product.metafields.custom.mydos_link.value | default: '#' -%}
-          <a class="chx-btn chx-btn--accent chx-pdp__cta" href="{{ intake_url }}">
+          {%- # Products on the 2026-11-04 pricing sheet's "Later" and "Remove" lists stay live but show Coming Soon instead of Start intake. Add the coming-soon tag to any other product to do the same. -%}
+      {%- assign coming_soon_handles = 'wegovy,zepbound,tirzepatide-ondansetron,minoxidil-finasteride-tretinoin,minoxidil-tretinoin-fluocinolone-biotin-melatonin,spironolactone,tretinoin,naltrexone,methylene-blue,sildenafil-tadalafil,mic-b12,berberine-complex,magnesium-glycinate,omega-3-ultra,vitamin-d3,vitamin-e-vitamin-a,melatonin,lean-cut,peak-performance,longevity-core,mounjaro,ozempic,liraglutide,tirzepatide-sublingual,tirzepatide-b6,orforglipron,bupropion-naltrexone,topiramate-bupropion-yohimbine,metformin,ondansetron,lipo-b12,lipo-b6-mic-choline,lipo-mino-l-carnitine,mic-b12-l-carnitine,vardenafil,sildenafil-papaverine,sildenafil-pentoxifylline-arginine,sildenafil-tadalafil-oxytocin,trimix,oxytocin,oxytocin-apomorphine,pt-141-oxytocin,estradiol,progesterone,bi-est-progesterone,bi-est,dhea,dhea-pregnenolone,estradiol-dhea,gonadorelin,hcg,minoxidil-finasteride-latanoprost-ketoconazole,minoxidil-finasteride-tretinoin-fluocinolone,hydroquinone-tretinoin-fluocinolone,estriol-niacinamide-ghk-cu-ha' | split: ',' -%}
+      {%- if coming_soon_handles contains product.handle or product.tags contains 'coming-soon' -%}
+      <span class="chx-btn chx-btn--accent chx-pdp__cta chx-pdp__cta--soon" role="button" aria-disabled="true"><span>Coming Soon</span></span>
+      {%- else -%}
+      <a class="chx-btn chx-btn--accent chx-pdp__cta" href="{{ intake_url }}">
             <span>{{ section.settings.cta_label }}</span>
             <span class="chx-btn__icon" aria-hidden="true">{{ arrow_icon }}</span>
           </a>
+      {%- endif -%}
         {%- endif -%}
 
         {%- if section.settings.show_trustpilot -%}
@@ -534,6 +540,12 @@
 
   .chx-pdp__cta {
     width: 298px;
+  }
+
+  .chx-pdp__cta--soon {
+    opacity: 0.55;
+    cursor: not-allowed;
+    pointer-events: none;
   }
 
   .chx-pdp__divider {
