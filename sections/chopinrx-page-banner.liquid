@@ -27,6 +27,7 @@
         width="{{ image.width }}"
         height="{{ image.height }}"
         alt="{{ image.alt | escape }}"
+        style="--chx-abouthero-focus-x: {{ section.settings.mobile_focus_x }}%;"
         loading="eager"
         fetchpriority="high"
       >
@@ -234,6 +235,12 @@
       min-height: 512px;
     }
 
+    /* A portrait crop shows only about a third of a landscape photograph, so
+       each banner sets where the crop sits to keep its subject in frame. */
+    .chx-abouthero__media {
+      object-position: var(--chx-abouthero-focus-x, 50%) center;
+    }
+
     .chx-abouthero__frame {
       padding: 80px 17px;
     }
@@ -295,6 +302,17 @@
       "id": "image",
       "label": "Background image",
       "info": "Upload to Content → Files, then pick it here."
+    },
+    {
+      "type": "range",
+      "id": "mobile_focus_x",
+      "label": "Mobile image focus (left → right)",
+      "info": "Where the photo is cropped on phones. 50% is centred.",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "default": 50
     },
     {
       "type": "text",
