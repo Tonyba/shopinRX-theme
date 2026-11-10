@@ -1,0 +1,54 @@
+{{ 'two-cols-section.css' | asset_url | stylesheet_tag }}
+
+<div
+  class="products-wrapper"
+  style="background-color: {{ section.settings.bg_color }};"
+>
+  <div class="page-width">
+    <h2 style="text-align: {{ section.settings.title_alignment }}">
+      {{ section.settings.title }}
+    </h2>
+    <div class="grid__items">
+      {% for product in section.settings.products %}
+        <li class="grid__item">
+          {% render 'new-loop-carousel', product: product %}
+        </li>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+{% comment %} {% if product.media.size > 0 %} {% endcomment %}
+<script src="{{ 'product-modal.js' | asset_url }}" defer></script>
+<script src="{{ 'media-gallery.js' | asset_url }}" defer></script>
+{% comment %} {% endif %} {% endcomment %}
+
+{% schema %}
+{
+  "name": "Two Columns Product",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title"
+    },
+    {
+      "type": "text_alignment",
+      "id": "title_alignment",
+      "label": "Alignment"
+    },
+    {
+      "type": "product_list",
+      "id": "products",
+      "label": "Products",
+      "limit": 2
+    },
+    {
+      "type": "color",
+      "label": "Background Color",
+      "id": "bg_color",
+      "default": "transparent"
+    }
+  ]
+}
+{% endschema %}

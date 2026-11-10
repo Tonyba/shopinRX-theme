@@ -1,0 +1,104 @@
+{{ 'home-slider.css' | asset_url | stylesheet_tag: preload: true }}
+
+<div class="splide home-slider">
+  <div class="splide__arrows">
+    <button class="splide__arrow splide__arrow--prev">{% render 'home-slider-arrow' %}</button>
+    <button class="splide__arrow splide__arrow--next">{% render 'home-slider-arrow' %}</button>
+  </div>
+  <div class="splide__track">
+    <div class="splide__list">
+      {% for block in section.blocks %}
+        <div class="splide__slide">
+          <div class="slide-inner" style="background-image: url({{ block.settings.bg_img | image_url }})">
+            <div class="page-width">
+              <div class="slide-content">
+                <h2>{{ block.settings.slide_heading }}</h2>
+                <p>
+                  {{ block.settings.slide_text }}
+                </p>
+
+                <a class="btn home-slide-btn" href="{{ block.settings.button_link }}">
+                  {{- block.settings.button_text -}}
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+<script defer>
+  function init() {
+    const splide = document.querySelector('.splide.home-slider');
+    const config = {
+      type: 'loop',
+      arrows: true,
+      pagination: false,
+      perPage: 1,
+    };
+    const splideInstance = new Splide(splide, config);
+
+    splideInstance.mount();
+  }
+
+  function deferSplide(method) {
+    if (typeof Splide != 'undefined') {
+      method();
+    } else {
+      setTimeout(function () {
+        deferSplide(method);
+      }, 50);
+    }
+  }
+
+  deferSplide(init);
+</script>
+
+{% schema %}
+{
+  "name": "Home Slider",
+  "settings": [],
+  "blocks": [
+    {
+      "name": "Slide",
+      "type": "slide",
+      "settings": [
+        {
+          "type": "text",
+          "id": "slide_heading",
+          "label": "Heading",
+          "default": "Heading"
+        },
+        {
+          "type": "textarea",
+          "id": "slide_text",
+          "label": "Text",
+          "default": "Welcome to my shop!"
+        },
+        {
+          "type": "image_picker",
+          "id": "bg_img",
+          "label": "Background Image"
+        },
+        {
+          "type": "header",
+          "content": "Button"
+        },
+        {
+          "type": "text",
+          "id": "button_text",
+          "label": "Button Text",
+          "default": "Shop Now!"
+        },
+        {
+          "type": "url",
+          "id": "button_link",
+          "label": "Button Link"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

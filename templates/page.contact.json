@@ -9,73 +9,26 @@
  */
 {
   "sections": {
-    "contact": {
-      "type": "chopinrx-contact",
-      "blocks": {
-        "channel_1": {
-          "type": "channel",
-          "disabled": true,
-          "settings": {
-            "icon": "phone",
-            "label": "073 8016 9186",
-            "text": "Monday - Friday 9am - 5pm",
-            "url": "tel:07380169186"
-          }
-        },
-        "channel_2": {
-          "type": "channel",
-          "settings": {
-            "icon": "chat",
-            "label": "hello@chopinwellness.com",
-            "text": "We aim to reply in 24 hours",
-            "url": "mailto:hello@chopinwellness.com"
-          }
-        },
-        "channel_3": {
-          "type": "channel",
-          "disabled": true,
-          "settings": {
-            "icon": "mail",
-            "label": "press@chopinrx.com",
-            "text": "Press & media inquiries",
-            "url": "mailto:press@chopinrx.com"
-          }
-        }
-      },
-      "block_order": [
-        "channel_1",
-        "channel_2",
-        "channel_3"
-      ],
+    "main": {
+      "type": "main-page",
       "settings": {
-        "eyebrow": "Contact Us",
-        "heading": "Get In Touch<em>.</em>",
-        "lede": "Fill in the form to get in touch with someone on our team, and we will reach out shortly.",
-        "channels_title": "Have a question?",
-        "first_name_label": "First name",
-        "first_name_helper": "As it appears on your ID.",
-        "last_name_label": "Last name",
-        "last_name_helper": "As it appears on your ID.",
-        "email_label": "Email",
-        "email_placeholder": "you@example.com",
-        "email_helper": "We reply here first.",
-        "phone_label": "Phone number",
-        "phone_placeholder": "+1 (___) ___-____",
-        "phone_helper": "Only used if we cannot reach you by email.",
-        "reason_label": "Contact reason",
-        "reason_placeholder": "Choose a reason",
-        "reasons": "Programs and treatments\nAn existing order\nBilling\nPress and media\nSomething else",
-        "reason_helper": "Pick the closest match — it routes your message.",
-        "message_label": "Message",
-        "message_placeholder": "Tell us what you need",
-        "message_helper": "Character count: [count]",
-        "consent": "<p>I agree to the Terms & Conditions and the Privacy Policy. By submitting this form I consent to receive SMS messages, emails and calls from Chopin Wellness. Message frequency varies. Reply STOP to cancel. Msg and data rates may apply. Your information is never sold to third parties.</p>",
-        "submit_label": "Send message",
-        "note": "Chopin Wellness connects you with independent licensed providers. This form is not a request for medical advice."
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "form": {
+      "type": "contact-form",
+      "settings": {
+        "heading": "",
+        "heading_size": "h1",
+        "color_scheme": "scheme-1",
+        "padding_top": 36,
+        "padding_bottom": 36
       }
     }
   },
   "order": [
-    "contact"
+    "main",
+    "form"
   ]
 }
