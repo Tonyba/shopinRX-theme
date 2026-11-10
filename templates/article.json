@@ -1,51 +1,33 @@
-/*
- * ------------------------------------------------------------
- * IMPORTANT: The contents of this file are auto-generated.
- *
- * This file may be updated by the Shopify admin theme editor
- * or related systems. Please exercise caution as any changes
- * made to this file may be overwritten.
- * ------------------------------------------------------------
- */
 {
   "sections": {
-    "main": {
-      "type": "main-article",
-      "blocks": {
-        "featured_image": {
-          "type": "featured_image",
-          "settings": {
-            "image_height": "adapt"
-          }
-        },
-        "title": {
-          "type": "title",
-          "settings": {
-            "blog_show_date": true,
-            "blog_show_author": false
-          }
-        },
-        "share": {
-          "type": "share",
-          "settings": {
-            "share_label": "Share"
-          }
-        },
-        "content": {
-          "type": "content",
-          "settings": {}
-        }
-      },
-      "block_order": [
-        "featured_image",
-        "title",
-        "share",
-        "content"
-      ],
-      "settings": {}
+    "hero": {
+      "type": "chopinrx-article-hero",
+      "settings": {
+        "breadcrumb_home": "Home",
+        "featured_tag": "featured",
+        "show_share": true,
+        "share_label": "Share"
+      }
+    },
+    "content": {
+      "type": "chopinrx-article-content",
+      "settings": {
+        "show_image": true,
+        "show_comments": false
+      }
+    },
+    "related": {
+      "type": "chopinrx-insights",
+      "settings": {
+        "eyebrow": "Keep reading",
+        "heading": "More from the blog",
+        "blog": "news",
+        "posts_count": 3,
+        "featured_tag": "featured",
+        "read_more_label": "Read More",
+        "cta_label": "View all"
+      }
     }
   },
-  "order": [
-    "main"
-  ]
+  "order": ["hero", "content", "related"]
 }

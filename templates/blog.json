@@ -9,20 +9,48 @@
  */
 {
   "sections": {
-    "main": {
-      "type": "main-blog",
+    "banner": {
+      "type": "chopinrx-page-banner",
       "settings": {
-        "layout": "collage",
-        "show_image": true,
-        "image_height": "medium",
-        "show_date": true,
-        "show_author": false,
-        "padding_top": 36,
-        "padding_bottom": 36
+        "style": "band",
+        "alignment": "start",
+        "breadcrumb_home": "Home",
+        "breadcrumb_current": "Blog",
+        "heading": "Guides & Tips",
+        "body": "<p>Discover expert-backed guidance on weight loss and personalised tips to help you succeed in your health journey.</p>",
+        "show_trustpilot": false,
+        "trustpilot_rating": "Excellent",
+        "trustpilot_score": "4.6",
+        "trustpilot_count": "436 reviews",
+        "trustpilot_mobile_count": "Check out our 436 reviews",
+        "trustpilot_url": ""
+      }
+    },
+    "featured": {
+      "type": "chopinrx-featured-articles",
+      "settings": {
+        "heading": "Featured articles",
+        "blog": "",
+        "featured_tag": "featured",
+        "read_more_label": "Read More"
+      }
+    },
+    "articles": {
+      "type": "chopinrx-article-list",
+      "settings": {
+        "heading": "Recent articles",
+        "all_label": "All",
+        "tabs_label": "Filter articles by topic",
+        "featured_tag": "featured",
+        "per_page": 9,
+        "read_more_label": "Read More",
+        "empty_text": "No articles here yet."
       }
     }
   },
   "order": [
-    "main"
+    "banner",
+    "featured",
+    "articles"
   ]
 }

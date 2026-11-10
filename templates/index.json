@@ -9,78 +9,582 @@
  */
 {
   "sections": {
-    "home-slider": {
-      "type": "home-slider",
+    "hero": {
+      "type": "chopinrx-hero",
       "blocks": {
-        "slide_VpBpze": {
-          "type": "slide",
+        "feature_1": {
+          "type": "feature",
           "settings": {
-            "slide_heading": "Beauty Products At Hom",
-            "slide_text": "With advanced technology, achieving long-lasting results has never been easier. Embrace the convenience and effectiveness of DIY laser hair removal",
-            "bg_img": "shopify:\/\/shop_images\/19773397446b797bf372c7bcb6d301ee.png",
-            "button_text": "Shop Now!",
-            "button_link": "shopify:\/\/collections\/all"
+            "text": "Premium quality products for human consumption at reasonable rates"
+          }
+        },
+        "feature_TFVM6N": {
+          "type": "feature",
+          "settings": {
+            "text": "Manufactured in USA"
+          }
+        },
+        "feature_69m9LP": {
+          "type": "feature",
+          "settings": {
+            "text": "Personalize your monthly order"
+          }
+        },
+        "feature_d7mLmg": {
+          "type": "feature",
+          "settings": {
+            "text": "Treatment options selected around your health needs and goals"
+          }
+        },
+        "feature_2": {
+          "type": "feature",
+          "settings": {
+            "text": "Prescribing decisions made by independent, licensed clinicians"
+          }
+        },
+        "feature_3": {
+          "type": "feature",
+          "settings": {
+            "text": "A secure & convenient online experience, no insurance required"
           }
         }
       },
       "block_order": [
-        "slide_VpBpze"
+        "feature_1",
+        "feature_TFVM6N",
+        "feature_69m9LP",
+        "feature_d7mLmg",
+        "feature_2",
+        "feature_3"
+      ],
+      "custom_css": [
+        "h1 {font-size: 65px;}",
+        "@media (max-width: 1024px) {h1 {font-size: 55px; }}",
+        "@media (max-width: 767px) {h1 {font-size: 32px; }}"
       ],
       "settings": {
+        "image": "shopify://shop_images/Chopin_RX_-_Sunlit_Luxury_Patio_Couple_Heathly_Lifestyle_Enhancement.webp",
+        "eyebrow": "Chopin Wellness",
+        "title_line_1": "Lifestyle Enhancement Provider",
+        "title_line_2": "Peptides + Prescriptions delivered to you fast & easy.",
+        "body": "<h4>Connect with licensed U.S. clinicians and 503A & 503B pharmacy partners for personalized peptide and treatment options through a simple online experience.</h4>",
+        "primary_label": "Explore Programs",
+        "primary_url": "shopify://collections/program",
+        "secondary_label": "View All Treatments",
+        "secondary_style": "luxury",
+        "secondary_url": "shopify://collections/treatment",
+        "tertiary_label": "Start Now",
+        "tertiary_url": "#find-your-program",
+        "show_trustpilot": false,
+        "trustpilot_rating": "Excellent",
+        "trustpilot_score": "4.6",
+        "trustpilot_count": "436 reviews on",
+        "trustpilot_url": ""
       }
     },
-    "brands": {
-      "type": "brands-carousel",
+    "trust_bar": {
+      "type": "chopinrx-trust-bar",
       "blocks": {
-        "slide_XPLNwW": {
-          "type": "slide",
+        "feature_1": {
+          "type": "feature",
           "settings": {
-            "image": "shopify:\/\/shop_images\/ad3e2346f4c0ed84b29ccdb325793a37.png"
+            "title": "Licensed U.S. Clinicians",
+            "text": "Independent medical providers."
           }
         },
-        "slide_gDitiE": {
-          "type": "slide",
+        "feature_2": {
+          "type": "feature",
           "settings": {
-            "image": "shopify:\/\/shop_images\/989b6fa6af7634668e8f54a34269440f.png"
+            "title": "Ongoing clinical support",
+            "text": "Trusted medical advice from expert clinicians."
           }
         },
-        "slide_C3nVUh": {
-          "type": "slide",
+        "feature_3": {
+          "type": "feature",
           "settings": {
-            "image": "shopify:\/\/shop_images\/3bbf467d37c3cb3101c3efeac22258ac.png"
+            "title": "Confidential Care",
+            "text": "Your data is always protected."
+          }
+        },
+        "feature_4": {
+          "type": "feature",
+          "settings": {
+            "title": "Discreet Delivery",
+            "text": "Private, secure packaging."
           }
         }
       },
       "block_order": [
-        "slide_XPLNwW",
-        "slide_gDitiE",
-        "slide_C3nVUh"
+        "feature_1",
+        "feature_2",
+        "feature_3",
+        "feature_4"
       ],
+      "settings": {}
+    },
+    "programs": {
+      "type": "chopinrx-programs",
       "settings": {
-        "is_autoscroll": true,
-        "carousel_bg": "#f3eadd",
-        "padding_top": 50,
-        "padding_bottom": 50,
-        "padding_left": 0,
-        "padding_right": 0
+        "eyebrow": "Premier Programs",
+        "heading": "Start With One of Our Premier Programs",
+        "collection": "program",
+        "products_count": 3,
+        "price_prefix": "From",
+        "price_unit": "/mo",
+        "card_cta_label": "Start intake",
+        "badge_tag": "popular",
+        "badge_label": "Most Popular",
+        "cta_label": "See All Programs",
+        "cta_url": "shopify://collections/program"
       }
     },
-    "two-cols-section": {
-      "type": "two-cols-section",
+    "program_list": {
+      "type": "chopinrx-program-list",
       "settings": {
-        "title": "Take Care Of Yourself At Home",
-        "title_alignment": "center",
-        "products": [
-          "the-3p-fulfilled-snowboard",
-          "the-collection-snowboard-hydrogen"
+        "eyebrow": "All Programs",
+        "heading": "Find The Program That Fits",
+        "collections": [
+          "metabolic-health",
+          "hormone-health",
+          "sex-health",
+          "longevity",
+          "energy-recovery",
+          "aesthetics"
         ],
-        "bg_color": "#f3f3f3"
+        "primary_collection": "program",
+        "products_count": 8,
+        "price_prefix": "From",
+        "price_unit": "/mo",
+        "card_cta_label": "Start intake",
+        "badge_tag": "popular",
+        "badge_label": "Most Popular",
+        "cta_label": "See All Programs",
+        "cta_url": "shopify://collections/program"
+      }
+    },
+    "personalized_care": {
+      "type": "chopinrx-split-features",
+      "blocks": {
+        "feature_1": {
+          "type": "feature",
+          "settings": {
+            "title": "Convenient Online Access",
+            "text": "Complete your intake and connect with a licensed clinician from wherever you are."
+          }
+        },
+        "feature_2": {
+          "type": "feature",
+          "settings": {
+            "title": "Independent Clinical Review",
+            "text": "A licensed clinician reviews your health information and makes every prescribing decision."
+          }
+        },
+        "feature_3": {
+          "type": "feature",
+          "settings": {
+            "title": "Ongoing Care-Team Support",
+            "text": "Ask questions and access support throughout your treatment experience."
+          }
+        },
+        "feature_4": {
+          "type": "feature",
+          "settings": {
+            "title": "Treatment Follow-Up",
+            "text": "Your clinician may review your progress and adjust your plan when medically appropriate."
+          }
+        }
+      },
+      "block_order": [
+        "feature_1",
+        "feature_2",
+        "feature_3",
+        "feature_4"
+      ],
+      "settings": {
+        "image": "shopify://shop_images/Chopin_RX_-_Personalized_Care_Licensed_Clinicians.webp",
+        "media_position": "left",
+        "eyebrow": "Personalized Care",
+        "heading": "With you <em>every step</em> of the way",
+        "body": "<p>Your goals, health history, and needs are personal. Chopin Wellness helps connect you with independent, licensed clinicians who review your information, determine whether treatment is appropriate, and guide your care experience.</p>",
+        "cta_label": "Explore Treatments",
+        "cta_url": "shopify://collections/treatment"
+      }
+    },
+    "gender_split": {
+      "type": "chopinrx-gender-split",
+      "blocks": {
+        "panel_1": {
+          "type": "panel",
+          "settings": {
+            "image": "shopify://shop_images/chx-gender-men.jpg",
+            "overlay_color": "#0d2535b3",
+            "eyebrow": "Find your path",
+            "heading": "Built for men",
+            "text": "Explore provider-guided options for hormone health, sexual wellness, performance, recovery, metabolic health, hair, and skin.",
+            "cta_label": "Explore Men's Programs",
+            "cta_url": "shopify://collections/mens-health",
+            "button_color": "#2864dc",
+            "button_text_color": "#ffffff"
+          }
+        },
+        "panel_2": {
+          "type": "panel",
+          "settings": {
+            "image": "shopify://shop_images/chx-gender-women-v2.jpg",
+            "overlay_color": "#0d2535b3",
+            "eyebrow": "Find your path",
+            "heading": "Built for women",
+            "text": "Explore provider-guided options for weight management, hormone health, menopause support, energy, hair, and skin.",
+            "cta_label": "Explore Women's Programs",
+            "cta_url": "shopify://collections/womens-health",
+            "button_color": "#2864dc",
+            "button_text_color": "#ffffff"
+          }
+        }
+      },
+      "block_order": [
+        "panel_1",
+        "panel_2"
+      ],
+      "settings": {}
+    },
+    "treatments": {
+      "type": "chopinrx-treatments-carousel",
+      "settings": {
+        "eyebrow": "Explore Solutions",
+        "heading": "Know What You’re Looking For?",
+        "collections": [
+          "metabolic-health",
+          "hormone-health",
+          "sex-health",
+          "longevity",
+          "energy-recovery",
+          "aesthetics"
+        ],
+        "primary_collection": "treatment",
+        "products_count": 8,
+        "price_prefix": "From",
+        "price_unit": "/mo",
+        "placeholder_label": "Vial · placeholder",
+        "card_cta_label": "Explore",
+        "cta_label": "See All Treatments",
+        "cta_url": "shopify://collections/treatment",
+        "disclaimer": "Disclaimer: Images are for illustrative purposes only and may not represent the actual products, packaging, formulations, or treatments provided. Product appearance and packaging may vary. All treatments are subject to medical evaluation, eligibility, and availability."
+      }
+    },
+    "reviews": {
+      "type": "chopinrx-reviews",
+      "blocks": {
+        "review_1": {
+          "type": "review",
+          "settings": {
+            "name": "James Wh.",
+            "rating": 5,
+            "quote": "“The process was straightforward, and I understood what would happen at each step. I appreciated being able to complete everything online.”",
+            "row": "1"
+          }
+        },
+        "review_2": {
+          "type": "review",
+          "settings": {
+            "name": "Amelia H.",
+            "rating": 5,
+            "quote": "“My provider explained my options clearly and answered my questions before any treatment decision was made.”",
+            "row": "1"
+          }
+        },
+        "review_3": {
+          "type": "review",
+          "settings": {
+            "name": "Daniel M.",
+            "rating": 5,
+            "quote": "“The intake was easy to complete, support was responsive, and delivery was discreet.”",
+            "row": "1"
+          }
+        },
+        "review_4": {
+          "type": "review",
+          "settings": {
+            "name": "Priya R.",
+            "rating": 5,
+            "quote": "“I appreciate that the plan was adjusted after my check-in rather than being one size fits all.”",
+            "row": "2"
+          }
+        },
+        "review_5": {
+          "type": "review",
+          "settings": {
+            "name": "Michael P.",
+            "rating": 5,
+            "quote": "“I liked having a plan that reflected my goals instead of feeling like a one-size-fits-all experience.”",
+            "row": "2"
+          }
+        },
+        "review_6": {
+          "type": "review",
+          "settings": {
+            "name": "Elisa J.",
+            "rating": 5,
+            "quote": "\"Having round-the-clock support made this whole experience much smoother than I anticipated.\"",
+            "row": "2"
+          }
+        }
+      },
+      "block_order": [
+        "review_1",
+        "review_2",
+        "review_3",
+        "review_4",
+        "review_5",
+        "review_6"
+      ],
+      "disabled": true,
+      "settings": {
+        "eyebrow": "4.8/5 on Trust Pilot",
+        "heading": "More than <em>100,000</em> patients trust our treatment plans",
+        "show_trustpilot": true,
+        "trustpilot_rating": "Excellent",
+        "trustpilot_score": "4.6",
+        "trustpilot_count": "+300 reviews on",
+        "trustpilot_url": ""
+      }
+    },
+    "proof": {
+      "type": "chopinrx-proof",
+      "blocks": {
+        "media_1": {
+          "type": "media",
+          "settings": {
+            "image": "shopify://shop_images/chx-proof.jpg"
+          }
+        },
+        "stat_2": {
+          "type": "stat",
+          "settings": {
+            "style": "accent",
+            "figure": "10K+",
+            "title": "Patients Served",
+            "text": "People supported through our care platform."
+          }
+        },
+        "stat_3": {
+          "type": "stat",
+          "settings": {
+            "style": "dark",
+            "figure": "+92%",
+            "title": "Patient Satisfaction",
+            "text": "Based on patient feedback."
+          }
+        },
+        "stat_4": {
+          "type": "stat",
+          "settings": {
+            "style": "well",
+            "figure": "5 min",
+            "title": "Average Assessment",
+            "text": "Designed to keep your experience simple."
+          }
+        },
+        "stat_5": {
+          "type": "stat",
+          "settings": {
+            "style": "paper",
+            "figure": "4.9/5",
+            "title": "Provider Rating",
+            "text": "Based on patient reviews"
+          }
+        }
+      },
+      "block_order": [
+        "media_1",
+        "stat_2",
+        "stat_3",
+        "stat_4",
+        "stat_5"
+      ],
+      "disabled": true,
+      "settings": {
+        "eyebrow": "Care Designed Around Real People",
+        "heading": "Changing lives through <em>proven outcomes</em>"
+      }
+    },
+    "lab_testing": {
+      "type": "chopinrx-lab-testing",
+      "blocks": {
+        "test_2": {
+          "type": "test",
+          "settings": {
+            "title": "Trusted U.S. Medical & Pharmacy Partners",
+            "text": "Treatments are prescribed by licensed U.S. clinicians, when medically appropriate, and supplied through 503A compounding pharmacy and 503B facility partners."
+          }
+        },
+        "test_1": {
+          "type": "test",
+          "settings": {
+            "title": "Quality-Focused Standards",
+            "text": "We work with pharmacy partners operating under applicable federal and state quality, safety, and regulatory requirements."
+          }
+        },
+        "test_3": {
+          "type": "test",
+          "settings": {
+            "title": "Personalized Medical Oversight",
+            "text": "Licensed U.S. clinicians evaluate your individual health needs and determine appropriate treatment options."
+          }
+        },
+        "test_4": {
+          "type": "test",
+          "settings": {
+            "title": "Transparency & Accountability",
+            "text": "Clear treatment information and professional guidance to help you make informed decisions about your care."
+          }
+        }
+      },
+      "block_order": [
+        "test_2",
+        "test_1",
+        "test_3",
+        "test_4"
+      ],
+      "settings": {
+        "image": "shopify://shop_images/Chopin_Wellness_-_Modern_Doctor_Reviewing_Medical_Tablet.webp",
+        "media_position": "right",
+        "eyebrow": "Quality & Standards",
+        "heading": "Quality you can <em>trust</em>. Standards you can <em>count on</em>.",
+        "note": "Compounded medications are not FDA-approved. Prescriptions are issued only after an online consultation with an independent licensed provider. Medications are dispensed by state-licensed pharmacies."
+      }
+    },
+    "how_it_works": {
+      "type": "chopinrx-how-it-works",
+      "blocks": {
+        "step_1": {
+          "type": "step",
+          "settings": {
+            "title": "Choose a Program or Treatment",
+            "text": "Explore a goal-based program or an individual treatment option."
+          }
+        },
+        "step_2": {
+          "type": "step",
+          "settings": {
+            "title": "Complete the medical intake",
+            "text": "Tell an independent licensed clinician about your health history, needs, and goals."
+          }
+        },
+        "step_3": {
+          "type": "step",
+          "settings": {
+            "title": "Provider reviews & prescribes",
+            "text": "A licensed provider reviews your history and prescribes only if appropriate."
+          }
+        },
+        "step_4": {
+          "type": "step",
+          "settings": {
+            "title": "Pharmacy ships to your door",
+            "text": "A licensed U.S. pharmacy fills and ships discreetly, on a schedule."
+          }
+        }
+      },
+      "block_order": [
+        "step_1",
+        "step_2",
+        "step_3",
+        "step_4"
+      ],
+      "settings": {
+        "eyebrow": "How It Works",
+        "heading": "Four Simple Steps to Get Started",
+        "cta_label": "Get Started",
+        "cta_url": "#find-your-program"
+      }
+    },
+    "faq": {
+      "type": "chopinrx-faq",
+      "blocks": {
+        "question_1": {
+          "type": "question",
+          "settings": {
+            "question": "How does Chopin Wellness work?",
+            "answer": "<p>Choose a goal-based program or individual treatment and complete a secure online medical intake. Chopin Wellness connects you with an independent, licensed clinician who reviews your information and determines whether treatment is appropriate. If prescribed, a licensed U.S. pharmacy fulfills and ships your treatment.</p><h3></h3>",
+            "open": true
+          }
+        },
+        "question_2": {
+          "type": "question",
+          "settings": {
+            "question": "Does Chopin Wellness provide medical care or prescribe medication?",
+            "answer": "<p>No. Chopin Wellness is a technology and lead-generation platform that helps connect consumers with independent, licensed medical providers. Those providers, not Chopin Wellness, evaluate patients, make prescribing decisions, and direct medical care.</p>",
+            "open": false
+          }
+        },
+        "question_3": {
+          "type": "question",
+          "settings": {
+            "question": "Who decides what I am prescribed?",
+            "answer": "<p>All prescribing decisions are made by the independent licensed clinician who reviews your health information. Choosing a program or treatment on the website does not guarantee that it will be prescribed.</p>",
+            "open": false
+          }
+        },
+        "question_4": {
+          "type": "question",
+          "settings": {
+            "question": "What is the difference between a program and an individual treatment?",
+            "answer": "<p>A program groups several potential treatment options around a specific goal, while an individual treatment page focuses on one medication or product. In either case, an independent clinician determines what, if anything, is medically appropriate for you.</p>",
+            "open": false
+          }
+        },
+        "question_5": {
+          "type": "question",
+          "settings": {
+            "question": "Will I need laboratory testing?",
+            "answer": "<p>It depends on the treatment, your medical history, and the clinician’s judgment. Some options may require laboratory testing before treatment begins or during follow-up.</p>",
+            "open": false
+          }
+        }
+      },
+      "block_order": [
+        "question_1",
+        "question_2",
+        "question_3",
+        "question_4",
+        "question_5"
+      ],
+      "settings": {
+        "eyebrow": "Have questions?",
+        "heading": "Frequently asked <em>questions</em>",
+        "cta_label": "Get Started",
+        "cta_url": "#find-your-program",
+        "cta_to_intake": false
+      }
+    },
+    "insights": {
+      "type": "chopinrx-insights",
+      "settings": {
+        "eyebrow": "Our blog",
+        "heading": "Latest insights",
+        "blog": "news",
+        "posts_count": 3,
+        "featured_tag": "featured",
+        "read_more_label": "Read More",
+        "cta_label": "View all",
+        "cta_url": "shopify://blogs/news"
       }
     }
   },
   "order": [
-    "home-slider",
-    "brands",
-    "two-cols-section"
+    "hero",
+    "trust_bar",
+    "programs",
+    "program_list",
+    "personalized_care",
+    "gender_split",
+    "treatments",
+    "reviews",
+    "proof",
+    "lab_testing",
+    "how_it_works",
+    "faq",
+    "insights"
   ]
 }
