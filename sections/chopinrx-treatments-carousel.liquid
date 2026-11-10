@@ -180,9 +180,16 @@
     </div>
   {%- endfor -%}
 
-  {%- if section.settings.disclaimer != blank -%}
+  {%- if section.settings.disclaimer != blank or section.settings.compliance_note != blank -%}
     <div class="chx-container">
-      <p class="chx-disclaimer chx-explore__disclaimer">{{ section.settings.disclaimer | escape }}</p>
+      <div class="chx-explore__disclaimer">
+        {%- if section.settings.disclaimer != blank -%}
+          <p class="chx-disclaimer">{{ section.settings.disclaimer | escape }}</p>
+        {%- endif -%}
+        {%- if section.settings.compliance_note != blank -%}
+          <p class="chx-disclaimer">{{ section.settings.compliance_note | escape }}</p>
+        {%- endif -%}
+      </div>
     </div>
   {%- endif -%}
 </div>
@@ -234,6 +241,9 @@
   }
 
   .chx-explore .chx-explore__disclaimer {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
     margin-block-start: var(--space-6);
   }
 
@@ -595,6 +605,12 @@
       "id": "disclaimer",
       "label": "Disclaimer",
       "default": "Disclaimer: Images are for illustrative purposes only and may not represent the actual products, packaging, formulations, or treatments provided. Product appearance and packaging may vary. All treatments are subject to medical evaluation, eligibility, and availability."
+    },
+    {
+      "type": "textarea",
+      "id": "compliance_note",
+      "label": "FDA notice",
+      "default": "Compounded medications are not FDA-approved. Prescriptions are issued only after an online consultation with an independent licensed provider. Medications are dispensed by state-licensed pharmacies."
     }
   ],
   "presets": [

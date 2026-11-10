@@ -56,6 +56,10 @@
             {%- endfor -%}
           </ul>
         {%- endif -%}
+
+        {%- if section.settings.note != blank -%}
+          <p class="chx-disclaimer chx-lab__note">{{ section.settings.note | escape }}</p>
+        {%- endif -%}
       </div>
 
       <div class="chx-lab__media">
@@ -119,6 +123,14 @@
     margin: 0;
     padding: 0;
     list-style: none;
+  }
+
+  /* Small print as the last line of the copy column, aligned with the cards. */
+  .chx-lab .chx-lab__note {
+    margin-inline: 0;
+    margin-block-start: calc(var(--space-4) - var(--space-8));
+    max-width: none;
+    text-align: start;
   }
 
   .chx-lab-card {
@@ -278,6 +290,12 @@
       "label": "Heading",
       "info": "Italic text is rendered in the accent colour.",
       "default": "Always lab <em>tested</em> for quality & consistency"
+    },
+    {
+      "type": "textarea",
+      "id": "note",
+      "label": "Small print",
+      "info": "Shown as the last line of the section. Leave empty to hide."
     }
   ],
   "blocks": [
