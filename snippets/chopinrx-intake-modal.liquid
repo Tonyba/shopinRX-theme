@@ -1,7 +1,8 @@
 {% doc %}
   Intake modal. Every "Start intake" link that points at a MyDose
   book-consultation URL opens here, in an iframe on intake.chopinwellness.com,
-  instead of leaving the site. Centred panel on desktop and tablet, full screen
+  instead of leaving the site. The header Login link to
+  intake.chopinwellness.com/signin opens here too. Centred panel on desktop and tablet, full screen
   on mobile. Rendered once in layout/theme.liquid.
 
   @example
@@ -16,7 +17,7 @@
       </span>
       <span>Back</span>
     </button>
-    <p class="chx-intake__title" id="ChxIntakeTitle">Start your intake</p>
+    <p class="chx-intake__title" id="ChxIntakeTitle" data-chx-intake-title>Start your intake</p>
     <button type="button" class="chx-intake__close" aria-label="Close intake" data-chx-intake-close>
       <span aria-hidden="true">{{- 'icon-close.svg' | inline_asset_content -}}</span>
     </button>
@@ -200,6 +201,19 @@
     .chx-intake__frame {
       padding-block-end: env(safe-area-inset-bottom, 0px);
     }
+  }
+
+  /* Patient login: full screen at every breakpoint */
+  .chx-intake.chx-intake--full {
+    width: 100vw;
+    height: 100dvh;
+    margin: 0;
+    border-radius: 0;
+    box-shadow: none;
+  }
+
+  .chx-intake--full .chx-intake__frame {
+    padding-block-end: env(safe-area-inset-bottom, 0px);
   }
 
   [data-chx-intake-src] {
