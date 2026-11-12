@@ -58,6 +58,7 @@
         <div class="chx-menu__group" data-chx-menu-group="{{ block.id }}" {{ block.shopify_attributes }}>
           <div class="chx-menu__group-head">
             <h3 class="chx-menu__group-title">{{ label }}</h3>
+            <p class="chx-menu__group-label" aria-hidden="true">{{ section.settings.options_label }}</p>
             <p class="chx-menu__group-count">{{ count_text }}</p>
           </div>
           <ul class="chx-menu__rows" role="list">
@@ -77,6 +78,14 @@
                   endfor
                 endif
                 assign intake_url = intake_url | default: '#'
+                assign row_id = section.id | append: '-' | append: block.id | append: '-' | append: item.id
+                assign has_options = false
+                for form in forms
+                  if form != 'Default Title'
+                    assign has_options = true
+                    break
+                  endif
+                endfor
               -%}
               <li class="chx-menu__row" data-chx-menu-row data-chx-menu-text="{{ search_text }}">
                 <div class="chx-menu__name-wrap">
@@ -92,13 +101,44 @@
                     <p class="chx-menu__sub">{{ subtitle }}</p>
                   {%- endif -%}
                 </div>
-                <ul class="chx-menu__forms" role="list" aria-label="{{ section.settings.forms_label | escape }}">
-                  {%- for form in forms -%}
-                    {%- if form != 'Default Title' -%}
-                      <li class="chx-menu__form">{{ form }}</li>
-                    {%- endif -%}
-                  {%- endfor -%}
-                </ul>
+                {%- if has_options -%}
+                  <fieldset class="chx-menu__forms" data-chx-menu-options>
+                    <legend class="chx-menu__forms-legend">{{ section.settings.options_label }}</legend>
+                    <div class="chx-menu__form-list">
+                      {%- for form in forms -%}
+                        {%- if form == 'Default Title' -%}
+                          {%- continue -%}
+                        {%- endif -%}
+                        {%- liquid
+                          assign form_url = blank
+                          for variant in item.variants
+                            if variant.option1 == form and variant.metafields.custom.mydos_link.value != blank
+                              assign form_url = variant.metafields.custom.mydos_link.value
+                              break
+                            endif
+                          endfor
+                          assign form_url = form_url | default: intake_url
+                        -%}
+                        <label class="chx-menu__form">
+                          <input
+                            class="chx-menu__form-input"
+                            type="radio"
+                            name="{{ row_id }}-form"
+                            value="{{ form | escape }}"
+                            data-chx-menu-option-url="{{ form_url | escape }}"
+                            aria-describedby="{{ row_id }}-error"
+                          >
+                          <span>{{ form }}</span>
+                        </label>
+                      {%- endfor -%}
+                    </div>
+                    <p class="chx-menu__error" id="{{ row_id }}-error" role="alert" data-chx-menu-error hidden>
+                      {{ section.settings.options_error }}
+                    </p>
+                  </fieldset>
+                {%- else -%}
+                  <div class="chx-menu__forms"></div>
+                {%- endif -%}
                 {% render 'chopinrx-price-from',
                   amount: item.price_min,
                   prefix: section.settings.price_prefix,
@@ -108,6 +148,7 @@
                 <a
                   class="chx-btn chx-btn--sm chx-btn--secondary chx-menu__cta"
                   href="{{ intake_url }}"
+                  {% if has_options %}data-chx-menu-cta{% endif %}
                   aria-label="{{ section.settings.cta_label | escape }}: {{ item.title | escape }}"
                 >
                   {{- section.settings.cta_label -}}
@@ -124,8 +165,9 @@
 </section>
 
 <script type="module">
-  import { initMenuFilter } from '{{ 'chopinrx-menu-filter.js' | asset_url }}';
+  import { initMenuFilter, initMenuOptions } from '{{ 'chopinrx-menu-filter.js' | asset_url }}';
   initMenuFilter();
+  initMenuOptions();
 </script>
 
 {% stylesheet %}
@@ -232,7 +274,12 @@
     margin-block-start: var(--space-6);
   }
 
+  /* Rows and the group head share one set of columns (subgrid), so the
+     "Choose your option" label sits right above the option pills. */
   .chx-menu__group {
+    display: grid;
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr) 110px auto;
+    column-gap: var(--space-4);
     overflow: hidden;
     border: var(--border-w) solid var(--border-hairline);
     border-radius: var(--radius-lg);
@@ -240,12 +287,25 @@
   }
 
   .chx-menu__group-head {
-    display: flex;
+    display: grid;
+    grid-column: 1 / -1;
+    grid-template-columns: subgrid;
     align-items: center;
-    justify-content: space-between;
-    gap: var(--space-4);
     padding: var(--space-6);
     border-bottom: var(--border-w) solid var(--border-hairline);
+  }
+
+  .chx-menu__group-label {
+    margin: 0;
+    font-family: var(--font-ui);
+    font-size: var(--font-size-body-small);
+    font-weight: 600;
+    color: var(--text-heading);
+  }
+
+  .chx-menu__group-count {
+    grid-column: 3 / -1;
+    justify-self: end;
   }
 
   .chx-menu__group-title {
@@ -266,6 +326,9 @@
   }
 
   .chx-menu__rows {
+    display: grid;
+    grid-column: 1 / -1;
+    grid-template-columns: subgrid;
     margin: 0;
     padding: 0;
     list-style: none;
@@ -273,7 +336,8 @@
 
   .chx-menu__row {
     display: grid;
-    grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr) 110px auto;
+    grid-column: 1 / -1;
+    grid-template-columns: subgrid;
     align-items: center;
     gap: var(--space-4);
     padding: var(--space-4) var(--space-6);
@@ -326,25 +390,82 @@
   }
 
   .chx-menu__forms {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 6px;
+    min-width: 0;
     margin: 0;
     padding: 0;
-    list-style: none;
+    border: 0;
+  }
+
+  /* The group head shows the label above the column; each fieldset keeps its
+     legend for screen readers and shows it on mobile, where there is no column. */
+  .chx-menu__forms-legend {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+
+  .chx-menu__form-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
   }
 
   .chx-menu__form {
+    position: relative;
     display: inline-flex;
     align-items: center;
-    height: 26px;
-    padding-inline: 10px;
+    min-height: 36px;
+    padding-inline: var(--space-4);
     border: var(--border-w) solid var(--border-hairline);
     border-radius: var(--radius-pill);
+    background-color: var(--surface-card);
+    font-family: var(--font-ui);
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1.2;
+    color: var(--text-body);
+    cursor: pointer;
+    transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+  }
+
+  .chx-menu__form:hover {
+    border-color: var(--ink-300);
+  }
+
+  .chx-menu__form-input {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    opacity: 0;
+    cursor: pointer;
+  }
+
+  .chx-menu__form:has(.chx-menu__form-input:checked) {
+    border-color: var(--ink-900);
+    background-color: var(--ink-900);
+    color: var(--text-on-dark);
+  }
+
+  .chx-menu__form:has(.chx-menu__form-input:focus-visible) {
+    outline: 2px solid var(--text-accent);
+    outline-offset: 2px;
+  }
+
+  .chx-menu__forms[data-invalid] .chx-menu__form {
+    border-color: var(--text-error);
+  }
+
+  .chx-menu__error {
+    margin: var(--space-2) 0 0;
     font-family: var(--font-ui);
     font-size: 13px;
-    line-height: 1;
-    color: var(--text-body);
+    line-height: 1.4;
+    color: var(--text-error);
   }
 
   .chx-menu__row .chx-price-from {
@@ -361,8 +482,34 @@
   }
 
   @media screen and (max-width: 767px) {
+    .chx-menu__group,
+    .chx-menu__rows {
+      display: block;
+    }
+
     .chx-menu__group-head {
+      display: flex;
+      justify-content: space-between;
+      gap: var(--space-4);
       padding: var(--space-4);
+    }
+
+    .chx-menu__group-label {
+      display: none;
+    }
+
+    .chx-menu__forms-legend {
+      position: static;
+      width: auto;
+      height: auto;
+      overflow: visible;
+      clip: auto;
+      margin-block-end: var(--space-2);
+      padding: 0;
+      font-family: var(--font-ui);
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-heading);
     }
 
     .chx-menu__row {
@@ -472,9 +619,16 @@
     },
     {
       "type": "text",
-      "id": "forms_label",
-      "label": "Forms label",
-      "default": "Available forms"
+      "id": "options_label",
+      "label": "Options label",
+      "default": "Choose your option"
+    },
+    {
+      "type": "text",
+      "id": "options_error",
+      "label": "Options error",
+      "info": "Shown when Start intake is pressed before an option is chosen.",
+      "default": "Please select an option before proceeding."
     },
     {
       "type": "text",
