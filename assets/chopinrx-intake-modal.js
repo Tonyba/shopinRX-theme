@@ -40,15 +40,59 @@
     if (dialog.open) dialog.close();
   };
 
-  document.addEventListener('click', (event) => {
-    if (event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
-    const link = event.target.closest('a[href]');
-    if (!link) return;
+  // Where the modal can run, intake links stop being links: the URL moves to a
+  // data attribute and the href goes away, so middle-click, ctrl/cmd-click and
+  // the context menu's "open in new tab" have nothing to open. Elsewhere the
+  // href is rewritten to the intake host so a new tab at least lands there.
+  const SELECTOR = 'a[href*="/patient/book-consultation/"]';
+
+  const prepare = (link) => {
     const src = intakeUrl(link);
     if (!src) return;
+    if (!canFrame) {
+      link.href = src;
+      return;
+    }
+    link.dataset.chxIntakeSrc = src;
+    link.removeAttribute('href');
+    link.removeAttribute('target');
+    link.setAttribute('role', 'button');
+    link.setAttribute('tabindex', '0');
+  };
+
+  const prepareIn = (root) => {
+    if (root.matches?.(SELECTOR)) prepare(root);
+    root.querySelectorAll?.(SELECTOR).forEach(prepare);
+  };
+
+  prepareIn(document);
+
+  // Sections re-rendered by variant changes, quizzes or the theme editor.
+  new MutationObserver((mutations) => {
+    for (const mutation of mutations) {
+      mutation.addedNodes.forEach((node) => {
+        if (node.nodeType === 1) prepareIn(node);
+      });
+    }
+  }).observe(document.body, { childList: true, subtree: true });
+
+  if (!canFrame) return;
+
+  document.addEventListener('click', (event) => {
+    if (event.defaultPrevented || event.button !== 0) return;
+    const link = event.target.closest('[data-chx-intake-src]');
+    if (!link) return;
     event.preventDefault();
-    if (canFrame) open(src, link);
-    else window.location.assign(src);
+    open(link.dataset.chxIntakeSrc, link);
+  });
+
+  // role="button" contract: Enter and Space activate.
+  document.addEventListener('keydown', (event) => {
+    if (event.key !== 'Enter' && event.key !== ' ') return;
+    const link = event.target.closest?.('[data-chx-intake-src]');
+    if (!link) return;
+    event.preventDefault();
+    open(link.dataset.chxIntakeSrc, link);
   });
 
   dialog.querySelectorAll('[data-chx-intake-close]').forEach((button) => button.addEventListener('click', close));

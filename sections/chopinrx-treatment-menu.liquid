@@ -67,7 +67,16 @@
                 assign actives = item.metafields.custom.ingredients.value | join: ' '
                 assign forms = item.variants | map: 'option1' | uniq
                 assign search_text = item.title | append: ' ' | append: subtitle | append: ' ' | append: actives | downcase | escape
-                assign intake_url = item.metafields.custom.mydos_link.value | default: '#'
+                assign intake_url = item.metafields.custom.mydos_link.value
+                if intake_url == blank
+                  for variant in item.variants
+                    if variant.metafields.custom.mydos_link.value != blank
+                      assign intake_url = variant.metafields.custom.mydos_link.value
+                      break
+                    endif
+                  endfor
+                endif
+                assign intake_url = intake_url | default: '#'
               -%}
               <li class="chx-menu__row" data-chx-menu-row data-chx-menu-text="{{ search_text }}">
                 <div class="chx-menu__name-wrap">
