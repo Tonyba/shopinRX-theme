@@ -54,7 +54,8 @@ export function initMenuFilter() {
 }
 
 /**
- * Rows with several forms: Start intake toggles a list of forms, and each form
+ * Rows with several forms: Start intake toggles (or, with a mouse, hover opens)
+ * a list of forms, and each form
  * is an intake link the intake modal picks up. One list is open at a time; it
  * closes on Escape or a click outside it (clicks inside the open intake dialog
  * do not count, so focus can return to the chosen form). Markup:
@@ -74,11 +75,40 @@ export function initMenuPick() {
     openPick = open ? pick : null;
   };
 
+  // Mouse and trackpad: the list opens on hover and closes shortly after the
+  // pointer leaves, so crossing the gap to the list does not close it. Kept
+  // open while the intake dialog is up, so focus can return to the form.
+  const canHover = window.matchMedia('(hover: hover) and (pointer: fine)');
+  let closeTimer = 0;
+
+  document.addEventListener('pointerover', (event) => {
+    if (!canHover.matches || event.pointerType !== 'mouse') return;
+    const pick = event.target.closest?.('[data-chx-menu-pick]');
+    if (!pick) return;
+    clearTimeout(closeTimer);
+    if (openPick === pick) return;
+    if (openPick) setOpen(openPick, false);
+    setOpen(pick, true);
+  });
+
+  document.addEventListener('pointerout', (event) => {
+    if (!canHover.matches || event.pointerType !== 'mouse' || !openPick) return;
+    if (!openPick.contains(event.target) || openPick.contains(event.relatedTarget)) return;
+    const pick = openPick;
+    clearTimeout(closeTimer);
+    closeTimer = setTimeout(() => {
+      if (openPick === pick && !document.querySelector('dialog[open]')) setOpen(pick, false);
+    }, 200);
+  });
+
   document.addEventListener('click', (event) => {
     const toggle = event.target.closest('[data-chx-menu-pick-toggle]');
     if (toggle) {
       const pick = toggle.closest('[data-chx-menu-pick]');
       const wasOpen = openPick === pick;
+      // A mouse click on a list hover already opened keeps it open; keyboard
+      // activation (detail 0) and touch still toggle.
+      if (wasOpen && canHover.matches && event.detail > 0) return;
       if (openPick) setOpen(openPick, false);
       if (!wasOpen) setOpen(pick, true);
       return;
