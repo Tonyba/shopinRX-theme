@@ -724,7 +724,6 @@
         "protocol_badge": "Protocol",
         "branded_badge": "Branded",
         "options_label": "Choose your option",
-        "options_error": "Please select an option before proceeding.",
         "price_prefix": "From",
         "price_unit": "/mo",
         "cta_label": "Start intake"
