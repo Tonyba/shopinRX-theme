@@ -52,3 +52,45 @@ export function initMenuFilter() {
     search?.closest('form')?.addEventListener('submit', (event) => event.preventDefault());
   }
 }
+
+/**
+ * Rows with several forms: Start intake toggles a list of forms, and each form
+ * is an intake link the intake modal picks up. One list is open at a time; it
+ * closes on Escape or a click outside it (clicks inside the open intake dialog
+ * do not count, so focus can return to the chosen form). Markup:
+ *   [data-chx-menu-pick]
+ *     button[data-chx-menu-pick-toggle][aria-expanded][aria-controls]
+ *     [data-chx-menu-pick-panel][hidden]
+ */
+export function initMenuPick() {
+  if (document.documentElement.dataset.chxMenuPickReady === 'true') return;
+  document.documentElement.dataset.chxMenuPickReady = 'true';
+
+  let openPick = null;
+
+  const setOpen = (pick, open) => {
+    pick.querySelector('[data-chx-menu-pick-toggle]').setAttribute('aria-expanded', String(open));
+    pick.querySelector('[data-chx-menu-pick-panel]').hidden = !open;
+    openPick = open ? pick : null;
+  };
+
+  document.addEventListener('click', (event) => {
+    const toggle = event.target.closest('[data-chx-menu-pick-toggle]');
+    if (toggle) {
+      const pick = toggle.closest('[data-chx-menu-pick]');
+      const wasOpen = openPick === pick;
+      if (openPick) setOpen(openPick, false);
+      if (!wasOpen) setOpen(pick, true);
+      return;
+    }
+    if (!openPick || openPick.contains(event.target) || event.target.closest('dialog[open]')) return;
+    setOpen(openPick, false);
+  });
+
+  document.addEventListener('keydown', (event) => {
+    if (event.key !== 'Escape' || !openPick || document.querySelector('dialog[open]')) return;
+    const toggle = openPick.querySelector('[data-chx-menu-pick-toggle]');
+    setOpen(openPick, false);
+    toggle.focus();
+  });
+}

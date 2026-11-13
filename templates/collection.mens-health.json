@@ -723,7 +723,8 @@
         "count_label": "[count] treatments",
         "protocol_badge": "Protocol",
         "branded_badge": "Branded",
-        "options_label": "Choose a form to start your intake",
+        "options_label": "Available as",
+        "pick_label": "Choose your form",
         "price_prefix": "From",
         "price_unit": "/mo",
         "cta_label": "Start intake"

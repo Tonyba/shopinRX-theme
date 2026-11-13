@@ -3,7 +3,6 @@
 {%- liquid
   assign heading_id = section.id | append: '-heading'
   assign search_id = section.id | append: '-search'
-  assign arrow_icon = 'icon-arrow-right.svg' | inline_asset_content
 -%}
 
 <section
@@ -59,6 +58,7 @@
         <div class="chx-menu__group" data-chx-menu-group="{{ block.id }}" {{ block.shopify_attributes }}>
           <div class="chx-menu__group-head">
             <h3 class="chx-menu__group-title">{{ label }}</h3>
+            <p class="chx-menu__group-label" aria-hidden="true">{{ section.settings.options_label }}</p>
             <p class="chx-menu__group-count">{{ count_text }}</p>
           </div>
           <ul class="chx-menu__rows" role="list">
@@ -110,54 +110,75 @@
                     <p class="chx-menu__sub">{{ subtitle }}</p>
                   {%- endif -%}
                 </div>
-                {%- if form_count > 1 -%}
-                  {%- comment -%} Several forms: each pill opens that form's intake. {%- endcomment -%}
-                  <div class="chx-menu__forms" role="group" aria-labelledby="{{ row_id }}-legend">
-                    <p class="chx-menu__forms-legend" id="{{ row_id }}-legend">{{ section.settings.options_label }}</p>
-                    <ul class="chx-menu__form-list" role="list">
-                      {%- for form in forms -%}
-                        {%- if form == 'Default Title' -%}
-                          {%- continue -%}
-                        {%- endif -%}
-                        {%- liquid
-                          assign form_url = blank
-                          for variant in item.variants
-                            if variant.option1 == form and variant.metafields.custom.mydos_link.value != blank
-                              assign form_url = variant.metafields.custom.mydos_link.value
-                              break
-                            endif
-                          endfor
-                          assign form_url = form_url | default: intake_url
-                        -%}
-                        <li>
-                          <a
-                            class="chx-menu__form chx-menu__form--link"
-                            href="{{ form_url }}"
-                            aria-label="{{ section.settings.cta_label | escape }}: {{ item.title | escape }}, {{ form | escape }}"
-                          >
-                            {{- form -}}
-                            <span class="chx-menu__form-arrow" aria-hidden="true">{{ arrow_icon }}</span>
-                          </a>
-                        </li>
-                      {%- endfor -%}
-                    </ul>
-                  </div>
-                {%- elsif form_count == 1 -%}
-                  <div class="chx-menu__forms">
-                    <ul class="chx-menu__form-list" role="list">
-                      <li><span class="chx-menu__form">{{ single_form }}</span></li>
-                    </ul>
-                  </div>
-                {%- else -%}
-                  <div class="chx-menu__forms"></div>
-                {%- endif -%}
+                {%- liquid
+                  assign forms_text = ''
+                  for form in forms
+                    if form == 'Default Title'
+                      continue
+                    endif
+                    if forms_text != ''
+                      assign forms_text = forms_text | append: ' · '
+                    endif
+                    assign forms_text = forms_text | append: form
+                  endfor
+                -%}
+                <p class="chx-menu__forms">
+                  {%- if forms_text != '' -%}
+                    <span class="visually-hidden">{{ section.settings.options_label }}: </span>{{ forms_text }}
+                  {%- endif -%}
+                </p>
                 {% render 'chopinrx-price-from',
                   amount: item.price_min,
                   prefix: section.settings.price_prefix,
                   unit: section.settings.price_unit,
                   stack: true
                 %}
-                {%- if form_count < 2 -%}
+                {%- if form_count > 1 -%}
+                  {%- comment -%} Several forms: the button opens a list, each form opens its own intake. {%- endcomment -%}
+                  <div class="chx-menu__pick" data-chx-menu-pick>
+                    <button
+                      type="button"
+                      class="chx-btn chx-btn--sm chx-btn--secondary chx-menu__cta chx-menu__pick-toggle"
+                      aria-expanded="false"
+                      aria-controls="{{ row_id }}-pick"
+                      aria-label="{{ section.settings.cta_label | escape }}: {{ item.title | escape }}"
+                      data-chx-menu-pick-toggle
+                    >
+                      {{- section.settings.cta_label -}}
+                      <span class="chx-menu__caret" aria-hidden="true"></span>
+                    </button>
+                    <div class="chx-menu__pick-panel" id="{{ row_id }}-pick" data-chx-menu-pick-panel hidden>
+                      <p class="chx-menu__pick-label" id="{{ row_id }}-pick-label">{{ section.settings.pick_label }}</p>
+                      <ul class="chx-menu__pick-list" role="list" aria-labelledby="{{ row_id }}-pick-label">
+                        {%- for form in forms -%}
+                          {%- if form == 'Default Title' -%}
+                            {%- continue -%}
+                          {%- endif -%}
+                          {%- liquid
+                            assign form_url = blank
+                            for variant in item.variants
+                              if variant.option1 == form and variant.metafields.custom.mydos_link.value != blank
+                                assign form_url = variant.metafields.custom.mydos_link.value
+                                break
+                              endif
+                            endfor
+                            assign form_url = form_url | default: intake_url
+                          -%}
+                          <li>
+                            <a
+                              class="chx-menu__pick-option"
+                              href="{{ form_url }}"
+                              aria-label="{{ section.settings.cta_label | escape }}: {{ item.title | escape }}, {{ form | escape }}"
+                            >
+                              <span>{{ form }}</span>
+                              <span class="chx-menu__pick-arrow" aria-hidden="true">&rarr;</span>
+                            </a>
+                          </li>
+                        {%- endfor -%}
+                      </ul>
+                    </div>
+                  </div>
+                {%- else -%}
                   <a
                     class="chx-btn chx-btn--sm chx-btn--secondary chx-menu__cta"
                     href="{{ intake_url }}"
@@ -178,8 +199,9 @@
 </section>
 
 <script type="module">
-  import { initMenuFilter } from '{{ 'chopinrx-menu-filter.js' | asset_url }}';
+  import { initMenuFilter, initMenuPick } from '{{ 'chopinrx-menu-filter.js' | asset_url }}';
   initMenuFilter();
+  initMenuPick();
 </script>
 
 {% stylesheet %}
@@ -292,7 +314,6 @@
     display: grid;
     grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr) 110px auto;
     column-gap: var(--space-4);
-    overflow: hidden;
     border: var(--border-w) solid var(--border-hairline);
     border-radius: var(--radius-lg);
     background-color: var(--surface-card);
@@ -305,6 +326,14 @@
     align-items: center;
     padding: var(--space-6);
     border-bottom: var(--border-w) solid var(--border-hairline);
+  }
+
+  .chx-menu__group-label {
+    margin: 0;
+    font-family: var(--font-ui);
+    font-size: var(--font-size-body-small);
+    font-weight: 500;
+    color: var(--text-heading);
   }
 
   .chx-menu__group-count {
@@ -396,72 +425,95 @@
   .chx-menu__forms {
     min-width: 0;
     margin: 0;
-    padding: 0;
-    border: 0;
-  }
-
-  .chx-menu__forms-legend {
-    margin: 0 0 var(--space-2);
     font-family: var(--font-ui);
-    font-size: var(--font-size-body-small);
-    font-weight: 400;
-    line-height: 1.43;
-    color: var(--text-muted);
+    font-size: 15px;
+    line-height: 1.4;
+    color: var(--text-body);
   }
 
-  .chx-menu__form-list {
-    display: flex;
-    flex-wrap: wrap;
+  .chx-menu__pick {
+    position: relative;
+    justify-self: end;
+  }
+
+  .chx-menu .chx-menu__pick-toggle {
     gap: var(--space-2);
   }
 
-  .chx-menu__form-list {
+  .chx-menu .chx-menu__pick-toggle[aria-expanded='true'] {
+    border-color: var(--action-secondary-fg);
+    background-color: var(--action-secondary-fg);
+    color: var(--action-primary-fg);
+  }
+
+  .chx-menu__caret {
+    width: 0;
+    height: 0;
+    border-inline: 3.5px solid transparent;
+    border-top: 4px solid currentColor;
+    transition: transform 0.2s ease;
+  }
+
+  .chx-menu__pick-toggle[aria-expanded='true'] .chx-menu__caret {
+    transform: rotate(180deg);
+  }
+
+  .chx-menu__pick-panel {
+    position: absolute;
+    top: calc(100% + var(--space-3));
+    right: 0;
+    z-index: 5;
+    width: 260px;
+    padding: var(--space-4) 0 var(--space-2);
+    border: var(--border-w) solid var(--border-hairline);
+    border-radius: var(--radius-lg);
+    background-color: var(--surface-card);
+    box-shadow: var(--shadow-popover);
+  }
+
+  .chx-menu__pick-label {
+    margin: 0 0 4px;
+    padding-inline: var(--space-5);
+    font-family: var(--font-ui);
+    font-size: 12px;
+    line-height: 1.4;
+    color: var(--text-muted);
+  }
+
+  .chx-menu__pick-list {
     margin: 0;
     padding: 0;
     list-style: none;
   }
 
-  .chx-menu__form {
-    display: inline-flex;
+  .chx-menu .chx-menu__pick-option {
+    display: flex;
     align-items: center;
-    min-height: 36px;
-    padding-inline: var(--space-4);
-    border: var(--border-w) solid var(--border-hairline);
-    border-radius: var(--radius-pill);
-    background-color: var(--surface-card);
+    justify-content: space-between;
+    gap: var(--space-3);
+    min-height: 40px;
+    padding-inline: var(--space-5);
     font-family: var(--font-ui);
-    font-size: 14px;
-    font-weight: 500;
-    line-height: 1.2;
-    color: var(--text-body);
+    font-size: 15px;
+    line-height: 1.3;
+    color: var(--text-heading);
     text-decoration: none;
-  }
-
-  .chx-menu .chx-menu__form--link {
-    gap: 6px;
     cursor: pointer;
-    transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+    transition: background-color 0.2s ease;
   }
 
-  .chx-menu__form-arrow {
-    display: inline-flex;
-    width: 14px;
-    height: 14px;
-    flex: none;
+  .chx-menu .chx-menu__pick-option:hover {
+    background-color: var(--surface-card-flat);
   }
 
-  .chx-menu__form-arrow svg {
-    width: 100%;
-    height: 100%;
-  }
-
-  .chx-menu .chx-menu__form--link:hover {
-    border-color: var(--ink-300);
-  }
-
-  .chx-menu .chx-menu__form--link:focus-visible {
+  .chx-menu .chx-menu__pick-option:focus-visible {
     outline: 2px solid var(--text-accent);
-    outline-offset: 2px;
+    outline-offset: -2px;
+  }
+
+  .chx-menu__pick-arrow {
+    font-size: 18px;
+    color: var(--text-muted);
   }
 
   .chx-menu__row .chx-price-from {
@@ -483,6 +535,10 @@
       display: block;
     }
 
+    .chx-menu__group-label {
+      display: none;
+    }
+
     .chx-menu__group-head {
       display: flex;
       justify-content: space-between;
@@ -499,6 +555,10 @@
     .chx-menu__name-wrap,
     .chx-menu__forms {
       grid-column: 1 / -1;
+    }
+
+    .chx-menu__forms:empty {
+      display: none;
     }
 
     .chx-menu__row .chx-price-from--stack .chx-price-from__prefix {
@@ -598,9 +658,15 @@
     {
       "type": "text",
       "id": "options_label",
-      "label": "Options label",
-      "info": "Shown above the form pills on rows with several forms.",
-      "default": "Choose a form to start your intake"
+      "label": "Forms column label",
+      "default": "Available as"
+    },
+    {
+      "type": "text",
+      "id": "pick_label",
+      "label": "Form picker label",
+      "info": "Shown in the Start intake menu on rows with several forms.",
+      "default": "Choose your form"
     },
     {
       "type": "text",
@@ -618,7 +684,7 @@
       "type": "text",
       "id": "cta_label",
       "label": "Button label",
-      "info": "Shown on rows with one form or none. Rows with several forms open the intake from each form pill.",
+      "info": "Rows with several forms open a menu to choose the form first.",
       "default": "Start intake"
     }
   ],
