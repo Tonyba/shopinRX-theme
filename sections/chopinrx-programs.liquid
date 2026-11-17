@@ -28,11 +28,20 @@
 
     <ul class="chx-programs__grid" role="list">
       {%- assign hidden_handles = section.settings.hidden_products | map: 'handle' -%}
-      {%- assign shown = 0 -%}
-      {%- for product in collection.products -%}
+      {%- liquid
+        # A hand-picked list replaces the collection and is shown in full.
+        assign source = collection.products
+        assign max_cards = section.settings.products_count
+        if section.settings.products != blank
+          assign source = section.settings.products
+          assign max_cards = section.settings.products.size
+        endif
+        assign shown = 0
+      -%}
+      {%- for product in source -%}
         {%- liquid
           # Counted by hand so a hidden product does not use up a card slot.
-          if shown >= section.settings.products_count
+          if shown >= max_cards
             break
           endif
           if hidden_handles contains product.handle
@@ -478,6 +487,13 @@
       "max": 6,
       "step": 1,
       "default": 3
+    },
+    {
+      "type": "product_list",
+      "id": "products",
+      "label": "Products",
+      "info": "Pick products to show instead of the collection. All picked products are shown.",
+      "limit": 12
     },
     {
       "type": "product_list",

@@ -87,7 +87,8 @@
             "label": "Hormones & Menopause",
             "anchor": "hormones-menopause",
             "highlight": false
-          }
+          },
+          "disabled": true
         },
         "link_04": {
           "type": "link",
@@ -119,7 +120,8 @@
             "label": "Hair",
             "anchor": "hair",
             "highlight": false
-          }
+          },
+          "disabled": true
         },
         "link_08": {
           "type": "link",
@@ -161,7 +163,8 @@
           "settings": {
             "title": "Menopause and hormones",
             "subtitle": "Hot flashes, sleep, mood"
-          }
+          },
+          "disabled": true
         },
         "pick_02": {
           "type": "pick",
@@ -172,7 +175,8 @@
             "subtitle": "Bi-Est + Progesterone",
             "form": "Cream or injection",
             "variant_form": ""
-          }
+          },
+          "disabled": true
         },
         "pick_03": {
           "type": "pick",
@@ -183,7 +187,8 @@
             "subtitle": "Often a first step in perimenopause",
             "form": "Capsule",
             "variant_form": ""
-          }
+          },
+          "disabled": true
         },
         "pick_04": {
           "type": "pick",
@@ -194,7 +199,8 @@
             "subtitle": "Steady-release estrogen",
             "form": "Patch",
             "variant_form": "Patch"
-          }
+          },
+          "disabled": true
         },
         "goal_05": {
           "type": "goal",
@@ -212,7 +218,8 @@
             "subtitle": "Retatrutide + B12",
             "form": "Weekly injection",
             "variant_form": ""
-          }
+          },
+          "disabled": true
         },
         "pick_07": {
           "type": "pick",
@@ -223,7 +230,8 @@
             "subtitle": "Dual GIP/GLP-1 with B12 or B6",
             "form": "Weekly injection",
             "variant_form": ""
-          }
+          },
+          "disabled": true
         },
         "pick_08": {
           "type": "pick",
@@ -234,7 +242,8 @@
             "subtitle": "Bupropion + Naltrexone",
             "form": "Capsule",
             "variant_form": ""
-          }
+          },
+          "disabled": true
         },
         "goal_09": {
           "type": "goal",
@@ -321,7 +330,8 @@
           "settings": {
             "title": "Thinning hair",
             "subtitle": "Finasteride-free"
-          }
+          },
+          "disabled": true
         },
         "pick_18": {
           "type": "pick",
@@ -332,7 +342,8 @@
             "subtitle": "Five-active topical formula",
             "form": "Topical spray",
             "variant_form": ""
-          }
+          },
+          "disabled": true
         },
         "pick_19": {
           "type": "pick",
@@ -343,7 +354,8 @@
             "subtitle": "Oral option",
             "form": "Tablet",
             "variant_form": ""
-          }
+          },
+          "disabled": true
         },
         "goal_20": {
           "type": "goal",
@@ -355,7 +367,7 @@
         "pick_21": {
           "type": "pick",
           "settings": {
-            "label": "Recommended start",
+            "label": "Also consider",
             "product": "nad",
             "name": "NAD+",
             "subtitle": "Cellular energy support",
@@ -372,7 +384,8 @@
             "subtitle": "GH-axis support",
             "form": "Injection or strip",
             "variant_form": ""
-          }
+          },
+          "disabled": true
         },
         "pick_23": {
           "type": "pick",
@@ -383,18 +396,106 @@
             "subtitle": "Lipotropics + B12",
             "form": "Injection or capsule",
             "variant_form": ""
+          },
+          "disabled": true
+        },
+        "pick_w1": {
+          "type": "pick",
+          "settings": {
+            "label": "Recommended start",
+            "product": "recomp-stack",
+            "name": "",
+            "subtitle": "",
+            "form": "Injection",
+            "variant_form": ""
+          }
+        },
+        "pick_w2": {
+          "type": "pick",
+          "settings": {
+            "label": "Also consider",
+            "product": "tirzepatide-b12",
+            "name": "",
+            "subtitle": "",
+            "form": "Weekly injection",
+            "variant_form": ""
+          }
+        },
+        "pick_w3": {
+          "type": "pick",
+          "settings": {
+            "label": "Also consider",
+            "product": "orforglipron",
+            "name": "",
+            "subtitle": "",
+            "form": "Daily pill",
+            "variant_form": ""
+          }
+        },
+        "goal_recover": {
+          "type": "goal",
+          "settings": {
+            "title": "Recover and restore",
+            "subtitle": "Recovery and repair"
+          }
+        },
+        "pick_restore": {
+          "type": "pick",
+          "settings": {
+            "label": "Recommended start",
+            "product": "wolverine-blend",
+            "name": "",
+            "subtitle": "",
+            "form": "",
+            "variant_form": ""
+          }
+        },
+        "goal_sleep": {
+          "type": "goal",
+          "settings": {
+            "title": "Sleep better",
+            "subtitle": "Sleep and recovery"
+          }
+        },
+        "pick_sleep": {
+          "type": "pick",
+          "settings": {
+            "label": "Recommended start",
+            "product": "cjc-1295-ipamorelin",
+            "name": "",
+            "subtitle": "",
+            "form": "",
+            "variant_form": ""
+          }
+        },
+        "pick_fs": {
+          "type": "pick",
+          "settings": {
+            "label": "Recommended start",
+            "product": "vitality-stack",
+            "name": "",
+            "subtitle": "",
+            "form": "Injection",
+            "variant_form": ""
+          }
+        },
+        "pick_mr": {
+          "type": "pick",
+          "settings": {
+            "label": "Also consider",
+            "product": "metabolic-reset",
+            "name": "",
+            "subtitle": "",
+            "form": "Injection",
+            "variant_form": ""
           }
         }
       },
       "block_order": [
-        "goal_01",
-        "pick_02",
-        "pick_03",
-        "pick_04",
         "goal_05",
-        "pick_06",
-        "pick_07",
-        "pick_08",
+        "pick_w1",
+        "pick_w2",
+        "pick_w3",
         "goal_09",
         "pick_10",
         "pick_11",
@@ -403,11 +504,24 @@
         "pick_14",
         "pick_15",
         "pick_16",
+        "goal_recover",
+        "pick_restore",
+        "goal_sleep",
+        "pick_sleep",
+        "goal_20",
+        "pick_fs",
+        "pick_mr",
+        "pick_21",
+        "goal_01",
+        "pick_02",
+        "pick_03",
+        "pick_04",
+        "pick_06",
+        "pick_07",
+        "pick_08",
         "goal_17",
         "pick_18",
         "pick_19",
-        "goal_20",
-        "pick_21",
         "pick_22",
         "pick_23"
       ],
@@ -454,7 +568,8 @@
             "subtitle": "Compounded HRT in one prescription",
             "tag": "",
             "anchor": ""
-          }
+          },
+          "disabled": true
         },
         "protocol_05": {
           "type": "protocol",
@@ -466,7 +581,8 @@
             ],
             "form": "",
             "featured": true
-          }
+          },
+          "disabled": true
         },
         "protocol_06": {
           "type": "protocol",
@@ -478,7 +594,8 @@
             ],
             "form": "",
             "featured": false
-          }
+          },
+          "disabled": true
         },
         "group_07": {
           "type": "group",
@@ -504,7 +621,7 @@
         "protocol_09": {
           "type": "protocol",
           "settings": {
-            "title": "Tirzepatide Protocol",
+            "title": "Tirzepatide Weight Program",
             "subtitle": "Dual GIP/GLP-1 weight protocol",
             "products": [
               "tirzepatide-b12",
@@ -666,7 +783,8 @@
             "subtitle": "Finasteride-free",
             "tag": "",
             "anchor": ""
-          }
+          },
+          "disabled": true
         },
         "protocol_23": {
           "type": "protocol",
@@ -678,7 +796,8 @@
             ],
             "form": "",
             "featured": false
-          }
+          },
+          "disabled": true
         },
         "group_24": {
           "type": "group",
@@ -692,7 +811,7 @@
         "protocol_25": {
           "type": "protocol",
           "settings": {
-            "title": "Wolverine Blend",
+            "title": "Restore Blend",
             "subtitle": "Recovery peptide pair",
             "products": [
               "wolverine-blend"
@@ -704,10 +823,67 @@
         "protocol_26": {
           "type": "protocol",
           "settings": {
-            "title": "CJC + Ipamorelin",
-            "subtitle": "GH-axis peptide pair",
+            "title": "Deep Rest Stack",
+            "subtitle": "Sleep and recovery protocol",
             "products": [
               "cjc-1295-ipamorelin"
+            ],
+            "form": "",
+            "featured": false
+          }
+        },
+        "protocol_recomp": {
+          "type": "protocol",
+          "settings": {
+            "title": "Recomp Stack",
+            "subtitle": "Tirzepatide + B12 with CJC-1295 + Ipamorelin",
+            "products": [
+              "recomp-stack"
+            ],
+            "form": "",
+            "featured": true
+          }
+        },
+        "protocol_foundayo": {
+          "type": "protocol",
+          "settings": {
+            "title": "Foundayo",
+            "subtitle": "Needle-free daily GLP-1 pill",
+            "products": [
+              "orforglipron"
+            ],
+            "form": "",
+            "featured": false
+          }
+        },
+        "protocol_metabolic": {
+          "type": "protocol",
+          "settings": {
+            "title": "Metabolic Reset",
+            "subtitle": "MOTS-c + B12 metabolic protocol",
+            "products": [
+              "metabolic-reset"
+            ],
+            "form": "",
+            "featured": false
+          }
+        },
+        "group_longevity": {
+          "type": "group",
+          "settings": {
+            "title": "Longevity & Energy",
+            "subtitle": "Energy and healthy aging",
+            "tag": "",
+            "anchor": ""
+          }
+        },
+        "protocol_fs": {
+          "type": "protocol",
+          "settings": {
+            "title": "Forever Strong",
+            "subtitle": "MOTS-c + NAD+ energy protocol",
+            "products": [
+              "vitality-stack"
             ],
             "form": "",
             "featured": false
@@ -718,15 +894,15 @@
         "feature_01",
         "feature_02",
         "feature_03",
-        "group_04",
-        "protocol_05",
-        "protocol_06",
         "group_07",
-        "protocol_08",
+        "protocol_recomp",
         "protocol_09",
+        "protocol_foundayo",
+        "protocol_metabolic",
         "protocol_10",
         "protocol_11",
         "protocol_12",
+        "protocol_08",
         "group_13",
         "protocol_14",
         "protocol_15",
@@ -736,11 +912,16 @@
         "protocol_19",
         "protocol_20",
         "protocol_21",
-        "group_22",
-        "protocol_23",
         "group_24",
         "protocol_25",
-        "protocol_26"
+        "protocol_26",
+        "group_longevity",
+        "protocol_fs",
+        "group_04",
+        "protocol_05",
+        "protocol_06",
+        "group_22",
+        "protocol_23"
       ],
       "settings": {
         "anchor": "protocols",
@@ -764,7 +945,8 @@
           "settings": {
             "label": "Hormones & Menopause",
             "collection": "womens-hormones-menopause"
-          }
+          },
+          "disabled": true
         },
         "category_02": {
           "type": "category",
@@ -792,7 +974,8 @@
           "settings": {
             "label": "Hair",
             "collection": "womens-hair"
-          }
+          },
+          "disabled": true
         },
         "category_06": {
           "type": "category",
@@ -941,11 +1124,39 @@
         "heading": "Good questions",
         "body": ""
       }
+    },
+    "flagship": {
+      "type": "chopinrx-programs",
+      "settings": {
+        "eyebrow": "Flagship Programs",
+        "heading": "Start With A Flagship Program",
+        "collection": "",
+        "products": [
+          "vitality-stack",
+          "orforglipron",
+          "recomp-stack",
+          "metabolic-reset",
+          "glow-blend",
+          "tirzepatide-b12",
+          "wolverine-blend",
+          "cjc-1295-ipamorelin"
+        ],
+        "products_count": 3,
+        "price_prefix": "From",
+        "price_unit": "/mo",
+        "card_cta_label": "Start intake",
+        "badge_tag": "popular",
+        "badge_label": "Most Popular",
+        "cta_label": "",
+        "cta_url": "",
+        "hidden_products": []
+      }
     }
   },
   "order": [
     "hero",
     "anchor_nav",
+    "flagship",
     "goals",
     "protocols",
     "menu",

@@ -154,7 +154,8 @@
             "subtitle": "Retatrutide + B12",
             "form": "Weekly injection",
             "variant_form": ""
-          }
+          },
+          "disabled": true
         },
         "pick_03": {
           "type": "pick",
@@ -165,7 +166,8 @@
             "subtitle": "Dual GIP/GLP-1 with B12 or B6",
             "form": "Weekly injection",
             "variant_form": ""
-          }
+          },
+          "disabled": true
         },
         "pick_04": {
           "type": "pick",
@@ -176,7 +178,8 @@
             "subtitle": "Bupropion + Naltrexone",
             "form": "Capsule",
             "variant_form": ""
-          }
+          },
+          "disabled": true
         },
         "goal_05": {
           "type": "goal",
@@ -259,8 +262,8 @@
           "settings": {
             "label": "Recommended start",
             "product": "wolverine-blend",
-            "name": "Wolverine Blend",
-            "subtitle": "BPC-157 + TB-500",
+            "name": "",
+            "subtitle": "BPC-157 + TB-500 (the 'Wolverine' stack)",
             "form": "Injection",
             "variant_form": ""
           }
@@ -274,7 +277,8 @@
             "subtitle": "GH-axis peptide pair",
             "form": "Injection",
             "variant_form": ""
-          }
+          },
+          "disabled": true
         },
         "pick_15": {
           "type": "pick",
@@ -297,7 +301,7 @@
         "pick_17": {
           "type": "pick",
           "settings": {
-            "label": "Recommended start",
+            "label": "Also consider",
             "product": "nad",
             "name": "NAD+",
             "subtitle": "Cellular energy support",
@@ -314,7 +318,8 @@
             "subtitle": "Lipotropics + B12",
             "form": "Injection or capsule",
             "variant_form": ""
-          }
+          },
+          "disabled": true
         },
         "pick_19": {
           "type": "pick",
@@ -325,7 +330,8 @@
             "subtitle": "Antioxidant support",
             "form": "Injection or nasal spray",
             "variant_form": ""
-          }
+          },
+          "disabled": true
         },
         "goal_20": {
           "type": "goal",
@@ -355,13 +361,97 @@
             "form": "Tablet",
             "variant_form": ""
           }
+        },
+        "pick_w1": {
+          "type": "pick",
+          "settings": {
+            "label": "Recommended start",
+            "product": "recomp-stack",
+            "name": "",
+            "subtitle": "",
+            "form": "Injection",
+            "variant_form": ""
+          }
+        },
+        "pick_w2": {
+          "type": "pick",
+          "settings": {
+            "label": "Also consider",
+            "product": "tirzepatide-b12",
+            "name": "",
+            "subtitle": "",
+            "form": "Weekly injection",
+            "variant_form": ""
+          }
+        },
+        "pick_w3": {
+          "type": "pick",
+          "settings": {
+            "label": "Also consider",
+            "product": "orforglipron",
+            "name": "",
+            "subtitle": "",
+            "form": "Daily pill",
+            "variant_form": ""
+          }
+        },
+        "pick_define": {
+          "type": "pick",
+          "settings": {
+            "label": "Also consider",
+            "product": "tesamorelin",
+            "name": "",
+            "subtitle": "",
+            "form": "",
+            "variant_form": ""
+          }
+        },
+        "goal_sleep": {
+          "type": "goal",
+          "settings": {
+            "title": "Sleep better",
+            "subtitle": "Sleep and recovery"
+          }
+        },
+        "pick_sleep": {
+          "type": "pick",
+          "settings": {
+            "label": "Recommended start",
+            "product": "cjc-1295-ipamorelin",
+            "name": "",
+            "subtitle": "",
+            "form": "",
+            "variant_form": ""
+          }
+        },
+        "pick_fs": {
+          "type": "pick",
+          "settings": {
+            "label": "Recommended start",
+            "product": "vitality-stack",
+            "name": "",
+            "subtitle": "",
+            "form": "Injection",
+            "variant_form": ""
+          }
+        },
+        "pick_mr": {
+          "type": "pick",
+          "settings": {
+            "label": "Also consider",
+            "product": "metabolic-reset",
+            "name": "",
+            "subtitle": "",
+            "form": "Injection",
+            "variant_form": ""
+          }
         }
       },
       "block_order": [
         "goal_01",
-        "pick_02",
-        "pick_03",
-        "pick_04",
+        "pick_w1",
+        "pick_w2",
+        "pick_w3",
         "goal_05",
         "pick_06",
         "pick_07",
@@ -371,15 +461,23 @@
         "pick_11",
         "goal_12",
         "pick_13",
-        "pick_14",
+        "pick_define",
         "pick_15",
+        "goal_sleep",
+        "pick_sleep",
         "goal_16",
+        "pick_fs",
+        "pick_mr",
         "pick_17",
-        "pick_18",
-        "pick_19",
         "goal_20",
         "pick_21",
-        "pick_22"
+        "pick_22",
+        "pick_02",
+        "pick_03",
+        "pick_04",
+        "pick_14",
+        "pick_18",
+        "pick_19"
       ],
       "settings": {
         "anchor": "shop-by-goal",
@@ -435,13 +533,13 @@
               "retatrutide-b12"
             ],
             "form": "",
-            "featured": true
+            "featured": false
           }
         },
         "protocol_06": {
           "type": "protocol",
           "settings": {
-            "title": "Tirzepatide Protocol",
+            "title": "Tirzepatide Weight Program",
             "subtitle": "Dual GIP/GLP-1 weight protocol",
             "products": [
               "tirzepatide-b12",
@@ -575,8 +673,8 @@
         "protocol_17": {
           "type": "protocol",
           "settings": {
-            "title": "Wolverine Blend",
-            "subtitle": "Recovery peptide pair",
+            "title": "Restore Blend",
+            "subtitle": "BPC-157 + TB-500 (the 'Wolverine' stack)",
             "products": [
               "wolverine-blend"
             ],
@@ -587,8 +685,8 @@
         "protocol_18": {
           "type": "protocol",
           "settings": {
-            "title": "CJC + Ipamorelin",
-            "subtitle": "GH-axis peptide pair",
+            "title": "Deep Rest Stack",
+            "subtitle": "Sleep and recovery protocol",
             "products": [
               "cjc-1295-ipamorelin"
             ],
@@ -618,6 +716,75 @@
             "form": "",
             "featured": false
           }
+        },
+        "protocol_recomp": {
+          "type": "protocol",
+          "settings": {
+            "title": "Recomp Stack",
+            "subtitle": "Tirzepatide + B12 with CJC-1295 + Ipamorelin",
+            "products": [
+              "recomp-stack"
+            ],
+            "form": "",
+            "featured": true
+          }
+        },
+        "protocol_foundayo": {
+          "type": "protocol",
+          "settings": {
+            "title": "Foundayo",
+            "subtitle": "Needle-free daily GLP-1 pill",
+            "products": [
+              "orforglipron"
+            ],
+            "form": "",
+            "featured": false
+          }
+        },
+        "protocol_metabolic": {
+          "type": "protocol",
+          "settings": {
+            "title": "Metabolic Reset",
+            "subtitle": "MOTS-c + B12 metabolic protocol",
+            "products": [
+              "metabolic-reset"
+            ],
+            "form": "",
+            "featured": false
+          }
+        },
+        "protocol_define": {
+          "type": "protocol",
+          "settings": {
+            "title": "Define Protocol",
+            "subtitle": "Tesamorelin, a single GH-axis peptide",
+            "products": [
+              "tesamorelin"
+            ],
+            "form": "",
+            "featured": false
+          }
+        },
+        "group_longevity": {
+          "type": "group",
+          "settings": {
+            "title": "Longevity & Energy",
+            "subtitle": "Energy and healthy aging",
+            "tag": "",
+            "anchor": ""
+          }
+        },
+        "protocol_fs": {
+          "type": "protocol",
+          "settings": {
+            "title": "Forever Strong",
+            "subtitle": "MOTS-c + NAD+ energy protocol",
+            "products": [
+              "vitality-stack"
+            ],
+            "form": "",
+            "featured": false
+          }
         }
       },
       "block_order": [
@@ -625,11 +792,14 @@
         "feature_02",
         "feature_03",
         "group_04",
-        "protocol_05",
+        "protocol_recomp",
         "protocol_06",
+        "protocol_foundayo",
+        "protocol_metabolic",
         "protocol_07",
         "protocol_08",
         "protocol_09",
+        "protocol_05",
         "group_10",
         "protocol_11",
         "protocol_12",
@@ -639,6 +809,9 @@
         "group_16",
         "protocol_17",
         "protocol_18",
+        "protocol_define",
+        "group_longevity",
+        "protocol_fs",
         "group_19",
         "protocol_20"
       ],
@@ -833,11 +1006,37 @@
         "heading": "Good questions",
         "body": ""
       }
+    },
+    "flagship": {
+      "type": "chopinrx-programs",
+      "settings": {
+        "eyebrow": "Flagship Programs",
+        "heading": "Start With A Flagship Program",
+        "collection": "",
+        "products": [
+          "vitality-stack",
+          "orforglipron",
+          "tesamorelin",
+          "recomp-stack",
+          "metabolic-reset",
+          "tirzepatide-b12"
+        ],
+        "products_count": 3,
+        "price_prefix": "From",
+        "price_unit": "/mo",
+        "card_cta_label": "Start intake",
+        "badge_tag": "popular",
+        "badge_label": "Most Popular",
+        "cta_label": "",
+        "cta_url": "",
+        "hidden_products": []
+      }
     }
   },
   "order": [
     "hero",
     "anchor_nav",
+    "flagship",
     "goals",
     "protocols",
     "menu",
