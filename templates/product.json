@@ -245,52 +245,7 @@
         "cta_url": "shopify://collections/treatment"
       }
     },
-    "credentials": {
-      "type": "chopinrx-lab-testing",
-      "blocks": {
-        "test_1": {
-          "type": "test",
-          "settings": {
-            "title": "Potency tested",
-            "text": "A test to check the medication contains the correct concentration of active ingredient."
-          }
-        },
-        "test_2": {
-          "type": "test",
-          "settings": {
-            "title": "Sterility Tested",
-            "text": "A test to check the medication is free of foreign organisms and pathogens."
-          }
-        },
-        "test_3": {
-          "type": "test",
-          "settings": {
-            "title": "pH Level Tested",
-            "text": "A test to check for the ideal 'acid to base' ratio to minimize irritation caused by the injection itself."
-          }
-        },
-        "test_4": {
-          "type": "test",
-          "settings": {
-            "title": "Endotoxicity Tested",
-            "text": "A test to check the medication adheres to endotoxin safety recommendations."
-          }
-        }
-      },
-      "block_order": [
-        "test_1",
-        "test_2",
-        "test_3",
-        "test_4"
-      ],
-      "settings": {
-        "image": "{{ product.metafields.custom.lab_image.value }}",
-        "media_position": "right",
-        "eyebrow": "{{ product.metafields.custom.lab_eyebrow.value }}",
-        "heading": "{{ product.metafields.custom.lab_heading.value }}"
-      }
-    },
-    "reviews": {
+    "credentials": {"type": "chopinrx-lab-testing", "blocks": {"test_1": {"type": "test", "settings": {"title": "Trusted U.S. Medical & Pharmacy Partners", "text": "Treatments are prescribed by licensed U.S. clinicians, when medically appropriate, and supplied through 503A compounding pharmacy and 503B facility partners."}}, "test_2": {"type": "test", "settings": {"title": "Quality-Focused Standards", "text": "We work with pharmacy partners operating under applicable federal and state quality, safety, and regulatory requirements."}}, "test_3": {"type": "test", "settings": {"title": "Personalized Medical Oversight", "text": "Licensed U.S. clinicians evaluate your individual health needs and determine appropriate treatment options."}}, "test_4": {"type": "test", "settings": {"title": "Transparency & Accountability", "text": "Clear treatment information and professional guidance to help you make informed decisions about your care."}}}, "block_order": ["test_1", "test_2", "test_3", "test_4"], "settings": {"image": "shopify://shop_images/Chopin_Wellness_-_Modern_Doctor_Reviewing_Medical_Tablet.webp", "media_position": "right", "eyebrow": "Quality & Standards", "heading": "Quality you can <em>trust</em>. Standards you can <em>count on</em>.", "note": "Compounded medications are not FDA-approved. Prescriptions are issued only after an online consultation with an independent licensed provider. Medications are dispensed by state-licensed pharmacies."}},    "reviews": {
       "type": "chopinrx-reviews",
       "blocks": {
         "review_1": {
