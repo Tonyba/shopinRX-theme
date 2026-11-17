@@ -109,6 +109,9 @@
                   {%- if subtitle != blank -%}
                     <p class="chx-menu__sub">{{ subtitle }}</p>
                   {%- endif -%}
+                  {%- if section.settings.provider_note != blank -%}
+                    <p class="chx-menu__note">{{ section.settings.provider_note }}</p>
+                  {%- endif -%}
                 </div>
                 {%- liquid
                   assign forms_text = ''
@@ -121,6 +124,14 @@
                     endif
                     assign forms_text = forms_text | append: form
                   endfor
+                  # Fixed-length MyDose packages carry their course length; ongoing plans leave it empty.
+                  assign course = item.metafields.custom.course_length.value
+                  if course != blank
+                    if forms_text != ''
+                      assign forms_text = forms_text | append: ' · '
+                    endif
+                    assign forms_text = forms_text | append: course
+                  endif
                 -%}
                 <p class="chx-menu__forms">
                   {%- if forms_text != '' -%}
@@ -422,6 +433,14 @@
     color: var(--text-muted);
   }
 
+  .chx-menu__note {
+    margin: 2px 0 0;
+    font-family: var(--font-ui);
+    font-size: var(--font-size-caption);
+    line-height: 1.4;
+    color: var(--text-muted);
+  }
+
   .chx-menu__forms {
     min-width: 0;
     margin: 0;
@@ -686,6 +705,13 @@
       "label": "Button label",
       "info": "Rows with several forms open a menu to choose the form first.",
       "default": "Start intake"
+    },
+    {
+      "type": "text",
+      "id": "provider_note",
+      "label": "Provider note",
+      "info": "Shown on every card. Leave empty to hide.",
+      "default": "A licensed provider decides if it's right for you."
     }
   ],
   "blocks": [

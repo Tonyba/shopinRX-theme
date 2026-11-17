@@ -283,11 +283,11 @@
         "pick_15": {
           "type": "pick",
           "settings": {
-            "label": "Needle-free option",
+            "label": "Also consider",
             "product": "sermorelin",
             "name": "Sermorelin",
             "subtitle": "GH-axis support",
-            "form": "Film strip or troche",
+            "form": "Injection",
             "variant_form": ""
           }
         },
@@ -305,7 +305,7 @@
             "product": "nad",
             "name": "NAD+",
             "subtitle": "Cellular energy support",
-            "form": "Injection, nasal spray or strip",
+            "form": "Injection or film strip",
             "variant_form": ""
           }
         },

@@ -63,7 +63,11 @@
 
                 assign name = block.settings.name | default: item.title
                 assign subtitle = block.settings.subtitle | default: item.metafields.custom.subtitle.value
-                assign form = block.settings.form | default: item.metafields.custom.form_label.value | default: variant.option1
+                assign form = block.settings.form | default: item.metafields.custom.form_label.value
+                unless item.has_only_default_variant
+                  assign form = form | default: variant.option1
+                endunless
+                assign course = item.metafields.custom.course_length.value
                 assign intake_url = variant.metafields.custom.mydos_link.value | default: item.metafields.custom.mydos_link.value | default: '#'
               -%}
               <article class="chx-goal-card{% if pick_index == 1 %} chx-goal-card--featured{% endif %}" {{ block.shopify_attributes }}>
@@ -76,8 +80,12 @@
                 {%- endif -%}
                 <p class="chx-goal-card__meta">
                   {{- form -}}
+                  {%- if course != blank %}{% if form != blank %} · {% endif %}{{ course }}{% endif -%}
                   {%- if section.settings.intake_note != blank %} · {{ section.settings.intake_note }}{% endif -%}
                 </p>
+                {%- if section.settings.provider_note != blank -%}
+                  <p class="chx-goal-card__note">{{ section.settings.provider_note }}</p>
+                {%- endif -%}
                 <div class="chx-goal-card__foot">
                   {% render 'chopinrx-price-from',
                     amount: amount,
@@ -208,6 +216,14 @@
     color: var(--text-body);
   }
 
+  .chx-goal-card__note {
+    margin: var(--space-2) 0 0;
+    font-family: var(--font-ui);
+    font-size: var(--font-size-caption);
+    line-height: 1.4;
+    color: var(--text-muted);
+  }
+
   .chx-goal-card__foot {
     display: flex;
     flex-wrap: wrap;
@@ -309,6 +325,13 @@
       "label": "Button label",
       "info": "Links to the Mydos Link of the chosen form (variant), or the product's when the form has none.",
       "default": "Start intake"
+    },
+    {
+      "type": "text",
+      "id": "provider_note",
+      "label": "Provider note",
+      "info": "Shown on every card. Leave empty to hide.",
+      "default": "A licensed provider decides if it's right for you."
     }
   ],
   "blocks": [
