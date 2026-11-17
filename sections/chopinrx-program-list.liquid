@@ -5,6 +5,7 @@
   assign tabs = section.settings.collections
   assign unit = section.settings.price_unit
   assign primary = section.settings.primary_collection
+  assign hidden_handles = section.settings.hidden_products | map: 'handle'
 %}
 
 <div class="chx-programlist">
@@ -74,6 +75,10 @@
               # before the filter and cut the tab short.
               if shown >= section.settings.products_count
                 break
+              endif
+
+              if hidden_handles contains product.handle
+                continue
               endif
 
               if primary != blank
@@ -555,6 +560,12 @@
       "max": 24,
       "step": 1,
       "default": 8
+    },
+    {
+      "type": "product_list",
+      "id": "hidden_products",
+      "label": "Hidden products",
+      "info": "Products to leave out of every tab."
     },
     {
       "type": "header",

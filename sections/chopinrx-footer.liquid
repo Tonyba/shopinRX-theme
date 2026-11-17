@@ -101,6 +101,8 @@
           {%- if menu.links.size > 0 -%}
             <ul class="chx-footer__links" role="list">
               {%- for link in menu.links -%}
+                {%- # A menu item pointing at a draft product renders as "#"; leave it out instead of showing a dead link. -%}
+                {%- if link.url == '#' or link.url == blank -%}{%- continue -%}{%- endif -%}
                 <li>
                   <a class="chx-footer__link" href="{{ link.url }}">{{ link.title }}</a>
                 </li>

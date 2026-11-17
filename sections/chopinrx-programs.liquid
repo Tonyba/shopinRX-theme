@@ -27,8 +27,19 @@
     </div>
 
     <ul class="chx-programs__grid" role="list">
-      {%- for product in collection.products limit: section.settings.products_count -%}
+      {%- assign hidden_handles = section.settings.hidden_products | map: 'handle' -%}
+      {%- assign shown = 0 -%}
+      {%- for product in collection.products -%}
         {%- liquid
+          # Counted by hand so a hidden product does not use up a card slot.
+          if shown >= section.settings.products_count
+            break
+          endif
+          if hidden_handles contains product.handle
+            continue
+          endif
+          assign shown = shown | plus: 1
+
           assign goal = product.metafields.custom.goal.value | default: product.type
           assign ingredients = product.metafields.custom.ingredients.value | join: ' · '
 
@@ -467,6 +478,12 @@
       "max": 6,
       "step": 1,
       "default": 3
+    },
+    {
+      "type": "product_list",
+      "id": "hidden_products",
+      "label": "Hidden products",
+      "info": "Products from the collection to leave out of this section."
     },
     {
       "type": "header",
