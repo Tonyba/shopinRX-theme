@@ -1,0 +1,368 @@
+{
+  "sections": {
+    "hero": {
+      "type": "chopinrx-tx-hero",
+      "settings": {
+        "eyebrow": "Treatment",
+        "cta_label": "Get started",
+        "soon_label": "Coming soon",
+        "price_prefix": "From",
+        "price_unit": "/mo",
+        "compare_label": "Regular price",
+        "course_label": "Course:",
+        "placeholder_label": "Vial · placeholder"
+      },
+      "blocks": {
+        "badge_1": {
+          "type": "badge",
+          "settings": {
+            "text": "Third-party lab tested"
+          }
+        },
+        "detail_1": {
+          "type": "detail",
+          "settings": {
+            "heading": "What is [product]?",
+            "source": "description",
+            "content": "",
+            "open": false
+          }
+        }
+      },
+      "block_order": [
+        "badge_1",
+        "detail_1"
+      ]
+    },
+    "marquee": {
+      "type": "chopinrx-tx-marquee",
+      "settings": {
+        "speed": 40
+      },
+      "blocks": {
+        "item_1": {
+          "type": "item",
+          "settings": {
+            "text": "Guided by independent licensed providers"
+          }
+        },
+        "item_2": {
+          "type": "item",
+          "settings": {
+            "text": "Prepared by licensed U.S. pharmacies"
+          }
+        },
+        "item_3": {
+          "type": "item",
+          "settings": {
+            "text": "100% online care"
+          }
+        },
+        "item_4": {
+          "type": "item",
+          "settings": {
+            "text": "Discreet delivery to your door"
+          }
+        }
+      },
+      "block_order": [
+        "item_1",
+        "item_2",
+        "item_3",
+        "item_4"
+      ]
+    },
+    "about": {
+      "type": "chopinrx-tx-about",
+      "settings": {
+        "image": "{{ product.metafields.custom.benefits_image.value }}",
+        "eyebrow": "01 / About [product]",
+        "heading": "{{ product.metafields.custom.benefits_heading.value }}"
+      },
+      "blocks": {},
+      "block_order": []
+    },
+    "benefits": {
+      "type": "chopinrx-tx-benefits",
+      "settings": {
+        "eyebrow": "02 / Benefits",
+        "heading": "{{ product.metafields.custom.why_heading.value }}"
+      },
+      "blocks": {
+        "benefit_1": {
+          "type": "benefit",
+          "settings": {
+            "title": "Cellular Energy Support",
+            "text": "Targets underlying cellular pathways involved in energy production and mitochondrial function."
+          }
+        },
+        "benefit_2": {
+          "type": "benefit",
+          "settings": {
+            "title": "Recovery & Vitality",
+            "text": "Designed to support recovery, sleep quality, and day-to-day vitality under provider guidance."
+          }
+        },
+        "benefit_3": {
+          "type": "benefit",
+          "settings": {
+            "title": "Provider-Guided Care",
+            "text": "An independent licensed provider reviews your case before any treatment decision is made."
+          }
+        },
+        "benefit_4": {
+          "type": "benefit",
+          "settings": {
+            "title": "Ongoing Support",
+            "text": "Ongoing provider access is available to adjust your protocol as your goals evolve."
+          }
+        }
+      },
+      "block_order": [
+        "benefit_1",
+        "benefit_2",
+        "benefit_3",
+        "benefit_4"
+      ]
+    },
+    "steps": {
+      "type": "chopinrx-tx-steps",
+      "settings": {
+        "eyebrow": "03 / How it works",
+        "heading": "{{ product.metafields.custom.how_heading.value }}",
+        "cta_label": "",
+        "image": "shopify://shop_images/Chopin_RX_-_Warm_Telemedicine_Consultation.webp"
+      },
+      "blocks": {
+        "step_1": {
+          "type": "step",
+          "settings": {
+            "title": "Online intake",
+            "text": "Answer a short health questionnaire online. No appointments and no waiting rooms."
+          }
+        },
+        "step_2": {
+          "type": "step",
+          "settings": {
+            "title": "Provider review",
+            "text": "An independent licensed provider reviews your answers and decides whether treatment is right for you."
+          }
+        },
+        "step_3": {
+          "type": "step",
+          "settings": {
+            "title": "Delivered to your door",
+            "text": "If prescribed, a licensed U.S. pharmacy prepares your treatment and ships it discreetly."
+          }
+        }
+      },
+      "block_order": [
+        "step_1",
+        "step_2",
+        "step_3"
+      ]
+    },
+    "compare": {
+      "type": "chopinrx-tx-compare",
+      "settings": {
+        "eyebrow": "",
+        "heading": "",
+        "us_label": "Chopin Wellness",
+        "them_label": "Clinics, med spas and online vendors",
+        "note": "You are only charged after a provider approves your prescription.",
+        "cta_label": "Get started",
+        "us_image": "shopify://shop_images/Chopin_Wellness_-_Modern_Doctor_Reviewing_Medical_Tablet.webp"
+      },
+      "blocks": {
+        "row_1": {
+          "type": "row",
+          "settings": {
+            "us": "An independent licensed provider reviews every plan",
+            "them": "Products sold with no medical review"
+          }
+        },
+        "row_2": {
+          "type": "row",
+          "settings": {
+            "us": "One clear monthly price, no per-visit fees",
+            "them": "Consult, visit and add-on fees"
+          }
+        },
+        "row_3": {
+          "type": "row",
+          "settings": {
+            "us": "Prepared by licensed U.S. pharmacies",
+            "them": "Unclear sourcing and quality checks"
+          }
+        },
+        "row_4": {
+          "type": "row",
+          "settings": {
+            "us": "Delivered to your door, 100% online",
+            "them": "In-person appointments and waiting rooms"
+          }
+        },
+        "row_5": {
+          "type": "row",
+          "settings": {
+            "us": "Ongoing access to your care team",
+            "them": "No follow-up once you have paid"
+          }
+        }
+      },
+      "block_order": [
+        "row_1",
+        "row_2",
+        "row_3",
+        "row_4",
+        "row_5"
+      ]
+    },
+    "reviews": {
+      "type": "chopinrx-tx-reviews",
+      "settings": {
+        "eyebrow": "04 / Testimonials",
+        "heading": "Hear it from others",
+        "rating_label": "Rating:"
+      },
+      "blocks": {
+        "review_1": {
+          "type": "review",
+          "settings": {
+            "name": "James Whitfield",
+            "rating": 5,
+            "quote": "I really love how simple and easy everything has been so far. I have noticed an enhanced focused on being more mindful of what I am eating, making sure to hit my protein goals!"
+          }
+        },
+        "review_2": {
+          "type": "review",
+          "settings": {
+            "name": "Amelia Hart",
+            "rating": 5,
+            "quote": "The intake took ten minutes and I had a provider response the same day. Everything has been clear and easy to follow."
+          }
+        },
+        "review_3": {
+          "type": "review",
+          "settings": {
+            "name": "Daniel Osei",
+            "rating": 5,
+            "quote": "Discreet packaging, on time every month, and the care team answers fast when I have a question."
+          }
+        },
+        "review_4": {
+          "type": "review",
+          "settings": {
+            "name": "Priya Raman",
+            "rating": 5,
+            "quote": "I appreciate that the plan was adjusted after my check-in rather than being one size fits all."
+          }
+        },
+        "review_5": {
+          "type": "review",
+          "settings": {
+            "name": "Marcus Lee",
+            "rating": 5,
+            "quote": "Straightforward pricing and no surprises. The provider explained the options before anything was prescribed."
+          }
+        },
+        "review_6": {
+          "type": "review",
+          "settings": {
+            "name": "Sofia Alvarez",
+            "rating": 5,
+            "quote": "Being able to message the care team at any hour has made this far less stressful than I expected."
+          }
+        }
+      },
+      "block_order": [
+        "review_1",
+        "review_2",
+        "review_3",
+        "review_4",
+        "review_5",
+        "review_6"
+      ]
+    },
+    "related": {
+      "type": "chopinrx-tx-related",
+      "settings": {
+        "eyebrow": "05 / More for you",
+        "heading": "Related treatments",
+        "type_collections": "program, treatment",
+        "products_count": 8,
+        "price_prefix": "From",
+        "price_unit": "/mo"
+      }
+    },
+    "faq": {
+      "type": "chopinrx-tx-faq",
+      "settings": {
+        "eyebrow": "06 / Frequently asked questions",
+        "heading": "Questions? We have answers",
+        "text": "",
+        "cta_label": ""
+      },
+      "blocks": {
+        "question_1": {
+          "type": "question",
+          "settings": {
+            "question": "How does Chopin Wellness work?",
+            "answer": "<p>You pick a program or a single treatment, complete the intake in about ten minutes, and an independent licensed provider reviews it and prescribes if appropriate. A licensed U.S. compounding pharmacy ships to your door.</p>",
+            "open": true
+          }
+        },
+        "question_2": {
+          "type": "question",
+          "settings": {
+            "question": "Who decides what I am prescribed?",
+            "answer": "<p>An independent licensed provider reviews your intake and medical history and makes the prescribing decision.</p>",
+            "open": false
+          }
+        },
+        "question_3": {
+          "type": "question",
+          "settings": {
+            "question": "What is the difference between a program and a treatment?",
+            "answer": "<p>A program is a packaged combination reviewed as one plan. A treatment is a single item from the full menu.</p>",
+            "open": false
+          }
+        },
+        "question_4": {
+          "type": "question",
+          "settings": {
+            "question": "Is Chopin Wellness available in my state?",
+            "answer": "<p>Availability depends on provider licensing in your state. You will see this during intake before anything is prescribed.</p>",
+            "open": false
+          }
+        },
+        "question_5": {
+          "type": "question",
+          "settings": {
+            "question": "Are these medications FDA approved?",
+            "answer": "<p>Compounded medications are not FDA approved. They are prepared by licensed U.S. compounding pharmacies for an individual prescription.</p>",
+            "open": false
+          }
+        }
+      },
+      "block_order": [
+        "question_1",
+        "question_2",
+        "question_3",
+        "question_4",
+        "question_5"
+      ]
+    }
+  },
+  "order": [
+    "hero",
+    "marquee",
+    "about",
+    "benefits",
+    "steps",
+    "compare",
+    "reviews",
+    "related",
+    "faq"
+  ]
+}

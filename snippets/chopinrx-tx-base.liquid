@@ -1,0 +1,161 @@
+{% doc %}
+  Shared look for the treatment template sections (chopinrx-tx-*): numbered
+  uppercase labels, bold uppercase display titles, square dark buttons and
+  divider-line accordions. Every rule is scoped under `.chx-tx`, the class each
+  of those section roots carries, so it never reaches the rest of the theme.
+  Renders nothing; it only holds the stylesheet.
+
+  @example
+  {% render 'chopinrx-tx-base' %}
+{% enddoc %}
+
+{% stylesheet %}
+  .chx-tx {
+    --chx-tx-ink: var(--surface-dark);
+    --chx-tx-line: var(--border-strong);
+  }
+
+  .chx-tx .chx-txlabel {
+    margin: 0;
+    color: var(--chx-txlabel-color, var(--text-accent));
+    font-family: var(--font-ui);
+    font-size: var(--font-size-caption);
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    line-height: 1.4;
+    text-transform: uppercase;
+  }
+
+  .chx-tx .chx-txtitle {
+    margin: 0;
+    color: var(--chx-txtitle-color, var(--text-heading));
+    font-family: var(--font-display);
+    font-size: var(--font-size-h2);
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    line-height: 1;
+    text-transform: uppercase;
+  }
+
+  .chx-tx .chx-txbtn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    min-height: 52px;
+    padding: var(--space-3) var(--space-8);
+    border: 0;
+    border-radius: 0;
+    background: var(--chx-tx-ink);
+    color: var(--text-on-dark);
+    font-family: var(--font-ui);
+    font-size: var(--font-size-caption);
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    line-height: 1.2;
+    text-align: center;
+    text-decoration: none;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+  }
+
+  .chx-tx .chx-txbtn:hover {
+    background: var(--action-primary-bg);
+  }
+
+  .chx-tx .chx-txbtn:focus-visible {
+    outline: 2px solid var(--accent-500);
+    outline-offset: 3px;
+  }
+
+  .chx-tx .chx-txbtn[aria-disabled='true'] {
+    cursor: not-allowed;
+    opacity: 0.6;
+  }
+
+  /* Divider-line accordion: re-skins the shared .chx-faq__* rows. */
+  .chx-tx .chx-txacc {
+    gap: 0;
+  }
+
+  .chx-tx .chx-txacc .chx-faq__item,
+  .chx-tx .chx-txacc .chx-faq__item[open] {
+    padding: var(--space-5) 0;
+    border: 0;
+    border-bottom: var(--border-w) solid var(--chx-tx-line);
+    border-radius: 0;
+    background: transparent;
+  }
+
+  .chx-tx .chx-txacc .chx-faq__question {
+    gap: var(--space-4);
+    font-family: var(--font-ui);
+    font-size: var(--font-size-body);
+    font-weight: 500;
+    letter-spacing: 0;
+    line-height: 1.4;
+  }
+
+  .chx-tx .chx-txacc .chx-faq__toggle,
+  .chx-tx .chx-txacc .chx-faq__item[open] .chx-faq__toggle {
+    width: 22px;
+    height: 22px;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    color: var(--text-heading);
+  }
+
+  .chx-tx .chx-txacc .chx-faq__toggle-icon {
+    width: 22px;
+    height: 22px;
+  }
+
+  /* One plus icon that turns into an × when the row opens. */
+  .chx-tx .chx-txacc .chx-faq__toggle-icon--closed,
+  .chx-tx .chx-txacc .chx-faq__item[open] .chx-faq__toggle-icon--closed {
+    display: block;
+    transition: transform 0.25s ease;
+  }
+
+  .chx-tx .chx-txacc .chx-faq__item[open] .chx-faq__toggle-icon--closed {
+    transform: rotate(45deg);
+  }
+
+  .chx-tx .chx-txacc .chx-faq__toggle-icon--open,
+  .chx-tx .chx-txacc .chx-faq__item[open] .chx-faq__toggle-icon--open {
+    display: none;
+  }
+
+  .chx-tx .chx-txacc .chx-faq__answer {
+    margin-block-start: var(--space-3);
+    padding-inline-end: var(--space-10);
+    font-size: var(--font-size-body-small);
+    line-height: 1.6;
+  }
+
+  /* Scroll reveal (assets/chopinrx-tx-reveal.js). Items only start hidden once
+     the script has marked the root, so no-JS and reduced motion stay visible. */
+  .chx-tx.chx-reveal-on [data-chx-reveal] {
+    transition:
+      opacity 0.7s ease-out var(--chx-reveal-delay, 0ms),
+      translate 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) var(--chx-reveal-delay, 0ms);
+  }
+
+  .chx-tx.chx-reveal-on [data-chx-reveal]:not(.is-revealed) {
+    opacity: 0;
+    translate: 0 42px;
+  }
+
+  @media (max-width: 767px) {
+    .chx-tx .chx-txbtn {
+      width: 100%;
+    }
+
+    .chx-tx .chx-txacc .chx-faq__answer {
+      padding-inline-end: 0;
+    }
+  }
+{% endstylesheet %}

@@ -1,0 +1,284 @@
+{% render 'chopinrx-tokens' %}
+{% render 'chopinrx-tx-base' %}
+
+{% liquid
+  assign eyebrow = section.settings.eyebrow | replace: '[product]', product.title
+  assign heading = section.settings.heading | replace: '[product]', product.title
+  assign items = product.metafields.custom.how_steps.value
+  assign blocks = section.blocks | where: 'type', 'step'
+  assign count = items.size | plus: 0
+  if count == 0
+    assign count = blocks.size
+  endif
+
+  assign variant = product.selected_or_first_available_variant
+  assign intake_url = variant.metafields.custom.mydos_link.value | default: product.metafields.custom.mydos_link.value | default: '' | strip
+  if product.tags contains 'coming-soon'
+    assign intake_url = ''
+  endif
+%}
+
+{%- if count > 0 -%}
+  <div class="chx-tx chx-txsteps" data-chx-reveal-root>
+    <div class="chx-container">
+      <div class="chx-txsteps__frame">
+        {%- if section.settings.image != blank -%}
+          {{
+            section.settings.image
+            | image_url: width: 2400
+            | image_tag:
+              widths: '750, 1100, 1500, 2000, 2400',
+              sizes: '(min-width: 1500px) 1452px, 100vw',
+              loading: 'lazy',
+              class: 'chx-txsteps__image',
+              alt: ''
+          }}
+        {%- endif -%}
+
+        <div class="chx-txsteps__content">
+          <header class="chx-txsteps__header">
+            {%- if eyebrow != blank -%}
+              <p class="chx-txlabel">{{ eyebrow }}</p>
+            {%- endif -%}
+            {%- if heading != blank -%}
+              <h2 class="chx-txtitle">{{ heading }}</h2>
+            {%- endif -%}
+          </header>
+
+          <ol class="chx-txsteps__panel" role="list">
+            {%- if items.size > 0 -%}
+              {%- for item in items -%}
+                <li class="chx-txsteps__item" data-chx-reveal>
+                  <span class="chx-txsteps__number" aria-hidden="true">{{ forloop.index | prepend: '0' | slice: -2, 2 }}</span>
+                  <h3 class="chx-txsteps__name">{{ item.title.value }}</h3>
+                  {%- if item.text.value != blank -%}
+                    <p class="chx-txsteps__text">{{ item.text.value | newline_to_br }}</p>
+                  {%- endif -%}
+                </li>
+              {%- endfor -%}
+            {%- else -%}
+              {%- for block in blocks -%}
+                <li class="chx-txsteps__item" data-chx-reveal {{ block.shopify_attributes }}>
+                  <span class="chx-txsteps__number" aria-hidden="true">{{ forloop.index | prepend: '0' | slice: -2, 2 }}</span>
+                  <h3 class="chx-txsteps__name">{{ block.settings.title }}</h3>
+                  {%- if block.settings.text != blank -%}
+                    <p class="chx-txsteps__text">{{ block.settings.text }}</p>
+                  {%- endif -%}
+                </li>
+              {%- endfor -%}
+            {%- endif -%}
+          </ol>
+
+          {%- if section.settings.cta_label != blank and intake_url != blank -%}
+            <a class="chx-txbtn chx-txsteps__cta" href="{{ intake_url }}">{{ section.settings.cta_label }}</a>
+          {%- endif -%}
+        </div>
+      </div>
+    </div>
+  </div>
+<script src="{{ 'chopinrx-tx-reveal.js' | asset_url }}" type="module"></script>
+{%- endif -%}
+
+{% stylesheet %}
+  .chx-txsteps {
+    --chx-txlabel-color: var(--text-on-dark);
+    --chx-txtitle-color: var(--text-on-dark);
+    padding-block: var(--space-6);
+    background: var(--surface-card);
+  }
+
+  .chx-txsteps__frame {
+    position: relative;
+    overflow: hidden;
+    background: var(--surface-dark);
+  }
+
+  .chx-txsteps .chx-txsteps__image {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .chx-txsteps__frame::before {
+    content: '';
+    position: absolute;
+    z-index: 1;
+    inset: 0;
+    background: rgb(13 37 53 / 35%);
+    pointer-events: none;
+  }
+
+  .chx-txsteps__content {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-10);
+    padding: var(--space-16) var(--space-6) var(--space-24);
+    color: var(--text-on-dark);
+    text-align: center;
+  }
+
+  .chx-txsteps__header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-3);
+    max-width: 900px;
+  }
+
+  .chx-txsteps__panel {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 660px;
+    margin: 0;
+    padding: var(--space-10) var(--space-8);
+    background: rgb(13 37 53 / 72%);
+    backdrop-filter: blur(6px);
+    list-style: none;
+  }
+
+  .chx-txsteps__item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-2);
+    max-width: 440px;
+  }
+
+  /* Vertical connector between steps. */
+  .chx-txsteps__item + .chx-txsteps__item::before {
+    content: '';
+    width: 1px;
+    height: 56px;
+    margin-block: var(--space-4);
+    background: rgb(255 255 255 / 40%);
+  }
+
+  .chx-txsteps__number {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 28px;
+    padding: 2px 6px;
+    background: var(--paper-000);
+    color: var(--text-heading);
+    font-family: var(--font-ui);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    line-height: 1.4;
+  }
+
+  .chx-txsteps .chx-txsteps__name {
+    margin: var(--space-2) 0 0;
+    color: var(--text-on-dark);
+    font-family: var(--font-display);
+    font-size: var(--font-size-h5);
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    line-height: 1.2;
+  }
+
+  .chx-txsteps__text {
+    margin: 0;
+    color: var(--text-on-dark-muted);
+    font-size: var(--font-size-body);
+    line-height: 1.5;
+  }
+
+  @media (max-width: 1024px) {
+    .chx-txsteps__content {
+      padding: var(--space-16) var(--space-6);
+    }
+  }
+
+  @media (max-width: 767px) {
+    .chx-txsteps {
+      padding-block: var(--space-4);
+    }
+
+    .chx-txsteps__content {
+      gap: var(--space-8);
+      padding: var(--space-10) var(--space-4);
+    }
+
+    .chx-txsteps__panel {
+      padding: var(--space-8) var(--space-5);
+    }
+
+    .chx-txsteps__item + .chx-txsteps__item::before {
+      height: 40px;
+    }
+
+    .chx-txsteps__text {
+      font-size: var(--font-size-body-small);
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Treatment steps",
+  "tag": "section",
+  "class": "chopinrx-tx-steps-section",
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Steps come from the product's How steps custom field. The blocks below are only used when it is empty."
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Background image"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "03 / How it works"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Your path to [product]"
+    },
+    {
+      "type": "text",
+      "id": "cta_label",
+      "label": "Button label",
+      "info": "Optional. Links to the product's MyDose intake and hides without one."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "step",
+      "name": "Step",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Online intake"
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Text"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Treatment steps"
+    }
+  ]
+}
+{% endschema %}

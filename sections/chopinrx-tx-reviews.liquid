@@ -1,0 +1,318 @@
+{% render 'chopinrx-tokens' %}
+{% render 'chopinrx-tx-base' %}
+
+{% liquid
+  assign eyebrow = section.settings.eyebrow | replace: '[product]', product.title
+  assign heading = section.settings.heading | replace: '[product]', product.title
+  assign reviews = section.blocks | where: 'type', 'review'
+%}
+
+{%- if reviews.size > 0 -%}
+  {%- liquid
+    # One list must be wider than any screen for the loop to close without a
+    # gap, so short review lists are repeated inside it.
+    assign repeat = 1
+    if reviews.size < 3
+      assign repeat = 4
+    elsif reviews.size < 6
+      assign repeat = 2
+    endif
+  -%}
+  <div class="chx-tx chx-txreviews" style="--chx-reviews-duration: {{ section.settings.speed }}s;">
+    <div class="chx-container chx-txreviews__inner">
+      <header class="chx-txreviews__header">
+        {%- if eyebrow != blank -%}
+          <p class="chx-txlabel">{{ eyebrow }}</p>
+        {%- endif -%}
+        {%- if heading != blank -%}
+          <h2 class="chx-txtitle">{{ heading }}</h2>
+        {%- endif -%}
+      </header>
+    </div>
+
+    <div class="chx-txreviews__marquee">
+      <div class="chx-txreviews__track">
+        {%- for pass in (1..2) -%}
+          <ul class="chx-txreviews__list" role="list" {% if pass == 2 %}aria-hidden="true"{% endif %}>
+            {%- for round in (1..repeat) -%}
+              {%- for block in reviews -%}
+                <li
+                  class="chx-txreviews__slide"
+                  {% if pass == 1 and round == 1 %}{{ block.shopify_attributes }}{% endif %}
+                  {% if round > 1 %}aria-hidden="true"{% endif %}
+                >
+                  <figure class="chx-txreviews__card">
+                    <span class="chx-txreviews__mark" aria-hidden="true">&ldquo;</span>
+                    <blockquote class="chx-txreviews__quote">{{ block.settings.quote }}</blockquote>
+                    <figcaption class="chx-txreviews__author">
+                      <span class="chx-txreviews__name">{{ block.settings.name }}</span>
+                      <span class="chx-txreviews__score">
+                        <span aria-hidden="true">&#9733;</span>
+                        <span class="visually-hidden">{{ section.settings.rating_label }}</span>
+                        {{- block.settings.rating }}/5
+                      </span>
+                    </figcaption>
+                  </figure>
+                </li>
+              {%- endfor -%}
+            {%- endfor -%}
+          </ul>
+        {%- endfor -%}
+      </div>
+    </div>
+  </div>
+{%- endif -%}
+
+{% stylesheet %}
+  .chx-txreviews {
+    padding-block: var(--space-24);
+    overflow: hidden;
+    background: var(--surface-card);
+  }
+
+  .chx-txreviews__inner {
+    margin-bottom: var(--space-16);
+  }
+
+  .chx-txreviews__header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-3);
+    text-align: center;
+  }
+
+  .chx-txreviews__marquee {
+    overflow: hidden;
+  }
+
+  .chx-txreviews__track {
+    display: flex;
+    width: max-content;
+    animation: chx-txreviews-loop var(--chx-reviews-duration, 40s) linear infinite;
+  }
+
+  .chx-txreviews__marquee:hover .chx-txreviews__track,
+  .chx-txreviews__marquee:focus-within .chx-txreviews__track {
+    animation-play-state: paused;
+  }
+
+  .chx-txreviews__list {
+    display: flex;
+    flex-shrink: 0;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  /* Padding, not gap, spaces the slides; the divider sits on the slide edge. */
+  .chx-txreviews__slide {
+    flex: 0 0 auto;
+    width: clamp(280px, 25vw, 400px);
+    padding-inline: var(--space-6);
+    border-left: var(--border-w) solid var(--border-strong);
+  }
+
+  @keyframes chx-txreviews-loop {
+    from {
+      transform: translateX(0);
+    }
+
+    to {
+      transform: translateX(-50%);
+    }
+  }
+
+  /* Reduced motion: no loop, the reviews scroll by hand instead. */
+  @media (prefers-reduced-motion: reduce) {
+    .chx-txreviews__marquee {
+      overflow-x: auto;
+    }
+
+    .chx-txreviews__track {
+      animation: none;
+    }
+
+    .chx-txreviews__list[aria-hidden='true'],
+    .chx-txreviews__slide[aria-hidden='true'] {
+      display: none;
+    }
+  }
+
+  .chx-txreviews__card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-4);
+    height: 100%;
+    margin: 0;
+    text-align: center;
+  }
+
+  .chx-txreviews__mark {
+    color: var(--text-accent);
+    font-family: Georgia, serif;
+    font-size: 40px;
+    line-height: 0.8;
+  }
+
+  .chx-txreviews__quote {
+    flex: 1;
+    margin: 0;
+    color: var(--text-body);
+    font-size: var(--font-size-body);
+    line-height: 1.5;
+  }
+
+  .chx-txreviews__author {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    font-size: var(--font-size-body-small);
+  }
+
+  .chx-txreviews__name {
+    color: var(--text-heading);
+    font-weight: 600;
+  }
+
+  .chx-txreviews__score {
+    padding: 2px 6px;
+    background: var(--surface-accent-soft);
+    color: var(--text-accent);
+    font-size: var(--font-size-caption);
+    font-weight: 600;
+  }
+
+  .chx-txarrows {
+    display: flex;
+    justify-content: center;
+    gap: var(--space-2);
+  }
+
+  /* Nothing to scroll: every slide already fits. */
+  .chx-txarrows:not(:has(.chx-txarrows__button:not(:disabled))) {
+    display: none;
+  }
+
+  .chx-txarrows__button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    border: var(--border-w) solid var(--surface-dark);
+    border-radius: 0;
+    background: transparent;
+    color: var(--surface-dark);
+    cursor: pointer;
+    transition: background-color 0.2s ease, color 0.2s ease;
+  }
+
+  .chx-txarrows__button:hover:not(:disabled) {
+    background: var(--surface-dark);
+    color: var(--text-on-dark);
+  }
+
+  .chx-txarrows__button:disabled {
+    cursor: default;
+    opacity: 0.3;
+  }
+
+  .chx-txarrows__button svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  @media (max-width: 1024px) {
+    .chx-txreviews {
+      padding-block: var(--space-16);
+    }
+  }
+
+  @media (max-width: 767px) {
+    .chx-txreviews {
+      padding-block: var(--space-10);
+    }
+
+    .chx-txreviews__inner {
+      margin-bottom: var(--space-10);
+    }
+
+    .chx-txreviews__slide {
+      padding-inline: var(--space-4);
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Treatment reviews",
+  "tag": "section",
+  "class": "chopinrx-tx-reviews-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "04 / Testimonials"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Hear it from others"
+    },
+    {
+      "type": "range",
+      "id": "speed",
+      "label": "Loop duration",
+      "min": 15,
+      "max": 120,
+      "step": 5,
+      "unit": "s",
+      "default": 40
+    },
+    {
+      "type": "text",
+      "id": "rating_label",
+      "label": "Rating label (screen readers)",
+      "default": "Rating:"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "review",
+      "name": "Review",
+      "settings": [
+        {
+          "type": "text",
+          "id": "name",
+          "label": "Name",
+          "default": "Verified patient"
+        },
+        {
+          "type": "range",
+          "id": "rating",
+          "label": "Rating",
+          "min": 1,
+          "max": 5,
+          "step": 1,
+          "default": 5
+        },
+        {
+          "type": "textarea",
+          "id": "quote",
+          "label": "Quote"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Treatment reviews"
+    }
+  ]
+}
+{% endschema %}

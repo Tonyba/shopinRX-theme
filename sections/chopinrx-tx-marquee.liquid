@@ -1,0 +1,130 @@
+{% render 'chopinrx-tokens' %}
+
+{%- if section.blocks.size > 0 -%}
+  <div class="chx-txmarquee" style="--chx-marquee-duration: {{ section.settings.speed }}s;">
+    {%- comment -%} The list is printed twice so the loop has no gap; the copy is hidden from assistive tech. {%- endcomment -%}
+    <div class="chx-txmarquee__track">
+      {%- for pass in (1..2) -%}
+        <ul class="chx-txmarquee__list" role="list" {% if pass == 2 %}aria-hidden="true"{% endif %}>
+          {%- comment -%} Repeated so one list is wider than any screen. {%- endcomment -%}
+          {%- for round in (1..3) -%}
+            {%- for block in section.blocks -%}
+              <li
+                class="chx-txmarquee__item"
+                {% if pass == 1 and round == 1 %}{{ block.shopify_attributes }}{% endif %}
+                {% if round > 1 %}aria-hidden="true"{% endif %}
+              >
+                {{- block.settings.text -}}
+              </li>
+            {%- endfor -%}
+          {%- endfor -%}
+        </ul>
+      {%- endfor -%}
+    </div>
+  </div>
+{%- endif -%}
+
+{% stylesheet %}
+  .chx-txmarquee {
+    overflow: hidden;
+    background: var(--surface-dark);
+    color: var(--text-on-dark);
+  }
+
+  .chx-txmarquee__track {
+    display: flex;
+    width: max-content;
+    animation: chx-txmarquee var(--chx-marquee-duration, 40s) linear infinite;
+  }
+
+  .chx-txmarquee:hover .chx-txmarquee__track {
+    animation-play-state: paused;
+  }
+
+  .chx-txmarquee__list {
+    display: flex;
+    flex-shrink: 0;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .chx-txmarquee__item {
+    padding: var(--space-3) var(--space-6);
+    font-family: var(--font-ui);
+    font-size: var(--font-size-caption);
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    line-height: 1.4;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  @keyframes chx-txmarquee {
+    from {
+      transform: translateX(0);
+    }
+
+    to {
+      transform: translateX(-50%);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .chx-txmarquee__track {
+      width: auto;
+      justify-content: center;
+      animation: none;
+    }
+
+    .chx-txmarquee__list {
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .chx-txmarquee__list[aria-hidden='true'],
+    .chx-txmarquee__item[aria-hidden='true'] {
+      display: none;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Treatment marquee",
+  "tag": "section",
+  "class": "chopinrx-tx-marquee-section",
+  "settings": [
+    {
+      "type": "range",
+      "id": "speed",
+      "label": "Loop duration",
+      "min": 10,
+      "max": 90,
+      "step": 5,
+      "unit": "s",
+      "default": 40
+    }
+  ],
+  "blocks": [
+    {
+      "type": "item",
+      "name": "Item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Text",
+          "default": "Guided by licensed providers"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Treatment marquee",
+      "blocks": [{ "type": "item" }, { "type": "item" }, { "type": "item" }]
+    }
+  ]
+}
+{% endschema %}
